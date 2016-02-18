@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b35fd7b4eca647888bf31e68c982a7ba" Name="Diagram1" ZoomLevel="70">
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Member" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Member_Detail" Width="1.5" PointX="8" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Orders" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Orders_Detail" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="Renhai_LightSiteModel.FK_Member_Detail_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="Renhai_LightSiteModel.FK_Orders_Detail_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="Renhai_LightSiteModel.FK_Orders_Orders" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

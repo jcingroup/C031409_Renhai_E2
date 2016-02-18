@@ -1,0 +1,73 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">會員資料編輯</h3>
+</div>
+<form ng-submit="submit()">
+    <div class="modal-body">
+
+        <fieldset class="profile">
+            <legend>基本資料</legend>
+            <p>
+                <label class="col-xs-1">姓名</label>
+                <input class="col-xs-4" type="text"
+                       ng-model="fd.member_name" maxlength="32" required />
+                <label class="col-xs-1">生日</label>
+                <input class="col-xs-4" type="text"
+                       ng-model="fd.l_birthday" maxlength="10" required />
+            </p>
+            <p>
+                <label class="col-xs-1">性別</label>
+
+                <label class="col-xs-1 text-right">
+                    <input type="radio" name="gender" ng-model="fd.gender" ng-value="false" />
+                    <i class="fa-check"></i>
+                </label>
+                <label class="col-xs-1 text-left">女</label>
+
+                <label class="col-xs-1 text-right">
+                    <input type="radio" name="gender" ng-model="fd.gender" ng-value="true" />
+                    <i class="fa-check"></i>
+                </label>
+                <label class="col-xs-1 text-left">男</label>
+
+
+                <label class="col-xs-1">戶長</label>
+                <label class="col-xs-1 text-right">
+                    <input type="checkbox" ng-model="fd.is_holder" />
+                    <i class="fa-check"></i>
+                </label>
+            </p>
+            <p>
+                <label class="col-xs-1">電話</label>
+                <input class="col-xs-4" type="tel"
+                       ng-model="fd.tel" maxlength="32" />
+                <label class="col-xs-1">行動</label>
+                <input class="col-xs-4" type="tel"
+                       ng-model="fd.mobile" maxlength="20" />
+            </p>
+            <p>
+                <label class="col-xs-1">生肖</label>
+                <select class="col-xs-5" ng-model="fd.born_sign" ng-options="m for m in born_sign"></select>
+                <label class="col-xs-1">生辰</label>
+                <select class="col-xs-5" ng-model="fd.born_time" ng-options="m.value as m.label for m in born_time"></select>
+            </p>
+            <p>
+                <label class="col-xs-1">地址</label>
+                <input class="col-xs-1" type="text"
+                       ng-model="fd.zip" maxlength="5" />
+                <input class="col-xs-10" type="text"
+                       ng-model="fd.address"
+                       maxlength="64"
+                       typeahead-loading="loadingLocations"
+                       typeahead-wait-ms="500"
+                       typeahead-min-length="1"
+                       typeahead="addr.data as addr.data + '(' + addr.zip + ')' for addr in getTW_Adr($viewValue)"
+                       typeahead-on-select="typeHead_getCitys_Select($item,'zip')" />
+            </p>
+        </fieldset>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">送出</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">關閉</button>
+    </div>
+</form>

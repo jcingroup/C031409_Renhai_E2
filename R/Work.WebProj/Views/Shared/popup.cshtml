@@ -1,0 +1,247 @@
+﻿<h3>最新消息 編輯</h3>
+<button class="close" title="關閉視窗"><i class="fa-times"></i></button>
+
+<div class="popup">
+
+    <form>
+        <fieldset class="profile">
+            <legend>基本資料</legend>
+            <p>
+                <label class="col-xs-1">編號</label>
+                <input class="col-xs-5" type="text" value="100" disabled />
+                <em class="text-danger col-xs-2">* 不可修改</em>
+            </p>
+            <p>
+                <label class="col-xs-1">標題</label>
+                <input class="col-xs-5" type="text" required />
+            </p>
+            <p>
+                <label class="col-xs-1">日期</label>
+                <input class="col-xs-5" type="text" datepicker-popup="{{'yyyy-MM-dd'}}" required />
+            </p>
+            <p>
+                <label class="col-xs-1">狀態</label>
+                <span class="switcher col-xs-3">
+                    <label class="col-xs-6">
+                        <input type="radio" name="toggle" checked>
+                        <span>開放</span>
+                    </label>
+                    <label class="col-xs-6">
+                        <input type="radio" name="toggle">
+                        <span>不公開</span>
+                    </label>
+                </span>
+            </p>
+            <p>
+                <label class="col-xs-1">分類</label>
+                <select class="col-xs-5">
+                    <option>分類1</option>
+                </select>
+            </p>
+            <p>
+                <label class="col-xs-1">上傳</label>
+                <span class="outer col-xs-5">
+                    <input type="file" />
+                    <em class="drag-drop col-xs-12">拖曳檔案至此<i class="fa-cloud-upload"></i></em>
+                    <em class="pic-upload col-xs-12">
+                        <a href="" target="_blank">
+                            <i><img src="123"></i>
+                            <b>123456.jpg</b>
+                            <button class="close" href=""><i class="fa-times"></i></button>
+                        </a>
+                    </em>
+                </span>
+            </p>
+        </fieldset>
+
+        <fieldset class="article">
+            <legend>文章內容</legend>
+            <textarea class="col-xs-11">怎麼會有這麼離譜的事情，新竹一名邱姓駕駛，日前把自己的愛車，送到車行更換新的方向盤，但上路第三天，他行進中緊急煞車，整個方向盤竟然被拔起來，讓他嚇了一大跳，幸好當時車子已經停下來，否則後果不堪設想，駕駛指控車行業者，沒有做好安全檢修，才會釀成意外，後來雙方達成和解，業者也答應會負起責任。開車開到一半，方向盤突然掉落，這是外國整人節目設計好的橋段，但沒想到這樣誇張的情節，真實上演。新竹市一名邱姓車主，到車麗屋中華店更換新的方向盤，才剛換好3天，車主在汽車行進中，突然緊急煞車，上身因為慣性向前衝之後，再向後躺回椅背上，沒想到方向盤，竟然整個被拔起，幸好當時車子已經停穩，否則後果不堪設想。車行：「其實我們有跟車主聯繫，但這個有爭議，因為螺絲是有鎖的，不可能說整個拿起來。」駕駛真的嚇傻了，事後打電話向店家反映，沒想到對方竟然要求他開回修車廠重新鎖，但這樣的車到底要怎麼開，讓車主氣炸了，雙方目前已經達成和解，車行也承諾會負起相關責任，也會查明方向盤脫落的原因，但因為緊急剎車，方向盤竟然會鬆脫拔起，這樣的恐怖經驗誰也不想要有。</textarea>
+        </fieldset>
+
+        <fieldset class="send">
+            <button class="btn-primary" type="submit"><i class="fa-check"></i> 儲存</button>
+            <button class="btn-info" type="submit"><i class="fa-times"></i> 清除重填</button>
+        </fieldset>
+
+    </form>
+
+    <table>
+        <caption>主檔編輯</caption>
+        <thead>
+            <tr>
+                <th class="text-center col-xs-1">
+                    <label>
+                        <input type="checkbox" />
+                        <i class="fa-check"></i>
+                    </label>
+                </th>
+                <th class="col-xs-1"></th>
+                <th class="col-xs-1">編號</th>
+                <th class="col-xs-2">日期</th>
+                <th class="col-xs-6">標題</th>
+                <th class="col-xs-1">狀態</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center">
+                    <label>
+                        <input type="checkbox" />
+                        <i class="fa-check"></i>
+                    </label>
+                </td>
+                <td class="text-center">
+                    <a href="#" title="展開"><i class="fa-plus-square"></i></a>
+                    <a href="#" title="修改"><i class="fa-pencil"></i></a>
+                </td>
+                <td>100</td>
+                <td>2014-01-10</td>
+                <td>大貓熊參觀規則提醒</td>
+                <td class="text-info">開放</td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <label>
+                        <input type="checkbox" />
+                        <i class="fa-check"></i>
+                    </label>
+                </td>
+                <td class="text-center">
+                    <a href="#" title="收起"><i class="fa-minus-square"></i></a>
+                    <a href="#" title="修改"><i class="fa-pencil"></i></a>
+                </td>
+                <td>101</td>
+                <td>2014-01-10</td>
+                <td>圓圓與圓仔在A活動場</td>
+                <td class="text-danger">關閉</td>
+            </tr>
+            <tr class="sub">
+                <td colspan="6">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-xs-1 text-center">
+                                    <label>
+                                        <input type="checkbox" />
+                                        <i class="fa-check"></i>
+                                    </label>
+                                </th>
+                                <th class="col-xs-1"></th>
+                                <th class="col-xs-1">編號</th>
+                                <th class="col-xs-4">品名</th>
+                                <th class="col-xs-1">數量</th>
+                                <th class="col-xs-2">單價</th>
+                                <th class="col-xs-2">小計</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" />
+                                        <i class="fa-check"></i>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" title="修改"><i class="fa-pencil"></i></a>
+                                </td>
+                                <td>SN-001</td>
+                                <td>汽水</td>
+                                <td>2</td>
+                                <td>15</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" />
+                                        <i class="fa-check"></i>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" title="修改"><i class="fa-pencil"></i></a>
+                                </td>
+                                <td>SN-001</td>
+                                <td>汽水</td>
+                                <td>2</td>
+                                <td>15</td>
+                                <td>30</td>
+                            </tr>
+                            <tr class="page">
+                                <td colspan="7">
+                                    <button type="submit"><i class="fa-plus-circle"></i></button>
+                                    <button type="submit"><i class="fa-trash-o"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr><!--Sub Grid-->
+            <tr class="page">
+                <td colspan="6">
+                    <button type="submit"><i class="fa-plus-circle"></i></button>
+                    <button type="submit"><i class="fa-trash-o"></i></button>
+                    <small>第1-10筆，共100筆</small>
+                    <ul>
+                        <li><a href="#" title="第一頁"><i class="fa-angle-double-left"></i></a></li>
+                        <li><a href="#" title="上一頁"><i class="fa-angle-left"></i></a></li>
+                        <li class="active">第<input type="text" value="1">頁，共100頁</li>
+                        <li><a href="#" title="下一頁"><i class="fa-angle-right"></i></a></li>
+                        <li><a href="#" title="最後一頁"><i class="fa-angle-double-right"></i></a></li>
+                    </ul>
+                </td>
+            </tr><!--page-->
+        </tbody>
+    </table>
+
+    <table>
+        <caption>明細檔編輯<button type="button"><i class="fa-plus-circle"></i> 新增明細</button></caption>
+        <thead>
+            <tr>
+                <th class="col-xs-1"></th>
+                <th class="col-xs-1">#</th>
+                <th class="col-xs-2">產品序號</th>
+                <th class="col-xs-3">品名</th>
+                <th class="col-xs-2">數量</th>
+                <th class="col-xs-1">單位</th>
+                <th class="col-xs-2">收貨金額</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="colspan">
+                <td colspan="7">
+                    <table>
+                        <td class="text-center col-xs-1">
+                            <button type="button"><i class="fa-pencil"></i></button>
+                            <button type="button"><i class="fa-trash-o"></i></button>
+                        </td>
+                        <td class="col-xs-1">001</td>
+                        <td class="col-xs-2">ABC001</td>
+                        <td class="col-xs-3"><input type="text" value="test" disabled /></td>
+                        <td class="col-xs-2"><input type="text" value="100" disabled /></td>
+                        <td class="col-xs-1">KG</td>
+                        <td class="suffix col-xs-2"><input type="text" value="2000" disabled /><span>元</span></td>
+                    </table>
+                </td>
+            </tr>
+            <tr class="colspan">
+                <td colspan="7">
+                    <table>
+                        <td class="text-center col-xs-1">
+                            <button type="button"><i class="fa-check"></i></button>
+                            <button type="button"><i class="fa-times"></i></button>
+                        </td>
+                        <td class="col-xs-1">001</td>
+                        <td class="col-xs-2"><input type="text" value="ABC001" /></td>
+                        <td class="col-xs-3"><input type="text" value="test" /></td>
+                        <td class="col-xs-2"><input type="text" value="100" /></td>
+                        <td class="col-xs-1">KG</td>
+                        <td class="suffix col-xs-2"><input type="text" value="2000" /><span>元</span></td>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div><!-- popup -->

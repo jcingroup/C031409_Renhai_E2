@@ -1,0 +1,152 @@
+﻿@model ProcCore.Business.DB0.c_Orders
+
+@{
+    ViewBag.Caption = MvcSiteMapProvider.SiteMaps.Current.CurrentNode.Title;
+    ViewBag.MenuName = MvcSiteMapProvider.SiteMaps.Current.CurrentNode.ParentNode.Title;
+}
+@section IncludeCSS{}
+@section IncludeScript{
+
+    @Scripts.Render("~/ordersController")
+    @Html.Partial("Manage/jsCommVar")
+    <script>
+        var Info_Insert_Success = '@Resources.Res.Info_Insert_Success';
+        var Info_Update_Success = '@Resources.Res.Info_Update_Success';
+    </script>
+}
+@section sidebar{
+    @Html.Partial("Manage/vucMenu")
+}
+
+<form ng-submit="Init_Query()">
+    <fieldset class="search-form">
+        <legend class="sr-only">@Resources.Res.Search</legend>
+        <p>
+            <label class="sr-only">名稱：</label>
+            <input type="text" placeholder="請輸入訂單序號" ng-model="@Html.sd(x => x.q.orders_sn)">
+        </p>
+        <button type="submit"><i class="fa-search"></i></button>
+    </fieldset>
+
+    <h3>@ViewBag.MenuName</h3>
+    <table class="table table-hover">
+        <caption>@ViewBag.Caption</caption>
+        <thead>
+            <tr>
+                <th class="col-md-1">@Resources.Res.Button_Modify</th>
+                <th class="col-md-2">@Html.Lang(x => x.m.orders_sn)</th>
+                <th class="col-md-2">@Html.Lang(x => x.m.member_name)</th>
+                <th class="col-md-1">@Html.Lang(x => x.m.tel)</th>
+                <th class="col-md-1">@Html.Lang(x => x.m.transation_date)</th>
+                <th class="col-md-1">總計金額</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="gd in Grid_Items track by gd.orders_sn">
+            <tr>
+                <td>
+                    <a class="popup-show" href="#"
+                       ng-click="Master_Open_Modify($index)"
+                       title="@Resources.Res.Button_Sure_Modify">
+                        <i class="fa-pencil"></i>
+                    </a>
+                </td>
+                <td class="text-left">{{@Html.gd(x => x.m.orders_sn)}}</td>
+                <td class="text-left">{{@Html.gd(x => x.m.member_name)}}</td>
+                <td class="text-left">{{@Html.gd(x => x.m.tel)}}</td>
+                <td class="text-left">{{@Html.gd(x => x.m.transation_date) | date:'yyyy-MM-dd HH:mm'}}</td>
+                <td class="text-left">{{@Html.gd(x => x.m.total)}}</td>
+            </tr>
+        </tbody>
+        <tr class="page">
+            <td colspan="6">
+                <button class="text-success" type="button" ng-click="Master_Open_New()" ng-show="grid_new_show"><i class="fa-pencil"></i> @Resources.Res.Button_Insert_Order</button>
+                <button class="text-danger" type="button" ng-click="Master_Grid_Delete()" ng-show="grid_del_show"><i class="fa-trash-o"></i> @Resources.Res.Button_Delete</button>
+                <small>第{{StartCount}}-{{EndCount}}筆，共{{RecordCount}}筆</small>
+                <ul>
+                    <li><a href="#" title="@Resources.Res.FirstPage" ng-click="JumpPage(firstpage)" ng-disabled="NowPage <= 1" tabindex="-1"><i class="fa fa-angle-double-left"></i></a></li>
+                    <li><a href="#" title="@Resources.Res.PrevPage" ng-click="JumpPage(prevpage)" ng-disabled="NowPage==1" tabindex="-1"><i class="fa fa-angle-left"></i></a></li>
+                    <li class="active">第<input type="number" min="1" ng-model="NowPage" ng-change="JumpPageKey()" tabindex="-1">頁，共{{TotalPage}}頁</li>
+                    <li><a href="#" title="@Resources.Res.NextPage" ng-click="JumpPage(nextpage)" ng-disabled="NowPage == TotalPage" tabindex="-1"><i class="fa fa-angle-right"></i></a></li>
+                    <li><a href="#" title="@Resources.Res.LastPage" ng-click="JumpPage(lastpage)" ng-disabled="NowPage >= TotalPage" tabindex="-1"><i class="fa fa-angle-double-right"></i></a></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</form>
+
+@using (Html.popWindow("show_master_edit", "Master_Edit_Close()", (string)ViewBag.Caption))
+{
+    <form ng-submit="Master_Submit()">
+        <fieldset class="profile">
+            <legend>@Html.Lang("BaseData")</legend>
+            <p>
+                <label class="col-xs-2 text-right">@Html.Lang(x => x.m.orders_sn)</label>
+                <input class="col-xs-3" type="text" value="{{@Html.fd(x => x.m.orders_sn)}}" disabled />
+                <label class="col-xs-1 text-right">性別</label>
+
+                <label class="col-xs-1 text-right">
+                    <input type="radio" name="gender" ng-model="fd.gender" ng-value="false" />
+                    <i class="fa-check"></i>
+                </label>
+                <label class="col-xs-1 text-left">女士</label>
+
+                <label class="col-xs-1 text-right">
+                    <input type="radio" name="gender" ng-model="fd.gender" ng-value="true" />
+                    <i class="fa-check"></i>
+                </label>
+                <label class="col-xs-1 text-left">先生</label>
+            </p>
+            <p>
+                <label class="col-xs-2 text-right">@Html.Lang(x => x.m.member_name)</label>
+                <input class="col-xs-3" type="text" value="{{@Html.fd(x => x.m.member_name)}}" />
+                <label class="col-xs-1" text-right">@Html.Lang(x => x.m.tel)</label>
+                <input class="col-xs-3" type="tel" value="{{@Html.fd(x => x.m.tel)}}" />
+            </p>
+            <p>
+                <label class="col-xs-2 text-right">@Html.Lang(x => x.m.address)</label>
+                <input class="col-xs-1" type="tel" value="{{@Html.fd(x => x.m.zip)}}" />
+                <input type="text" ng-model="@Html.fd(x => x.m.address)"
+                       required="required"
+                       typeahead-loading="loadingLocations"
+                       typeahead-wait-ms="500"
+                       typeahead-min-length="1"
+                       typeahead="addr.data as addr.data + '(' + addr.zip + ')' for addr in getTW_Adr($viewValue)"
+                       typeahead-on-select="typeHead_getCitys_Select($item,'zip')"
+                       class="col-xs-6" />
+            </p>
+            
+        </fieldset>
+        <fieldset class="send">
+            <button type="submit" class="btn-primary" ng-disabled="fd.state=='Done'"><i class="fa fa-floppy-o"></i> @Resources.Res.Button_Save</button>
+            <button type="button" class="btn-warning" ng-show="!fd.is_direct_stock" ng-disabled="fd.state!='New' || detail_count == 0" ng-click="master_State_Done()">
+                <i class="fa fa-check"></i> @Resources.Res.Button_Sure
+            </button>
+        </fieldset>
+    </form>
+    
+    <table class="table table-hover">
+        <caption>訂單明細維護</caption>
+        <thead>
+            <tr>
+                <th class="col-md-1">@Resources.Res.Button_Modify</th>
+                <th class="col-md-1">會員姓名</th>
+                <th class="col-md-1">產品名稱</th>
+                <th class="col-md-1">價格</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr bindonce ng-repeat="item in fds track by item.orders_detail_id">
+                <td>
+                    <a class="popup-show" href="#"
+                       ng-click="Master_Open_Modify($index)"
+                       title="@Resources.Res.Button_Sure_Modify">
+                        <i class="fa-pencil"></i>
+                    </a>
+                </td>
+                <td class="text-left">{{item.member_name}}</td>
+                <td class="text-left">{{item.product_name}}</td>
+                <td class="text-left">{{item.price}}</td>
+            </tr>
+        </tbody>
+    </table>
+}

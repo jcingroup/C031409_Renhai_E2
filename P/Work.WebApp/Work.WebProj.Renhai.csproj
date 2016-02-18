@@ -1,0 +1,756 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8BA89DBC-7AE7-4CDC-A7BC-2D039E54342F}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Work.WebApp</RootNamespace>
+    <AssemblyName>Proc.WebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TypeScriptToolsVersion>1.4</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.38\lib\net40\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus.4.0.1.1\lib\net20\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.2\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.3.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.3.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\Res.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Res.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Api\MemberMailController.cs" />
+    <Compile Include="Controllers\Api\FortuneLightLabelController.cs" />
+    <Compile Include="Controllers\Api\TempleAccountPrintController.cs" />
+    <Compile Include="Controllers\Api\TempleAccountController.cs" />
+    <Compile Include="Controllers\Api\TempleMarkCloseController.cs" />
+    <Compile Include="Controllers\Api\MemberLabelController.cs" />
+    <Compile Include="Controllers\Api\TempleMemberController.cs" />
+    <Compile Include="Controllers\Api\RejectReportController.cs" />
+    <Compile Include="Controllers\Api\PutActionController.cs" />
+    <Compile Include="Controllers\Api\MemberDetailController.cs" />
+    <Compile Include="Controllers\Api\MemberMarkController.cs" />
+    <Compile Include="Controllers\Api\GetActionController.cs" />
+    <Compile Include="Controllers\Api\OrdersController.cs" />
+    <Compile Include="Controllers\Api\MemberController.cs" />
+    <Compile Include="Controllers\Api\RejectController.cs" />
+    <Compile Include="Controllers\ExcelReportController.cs" />
+    <Compile Include="Controllers\LoginManageController.cs" />
+    <Compile Include="Controllers\ManjushriController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\MemberMailController.cs" />
+    <Compile Include="Controllers\FortuneLightLabelController.cs" />
+    <Compile Include="Controllers\MemberMarkController.cs" />
+    <Compile Include="Controllers\TempleAccountController.cs" />
+    <Compile Include="Controllers\TempleAccountPrintController.cs" />
+    <Compile Include="Controllers\MemberLabelController.cs" />
+    <Compile Include="Controllers\TempleMarkCloseController.cs" />
+    <Compile Include="Controllers\TempleMemberController.cs" />
+    <Compile Include="Controllers\RejectReportController.cs" />
+    <Compile Include="Controllers\RejectLightController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\LogicController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaseApiController.cs" />
+    <Compile Include="Models\Fortune_Light.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\i_IDX.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Member_Detail_Category.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Fortune_Light.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_i_IDX.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Member_Detail_Category.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_TempleAccount.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_TempleMember.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TempleAccount.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TempleMember.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Work.WebApp.Models.cs" />
+    <Compile Include="Models\DBPart.cs" />
+    <Compile Include="Models\DotWeb.CommSetup.cs" />
+    <Compile Include="Models\Light_Site.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LogicCenter.cs" />
+    <Compile Include="Models\Manjushri.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Member.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Member_Detail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Light_Site.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Manjushri.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Member.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Member_Detail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Orders.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Orders_Detail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Product.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Reject.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Reject_Detail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Units.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_Users.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Orders.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Orders_Detail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reject.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reject_Detail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Units.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Users.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptsCtrl\widegt\GridInfo2.cs" />
+    <Compile Include="_Code\Ashx\AjaxGetCountry.ashx.cs">
+      <DependentUpon>AjaxGetCountry.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="_Code\Ashx\AjaxGetZip.ashx.cs">
+      <DependentUpon>AjaxGetZip.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="_Code\Ashx\BaseIHttpHandler.cs" />
+    <Compile Include="_Code\Ashx\ValidateCode.ashx.cs">
+      <DependentUpon>ValidateCode.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="_Code\CommClass\BaseWebController.cs" />
+    <Compile Include="_Code\CommClass\HtmlHelpers.cs" />
+    <Compile Include="_Code\CommClass\Pager\IPagedList.cs" />
+    <Compile Include="_Code\CommClass\Pager\PagedList.cs" />
+    <Compile Include="_Code\CommClass\Pager\Pager.cs" />
+    <Compile Include="_Code\CommClass\Pager\PagingExtensions.cs" />
+    <Compile Include="_Code\WebSrv\WebSrv.asmx.cs">
+      <DependentUpon>WebSrv.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="_SysAdm\MainDoor\Body\Code.aspx.cs">
+      <DependentUpon>Code.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_SysAdm\MainDoor\Body\Code.aspx.designer.cs">
+      <DependentUpon>Code.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\ngDialog-theme-default.css" />
+    <Content Include="Content\css\ngDialog-theme-plain.css" />
+    <Content Include="Content\css\ngDialog.css" />
+    <Content Include="Content\css\Reset.css" />
+    <Content Include="Content\css\Upt.css" />
+    <Content Include="Content\font-awesome-4.2.0\css\font-awesome.css" />
+    <Content Include="Content\font-awesome-4.2.0\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome-4.2.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="ScriptsCtrl\tmp\excelload.html" />
+    <Content Include="ScriptsCtrl\tmp\fileuploadb.html" />
+    <Content Include="ScriptsCtrl\tmp\modalProductSelect.html" />
+    <Content Include="Scripts\angular-typeahead.js" />
+    <Content Include="Scripts\angular-ui-router.js" />
+    <Content Include="Scripts\angularjs\angular-animate.js" />
+    <Content Include="Scripts\angularjs\angular-aria.js" />
+    <Content Include="Scripts\angularjs\angular-cookies.js" />
+    <Content Include="Scripts\angularjs\angular-csp.css" />
+    <Content Include="Scripts\angularjs\angular-loader.js" />
+    <Content Include="Scripts\angularjs\angular-messages.js" />
+    <Content Include="Scripts\angularjs\angular-mocks.js" />
+    <Content Include="Scripts\angularjs\angular-resource.js" />
+    <Content Include="Scripts\angularjs\angular-route.js" />
+    <Content Include="Scripts\angularjs\angular-sanitize.js" />
+    <Content Include="Scripts\angularjs\angular-scenario.js" />
+    <Content Include="Scripts\angularjs\angular-touch.js" />
+    <Content Include="Scripts\angularjs\angular.js" />
+    <Content Include="Scripts\angularjs\angular.min.js" />
+    <Content Include="Scripts\angularjs\i18n\angular-locale_zh-cn.js" />
+    <Content Include="Scripts\angularjs\i18n\angular-locale_zh-hk.js" />
+    <Content Include="Scripts\angularjs\i18n\angular-locale_zh-tw.js" />
+    <Content Include="Scripts\angularjs\ng-sortable.css" />
+    <Content Include="Scripts\angularjs\ng-sortable.js" />
+    <Content Include="Scripts\angularjs\ng-sortable.min.js" />
+    <Content Include="Scripts\jquery\jquery.cookie.js" />
+    <Content Include="Scripts\ngDialog.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.12.0.js" />
+    <Content Include="_SysAdm\Education\movie.htm" />
+    <Content Include="_SysAdm\Education\RenHaiEdu.htm" />
+    <Content Include="_SysAdm\Education\RenHaiEdu.swf" />
+    <Content Include="_SysAdm\Education\RenHaiEdu_old.swf" />
+    <Content Include="_SysAdm\Education\SonGodEdu.html" />
+    <Content Include="_SysAdm\Report\Daily\NotUse-ExcelExport.asp" />
+    <Content Include="_SysAdm\Report\Daily\List.asp" />
+    <Content Include="_SysAdm\Report\Light_Label\ExcelExport.asp" />
+    <Content Include="_SysAdm\Report\Light_Label\List.asp" />
+    <Content Include="_SysAdm\Report\Lucky\ExcelExport.asp" />
+    <Content Include="_SysAdm\Report\Lucky\List.asp" />
+    <Content Include="_SysAdm\Report\Member_Label\ExcelExport.asp" />
+    <Content Include="_SysAdm\Report\Member_Label\List.asp" />
+    <Content Include="_SysAdm\Report\Member_Label\List2.asp" />
+    <Content Include="_SysAdm\Report\Receipt\ExcelExport.asp" />
+    <Content Include="_SysAdm\Report\SuWen_Label_Doc\ExcelExport.asp" />
+    <Content Include="_SysAdm\Report\SuWen_Label_Doc\List.asp" />
+    <Content Include="_SysAdm\Report\TaiSui_Card\ExcelExport.asp" />
+    <Content Include="_SysAdm\Report\TaiSui_Card\List.asp" />
+    <Content Include="_SysAdm\Report\_ExcelOutput\EEDirectDL.asp" />
+    <Content Include="_SysAdm\Report\_ExcelOutput\EEDownLoad.asp" />
+    <Content Include="_SysAdm\_CSS\blank.gif" />
+    <Content Include="_SysAdm\_CSS\Default.css" />
+    <Content Include="_SysAdm\_CSS\iepngfix.htc" />
+    <Content Include="_SysAdm\_CSS\login.css" />
+    <Content Include="_SysAdm\_CSS\MainDoor.css" />
+    <Content Include="_SysAdm\_CSS\Reset.css" />
+    <Content Include="_SysAdm\_CSS\Upt.css" />
+    <Content Include="_SysAdm\_CSS\Set.css" />
+    <Content Include="_SysAdm\_Function\Base_Function.asp" />
+    <Content Include="_SysAdm\_Function\DB_Adovbs.asp" />
+    <Content Include="_SysAdm\_Function\DB_Function.asp" />
+    <Content Include="_SysAdm\_Function\File_Function.asp" />
+    <Content Include="_SysAdm\_Function\File_Upload.asp" />
+    <Content Include="_SysAdm\_Function\JSON_2.0.4.asp" />
+    <Content Include="_SysAdm\_Function\Power_Function.asp" />
+    <Content Include="_SysAdm\_Function\RDCrptserver10.asp" />
+    <Content Include="_SysAdm\_Function\RemoteScript.asp" />
+    <Content Include="_SysAdm\_Function\RemoteScript.htm" />
+    <Content Include="_SysAdm\_Function\RS_Function.asp" />
+    <Content Include="_SysAdm\_Function\SEC_MD5.asp" />
+    <Content Include="_SysAdm\_Function\Smartvieweractivex.asp" />
+    <Content Include="_SysAdm\_Function\S_Readme.txt" />
+    <Content Include="_SysAdm\_Function\Upload_Function.asp" />
+    <Content Include="_SysAdm\_Function\ValidCode.asp" />
+    <Content Include="_SysAdm\_Function\_pager\add.gif" />
+    <Content Include="_SysAdm\_Function\_pager\background-.gif" />
+    <Content Include="_SysAdm\_Function\_pager\background.gif" />
+    <Content Include="_SysAdm\_Function\_pager\delete.gif" />
+    <Content Include="_SysAdm\_Function\_pager\first.gif" />
+    <Content Include="_SysAdm\_Function\_pager\goto.gif" />
+    <Content Include="_SysAdm\_Function\_pager\head.gif" />
+    <Content Include="_SysAdm\_Function\_pager\last.gif" />
+    <Content Include="_SysAdm\_Function\_pager\n-left.gif" />
+    <Content Include="_SysAdm\_Function\_pager\n-line.gif" />
+    <Content Include="_SysAdm\_Function\_pager\next.gif" />
+    <Content Include="_SysAdm\_Function\_pager\page.gif" />
+    <Content Include="_SysAdm\_Function\_pager\pre.gif" />
+    <Content Include="_SysAdm\_Function\_pager\prebar.gif" />
+    <Content Include="_SysAdm\_Function\_pager\top.gif" />
+    <Content Include="_SysAdm\_Include\Bottom.asp" />
+    <Content Include="_SysAdm\_Include\Inc.asp" />
+    <Content Include="_SysAdm\_Include\Top.asp" />
+    <EntityDeploy Include="Models\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="Content\font-awesome-4.2.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome-4.2.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome-4.2.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome-4.2.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome-4.2.0\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\core.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\fixed-width.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\font-awesome.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\icons.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\larger.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\list.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\mixins.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\path.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\spinning.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\stacked.less" />
+    <Content Include="Content\font-awesome-4.2.0\less\variables.less" />
+    <Content Include="Content\font-awesome-4.2.0\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_core.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_icons.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_larger.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_list.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_path.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_spinning.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome-4.2.0\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\檔案.pubxml" />
+    <None Include="Scripts\jquery\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery\jquery-2.1.1.min.map" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="_Code\Log\Log.2014010622.txt" />
+    <Content Include="_Code\WebSrv\WebSrv.asmx" />
+    <Content Include="_SysAdm\MainDoor\Body\Code.aspx" />
+    <Content Include="_SysAdm\MainDoor\Body\L.html" />
+    <Content Include="_SysAdm\MainDoor\Body\LeftMenu.asp" />
+    <Content Include="_SysAdm\MainDoor\Body\Login.asp" />
+    <Content Include="_SysAdm\MainDoor\Body\LoginCheck.asp" />
+    <Content Include="_SysAdm\MainDoor\Body\Logout.asp" />
+    <Content Include="_SysAdm\MainDoor\Body\Main.asp" />
+    <Content Include="_SysAdm\MainDoor\Body\MainFrame.asp" />
+    <Content Include="_SysAdm\MainDoor\Body\R.html" />
+    <Content Include="_SysAdm\MainDoor\Body\Top.asp" />
+    <Content Include="_SysAdm\OnlineService\LiDo\list.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\ajax.get.master.data.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\ajax.get.member.data.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\ajax.myform.submit.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\ajax_GetAddressCountry.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\ajax_GetAddressZip.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\ajax_GetYearAnimal.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\del.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\ifrm_del.member.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\ifrm_list.ajax.load.data.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\list.asp" />
+    <Content Include="_SysAdm\OnlineService\LightData\lunar.js" />
+    <Content Include="_SysAdm\OnlineService\LightData\lunar.txt" />
+    <Content Include="_SysAdm\OnlineService\LightData\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\LightSiteStatistics\list.asp" />
+    <Content Include="_SysAdm\OnlineService\Live\check.js" />
+    <Content Include="_SysAdm\OnlineService\Live\common.js" />
+    <Content Include="_SysAdm\OnlineService\Live\ins.asp" />
+    <Content Include="_SysAdm\OnlineService\Live\lunar.js" />
+    <Content Include="_SysAdm\OnlineService\Live\Print.asp" />
+    <Content Include="_SysAdm\OnlineService\Live\set.js" />
+    <Content Include="_SysAdm\OnlineService\Live\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\Lucky\--upt.asp" />
+    <Content Include="_SysAdm\OnlineService\Lucky\list.asp" />
+    <Content Include="_SysAdm\OnlineService\Lucky\set.js" />
+    <Content Include="_SysAdm\OnlineService\Lucky\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\MemberModify\ajax.myform.submit.asp" />
+    <Content Include="_SysAdm\OnlineService\MemberModify\ifrm_list.ajax.load.data.asp" />
+    <Content Include="_SysAdm\OnlineService\MemberModify\list.asp" />
+    <Content Include="_SysAdm\OnlineService\MemberModify\list2.asp" />
+    <Content Include="_SysAdm\OnlineService\MemberModify\lunar.js" />
+    <Content Include="_SysAdm\OnlineService\MemberModify\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\ajax.get.master.data.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\ajax.get.member.data.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\ajax.myform.submit.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\ajax_GetAddressCountry.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\ajax_GetAddressZip.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\ajax_GetYearAnimal.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\bak.upt.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\del.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\ifrm_del.member.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\ifrm_list.ajax.load.data.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\list.asp" />
+    <Content Include="_SysAdm\OnlineService\Member\lunar.js" />
+    <Content Include="_SysAdm\OnlineService\Member\lunar.txt" />
+    <Content Include="_SysAdm\OnlineService\Member\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\OrderModify\list.asp" />
+    <Content Include="_SysAdm\OnlineService\OrderModify\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\Order\list.asp" />
+    <Content Include="_SysAdm\OnlineService\Order\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MBMS\ajax.sle_CF_EPD_p1.change.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MBMS\ajax.sle_CF_EPD_p2.change.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MBMS\del.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MBMS\list.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MBMS\pCar.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MBMS\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MD\ajax.sle_CF_EPD_p1.change.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MD\ajax.sle_CF_EPD_p2.change.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MD\del.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MD\list.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MD\pCar.asp" />
+    <Content Include="_SysAdm\OnlineService\Order_MD\upt.asp" />
+    <Content Include="_SysAdm\OnlineService\WenshuDate\ajax.myform.submit.asp" />
+    <Content Include="_SysAdm\OnlineService\WenshuDate\list.asp" />
+    <Content Include="_SysAdm\OnlineService\WenshuDate\lunar.js" />
+    <Content Include="_SysAdm\OnlineService\WenshuDate\upt.asp" />
+    <Content Include="Views\MemberMail\Index.cshtml" />
+    <Content Include="Views\Orders\sortable.cshtml" />
+    <Content Include="Views\FortuneLightLabel\Index.cshtml" />
+    <Content Include="Views\RejectReport\Index.cshtml" />
+    <Content Include="Views\TempleMember\Index.cshtml" />
+    <Content Include="Views\TempleMember\PostPrint.cshtml" />
+    <Content Include="Views\TempleAccountPrint\Index.cshtml" />
+    <Content Include="Views\TempleMarkClose\Index.cshtml" />
+    <Content Include="Views\TempleMember\MemberPrint.cshtml" />
+    <Content Include="Views\TempleAccount\Index.cshtml" />
+    <Content Include="Views\MemberLabel\Index.cshtml" />
+    <None Include="Web.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="_Code\Ashx\AjaxGetCountry.ashx" />
+    <Content Include="_Code\Ashx\AjaxGetZip.ashx" />
+    <Content Include="_Code\Ashx\ValidateCode.ashx" />
+    <Content Include="Views\Logic\Index.cshtml" />
+    <Content Include="_SysAdm\_Function\RSProxy.class" />
+    <Content Include="Views\RejectLight\Index.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Shared\NavPage.cshtml" />
+    <Content Include="Views\MemberMark\Index.cshtml" />
+    <Content Include="_SysAdm\Report\Daily\NotUse-統計表.xls" />
+    <Content Include="_SysAdm\Report\Dipper\入斗疏文名冊.xls" />
+    <Content Include="_SysAdm\Report\Light_Label\點燈標籤.xls" />
+    <Content Include="_SysAdm\Report\Lucky\保運文疏名冊.xls" />
+    <Content Include="_SysAdm\Report\Member_Label\郵寄標籤.xls" />
+    <Content Include="_SysAdm\Report\Receipt\感謝狀.xls" />
+    <Content Include="_SysAdm\Report\SuWen_Label_Doc\點燈疏文名冊.xls" />
+    <Content Include="_SysAdm\Report\TaiSui_Card\SinGiy_font.msi" />
+    <Content Include="_SysAdm\Report\TaiSui_Card\太歲卡.xls" />
+    <Content Include="_SysAdm\Report\Receipt\感謝狀2.xls" />
+    <Content Include="_SysAdm\Report\Receipt\感謝狀3.xls" />
+    <Content Include="_Code\Excel\統計表.xlsx" />
+    <Content Include="_Code\Excel\感謝狀.xlsx" />
+    <Content Include="_Code\Excel\福燈標籤.xlsx" />
+    <Content Include="_Code\Excel\test.xlsx" />
+    <Content Include="_Code\Excel\福燈標籤8.xlsx" />
+    <Content Include="_Code\Excel\契子會.xlsx" />
+    <Content Include="_Code\Excel\契子郵寄標籤.xlsx" />
+    <Content Include="_Code\Excel\郵寄標籤.xls" />
+    <Content Include="_Code\Excel\郵寄標籤.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="_SysAdm\OnlineService\FileUpLoad\" />
+    <Folder Include="_SysAdm\OnlineService\Order_MD\_Old\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Res.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Res.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.DataBaseHelper\Core.DataBaseHelper.csproj">
+      <Project>{81b932b5-a2a2-4a93-96ac-bab1d8d1ae03}</Project>
+      <Name>Core.DataBaseHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.ExceptDefine\Core.ExceptDefine.csproj">
+      <Project>{dd1594f2-163e-43c9-b9cb-8e88c27d24f5}</Project>
+      <Name>Core.ExceptDefine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.LogWriteHelper\Core.LogWriteHelper.csproj">
+      <Project>{d6ef0740-4302-456f-85e3-529b9a1f6424}</Project>
+      <Name>Core.LogWriteHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.NetExtension\Core.DotNetExtension.csproj">
+      <Project>{22814f6e-30c5-46c5-8ec0-6d3235c5465e}</Project>
+      <Name>Core.DotNetExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.ProjectHelper\Core.ProjectHelper.csproj">
+      <Project>{736b5cc1-a25e-41d7-856b-bfbfe355a6e3}</Project>
+      <Name>Core.ProjectHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Work.BusinessLogic\Work.BusinessLogic.csproj">
+      <Project>{81f31d0b-5d7a-44f7-ba5b-362bf27fcc8d}</Project>
+      <Name>Work.BusinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\發行至仁海宮伺服器.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="ScriptsCtrl\d.ts\angular-ui-router.d.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\templemarkcloseCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\templememberprintallCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\templeaccountCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\memberlabelCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\templepostprintCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\templememberprintCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\templememberCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\RejectReportCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\FortuneLightLabelCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\membermarkCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\orderfortuneCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\rejectLightCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\orderCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\d.ts\IAjaxResult.d.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\d.ts\IEditType.d.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\d.ts\IMakeScope.d.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\login.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\roleController.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\d.ts\ServerModals.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\usersController.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\widegt\GridInfo2.cs.d.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\commfunc.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\dynScript\defData.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\dynScript\defGlobal.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-resource.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-route.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:24047/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

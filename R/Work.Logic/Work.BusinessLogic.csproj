@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{81F31D0B-5D7A-44F7-BA5B-362BF27FCC8D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProcCore.Business</RootNamespace>
+    <AssemblyName>Proc.BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.34.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.1.34\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base.cs" />
+    <Compile Include="DB0\AspNetRoles.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\AspNetUsers.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\DBPart.cs" />
+    <Compile Include="DB0\Department.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\i_Adr_zh_TW_Data.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\i_Currency.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\i_IDX.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\i_Lang.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\i_Parm.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\i_SN.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Light_Site.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Member.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Member_Detail.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_AspNetRoles.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_AspNetUsers.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_Department.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_i_Adr_zh_TW_Data.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_i_Currency.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_i_IDX.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_i_Lang.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_i_Parm.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_i_SN.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_Light_Site.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_Member.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_Member_Detail.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_Orders.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_Orders_Detail.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\m_Product.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Orders.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Orders_Detail.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Product.cs">
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Renhai_LightSite.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Renhai_LightSite.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Renhai_LightSite.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Renhai_LightSite.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB0\Renhai_LightSite.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Renhai_LightSite.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ILogicCenter.cs" />
+    <Compile Include="LogicCenter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.LogWrite\Core.LogWriteHelper.csproj">
+      <Project>{d6ef0740-4302-456f-85e3-529b9a1f6424}</Project>
+      <Name>Core.LogWriteHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.ProjHelp\Core.ProjectHelper.csproj">
+      <Project>{736b5cc1-a25e-41d7-856b-bfbfe355a6e3}</Project>
+      <Name>Core.ProjectHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DB0\Renhai_LightSite.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Renhai_LightSite.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DB0\Renhai_LightSite.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Renhai_LightSite.edmx</DependentUpon>
+      <LastGenOutput>Renhai_LightSite.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DB0\Renhai_LightSite.edmx.diagram">
+      <DependentUpon>Renhai_LightSite.edmx</DependentUpon>
+    </None>
+    <None Include="DB0\Renhai_LightSite.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Renhai_LightSite.edmx</DependentUpon>
+      <LastGenOutput>Renhai_LightSite.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="DB0\Department.cs.d.ts">
+      <DependentUpon>Department.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="DB0\Member.cs.d.ts">
+      <DependentUpon>Member.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="DB0\Member_Detail.cs.d.ts">
+      <DependentUpon>Member_Detail.cs</DependentUpon>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此專案參照此電腦中缺少的  NuGet 套件。啟用「NuGet 套件還原」以便下載。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案為 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

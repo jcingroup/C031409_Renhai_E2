@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportDataApp", "ImportDataApp.csproj", "{F63890E5-107A-4CD8-9B17-917D76B32275}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://www.fly.idv.tw:8080/tfs/jcinproject
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ImportDataApp.csproj
+		SccLocalPath1 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F63890E5-107A-4CD8-9B17-917D76B32275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63890E5-107A-4CD8-9B17-917D76B32275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63890E5-107A-4CD8-9B17-917D76B32275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63890E5-107A-4CD8-9B17-917D76B32275}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

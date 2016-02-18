@@ -1,0 +1,173 @@
+﻿        /// <summary>
+        /// 收集Table的Key Value對應表，主要提供給Grid的代碼類欄位做轉換，可減沙在SQL做Table Join 。
+        /// </summary>
+        /// <param name="idTabFields">Id欄位</param>
+        /// <param name="nameTabFields">Text欄位</param>
+        /// <param name="conn">Connection連線</param>
+        /// <returns> Dictionary int String </returns>
+
+        public Dictionary<int, String> CollectIdNameFields(
+            Expression<Func<TabObjSource, FieldModule>> idTabFields,
+            Expression<Func<TabObjSource, FieldModule>> nameTabFields,
+            CommConnection conn
+            )
+        {
+            Func<TabObjSource, FieldModule> id = idTabFields.Compile();
+            Func<TabObjSource, FieldModule> name = nameTabFields.Compile();
+
+            FieldModule F_ID = id.Invoke(this.GetTabObj);
+            FieldModule F_Name = name.Invoke(this.GetTabObj);
+            
+
+
+            String sql = String.Format("Select {0},{1} From {2}", F_ID.N, F_Name.N, this.N);
+            DataTable dt = conn.ExecuteData(sql);
+
+            Dictionary<int, String> D = new Dictionary<int, String>();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                D.Add(dr[F_ID.N].CInt(), dr[F_Name.N].ToString());
+            }
+            return D;
+        }
+
+
+        public string m(object o)
+        {
+            string h = string.Empty;
+            string s = string.Empty;
+
+            PropertyInfo[] propertyInfos = null;
+
+            propertyInfos = o.GetType().GetProperties();
+
+            //Array.Sort(propertyInfos,
+            //        delegate(PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
+            //        { return propertyInfo1.Name.CompareTo(propertyInfo2.Name); });
+
+            List<string> l = new List<string>();
+            List<string> e = new List<string>() { };
+            List<string> formatterIsString = new List<string>();
+
+            //不要加雙引號的在這告知
+            e.AddRange(new String[] { "gridComplete", "formatter" });
+
+            //因 formatter是混合型 有些要加引號 checkbox
+            formatterIsString.AddRange(new String[] { "integer", "number", "currency", "date", "email", "link", "showlink", "checkbox", "select", "actions" });
+
+            foreach (PropertyInfo propertyInfo in propertyInfos)
+            {
+                h = "";
+                string n = (propertyInfo.Name);
+
+                object sub_o = propertyInfo.GetValue(o, null);
+
+                if (sub_o != null)
+                {
+                    if (sub_o.GetType().IsArray)
+                    {
+                        if (sub_o.GetType() == typeof(string[]))
+                        {
+                            string[] tran_os = (string[])sub_o;
+
+                            List<string> l_sub = new List<string>();
+
+                            foreach (string tran_o in tran_os)
+                            {
+                                l_sub.Add("'" + tran_o + "'");
+                            }
+
+                            h = propertyInfo.Name + ":[" + string.Join(",", l_sub.ToArray()) + "]";
+                        }
+
+                        //=================================
+                        if (sub_o.GetType() == typeof(SetcolModel[]))
+                        {
+
+                            SetcolModel[] tran_os = (SetcolModel[])sub_o;
+
+                            List<string> l_sub = new List<string>();
+
+                            foreach (SetcolModel tran_o in tran_os)
+                            {
+                                l_sub.Add(m(tran_o));
+                            }
+                            h = propertyInfo.Name + ":[" + string.Join(",", l_sub.ToArray()) + "]";
+                        }
+                        //==============================
+                    }
+                    else
+                    {
+                        if (sub_o.GetType() == typeof(string))
+                        {
+                            if (e.Exists(x => x.Contains(propertyInfo.Name))
+                                && !formatterIsString.Exists(x => x.Contains(sub_o.ToString())))
+                            {
+                                h = propertyInfo.Name + ":" + sub_o.ToString();
+                            }
+                            else
+                            {
+                                h = propertyInfo.Name + ":\"" + sub_o.ToString() + "\"";
+                            }
+
+                        }
+                        else if (sub_o.GetType() == typeof(Boolean))
+                        {
+                            h = propertyInfo.Name + ":" + sub_o.ToString().ToLower() ;
+                        }
+                        else if (
+                            sub_o.GetType() == typeof(editrules) ||
+                            sub_o.GetType() == typeof(FormatOptions) ||
+                            sub_o.GetType() == typeof(EditOptions)   
+                            )
+                        {
+                            h = propertyInfo.Name + ":" + m(sub_o) ;
+                        }
+                        else if (
+                                sub_o.GetType() == typeof(navGridOption) ||
+                                sub_o.GetType() == typeof(EditOption)   
+                                )
+                        {
+                            h = m(sub_o) ;
+                        }
+                        else if (sub_o.GetType() == typeof(funcMethodModule))
+                        {
+                            funcMethodModule tran_os = (funcMethodModule)sub_o;
+                            if (tran_os.FunctionString != null)
+                            {
+                                h = propertyInfo.Name + ":" + tran_os.FunctionString ;
+                            }
+                        }
+                        else if (sub_o.GetType() == typeof(GridEventFunc))
+                        {
+                            GridEventFunc tran_os = (GridEventFunc)sub_o;
+                            if (tran_os.functionString != null)
+                            {
+                                h = propertyInfo.Name + ":" + String.Format(gridEvntFunctionTpl(propertyInfo.Name), tran_os.functionString );
+                            }
+                        }
+                        else
+                        {
+                            h = propertyInfo.Name + ":" + sub_o.ToString() ;
+                        }
+                    }
+
+                    if (h.Trim() != "")
+                    {
+                        l.Add(h);
+                    }
+                }
+            }
+
+            if (typeof(navGridModule) == o.GetType())
+            {
+                s = string.Join(",\r\n", l.ToArray());
+            }
+            else
+            {
+                s = "{\r\n" + string.Join(",\r\n", l.ToArray()) + "\r\n}";
+            }
+
+            return s;
+        }

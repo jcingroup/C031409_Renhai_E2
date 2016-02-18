@@ -1,0 +1,92 @@
+﻿@{
+    Layout = null;
+}
+@using ProcCore.NetExtension;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@Resources.Res.System_Name</title>
+    <link rel="stylesheet" type="text/css" href="~/_Code/CSS/css/sys_index.css?v=@CommWebSetup.CacheVer" />
+
+    <script>
+        var ver_warn = '@Html.Lang("ver_warn")';
+        var lab_input_email = '@Html.Lang("lab_input_email")';
+        var vial_img_path = '@Url.Content("~/_Code/Ashx/ValidateCode.ashx")';
+        var path_lang = '@Url.Action("ajax_Lang")';
+        var ajax_ForgotPassword = '@Url.Action("ajax_ForgotPassword")';
+        var ajax_Login = '@Url.Action("ajax_Login")';
+        var debug_account = '@ViewData["username"]';
+        var debug_password = '@ViewData["password"]';
+        var Info_ForgetMial_Success = '@Html.Lang("Info_ForgetMial_Success")';
+    </script>
+    @Scripts.Render("~/loginController")
+</head>
+<body class="Index" ng-app="angularApp">
+    <div id="container" ng-controller="ctrl">
+        <div id="main">
+            <h1 class="logo"><em>@Resources.Res.System_Name</em><span>Web Manager</span></h1>
+            <p class="copyright">@Html.Lang("copyright")</p>
+            <form class="admin" ng-submit="submit()">
+                <fieldset class="login">
+                    <h3><i class="fa-lock"></i>@Html.Lang("systemlogin")</h3>
+                    <p>
+                        <!--[if lt IE 9]><label>@Html.Lang("account")</label><![endif]-->
+                        <input class="col-xs-12"
+                               type="text"
+                               tabindex="1"
+                               placeholder="@Html.Lang("account")"
+                               ng-model="fd.account"
+                               required />
+                    </p>
+                    <p>
+                        <!--[if lt IE 9]><label>@Html.Lang("password")Password</label><![endif]-->
+                        <input class="col-xs-12"
+                               type="password"
+                               tabindex="2"
+                               placeholder="@Html.Lang("password")"
+                               ng-model="fd.password"
+                               required />
+                    </p>
+                    <p>
+                        <select class="col-xs-12"
+                                tabindex="-1"
+                                ng-model="fd.lang"
+                                ng-options="m.lang as m.area for m in options_lang"
+                                ng-required="true" />
+                        </select>
+                    </p>
+                    <p>
+                        <img class="col-xs-4" ng-src="{{vial_img_path}}" alt="@Html.Lang("vildate_memo")" />
+                        <input class="col-xs-5"
+                               type="text"
+                               tabindex="3"
+                               capitalize
+                               required
+                               placeholder="@Html.Lang("vildate")"
+                               ng-model="fd.img_vildate" />
+                        <button class="btn-warning col-xs-3" type="button" tabindex="-1" ng-click="revildate()"><i class="fa-refresh"></i> @Html.Lang("revildate")</button>
+                    </p>
+                    <p class="send">
+                        <span class="col-xs-4">
+                            <label>
+                                <input type="checkbox" tabindex="-1" ng-model="fd.rememberme" />
+                                <i class="fa-check"></i>
+                            </label>
+                            @Html.Lang("remember")
+                        </span>
+                        <button class="btn-primary col-xs-4" tabindex="4" type="submit">
+                            <i class="fa-key"></i> @Html.Lang("login")
+                        </button>
+                        <button class="btn-danger col-xs-4" tabindex="-1" type="button" ng-click="forget_button_show()">
+                            <i class="fa-key"></i> @Html.Lang("forget")
+                        </button>
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

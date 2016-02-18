@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    @Scripts.Render("~/temple_memberprintCtr")
+}
+<form class="query-form" ng-submit="Init_Query()">
+    <fieldset>
+        <label>繳款日期： 起</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
+        <label>迄</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />
+        @*<label style="color:red">請選擇類別：</label>
+        <select ng-model="sd.product_sn" ng-options="m.value as m.label for m in godson_account_type"></select>*@
+        <button type="submit">
+            <i class="fa fa-search"></i>查詢
+        </button>
+        <button type="button" ng-click="DownLoadExcel_MemberPrint()">
+            <i class="fa fa-print"></i>產生會員名冊
+        </button>
+        @*<button type="button" ng-click="test()">test</button>*@
+    </fieldset>
+</form>
+<div class="grid-list">
+    <table class="table-master">
+        <caption>香油(契子觀摩) 會員名冊列印</caption>
+        <tr>
+            <th width="15%">訂單編號</th>
+            <th width="10%">會員姓名</th>
+            <th width="15%">身分證字號</th>
+            <th width="10%">國曆投保生日</th>
+            <th width="10%">產品名稱</th>
+            <th width="15%">繳款金額</th>
+            <th width="15%">繳款日期</th>
+            @*<th width="15%">備註</th>*@
+        </tr>
+        <tr ng-repeat="gd in Grid_Items">
+            <td>{{gd.orders_sn}}</td>
+            <td>{{gd.member_name}}</td>
+            <td>{{gd.sno}}</td>
+            <td>{{gd.insure_birthday}}</td>
+            @*<td>{{gd.product_sn | godsonProductSn}}</td>*@
+            <td>香油(契子觀摩)</td>
+            <td>{{gd.price}}</td>
+            <td>{{gd.l_insertDateTime | date: 'y/MM/dd'}}</td>
+            @*<td>{{gd.memo}}</td>*@
+        </tr>
+    </table>
+    @Html.Partial("NavPage")
+</div>
+<iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>

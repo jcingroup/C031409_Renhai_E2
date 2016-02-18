@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "sortable";
+    <link rel="stylesheet" href="https://rawgithub.com/a5hik/ng-sortable/master/dist/ng-sortable.css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    @*<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js"></script>
+        <script src="https://rawgithub.com/a5hik/ng-sortable/master/dist/ng-sortable.js"></script>*@
+}
+@Scripts.Render("~/testCtr")
+<script>
+    var app = angular.module('angularApp', ['commfun', 'siyfion.sfTypeahead', 'ngDialog', 'ui.router', 'ngCookies', 'ui.sortable'])
+    app.config(function ($stateProvider, $urlRouterProvider) {
+        //For any unmatched url,send to/ route1
+        $urlRouterProvider.otherwise("/route1")
+
+        $stateProvider
+        .state('route1', {
+            url: "/route1",
+            templateUrl: "RouteMain"
+        })
+        .state('route1.list', {
+            url: "/list",
+            templateUrl: "RouteList",
+            controller: 'ctrl2'
+        })
+    })
+    app.controller('ctrl', ['$scope', function ($scope) {
+    }]);
+
+    app.controller('ctrl2', ['$scope', function ($scope) {
+        $scope.items = [
+		{ id: 1, name: 'item1' },
+		{ id: 2, name: 'item2' },
+		{ id: 3, name: 'item3' },
+		{ id: 4, name: 'item4' },
+		{ id: 5, name: 'item5' },
+		{ id: 6, name: 'item6' },
+		{ id: 7, name: 'item7' },
+		{ id: 8, name: 'item8' }
+        ];
+    }]);
+</script>
+<p><i>hello ~!</i></p>
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="#">Quick Start</a>
+        <ul class="nav">
+            <li><a ui-sref="route1">route1</a></li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <div class="well" ui-view></div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="RouteMain">
+    <h1>Route 1</h1>
+    <hr />
+    <a ui-sref=".list">Show List</a>
+    <div ui-view></div>
+</script>
+
+<script type="text/ng-template" id="RouteList">
+    <h3>List of Route 1 Items</h3>
+    <div>
+        <ul as-sortable="sortableOptions" ng-model="items">
+            <li ng-repeat="item in items" as-sortable-item>
+                <div as-sortable-item-handle style="height:50px">
+                    <span ng-bind="item.name"></span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div>{{items|json}}</div>
+</script>
+

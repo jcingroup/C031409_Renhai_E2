@@ -1,0 +1,2 @@
+Lunar(0,parseInt(gDate[0],10)+1911,gDate[1],gDate[2]);
+$('#p4').val((lunar.y-1911) + '/' + lunar.m + '/' + lunar.d);

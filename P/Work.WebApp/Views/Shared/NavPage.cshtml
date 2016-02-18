@@ -1,0 +1,35 @@
+﻿<div class="grid-nav">
+    <span>
+        <button class="button-box" type="button" title="跳至第一頁"
+                ng-click="JumpPage(firstpage)"
+                ng-disabled="NowPage <= 1" tabindex="-1">
+            <i class="fa fa-angle-double-left"></i>
+        </button>
+
+        <button class="button-box" type="button" title="往前一頁"
+                ng-click="JumpPage(prevpage)"
+                ng-disabled="NowPage==1" tabindex="-1">
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <span>
+            <label for="">第</label>
+            <input
+                   type="number"
+                   min="1"
+                   style="width:50px;"
+                   ng-model="NowPage" ng-change="JumpPageKey()" tabindex="-1">
+            <label for="">頁，共{{TotalPage}}頁/{{RecordCount}}筆</label>
+        </span>
+        <button class="button-box" type="button" title="往下一頁"
+                ng-click="JumpPage(nextpage)"
+                ng-disabled="NowPage == TotalPage" tabindex="-1">
+            <i class="fa fa-angle-right"></i>
+        </button>
+
+        <button class="button-box" type="button" title="跳至最後一頁"
+                ng-click="JumpPage(lastpage)"
+                ng-disabled="NowPage >= TotalPage" tabindex="-1">
+            <i class="fa fa-angle-double-right"></i>
+        </button>
+    </span>
+</div>

@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RenHai2012Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="產品資料表">
+          <Key>
+            <PropertyRef Name="產品編號" />
+          </Key>
+          <Property Name="產品編號" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="產品名稱" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="產品分類" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="選擇" Type="bit" Nullable="false" />
+          <Property Name="燈位限制" Type="bit" Nullable="false" />
+          <Property Name="價格" Type="int" Nullable="false" />
+          <Property Name="隱藏" Type="int" />
+          <Property Name="排序" Type="int" Nullable="false" />
+          <Property Name="_InsertUserID" Type="int" />
+          <Property Name="_InsertDateTime" Type="datetime" />
+          <Property Name="_UpdateUserID" Type="int" />
+          <Property Name="_UpdateDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="點燈位置資料表">
+          <Key>
+            <PropertyRef Name="位置名稱" />
+            <PropertyRef Name="年度" />
+          </Key>
+          <Property Name="序號" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="位置名稱" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="年度" Type="int" Nullable="false" />
+          <Property Name="空位" Type="nvarchar" MaxLength="1" />
+          <Property Name="產品編號" Type="varchar" MaxLength="5" />
+          <Property Name="價格" Type="int" />
+          <Property Name="_Hiden" Type="bit" />
+          <Property Name="_InsertUserID" Type="int" />
+          <Property Name="_InsertDateTime" Type="datetime" />
+          <Property Name="_UpdateUserID" Type="int" />
+          <Property Name="_UpdateDateTime" Type="datetime" />
+          <Property Name="_LockUserID" Type="int" />
+          <Property Name="_LockDateTime" Type="datetime" />
+          <Property Name="_LockState" Type="bit" />
+          <Property Name="IsReject" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="RenHai2012ModelStoreContainer">
+          <EntitySet Name="產品資料表" EntityType="Self.產品資料表" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="點燈位置資料表" EntityType="Self.點燈位置資料表" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RenHai2012Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="產品資料表">
+          <Key>
+            <PropertyRef Name="產品編號" />
+          </Key>
+          <Property Name="產品編號" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="產品名稱" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="產品分類" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="選擇" Type="Boolean" Nullable="false" />
+          <Property Name="燈位限制" Type="Boolean" Nullable="false" />
+          <Property Name="價格" Type="Int32" Nullable="false" />
+          <Property Name="隱藏" Type="Int32" />
+          <Property Name="排序" Type="Int32" Nullable="false" />
+          <Property Name="C_InsertUserID" Type="Int32" />
+          <Property Name="C_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_UpdateUserID" Type="Int32" />
+          <Property Name="C_UpdateDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="點燈位置資料表">
+          <Key>
+            <PropertyRef Name="位置名稱" />
+            <PropertyRef Name="年度" />
+          </Key>
+          <Property Name="序號" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="位置名稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="年度" Type="Int32" Nullable="false" />
+          <Property Name="空位" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="產品編號" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="價格" Type="Int32" />
+          <Property Name="C_Hiden" Type="Boolean" />
+          <Property Name="C_InsertUserID" Type="Int32" />
+          <Property Name="C_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_UpdateUserID" Type="Int32" />
+          <Property Name="C_UpdateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_LockUserID" Type="Int32" />
+          <Property Name="C_LockDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_LockState" Type="Boolean" />
+          <Property Name="IsReject" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="RenHai2012Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="產品資料表" EntityType="Self.產品資料表" />
+          <EntitySet Name="點燈位置資料表" EntityType="Self.點燈位置資料表" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RenHai2012ModelStoreContainer" CdmEntityContainer="RenHai2012Entities">
+          <EntitySetMapping Name="產品資料表">
+            <EntityTypeMapping TypeName="RenHai2012Model.產品資料表">
+              <MappingFragment StoreEntitySet="產品資料表">
+                <ScalarProperty Name="產品編號" ColumnName="產品編號" />
+                <ScalarProperty Name="產品名稱" ColumnName="產品名稱" />
+                <ScalarProperty Name="產品分類" ColumnName="產品分類" />
+                <ScalarProperty Name="選擇" ColumnName="選擇" />
+                <ScalarProperty Name="燈位限制" ColumnName="燈位限制" />
+                <ScalarProperty Name="價格" ColumnName="價格" />
+                <ScalarProperty Name="隱藏" ColumnName="隱藏" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="C_InsertUserID" ColumnName="_InsertUserID" />
+                <ScalarProperty Name="C_InsertDateTime" ColumnName="_InsertDateTime" />
+                <ScalarProperty Name="C_UpdateUserID" ColumnName="_UpdateUserID" />
+                <ScalarProperty Name="C_UpdateDateTime" ColumnName="_UpdateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="點燈位置資料表">
+            <EntityTypeMapping TypeName="RenHai2012Model.點燈位置資料表">
+              <MappingFragment StoreEntitySet="點燈位置資料表">
+                <ScalarProperty Name="序號" ColumnName="序號" />
+                <ScalarProperty Name="位置名稱" ColumnName="位置名稱" />
+                <ScalarProperty Name="年度" ColumnName="年度" />
+                <ScalarProperty Name="空位" ColumnName="空位" />
+                <ScalarProperty Name="產品編號" ColumnName="產品編號" />
+                <ScalarProperty Name="價格" ColumnName="價格" />
+                <ScalarProperty Name="C_Hiden" ColumnName="_Hiden" />
+                <ScalarProperty Name="C_InsertUserID" ColumnName="_InsertUserID" />
+                <ScalarProperty Name="C_InsertDateTime" ColumnName="_InsertDateTime" />
+                <ScalarProperty Name="C_UpdateUserID" ColumnName="_UpdateUserID" />
+                <ScalarProperty Name="C_UpdateDateTime" ColumnName="_UpdateDateTime" />
+                <ScalarProperty Name="C_LockUserID" ColumnName="_LockUserID" />
+                <ScalarProperty Name="C_LockDateTime" ColumnName="_LockDateTime" />
+                <ScalarProperty Name="C_LockState" ColumnName="_LockState" />
+                <ScalarProperty Name="IsReject" ColumnName="IsReject" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

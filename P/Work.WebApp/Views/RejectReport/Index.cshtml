@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    @Scripts.Render("~/RejectReportCtr")
+}
+<form class="query-form" ng-submit="Init_Query()">
+    <fieldset>
+        <label>退訂日期： 起</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
+        <label>迄</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />
+        <br />
+        <label>訂單編號</label>
+        <input type="text" ng-model="sd.order_sn" />
+        <label>會員名稱</label>
+        <input type="text" ng-model="sd.member_name" />
+        <button type="submit">
+            <i class="fa fa-search"></i>查詢
+        </button>
+        <button type="button" ng-click="DownLoadExcel_RejectReport()">
+            <i class="fa fa-print"></i>產生報表
+        </button>
+        @*<button type="button" ng-click="test()">test</button>*@
+        <p class="text-center" style="color:red;">包含當日及當日以前所有的退訂紀錄</p>
+    </fieldset>
+</form>
+<div class="grid-list">
+    <table class="table-master">
+        <caption>燈位退訂明細</caption>
+        <tr>
+            <th width="10%">訂單編號</th>
+            <th width="10%">退訂總額</th>
+            <th width="15%">燈位名稱</th>
+            <th width="10%">金額</th>
+            <th width="15%">會員名稱</th>
+            <th width="20%">退訂時間</th>
+            <th width="10%">承辦人</th>
+        </tr>
+        <tr ng-repeat="gd in Grid_Items">
+            <td class="text-center">{{gd.orders_sn}}</td>
+            <td>{{gd.total}}</td>
+            <td>{{gd.light_name}}</td>
+            <td>{{gd.price}}</td>
+            <td>{{gd.member_name}}</td>
+            <td>{{gd.reject_date | date: 'yyyy/MM/dd a hh:mm:ss'}}</td>
+            <td>{{gd.InsertUserName}}</td>
+        </tr>
+    </table>
+    @Html.Partial("NavPage")
+</div>
+<iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>

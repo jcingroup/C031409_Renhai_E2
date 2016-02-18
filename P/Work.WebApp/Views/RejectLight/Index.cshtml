@@ -1,0 +1,49 @@
+﻿@{
+    Layout = Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    <script src="~/ScriptsCtrl/rejectLightCtr.js"></script>
+}
+
+<form ng-submit="Init_Query()" class="query-form">
+    <label>訂單編號</label>
+    <input type="text" ng-model="sd.order_sn" />
+    <button type="submit">查詢</button>
+</form>
+<div class="grid-list">
+    <table class="table-master">
+        <caption>
+            燈位退訂管理
+            <button type="button">新增退訂</button>
+        </caption>
+        <thead>
+            <tr>
+                <th>欄位一</th>
+                <th>欄位二</th>
+                <th>欄位三</th>
+                <th>欄位四</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>光明燈</td>
+                <td>光明燈</td>
+                <td>光明燈</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>光明燈</td>
+                <td>光明燈</td>
+                <td>光明燈</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>光明燈</td>
+                <td>光明燈</td>
+                <td>光明燈</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    @Html.Partial("NavPage")
+</div>

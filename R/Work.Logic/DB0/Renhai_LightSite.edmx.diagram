@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1cf1a17d94a543a2a2e3e2054d415981" Name="Diagram1" ZoomLevel="97">
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.AspNetRoles" Width="1.5" PointX="5.75" PointY="9.125" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.AspNetUsers" Width="1.5" PointX="8" PointY="8" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Department" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.i_Adr_zh_TW_Data" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.i_Currency" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.i_IDX" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.i_Lang" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.i_Parm" Width="1.5" PointX="10.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.i_SN" Width="1.5" PointX="4.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Light_Site" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Member" Width="1.5" PointX="5.75" PointY="2" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Member_Detail" Width="2.125" PointX="8.125" PointY="1.25" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Product" Width="1.5" PointX="0.75" PointY="12.75" />
+        <AssociationConnector Association="Renhai_LightSiteModel.FK_Member_Detail_Member" />
+        <AssociationConnector Association="Renhai_LightSiteModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Orders" Width="1.5" PointX="13.375" PointY="6.125" />
+        <EntityTypeShape EntityType="Renhai_LightSiteModel.Orders_Detail" Width="1.5" PointX="15.625" PointY="6.25" />
+        <AssociationConnector Association="Renhai_LightSiteModel.FK_Orders_Detail_Orders" />
+        <AssociationConnector Association="Renhai_LightSiteModel.FK_Orders_Orders" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

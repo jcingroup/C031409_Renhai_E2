@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html ng-app="angularApp">
+<head>
+    <meta charset="UTF-8">
+    <title>@Resources.ResWeb.WebTitle::@ViewBag.Title</title>
+    @RenderSection("styles", false)
+    @RenderSection("script", false)
+</head>
+<body class="@ViewBag.BodyClass">
+    <div ng-controller="ctrl">
+        @RenderBody()
+    </div>
+</body>
+</html>

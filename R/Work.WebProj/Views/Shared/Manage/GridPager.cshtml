@@ -1,0 +1,10 @@
+﻿<button class="text-success" type="button" ng-click="Master_Open_New()" ng-show="grid_new_show"><i class="fa-pencil"></i> @Resources.Res.Button_Insert</button>
+<button class="text-danger" type="button" ng-click="Master_Grid_Delete()" ng-show="grid_del_show"><i class="fa-trash-o"></i> @Resources.Res.Button_Delete</button>
+<small>第{{StartCount}}-{{EndCount}}筆，共{{RecordCount}}筆</small>
+<ul>
+    <li><a href="#" title="@Resources.Res.FirstPage" ng-click="JumpPage(firstpage)" ng-disabled="NowPage <= 1" tabindex="-1"><i class="fa fa-angle-double-left"></i></a></li>
+    <li><a href="#" title="@Resources.Res.PrevPage" ng-click="JumpPage(prevpage)" ng-disabled="NowPage==1" tabindex="-1"><i class="fa fa-angle-left"></i></a></li>
+    <li class="active">第<input type="number" min="1" ng-model="NowPage" ng-change="JumpPageKey()" tabindex="-1">頁，共{{TotalPage}}頁</li>
+    <li><a href="#" title="@Resources.Res.NextPage" ng-click="JumpPage(nextpage)" ng-disabled="NowPage == TotalPage" tabindex="-1"><i class="fa fa-angle-right"></i></a></li>
+    <li><a href="#" title="@Resources.Res.LastPage" ng-click="JumpPage(lastpage)" ng-disabled="NowPage >= TotalPage" tabindex="-1"><i class="fa fa-angle-double-right"></i></a></li>
+</ul>

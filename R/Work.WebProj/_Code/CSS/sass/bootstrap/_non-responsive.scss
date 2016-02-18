@@ -1,0 +1,121 @@
+﻿@charset "utf-8";
+
+/* Template-specific stuff
+ *
+ * Customizations just for the template; these are not necessary for anything
+ * with disabling the responsiveness.
+ */
+
+
+body {width:100%;min-width: 980px;}
+
+/* Non-responsive overrides
+ *
+ * Utilitze the following CSS to disable the responsive-ness of the container,
+ * grid system, and navbar.
+ */
+
+/* Reset the container */
+.container {
+  width: 100%;
+  min-width: 980px !important;
+  
+  .navbar-header,
+  .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+}
+
+/* Always float the navbar header */
+.navbar-header {
+  float: left;
+}
+.navbar-brand {
+  margin-left:0 !important;
+}
+
+/* Undo the collapsing navbar */
+.navbar-collapse {
+  display: block !important;
+  height: auto !important;
+  padding-bottom: 0;
+  border-top: 0;
+  overflow: visible !important;
+}
+
+.navbar-toggle {
+  display: none;
+}
+
+/* Always apply the floated nav */
+.navbar-nav {
+  float: left;
+  margin-right:-($grid-gutter-width/2);
+  
+  & > li {
+    float: left;
+    
+    & > a {
+      padding:5px 10px;
+    }
+  }
+
+}
+
+/* Redeclare since we override the float above */
+.navbar-nav.navbar-right {
+  float: right;
+  
+  .dropdown-menu {
+    right:0;
+    left:auto;
+  }
+  
+}
+
+/* Undo custom dropdowns */
+.navbar .navbar-nav .open .dropdown-menu {
+  position: absolute;
+  float: left;
+  margin-top:2px;
+  background-color: $dropdown-bg;
+  border:1px solid;
+  border-color: $dropdown-border;
+  border-radius: $navbar-border-radius;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  
+  & > li > a {color: $dropdown-link-color;}
+  
+  & > li > a:hover,
+  & > li > a:focus,
+  & > .active > a,
+  & > .active > a:hover,
+  & > .active > a:focus {
+    color: $dropdown-link-hover-color !important;
+    background-color: $dropdown-link-hover-bg !important;
+  }
+  
+  & > .disabled > a,
+  & > .disabled > a:hover,
+  & > .disabled > a:focus {
+    color: $dropdown-link-disabled-color !important;
+    background-color: transparent !important;
+  }
+  
+}
+
+/* Always apply the inline form */
+.form-inline {
+  
+  .form-group,
+  .form-control {
+    display:inline-block !important;
+    vertical-align:middle !important;
+  }
+  
+  .form-group {margin-bottom:0 !important;}
+  .form-control {width:auto !important;}
+  
+}

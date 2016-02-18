@@ -1,0 +1,55 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.SiteMapNodeModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+
+@if (Model.IsCurrentNode && Model.SourceMetadata["HtmlHelper"].ToString() != "MvcSiteMapProvider.Web.Html.MenuHelper")
+{
+    <text>@Model.Title</text>
+}
+else if (Model.IsClickable)
+{
+
+    if (Model.IsCurrentNode)
+    {
+
+        if (string.IsNullOrEmpty(Model.Description))
+        {
+            <a href="@Model.Url"><i class="fa-angle-double-right"></i>@Model.Title</a>
+        }
+        else
+        {
+            <a href="@Model.Url" title="@Model.Description"><i class="fa-angle-double-right"></i>@Model.Title</a>
+        }
+    }
+    else
+    {
+
+        if (string.IsNullOrEmpty(Model.Description))
+        {
+            <a href="@Model.Url">@Model.Title</a>
+        }
+        else
+        {
+            <a href="@Model.Url" title="@Model.Description">@Model.Title</a>
+        }
+    }
+
+
+
+}
+else
+{
+    <a href="#menu-@Model.Key">
+
+        @if (Model.Attributes.Any(x => x.Key == "IconClass"))
+        {
+
+            <i class="@Model.Attributes["IconClass"]"></i>@Model.Title<i class="fa-angle-down"></i>
+        }
+        else
+        {
+
+            <i></i>@Model.Title<i class="fa-angle-down"></i>
+        }
+    </a>
+}

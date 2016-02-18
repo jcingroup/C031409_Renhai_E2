@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    @Scripts.Render("~/temple_markcloseCtr")
+}
+<form class="query-form" ng-submit="Init_Query()">
+    <fieldset>
+        <label>契子會員姓名</label>
+        <input type="text" ng-model="sd.member_name" />
+        <label>電話</label>
+        <input type="text" ng-model="sd.tel" />
+        <label style="color:red">請選擇類別：</label>
+        <select ng-model="sd.is_close" ng-options="m.value as m.label for m in godson_markclose_forsearch"></select>
+        <button type="submit">
+            <i class="fa fa-search"></i>查詢
+        </button>
+    </fieldset>
+    <span style="color:red;font-size:small">此清單內的會員為三年內未有契子會(大會)交易紀錄的會員．</span><br />
+    <span style="color:red;font-size:small">系統以"最後出席日期"起算，若有落差請自行更新"最後出席日期"．</span>
+</form>
+<div class="grid-list">
+    <table class="table-master">
+        <caption>契子會會員三年未繳款註記</caption>
+        <tr>
+            <th width="10%">關閉會員</th>
+            <th width="10%">刪除會員</th>
+            <th width="10%">身分證字號</th>
+            <th width="15%">姓名</th>
+            <th width="10%">電話</th>
+            <th width="25%">地址</th>
+            <th width="10%">生日</th>
+            <th width="10%">入會日期</th>
+        </tr>
+        <tr ng-repeat="gd in Grid_Items">
+            <td class="text-center">
+                <input type="checkbox"
+                       ng-model="gd.is_close"
+                       ng-click="upCheck($index)"
+                       ng-true-value="true"
+                       ng-false-value="false" />
+            </td>
+            <td class="text-center">
+                <button type="button" ng-click="masterDelete($index)"
+                        title="@Resources.Res.Button_Sure_Modify">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </td>
+            <td>{{gd.sno}}</td>
+            <td>{{gd.member_name}}</td>
+            <td>{{gd.tel}}</td>
+            <td>{{gd.addr}}</td>
+            <td>{{gd.birthday}}</td>
+            <td>{{gd.join_datetime | getTaiwanCalendarDate }}</td>
+            @*<td>
+                <button ng-click="openFamilyData(gd.member_id)">
+                    檢視
+                </button>
+            </td>*@
+        </tr>
+    </table>
+    @Html.Partial("NavPage")
+</div>
+<div class="dialog-div ng-hide" ng-show="isShow">
+    <table class="table-detail">
+        <caption>
+            家庭成員
+            <button ng-click="closeFamileData()">
+                關閉
+            </button>
+        </caption>
+        <tr>
+            <th width="25%">姓名</th>
+            <th width="25%">電話</th>
+            <th width="50%">地址</th>
+        </tr>
+        <tr ng-repeat="item in member_details">
+            <td>{{item.member_name}}</td>
+            <td>{{item.tel}}</td>
+            <td>{{item.address}}</td>
+        </tr>
+    </table>
+</div>

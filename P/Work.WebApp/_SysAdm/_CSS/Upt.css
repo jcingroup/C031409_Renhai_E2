@@ -1,0 +1,165 @@
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.red-form {
+    /*background: #F7F7F7;*/
+    padding: 5px 5px 0 5px;
+    border: 1px solid #E4E4E4;
+}
+
+    .red-form table.table-master {
+        width: 100%;
+    }
+
+        .red-form table.table-master caption {
+            background: #A00200;
+            padding: 5px 5px 5px 5px;
+            font: 12px;
+            color: #fff;
+            border: 1px solid #E4E4E4;
+        }
+
+        .red-form table.table-master tr {
+        }
+
+        .red-form table.table-master th {
+            color: #5c5a5a;
+            background-color: #faeb78;
+            border-bottom: 1px solid #bab2b2;
+            text-align: left;
+            padding: 3px 0 5px 5px;
+        }
+
+        .red-form table.table-master td {
+            background-color: #F5F5DC;
+            border-bottom: 1px solid #bab2b2;
+            padding: 0 5px 0 1px;
+        }
+
+
+    .red-form input[type="text"], .red-form input[type="email"], .red-form textarea, .red-form select {
+        color: #555;
+        height: 30px;
+        line-height: 15px;
+        width: 100%;
+        padding: 0 0 0 10px;
+        margin: 2px 2px 2px 2px;
+        border: 1px solid #E5E5E5;
+        background: #FBFBFB;
+        outline: 0;
+    }
+
+    .red-form textarea {
+        height: 100px;
+        padding-top: 10px;
+    }
+
+    .red-form select {
+        background: url('down-arrow.png') no-repeat right, -moz-linear-gradient(top, #FBFBFB 0, #E9E9E9 100%);
+        background: url('down-arrow.png') no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0,#FBFBFB), color-stop(100%,#E9E9E9));
+        text-indent: 0.01px;
+    }
+
+    .red-form input[type="text"].zip {
+        width: 18%;
+    }
+
+    .red-form input[type="text"].address {
+        width: 80%;
+    }
+
+    .red-form table.table-detail {
+        width: 100%;
+    }
+
+        .red-form table.table-detail caption {
+            background: #ffdfdf;
+            padding: 5px 5px 5px 5px;
+            font: 12px;
+            color: #555;
+            border: 1px solid #E4E4E4;
+        }
+
+        .red-form table.table-detail th {
+            color: #5c5a5a;
+            background-color: #fff6b0;
+            border-bottom: 1px solid #bab2b2;
+            text-align: left;
+            padding: 3px 0 5px 5px;
+        }
+
+        .red-form table.table-detail td {
+            color: #5c5a5a;
+            background-color: #F5F5DC;
+            border-bottom: 1px solid #bab2b2;
+            padding: 2px 3px 2px 3px;
+        }
+
+.blue-form {
+}
+
+    .blue-form table {
+        width: 100%;
+        border: 1px solid #c5c2ff;
+        background-color: #f0f0ff;
+    }
+
+        .blue-form table caption {
+            background: #2a237d;
+            font: 12px;
+            color: #fff;
+            border: 1px solid #E4E4E4;
+            padding: 3px 0 3px 0;
+        }
+
+        .blue-form table th {
+            color: #5c5a5a;
+            background-color: #d2d0e6;
+            border-bottom: 1px solid #bab2b2;
+            text-align: left;
+            padding: 3px 0 5px 5px;
+        }
+
+        .blue-form table td {
+            background-color: #F5F5DC;
+            border-bottom: 1px solid #bab2b2;
+            padding: 0 3px 0 1px;
+        }
+
+    .blue-form input[type="text"], .blue-form input[type="email"], .blue-form input[type="number"], .blue-form textarea, .blue-form select {
+        color: #555;
+        height: 30px;
+        line-height: 14px;
+        width: 100%;
+        padding: 0 0 0 10px;
+        margin: 2px 2px 2px 2px;
+        border: 1px solid #E5E5E5;
+        background: #FBFBFB;
+        outline: 0;
+        font-size: 14px;
+    }
+
+    .blue-form select {
+        background: url('down-arrow.png') no-repeat right, -moz-linear-gradient(top, #FBFBFB 0, #E9E9E9 100%);
+        background: url('down-arrow.png') no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0,#FBFBFB), color-stop(100%,#E9E9E9));
+        text-indent: 0.01px;
+    }
+
+    .blue-form input[type="number"].dateText {
+        width: 20%;
+    }
+
+.dialog-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 360px;
+    width: 680px;
+    margin-top: -180px;
+    margin-left: -340px;
+}

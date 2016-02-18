@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Renhai_LightSiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="member_id" />
+          </Key>
+          <Property Name="member_id" Type="int" Nullable="false" />
+          <Property Name="householder" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="zip" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="tel" Type="varchar" MaxLength="20" />
+          <Property Name="i_Hide" Type="bit" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="i_InsertDeptID" Type="int" />
+          <Property Name="i_InsertDateTime" Type="datetime" />
+          <Property Name="i_UpdateUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="i_UpdateDeptID" Type="int" />
+          <Property Name="i_UpdateDateTime" Type="datetime" />
+          <Property Name="i_Lang" Type="char" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Member_Detail">
+          <Key>
+            <PropertyRef Name="member_detail_id" />
+          </Key>
+          <Property Name="member_detail_id" Type="int" Nullable="false" />
+          <Property Name="member_id" Type="int" Nullable="false" />
+          <Property Name="is_holder" Type="bit" Nullable="false" />
+          <Property Name="member_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="gender" Type="bit" Nullable="false" />
+          <Property Name="birthday" Type="smalldatetime" />
+          <Property Name="l_birthday" Type="varchar" MaxLength="9" />
+          <Property Name="born_time" Type="nvarchar" MaxLength="1" />
+          <Property Name="born_sign" Type="nvarchar" MaxLength="1" />
+          <Property Name="tel" Type="varchar" MaxLength="20" />
+          <Property Name="mobile" Type="varchar" MaxLength="20" />
+          <Property Name="zip" Type="varchar" MaxLength="5" />
+          <Property Name="address" Type="nvarchar" MaxLength="128" />
+          <Property Name="email" Type="nvarchar" MaxLength="64" />
+          <Property Name="i_Hide" Type="bit" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="i_InsertDeptID" Type="int" />
+          <Property Name="i_InsertDateTime" Type="datetime" />
+          <Property Name="i_UpdateUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="i_UpdateDeptID" Type="int" />
+          <Property Name="i_UpdateDateTime" Type="datetime" />
+          <Property Name="i_Lang" Type="char" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="orders_sn" />
+          </Key>
+          <Property Name="orders_id" Type="int" Nullable="false" />
+          <Property Name="orders_sn" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="orders_state" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="transation_date" Type="datetime" Nullable="false" />
+          <Property Name="member_id" Type="int" Nullable="false" />
+          <Property Name="member_detail_id" Type="int" Nullable="false" />
+          <Property Name="member_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="gender" Type="bit" />
+          <Property Name="tel" Type="varchar" MaxLength="20" />
+          <Property Name="zip" Type="varchar" MaxLength="5" />
+          <Property Name="address" Type="nvarchar" MaxLength="128" />
+          <Property Name="mobile" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="nvarchar" MaxLength="64" />
+          <Property Name="pay_style" Type="char" MaxLength="1" />
+          <Property Name="pay_date" Type="datetime" />
+          <Property Name="bank_serial" Type="varchar" MaxLength="20" />
+          <Property Name="total" Type="int" Nullable="false" />
+          <Property Name="i_Hide" Type="bit" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="i_InsertDeptID" Type="int" />
+          <Property Name="i_InsertDateTime" Type="datetime" />
+          <Property Name="i_UpdateUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="i_UpdateDeptID" Type="int" />
+          <Property Name="i_UpdateDateTime" Type="datetime" />
+          <Property Name="i_Lang" Type="char" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders_Detail">
+          <Key>
+            <PropertyRef Name="orders_detail_id" />
+          </Key>
+          <Property Name="orders_detail_id" Type="int" Nullable="false" />
+          <Property Name="orders_sn" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="product_sn" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="member_detail_id" Type="int" Nullable="false" />
+          <Property Name="Y" Type="int" Nullable="false" />
+          <Property Name="product_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="amt" Type="int" Nullable="false" />
+          <Property Name="member_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="gender" Type="bit" Nullable="false" />
+          <Property Name="l_birthday" Type="varchar" MaxLength="9" />
+          <Property Name="born_time" Type="nchar" MaxLength="1" />
+          <Property Name="born_sign" Type="nchar" MaxLength="1" />
+          <Property Name="light_name" Type="nvarchar" MaxLength="20" />
+          <Property Name="race" Type="int" />
+          <Property Name="gold" Type="int" />
+          <Property Name="manjushri" Type="int" />
+          <Property Name="i_Hide" Type="bit" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="i_InsertDeptID" Type="int" />
+          <Property Name="i_InsertDateTime" Type="datetime" />
+          <Property Name="i_UpdateUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="i_UpdateDeptID" Type="int" />
+          <Property Name="i_UpdateDateTime" Type="datetime" />
+          <Property Name="i_Lang" Type="char" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Member_Detail_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Member_Detail" Type="Self.Member_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="member_id" />
+            </Principal>
+            <Dependent Role="Member_Detail">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Detail_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Orders_Detail" Type="Self.Orders_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orders_sn" />
+            </Principal>
+            <Dependent Role="Orders_Detail">
+              <PropertyRef Name="orders_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Orders1" Type="Self.Orders" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orders_sn" />
+            </Principal>
+            <Dependent Role="Orders1">
+              <PropertyRef Name="orders_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Renhai_LightSiteModelStoreContainer">
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member_Detail" EntityType="Self.Member_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders_Detail" EntityType="Self.Orders_Detail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Member_Detail_Member" Association="Self.FK_Member_Detail_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Detail" EntitySet="Member_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Detail_Orders" Association="Self.FK_Orders_Detail_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Orders_Detail" EntitySet="Orders_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Orders1" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Renhai_LightSiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="member_id" />
+          </Key>
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="householder" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="zip" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="i_Hide" Type="Boolean" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="i_InsertDeptID" Type="Int32" />
+          <Property Name="i_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_UpdateUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="i_UpdateDeptID" Type="Int32" />
+          <Property Name="i_UpdateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_Lang" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member_Detail" Relationship="Self.FK_Member_Detail_Member" FromRole="Member" ToRole="Member_Detail" />
+        </EntityType>
+        <EntityType Name="Member_Detail">
+          <Key>
+            <PropertyRef Name="member_detail_id" />
+          </Key>
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="is_holder" Type="Boolean" Nullable="false" />
+          <Property Name="member_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="Boolean" Nullable="false" />
+          <Property Name="birthday" Type="DateTime" Precision="0" />
+          <Property Name="l_birthday" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="born_time" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="born_sign" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="i_Hide" Type="Boolean" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="i_InsertDeptID" Type="Int32" />
+          <Property Name="i_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_UpdateUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="i_UpdateDeptID" Type="Int32" />
+          <Property Name="i_UpdateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_Lang" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_Member_Detail_Member" FromRole="Member_Detail" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="orders_sn" />
+          </Key>
+          <Property Name="orders_id" Type="Int32" Nullable="false" />
+          <Property Name="orders_sn" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="orders_state" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="transation_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="member_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="Boolean" />
+          <Property Name="tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="pay_style" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="pay_date" Type="DateTime" Precision="3" />
+          <Property Name="bank_serial" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="Int32" Nullable="false" />
+          <Property Name="i_Hide" Type="Boolean" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="i_InsertDeptID" Type="Int32" />
+          <Property Name="i_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_UpdateUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="i_UpdateDeptID" Type="Int32" />
+          <Property Name="i_UpdateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_Lang" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Orders_Detail" Relationship="Self.FK_Orders_Detail_Orders" FromRole="Orders" ToRole="Orders_Detail" />
+          <NavigationProperty Name="Orders1" Relationship="Self.FK_Orders_Orders" FromRole="Orders" ToRole="Orders1" />
+          <NavigationProperty Name="Orders2" Relationship="Self.FK_Orders_Orders" FromRole="Orders1" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Orders_Detail">
+          <Key>
+            <PropertyRef Name="orders_detail_id" />
+          </Key>
+          <Property Name="orders_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="orders_sn" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="product_sn" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="product_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="amt" Type="Int32" Nullable="false" />
+          <Property Name="member_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="Boolean" Nullable="false" />
+          <Property Name="l_birthday" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="born_time" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="born_sign" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="light_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="race" Type="Int32" />
+          <Property Name="gold" Type="Int32" />
+          <Property Name="manjushri" Type="Int32" />
+          <Property Name="i_Hide" Type="Boolean" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="i_InsertDeptID" Type="Int32" />
+          <Property Name="i_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_UpdateUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="i_UpdateDeptID" Type="Int32" />
+          <Property Name="i_UpdateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_Lang" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Detail_Orders" FromRole="Orders_Detail" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK_Member_Detail_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Member_Detail" Type="Self.Member_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="member_id" />
+            </Principal>
+            <Dependent Role="Member_Detail">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Detail_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Orders_Detail" Type="Self.Orders_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orders_sn" />
+            </Principal>
+            <Dependent Role="Orders_Detail">
+              <PropertyRef Name="orders_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Orders1" Type="Self.Orders" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orders_sn" />
+            </Principal>
+            <Dependent Role="Orders1">
+              <PropertyRef Name="orders_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Renhai_LightSiteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Member" EntityType="Self.Member" />
+          <EntitySet Name="Member_Detail" EntityType="Self.Member_Detail" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Orders_Detail" EntityType="Self.Orders_Detail" />
+          <AssociationSet Name="FK_Member_Detail_Member" Association="Self.FK_Member_Detail_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Detail" EntitySet="Member_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Detail_Orders" Association="Self.FK_Orders_Detail_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Orders_Detail" EntitySet="Orders_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Orders1" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Renhai_LightSiteModelStoreContainer" CdmEntityContainer="Renhai_LightSiteEntities">
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="Renhai_LightSiteModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="householder" ColumnName="householder" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="i_Hide" ColumnName="i_Hide" />
+                <ScalarProperty Name="i_InsertUserID" ColumnName="i_InsertUserID" />
+                <ScalarProperty Name="i_InsertDeptID" ColumnName="i_InsertDeptID" />
+                <ScalarProperty Name="i_InsertDateTime" ColumnName="i_InsertDateTime" />
+                <ScalarProperty Name="i_UpdateUserID" ColumnName="i_UpdateUserID" />
+                <ScalarProperty Name="i_UpdateDeptID" ColumnName="i_UpdateDeptID" />
+                <ScalarProperty Name="i_UpdateDateTime" ColumnName="i_UpdateDateTime" />
+                <ScalarProperty Name="i_Lang" ColumnName="i_Lang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member_Detail">
+            <EntityTypeMapping TypeName="Renhai_LightSiteModel.Member_Detail">
+              <MappingFragment StoreEntitySet="Member_Detail">
+                <ScalarProperty Name="member_detail_id" ColumnName="member_detail_id" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="is_holder" ColumnName="is_holder" />
+                <ScalarProperty Name="member_name" ColumnName="member_name" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="l_birthday" ColumnName="l_birthday" />
+                <ScalarProperty Name="born_time" ColumnName="born_time" />
+                <ScalarProperty Name="born_sign" ColumnName="born_sign" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="i_Hide" ColumnName="i_Hide" />
+                <ScalarProperty Name="i_InsertUserID" ColumnName="i_InsertUserID" />
+                <ScalarProperty Name="i_InsertDeptID" ColumnName="i_InsertDeptID" />
+                <ScalarProperty Name="i_InsertDateTime" ColumnName="i_InsertDateTime" />
+                <ScalarProperty Name="i_UpdateUserID" ColumnName="i_UpdateUserID" />
+                <ScalarProperty Name="i_UpdateDeptID" ColumnName="i_UpdateDeptID" />
+                <ScalarProperty Name="i_UpdateDateTime" ColumnName="i_UpdateDateTime" />
+                <ScalarProperty Name="i_Lang" ColumnName="i_Lang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Renhai_LightSiteModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="orders_id" ColumnName="orders_id" />
+                <ScalarProperty Name="orders_sn" ColumnName="orders_sn" />
+                <ScalarProperty Name="orders_state" ColumnName="orders_state" />
+                <ScalarProperty Name="transation_date" ColumnName="transation_date" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="member_detail_id" ColumnName="member_detail_id" />
+                <ScalarProperty Name="member_name" ColumnName="member_name" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="pay_style" ColumnName="pay_style" />
+                <ScalarProperty Name="pay_date" ColumnName="pay_date" />
+                <ScalarProperty Name="bank_serial" ColumnName="bank_serial" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="i_Hide" ColumnName="i_Hide" />
+                <ScalarProperty Name="i_InsertUserID" ColumnName="i_InsertUserID" />
+                <ScalarProperty Name="i_InsertDeptID" ColumnName="i_InsertDeptID" />
+                <ScalarProperty Name="i_InsertDateTime" ColumnName="i_InsertDateTime" />
+                <ScalarProperty Name="i_UpdateUserID" ColumnName="i_UpdateUserID" />
+                <ScalarProperty Name="i_UpdateDeptID" ColumnName="i_UpdateDeptID" />
+                <ScalarProperty Name="i_UpdateDateTime" ColumnName="i_UpdateDateTime" />
+                <ScalarProperty Name="i_Lang" ColumnName="i_Lang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders_Detail">
+            <EntityTypeMapping TypeName="Renhai_LightSiteModel.Orders_Detail">
+              <MappingFragment StoreEntitySet="Orders_Detail">
+                <ScalarProperty Name="orders_detail_id" ColumnName="orders_detail_id" />
+                <ScalarProperty Name="orders_sn" ColumnName="orders_sn" />
+                <ScalarProperty Name="product_sn" ColumnName="product_sn" />
+                <ScalarProperty Name="member_detail_id" ColumnName="member_detail_id" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="amt" ColumnName="amt" />
+                <ScalarProperty Name="member_name" ColumnName="member_name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="l_birthday" ColumnName="l_birthday" />
+                <ScalarProperty Name="born_time" ColumnName="born_time" />
+                <ScalarProperty Name="born_sign" ColumnName="born_sign" />
+                <ScalarProperty Name="light_name" ColumnName="light_name" />
+                <ScalarProperty Name="race" ColumnName="race" />
+                <ScalarProperty Name="gold" ColumnName="gold" />
+                <ScalarProperty Name="manjushri" ColumnName="manjushri" />
+                <ScalarProperty Name="i_Hide" ColumnName="i_Hide" />
+                <ScalarProperty Name="i_InsertUserID" ColumnName="i_InsertUserID" />
+                <ScalarProperty Name="i_InsertDeptID" ColumnName="i_InsertDeptID" />
+                <ScalarProperty Name="i_InsertDateTime" ColumnName="i_InsertDateTime" />
+                <ScalarProperty Name="i_UpdateUserID" ColumnName="i_UpdateUserID" />
+                <ScalarProperty Name="i_UpdateDeptID" ColumnName="i_UpdateDeptID" />
+                <ScalarProperty Name="i_UpdateDateTime" ColumnName="i_UpdateDateTime" />
+                <ScalarProperty Name="i_Lang" ColumnName="i_Lang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

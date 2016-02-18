@@ -1,0 +1,1377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RenHai2012Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Fortune_Light">
+          <Key>
+            <PropertyRef Name="fortune_light_id" />
+          </Key>
+          <Property Name="fortune_light_id" Type="int" Nullable="false" />
+          <Property Name="order_sn" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Y" Type="int" Nullable="false" />
+          <Property Name="member_detail_id" Type="int" Nullable="false" />
+          <Property Name="member_name" Type="nvarchar" MaxLength="64" />
+          <Property Name="memo" Type="nvarchar" MaxLength="512" />
+          <Property Name="tran_mark" Type="bit" Nullable="false" />
+          <Property Name="sort" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="i_IDX">
+          <Key>
+            <PropertyRef Name="table_name" />
+          </Key>
+          <Property Name="table_name" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="IDX" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Member_Detail_Category">
+          <Key>
+            <PropertyRef Name="member_detail_category_id" />
+          </Key>
+          <Property Name="member_detail_category_id" Type="int" Nullable="false" />
+          <Property Name="member_detail_category_name" Type="nvarchar" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reject">
+          <Key>
+            <PropertyRef Name="reject_id" />
+          </Key>
+          <Property Name="reject_id" Type="int" Nullable="false" />
+          <Property Name="reject_date" Type="smalldatetime" Nullable="false" />
+          <Property Name="orders_sn" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="y" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="total" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reject_Detail">
+          <Key>
+            <PropertyRef Name="reject_detail_id" />
+          </Key>
+          <Property Name="reject_detail_id" Type="int" Nullable="false" />
+          <Property Name="reject_id" Type="int" Nullable="false" />
+          <Property Name="Y" Type="int" Nullable="false" />
+          <Property Name="light_site_id" Type="int" Nullable="false" />
+          <Property Name="light_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="member_detail_id" Type="int" Nullable="false" />
+          <Property Name="orders_detail_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TempleAccount">
+          <Key>
+            <PropertyRef Name="temple_account_id" />
+          </Key>
+          <Property Name="temple_account_id" Type="int" Nullable="false" />
+          <Property Name="product_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="product_sn" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="tran_date" Type="smalldatetime" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="temple_member_id" Type="int" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="int" Nullable="false" />
+          <Property Name="i_InsertUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="i_InsertDateTime" Type="datetime" Nullable="false" />
+          <Property Name="i_UpdateUserID" Type="int" />
+          <Property Name="i_UpdateDateTime" Type="datetime" />
+          <Property Name="i_UpdateUserName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TempleMember">
+          <Key>
+            <PropertyRef Name="temple_member_id" />
+          </Key>
+          <Property Name="temple_member_id" Type="int" Nullable="false" />
+          <Property Name="sno" Type="char" MaxLength="10" />
+          <Property Name="member_name" Type="nvarchar" MaxLength="32" />
+          <Property Name="zip" Type="varchar" MaxLength="5" />
+          <Property Name="addr" Type="nvarchar" MaxLength="128" />
+          <Property Name="birthday" Type="varchar" MaxLength="10" />
+          <Property Name="mobile" Type="varchar" MaxLength="50" />
+          <Property Name="tel" Type="varchar" MaxLength="50" />
+          <Property Name="is_close" Type="bit" Nullable="false" />
+          <Property Name="last_attend_datetime" Type="datetime" />
+          <Property Name="join_datetime" Type="datetime" />
+          <Property Name="i_insertDateTime" Type="datetime" />
+          <Property Name="memo" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="人員">
+          <Key>
+            <PropertyRef Name="人員代碼" />
+          </Key>
+          <Property Name="人員代碼" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="帳號" Type="nvarchar" MaxLength="40" />
+          <Property Name="密碼" Type="nvarchar" MaxLength="40" />
+          <Property Name="姓名" Type="nvarchar" MaxLength="60" />
+          <Property Name="住址" Type="nvarchar(max)" />
+          <Property Name="家裡電話" Type="nvarchar" MaxLength="50" />
+          <Property Name="手機" Type="nvarchar" MaxLength="50" />
+          <Property Name="生日" Type="smalldatetime" />
+          <Property Name="單位代碼" Type="int" />
+          <Property Name="停權" Type="int" />
+          <Property Name="職稱代碼" Type="int" />
+          <Property Name="抬頭稱呼" Type="varchar" MaxLength="20" />
+          <Property Name="電子信箱" Type="nvarchar" MaxLength="255" />
+          <Property Name="isadmin" Type="int" />
+          <Property Name="使用IP" Type="nvarchar" MaxLength="250" />
+          <Property Name="MD5" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="文疏梯次時間表">
+          <Key>
+            <PropertyRef Name="序號" />
+          </Key>
+          <Property Name="序號" Type="int" Nullable="false" />
+          <Property Name="梯次" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="時間" Type="datetime" Nullable="false" />
+          <Property Name="農曆年" Type="varchar" MaxLength="3" />
+          <Property Name="農曆月" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="農曆日" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="人數" Type="int" />
+        </EntityType>
+        <EntityType Name="訂單主檔">
+          <Key>
+            <PropertyRef Name="訂單編號" />
+          </Key>
+          <Property Name="訂單序號" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="訂單編號" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="y" Type="int" Nullable="false" />
+          <Property Name="會員編號" Type="int" Nullable="false" />
+          <Property Name="申請人姓名" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="申請人電話" Type="nvarchar" MaxLength="20" />
+          <Property Name="郵遞區號" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="申請人地址" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="申請人手機" Type="nvarchar" MaxLength="20" />
+          <Property Name="申請人性別" Type="nvarchar" MaxLength="1" />
+          <Property Name="申請人生日" Type="nvarchar" MaxLength="20" />
+          <Property Name="申請人EMAIL" Type="nvarchar" MaxLength="100" />
+          <Property Name="總額" Type="int" Nullable="false" />
+          <Property Name="付款方式" Type="nvarchar" MaxLength="1" />
+          <Property Name="訂單時間" Type="datetime" />
+          <Property Name="付款時間" Type="datetime" />
+          <Property Name="訂單狀態" Type="int" Nullable="false" />
+          <Property Name="查詢序號" Type="nvarchar" MaxLength="50" />
+          <Property Name="付款方式名稱" Type="nvarchar" MaxLength="20" />
+          <Property Name="訂單狀態名稱" Type="nvarchar" MaxLength="5" />
+          <Property Name="銀行帳號" Type="nvarchar" MaxLength="20" />
+          <Property Name="新增時間" Type="datetime" Nullable="false" />
+          <Property Name="新增人員" Type="int" Nullable="false" />
+          <Property Name="戶長SN" Type="int" Nullable="false" />
+          <Property Name="orders_type" Type="int" Nullable="false" />
+          <Property Name="_Hiden" Type="bit" />
+          <Property Name="_InsertUserID" Type="int" />
+          <Property Name="_InsertDateTime" Type="datetime" />
+          <Property Name="_UpdateUserID" Type="int" />
+          <Property Name="_UpdateDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="訂單明細檔">
+          <Key>
+            <PropertyRef Name="訂單編號" />
+            <PropertyRef Name="產品編號" />
+            <PropertyRef Name="會員編號" />
+          </Key>
+          <Property Name="訂單序號" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="訂單編號" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="產品編號" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="會員編號" Type="int" Nullable="false" />
+          <Property Name="年度" Type="int" Nullable="false" />
+          <Property Name="產品名稱" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="價格" Type="int" Nullable="false" />
+          <Property Name="數量" Type="int" Nullable="false" />
+          <Property Name="申請人姓名" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="申請人地址" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="申請人性別" Type="nvarchar" MaxLength="1" />
+          <Property Name="申請人生日" Type="nvarchar" MaxLength="20" />
+          <Property Name="申請人年齡" Type="nvarchar" MaxLength="3" />
+          <Property Name="申請人時辰" Type="nvarchar" MaxLength="2" />
+          <Property Name="申請人生肖" Type="nchar" MaxLength="1" />
+          <Property Name="購買時間" Type="datetime" />
+          <Property Name="付款時間" Type="datetime" />
+          <Property Name="祈福事項" Type="nvarchar(max)" />
+          <Property Name="郵遞區號" Type="nvarchar" MaxLength="10" />
+          <Property Name="點燈位置" Type="nvarchar" MaxLength="20" />
+          <Property Name="經手人" Type="nvarchar" MaxLength="10" />
+          <Property Name="新增時間" Type="datetime" Nullable="false" />
+          <Property Name="新增人員" Type="int" Nullable="false" />
+          <Property Name="白米" Type="int" Nullable="false" />
+          <Property Name="金牌" Type="int" Nullable="false" />
+          <Property Name="異動標記" Type="bit" Nullable="false" />
+          <Property Name="文疏梯次" Type="int" Nullable="false" />
+          <Property Name="detail_sort" Type="int" Nullable="false" />
+          <Property Name="is_reject" Type="bit" />
+          <Property Name="_Hiden" Type="bit" />
+          <Property Name="_InsertUserID" Type="int" />
+          <Property Name="_InsertDateTime" Type="datetime" />
+          <Property Name="_UpdateUserID" Type="int" />
+          <Property Name="_UpdateDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="產品資料表">
+          <Key>
+            <PropertyRef Name="產品編號" />
+          </Key>
+          <Property Name="產品編號" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="產品名稱" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="產品分類" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="選擇" Type="bit" Nullable="false" />
+          <Property Name="燈位限制" Type="bit" Nullable="false" />
+          <Property Name="價格" Type="int" Nullable="false" />
+          <Property Name="隱藏" Type="int" />
+          <Property Name="排序" Type="int" Nullable="false" />
+          <Property Name="_InsertUserID" Type="int" />
+          <Property Name="_InsertDateTime" Type="datetime" />
+          <Property Name="_UpdateUserID" Type="int" />
+          <Property Name="_UpdateDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="單位">
+          <Key>
+            <PropertyRef Name="單位代碼" />
+          </Key>
+          <Property Name="單位代碼" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="單位名稱" Type="nvarchar" MaxLength="100" />
+          <Property Name="電子信箱" Type="nvarchar" MaxLength="200" />
+          <Property Name="地址" Type="nvarchar" MaxLength="100" />
+          <Property Name="電話" Type="nvarchar" MaxLength="100" />
+          <Property Name="傳真" Type="nvarchar" MaxLength="100" />
+          <Property Name="自動電話" Type="nvarchar" MaxLength="100" />
+          <Property Name="自動傳真" Type="nvarchar" MaxLength="100" />
+          <Property Name="代碼" Type="char" MaxLength="20" />
+          <Property Name="單位主管" Type="nvarchar" MaxLength="40" />
+          <Property Name="起始IP" Type="char" MaxLength="20" />
+          <Property Name="結束IP" Type="char" MaxLength="20" />
+          <Property Name="IP" Type="nvarchar" MaxLength="250" />
+          <Property Name="業務內容" Type="nvarchar" MaxLength="255" />
+          <Property Name="排序" Type="float" />
+        </EntityType>
+        <EntityType Name="會員戶長資料">
+          <Key>
+            <PropertyRef Name="戶長SN" />
+          </Key>
+          <Property Name="戶長SN" Type="int" Nullable="false" />
+          <Property Name="電話" Type="varchar" MaxLength="24" />
+          <Property Name="郵遞區號" Type="char" MaxLength="5" />
+          <Property Name="地址" Type="nvarchar" MaxLength="128" />
+          <Property Name="姓名" Type="nvarchar" MaxLength="64" />
+          <Property Name="建立時間" Type="smalldatetime" />
+          <Property Name="重複註記" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="會員資料表">
+          <Key>
+            <PropertyRef Name="序號" />
+          </Key>
+          <Property Name="序號" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="戶長SN" Type="int" Nullable="false" />
+          <Property Name="Is戶長" Type="bit" Nullable="false" />
+          <Property Name="姓名" Type="nvarchar" MaxLength="20" />
+          <Property Name="電話區碼" Type="nvarchar" MaxLength="10" />
+          <Property Name="電話尾碼" Type="nvarchar" MaxLength="20" />
+          <Property Name="郵遞區號" Type="varchar" MaxLength="5" />
+          <Property Name="地址" Type="nvarchar" MaxLength="100" />
+          <Property Name="手機" Type="nvarchar" MaxLength="20" />
+          <Property Name="性別" Type="nvarchar" MaxLength="1" />
+          <Property Name="生日" Type="nvarchar" MaxLength="20" />
+          <Property Name="時辰" Type="nvarchar" MaxLength="2" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="100" />
+          <Property Name="祈福事項" Type="nvarchar(max)" />
+          <Property Name="生肖" Type="nvarchar" MaxLength="1" />
+          <Property Name="縣市" Type="nvarchar" MaxLength="5" />
+          <Property Name="鄉鎮" Type="nvarchar" MaxLength="5" />
+          <Property Name="建立日期" Type="datetime" />
+          <Property Name="isOnLeapMonth" Type="bit" Nullable="false" />
+          <Property Name="member_detail_category_id" Type="int" Nullable="false" />
+          <Property Name="sno" Type="nvarchar" MaxLength="10" />
+          <Property Name="insure_birthday" Type="nvarchar" MaxLength="20" />
+          <Property Name="is_delete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="點燈位置資料表">
+          <Key>
+            <PropertyRef Name="位置名稱" />
+            <PropertyRef Name="年度" />
+          </Key>
+          <Property Name="序號" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="位置名稱" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="年度" Type="int" Nullable="false" />
+          <Property Name="空位" Type="nvarchar" MaxLength="1" />
+          <Property Name="產品編號" Type="varchar" MaxLength="5" />
+          <Property Name="價格" Type="int" />
+          <Property Name="_Hiden" Type="bit" />
+          <Property Name="_InsertUserID" Type="int" />
+          <Property Name="_InsertDateTime" Type="datetime" />
+          <Property Name="_UpdateUserID" Type="int" />
+          <Property Name="_UpdateDateTime" Type="datetime" />
+          <Property Name="_LockUserID" Type="int" />
+          <Property Name="_LockDateTime" Type="datetime" />
+          <Property Name="_LockState" Type="bit" />
+          <Property Name="IsReject" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Fortune_Light_訂單主檔">
+          <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="1" />
+          <End Role="Fortune_Light" Type="Self.Fortune_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="訂單主檔">
+              <PropertyRef Name="訂單編號" />
+            </Principal>
+            <Dependent Role="Fortune_Light">
+              <PropertyRef Name="order_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fortune_Light_會員資料表">
+          <End Role="會員資料表" Type="Self.會員資料表" Multiplicity="1" />
+          <End Role="Fortune_Light" Type="Self.Fortune_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="會員資料表">
+              <PropertyRef Name="序號" />
+            </Principal>
+            <Dependent Role="Fortune_Light">
+              <PropertyRef Name="member_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reject_Detail_Reject">
+          <End Role="Reject" Type="Self.Reject" Multiplicity="1" />
+          <End Role="Reject_Detail" Type="Self.Reject_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reject">
+              <PropertyRef Name="reject_id" />
+            </Principal>
+            <Dependent Role="Reject_Detail">
+              <PropertyRef Name="reject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reject_Detail_會員資料表">
+          <End Role="會員資料表" Type="Self.會員資料表" Multiplicity="1" />
+          <End Role="Reject_Detail" Type="Self.Reject_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="會員資料表">
+              <PropertyRef Name="序號" />
+            </Principal>
+            <Dependent Role="Reject_Detail">
+              <PropertyRef Name="member_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reject_Reject">
+          <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="1" />
+          <End Role="Reject" Type="Self.Reject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="訂單主檔">
+              <PropertyRef Name="訂單編號" />
+            </Principal>
+            <Dependent Role="Reject">
+              <PropertyRef Name="orders_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Temple_Account_Temple_Member">
+          <End Role="TempleMember" Type="Self.TempleMember" Multiplicity="1" />
+          <End Role="TempleAccount" Type="Self.TempleAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TempleMember">
+              <PropertyRef Name="temple_member_id" />
+            </Principal>
+            <Dependent Role="TempleAccount">
+              <PropertyRef Name="temple_member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_訂單主檔_人員">
+          <End Role="人員" Type="Self.人員" Multiplicity="1" />
+          <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="人員">
+              <PropertyRef Name="人員代碼" />
+            </Principal>
+            <Dependent Role="訂單主檔">
+              <PropertyRef Name="新增人員" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_訂單明細檔_訂單主檔">
+          <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="1" />
+          <End Role="訂單明細檔" Type="Self.訂單明細檔" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="訂單主檔">
+              <PropertyRef Name="訂單編號" />
+            </Principal>
+            <Dependent Role="訂單明細檔">
+              <PropertyRef Name="訂單編號" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_訂單明細檔_產品資料表">
+          <End Role="產品資料表" Type="Self.產品資料表" Multiplicity="1" />
+          <End Role="訂單明細檔" Type="Self.訂單明細檔" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="產品資料表">
+              <PropertyRef Name="產品編號" />
+            </Principal>
+            <Dependent Role="訂單明細檔">
+              <PropertyRef Name="產品編號" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_訂單明細檔_會員資料表">
+          <End Role="會員資料表" Type="Self.會員資料表" Multiplicity="1" />
+          <End Role="訂單明細檔" Type="Self.訂單明細檔" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="會員資料表">
+              <PropertyRef Name="序號" />
+            </Principal>
+            <Dependent Role="訂單明細檔">
+              <PropertyRef Name="會員編號" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_會員資料表_Member_Detail_Category">
+          <End Role="Member_Detail_Category" Type="Self.Member_Detail_Category" Multiplicity="1" />
+          <End Role="會員資料表" Type="Self.會員資料表" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member_Detail_Category">
+              <PropertyRef Name="member_detail_category_id" />
+            </Principal>
+            <Dependent Role="會員資料表">
+              <PropertyRef Name="member_detail_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_會員資料表_會員戶長資料">
+          <End Role="會員戶長資料" Type="Self.會員戶長資料" Multiplicity="1" />
+          <End Role="會員資料表" Type="Self.會員資料表" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="會員戶長資料">
+              <PropertyRef Name="戶長SN" />
+            </Principal>
+            <Dependent Role="會員資料表">
+              <PropertyRef Name="戶長SN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RenHai2012ModelStoreContainer">
+          <EntitySet Name="Fortune_Light" EntityType="Self.Fortune_Light" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="i_IDX" EntityType="Self.i_IDX" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member_Detail_Category" EntityType="Self.Member_Detail_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reject" EntityType="Self.Reject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reject_Detail" EntityType="Self.Reject_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempleAccount" EntityType="Self.TempleAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempleMember" EntityType="Self.TempleMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="人員" EntityType="Self.人員" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="文疏梯次時間表" EntityType="Self.文疏梯次時間表" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="訂單主檔" EntityType="Self.訂單主檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="訂單明細檔" EntityType="Self.訂單明細檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="產品資料表" EntityType="Self.產品資料表" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="單位" EntityType="Self.單位" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="會員戶長資料" EntityType="Self.會員戶長資料" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="會員資料表" EntityType="Self.會員資料表" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="點燈位置資料表" EntityType="Self.點燈位置資料表" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Fortune_Light_訂單主檔" Association="Self.FK_Fortune_Light_訂單主檔">
+            <End Role="訂單主檔" EntitySet="訂單主檔" />
+            <End Role="Fortune_Light" EntitySet="Fortune_Light" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fortune_Light_會員資料表" Association="Self.FK_Fortune_Light_會員資料表">
+            <End Role="會員資料表" EntitySet="會員資料表" />
+            <End Role="Fortune_Light" EntitySet="Fortune_Light" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reject_Detail_Reject" Association="Self.FK_Reject_Detail_Reject">
+            <End Role="Reject" EntitySet="Reject" />
+            <End Role="Reject_Detail" EntitySet="Reject_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reject_Detail_會員資料表" Association="Self.FK_Reject_Detail_會員資料表">
+            <End Role="會員資料表" EntitySet="會員資料表" />
+            <End Role="Reject_Detail" EntitySet="Reject_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reject_Reject" Association="Self.FK_Reject_Reject">
+            <End Role="訂單主檔" EntitySet="訂單主檔" />
+            <End Role="Reject" EntitySet="Reject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Temple_Account_Temple_Member" Association="Self.FK_Temple_Account_Temple_Member">
+            <End Role="TempleMember" EntitySet="TempleMember" />
+            <End Role="TempleAccount" EntitySet="TempleAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_訂單主檔_人員" Association="Self.FK_訂單主檔_人員">
+            <End Role="人員" EntitySet="人員" />
+            <End Role="訂單主檔" EntitySet="訂單主檔" />
+          </AssociationSet>
+          <AssociationSet Name="FK_訂單明細檔_訂單主檔" Association="Self.FK_訂單明細檔_訂單主檔">
+            <End Role="訂單主檔" EntitySet="訂單主檔" />
+            <End Role="訂單明細檔" EntitySet="訂單明細檔" />
+          </AssociationSet>
+          <AssociationSet Name="FK_訂單明細檔_產品資料表" Association="Self.FK_訂單明細檔_產品資料表">
+            <End Role="產品資料表" EntitySet="產品資料表" />
+            <End Role="訂單明細檔" EntitySet="訂單明細檔" />
+          </AssociationSet>
+          <AssociationSet Name="FK_訂單明細檔_會員資料表" Association="Self.FK_訂單明細檔_會員資料表">
+            <End Role="會員資料表" EntitySet="會員資料表" />
+            <End Role="訂單明細檔" EntitySet="訂單明細檔" />
+          </AssociationSet>
+          <AssociationSet Name="FK_會員資料表_Member_Detail_Category" Association="Self.FK_會員資料表_Member_Detail_Category">
+            <End Role="Member_Detail_Category" EntitySet="Member_Detail_Category" />
+            <End Role="會員資料表" EntitySet="會員資料表" />
+          </AssociationSet>
+          <AssociationSet Name="FK_會員資料表_會員戶長資料" Association="Self.FK_會員資料表_會員戶長資料">
+            <End Role="會員戶長資料" EntitySet="會員戶長資料" />
+            <End Role="會員資料表" EntitySet="會員資料表" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RenHai2012Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="orders_sn" />
+          </Key>
+          <Property Name="orders_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orders_sn" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="member_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="zip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="申請人生日" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="total" Type="Int32" Nullable="false" />
+          <Property Name="付款方式" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="transation_date" Type="DateTime" Precision="3" />
+          <Property Name="付款時間" Type="DateTime" Precision="3" />
+          <Property Name="orders_state" Type="Int32" Nullable="false" />
+          <Property Name="查詢序號" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="付款方式名稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="orders_state_name" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="銀行帳號" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="新增時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="C_Hiden" Type="Boolean" />
+          <Property Name="C_InsertUserID" Type="Int32" />
+          <Property Name="C_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_UpdateUserID" Type="Int32" />
+          <Property Name="C_UpdateDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Orders_Detail" Relationship="Self.FK_訂單明細檔_訂單主檔" FromRole="訂單主檔" ToRole="訂單明細檔" />
+          <NavigationProperty Name="Users" Relationship="RenHai2012Model.FK_訂單主檔_人員" FromRole="Orders" ToRole="Users" />
+          <NavigationProperty Name="Reject" Relationship="RenHai2012Model.FK_Reject_Reject" FromRole="Orders" ToRole="Reject" />
+          <Property Name="orders_type" Type="Int32" Nullable="false" />
+          <Property Name="y" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Fortune_Light" Relationship="RenHai2012Model.FK_Fortune_Light_訂單主檔" FromRole="Orders" ToRole="Fortune_Light" />
+        </EntityType>
+        <EntityType Name="Orders_Detail">
+          <Key>
+            <PropertyRef Name="orders_sn" />
+            <PropertyRef Name="product_sn" />
+            <PropertyRef Name="member_detail_id" />
+          </Key>
+          <Property Name="orders_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orders_sn" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="product_sn" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="product_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="amt" Type="Int32" Nullable="false" />
+          <Property Name="member_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="l_birthday" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="age" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="born_time" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="born_sign" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="購買時間" Type="DateTime" Precision="3" />
+          <Property Name="付款時間" Type="DateTime" Precision="3" />
+          <Property Name="memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="light_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="經手人" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="i_InsertDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="i_InsertUserID" Type="Int32" Nullable="false" />
+          <Property Name="race" Type="Int32" Nullable="false" />
+          <Property Name="gold" Type="Int32" Nullable="false" />
+          <Property Name="tran_mark" Type="Boolean" Nullable="false" />
+          <Property Name="manjushri" Type="Int32" Nullable="false" />
+          <Property Name="C_Hiden" Type="Boolean" />
+          <Property Name="C_InsertUserID" Type="Int32" />
+          <Property Name="C_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_UpdateUserID" Type="Int32" />
+          <Property Name="C_UpdateDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_訂單明細檔_訂單主檔" FromRole="訂單明細檔" ToRole="訂單主檔" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_訂單明細檔_產品資料表" FromRole="訂單明細檔" ToRole="產品資料表" />
+          <NavigationProperty Name="Member_Detail" Relationship="RenHai2012Model.FK_訂單明細檔_會員資料表" FromRole="Orders_Detail" ToRole="Member_Detail" />
+          <Property Name="is_reject" Type="Boolean" Nullable="true" />
+          <Property Name="detail_sort" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_sn" />
+          </Key>
+          <Property Name="product_sn" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="product_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isSelect" Type="Boolean" Nullable="false" />
+          <Property Name="isLight" Type="Boolean" Nullable="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="i_Hide" Type="Int32" />
+          <Property Name="排序" Type="Int32" Nullable="false" />
+          <Property Name="C_InsertUserID" Type="Int32" />
+          <Property Name="C_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_UpdateUserID" Type="Int32" />
+          <Property Name="C_UpdateDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Orders_Detail" Relationship="Self.FK_訂單明細檔_產品資料表" FromRole="產品資料表" ToRole="訂單明細檔" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="member_id" />
+          </Key>
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="tel" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="householder" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="i_InsertDateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Member_Detail" Relationship="Self.FK_會員資料表_會員戶長資料" FromRole="會員戶長資料" ToRole="會員資料表" />
+          <Property Name="repeat_mark" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Member_Detail">
+          <Key>
+            <PropertyRef Name="member_detail_id" />
+          </Key>
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="is_holder" Type="Boolean" Nullable="false" />
+          <Property Name="member_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="電話區碼" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="tel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="zip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="lbirthday" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="born_time" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="born_sign" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="i_InsertDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_會員資料表_會員戶長資料" FromRole="會員資料表" ToRole="會員戶長資料" />
+          <Property Name="isOnLeapMonth" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Orders_Detail" Relationship="RenHai2012Model.FK_訂單明細檔_會員資料表" FromRole="Member_Detail" ToRole="Orders_Detail" />
+          <Property Name="member_detail_category_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member_Detail_Category" Relationship="RenHai2012Model.FK_會員資料表_Member_Detail_Category" FromRole="Member_Detail" ToRole="Member_Detail_Category" />
+          <NavigationProperty Name="Reject_Detail" Relationship="RenHai2012Model.FK_Reject_Detail_會員資料表" FromRole="Member_Detail" ToRole="Reject_Detail" />
+          <NavigationProperty Name="Fortune_Light" Relationship="RenHai2012Model.FK_Fortune_Light_會員資料表" FromRole="Member_Detail" ToRole="Fortune_Light" />
+          <Property Name="sno" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="insure_birthday" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="is_delete" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Light_Site">
+          <Key>
+            <PropertyRef Name="light_name" />
+            <PropertyRef Name="Y" />
+          </Key>
+          <Property Name="light_site_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="light_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="is_sellout" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="product_sn" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="C_Hiden" Type="Boolean" />
+          <Property Name="C_InsertUserID" Type="Int32" />
+          <Property Name="C_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_UpdateUserID" Type="Int32" />
+          <Property Name="C_UpdateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_LockUserID" Type="Int32" />
+          <Property Name="C_LockDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_LockState" Type="Boolean" />
+          <Property Name="IsReject" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_訂單明細檔_訂單主檔">
+          <End Role="訂單主檔" Type="RenHai2012Model.Orders" Multiplicity="1" />
+          <End Role="訂單明細檔" Type="RenHai2012Model.Orders_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="訂單主檔">
+              <PropertyRef Name="orders_sn" />
+            </Principal>
+            <Dependent Role="訂單明細檔">
+              <PropertyRef Name="orders_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_訂單明細檔_產品資料表">
+          <End Role="產品資料表" Type="RenHai2012Model.Product" Multiplicity="1" />
+          <End Role="訂單明細檔" Type="RenHai2012Model.Orders_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="產品資料表">
+              <PropertyRef Name="product_sn" />
+            </Principal>
+            <Dependent Role="訂單明細檔">
+              <PropertyRef Name="product_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_會員資料表_會員戶長資料">
+          <End Role="會員戶長資料" Type="RenHai2012Model.Member" Multiplicity="1" />
+          <End Role="會員資料表" Type="RenHai2012Model.Member_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="會員戶長資料">
+              <PropertyRef Name="member_id" />
+            </Principal>
+            <Dependent Role="會員資料表">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RenHai2012Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Orders" EntityType="RenHai2012Model.Orders" />
+          <EntitySet Name="Orders_Detail" EntityType="RenHai2012Model.Orders_Detail" />
+          <EntitySet Name="Product" EntityType="RenHai2012Model.Product" />
+          <EntitySet Name="Member" EntityType="RenHai2012Model.Member" />
+          <EntitySet Name="Member_Detail" EntityType="RenHai2012Model.Member_Detail" />
+          <EntitySet Name="Light_Site" EntityType="RenHai2012Model.Light_Site" />
+          <AssociationSet Name="FK_訂單明細檔_訂單主檔" Association="Self.FK_訂單明細檔_訂單主檔">
+            <End Role="訂單主檔" EntitySet="Orders" />
+            <End Role="訂單明細檔" EntitySet="Orders_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_訂單明細檔_產品資料表" Association="Self.FK_訂單明細檔_產品資料表">
+            <End Role="產品資料表" EntitySet="Product" />
+            <End Role="訂單明細檔" EntitySet="Orders_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_會員資料表_會員戶長資料" Association="Self.FK_會員資料表_會員戶長資料">
+            <End Role="會員戶長資料" EntitySet="Member" />
+            <End Role="會員資料表" EntitySet="Member_Detail" />
+          </AssociationSet>
+          <EntitySet Name="Manjushri" EntityType="RenHai2012Model.Manjushri" />
+          <AssociationSet Name="FK_訂單明細檔_會員資料表" Association="RenHai2012Model.FK_訂單明細檔_會員資料表">
+            <End Role="Member_Detail" EntitySet="Member_Detail" />
+            <End Role="Orders_Detail" EntitySet="Orders_Detail" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="RenHai2012Model.Users" />
+          <EntitySet Name="Units" EntityType="RenHai2012Model.Units" />
+          <AssociationSet Name="FK_訂單主檔_人員" Association="RenHai2012Model.FK_訂單主檔_人員">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="Member_Detail_Category" EntityType="RenHai2012Model.Member_Detail_Category" />
+          <AssociationSet Name="FK_會員資料表_Member_Detail_Category" Association="RenHai2012Model.FK_會員資料表_Member_Detail_Category">
+            <End Role="Member_Detail_Category" EntitySet="Member_Detail_Category" />
+            <End Role="Member_Detail" EntitySet="Member_Detail" />
+          </AssociationSet>
+          <EntitySet Name="Reject" EntityType="RenHai2012Model.Reject" />
+          <EntitySet Name="Reject_Detail" EntityType="RenHai2012Model.Reject_Detail" />
+          <AssociationSet Name="FK_Reject_Detail_Reject" Association="RenHai2012Model.FK_Reject_Detail_Reject">
+            <End Role="Reject" EntitySet="Reject" />
+            <End Role="Reject_Detail" EntitySet="Reject_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reject_Reject" Association="RenHai2012Model.FK_Reject_Reject">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Reject" EntitySet="Reject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reject_Detail_會員資料表" Association="RenHai2012Model.FK_Reject_Detail_會員資料表">
+            <End Role="Member_Detail" EntitySet="Member_Detail" />
+            <End Role="Reject_Detail" EntitySet="Reject_Detail" />
+          </AssociationSet>
+          <EntitySet Name="i_IDX" EntityType="RenHai2012Model.i_IDX" />
+          <EntitySet Name="Fortune_Light" EntityType="RenHai2012Model.Fortune_Light" />
+          <AssociationSet Name="FK_Fortune_Light_訂單主檔" Association="RenHai2012Model.FK_Fortune_Light_訂單主檔">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Fortune_Light" EntitySet="Fortune_Light" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fortune_Light_會員資料表" Association="RenHai2012Model.FK_Fortune_Light_會員資料表">
+            <End Role="Member_Detail" EntitySet="Member_Detail" />
+            <End Role="Fortune_Light" EntitySet="Fortune_Light" />
+          </AssociationSet>
+          <EntitySet Name="TempleMember" EntityType="RenHai2012Model.TempleMember" />
+          <EntitySet Name="TempleAccount" EntityType="RenHai2012Model.TempleAccount" />
+          <AssociationSet Name="FK_Temple_Account_Temple_Member" Association="RenHai2012Model.FK_Temple_Account_Temple_Member">
+            <End Role="TempleMember" EntitySet="TempleMember" />
+            <End Role="TempleAccount" EntitySet="TempleAccount" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Manjushri">
+          <Key>
+            <PropertyRef Name="manjushri_id" />
+          </Key>
+          <Property Name="manjushri_id" Type="Int32" Nullable="false" />
+          <Property Name="stage" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="set_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LY" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="LM" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="LD" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="people" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_訂單明細檔_會員資料表">
+          <End Type="RenHai2012Model.Member_Detail" Role="Member_Detail" Multiplicity="1" />
+          <End Type="RenHai2012Model.Orders_Detail" Role="Orders_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member_Detail">
+              <PropertyRef Name="member_detail_id" />
+            </Principal>
+            <Dependent Role="Orders_Detail">
+              <PropertyRef Name="member_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="users_id" />
+          </Key>
+          <Property Name="users_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="密碼" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="users_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="住址" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="家裡電話" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="手機" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="生日" Type="DateTime" Precision="0" />
+          <Property Name="units_id" Type="Int32" />
+          <Property Name="停權" Type="Int32" />
+          <Property Name="職稱代碼" Type="Int32" />
+          <Property Name="抬頭稱呼" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="電子信箱" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="isadmin" Type="Int32" />
+          <Property Name="使用IP" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MD5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="RenHai2012Model.FK_訂單主檔_人員" FromRole="Users" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="units_id" />
+          </Key>
+          <Property Name="units_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="units_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="電子信箱" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="地址" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="電話" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="傳真" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="自動電話" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="自動傳真" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="代碼" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="單位主管" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="起始IP" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="結束IP" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="IP" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="業務內容" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" />
+        </EntityType>
+        <Association Name="FK_訂單主檔_人員">
+          <End Type="RenHai2012Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="RenHai2012Model.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="users_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="InsertUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Member_Detail_Category">
+          <Key>
+            <PropertyRef Name="member_detail_category_id" />
+          </Key>
+          <Property Name="member_detail_category_id" Type="Int32" Nullable="false" />
+          <Property Name="member_detail_category_name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member_Detail" Relationship="RenHai2012Model.FK_會員資料表_Member_Detail_Category" FromRole="Member_Detail_Category" ToRole="Member_Detail" />
+        </EntityType>
+        <Association Name="FK_會員資料表_Member_Detail_Category">
+          <End Type="RenHai2012Model.Member_Detail_Category" Role="Member_Detail_Category" Multiplicity="1" />
+          <End Type="RenHai2012Model.Member_Detail" Role="Member_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member_Detail_Category">
+              <PropertyRef Name="member_detail_category_id" />
+            </Principal>
+            <Dependent Role="Member_Detail">
+              <PropertyRef Name="member_detail_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Reject">
+          <Key>
+            <PropertyRef Name="reject_id" />
+          </Key>
+          <Property Name="reject_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="reject_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="orders_sn" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reject_Detail" Relationship="RenHai2012Model.FK_Reject_Detail_Reject" FromRole="Reject" ToRole="Reject_Detail" />
+          <NavigationProperty Name="Orders" Relationship="RenHai2012Model.FK_Reject_Reject" FromRole="Reject" ToRole="Orders" />
+          <Property Name="y" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reject_Detail">
+          <Key>
+            <PropertyRef Name="reject_detail_id" />
+          </Key>
+          <Property Name="reject_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="reject_id" Type="Int32" Nullable="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="light_site_id" Type="Int32" Nullable="false" />
+          <Property Name="light_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="orders_detail_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reject" Relationship="RenHai2012Model.FK_Reject_Detail_Reject" FromRole="Reject_Detail" ToRole="Reject" />
+          <NavigationProperty Name="Member_Detail" Relationship="RenHai2012Model.FK_Reject_Detail_會員資料表" FromRole="Reject_Detail" ToRole="Member_Detail" />
+        </EntityType>
+        <Association Name="FK_Reject_Detail_Reject">
+          <End Type="RenHai2012Model.Reject" Role="Reject" Multiplicity="1" />
+          <End Type="RenHai2012Model.Reject_Detail" Role="Reject_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reject">
+              <PropertyRef Name="reject_id" />
+            </Principal>
+            <Dependent Role="Reject_Detail">
+              <PropertyRef Name="reject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reject_Reject">
+          <End Type="RenHai2012Model.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="RenHai2012Model.Reject" Role="Reject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orders_sn" />
+            </Principal>
+            <Dependent Role="Reject">
+              <PropertyRef Name="orders_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reject_Detail_會員資料表">
+          <End Type="RenHai2012Model.Member_Detail" Role="Member_Detail" Multiplicity="1" />
+          <End Type="RenHai2012Model.Reject_Detail" Role="Reject_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member_Detail">
+              <PropertyRef Name="member_detail_id" />
+            </Principal>
+            <Dependent Role="Reject_Detail">
+              <PropertyRef Name="member_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="i_IDX">
+          <Key>
+            <PropertyRef Name="table_name" />
+          </Key>
+          <Property Name="table_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IDX" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fortune_Light">
+          <Key>
+            <PropertyRef Name="fortune_light_id" />
+          </Key>
+          <Property Name="fortune_light_id" Type="Int32" Nullable="false" />
+          <Property Name="order_sn" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="member_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="memo" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="tran_mark" Type="Boolean" Nullable="false" />
+          <Property Name="sort" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="訂單主檔" Relationship="RenHai2012Model.FK_Fortune_Light_訂單主檔" FromRole="Fortune_Light" ToRole="Orders" />
+          <NavigationProperty Name="會員資料表" Relationship="RenHai2012Model.FK_Fortune_Light_會員資料表" FromRole="Fortune_Light" ToRole="Member_Detail" />
+        </EntityType>
+        <Association Name="FK_Fortune_Light_訂單主檔">
+          <End Type="RenHai2012Model.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="RenHai2012Model.Fortune_Light" Role="Fortune_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orders_sn" />
+            </Principal>
+            <Dependent Role="Fortune_Light">
+              <PropertyRef Name="order_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fortune_Light_會員資料表">
+          <End Type="RenHai2012Model.Member_Detail" Role="Member_Detail" Multiplicity="1" />
+          <End Type="RenHai2012Model.Fortune_Light" Role="Fortune_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member_Detail">
+              <PropertyRef Name="member_detail_id" />
+            </Principal>
+            <Dependent Role="Fortune_Light">
+              <PropertyRef Name="member_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TempleMember">
+          <Key>
+            <PropertyRef Name="temple_member_id" />
+          </Key>
+          <Property Name="temple_member_id" Type="Int32" Nullable="false" />
+          <Property Name="sno" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="member_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="zip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="addr" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="birthday" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="is_close" Type="Boolean" Nullable="false" />
+          <Property Name="last_attend_datetime" Type="DateTime" Precision="3" />
+          <Property Name="join_datetime" Type="DateTime" Precision="3" />
+          <Property Name="i_insertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="memo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TempleAccount" Relationship="RenHai2012Model.FK_Temple_Account_Temple_Member" FromRole="TempleMember" ToRole="TempleAccount" />
+        </EntityType>
+        <EntityType Name="TempleAccount">
+          <Key>
+            <PropertyRef Name="temple_account_id" />
+          </Key>
+          <Property Name="temple_account_id" Type="Int32" Nullable="false" />
+          <Property Name="product_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="product_sn" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="tran_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="temple_member_id" Type="Int32" Nullable="false" />
+          <Property Name="i_InsertUserID" Type="Int32" Nullable="false" />
+          <Property Name="i_InsertUserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="i_InsertDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="i_UpdateUserID" Type="Int32" />
+          <Property Name="i_UpdateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="i_UpdateUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TempleMember" Relationship="RenHai2012Model.FK_Temple_Account_Temple_Member" FromRole="TempleAccount" ToRole="TempleMember" />
+        </EntityType>
+        <Association Name="FK_Temple_Account_Temple_Member">
+          <End Type="RenHai2012Model.TempleMember" Role="TempleMember" Multiplicity="1" />
+          <End Type="RenHai2012Model.TempleAccount" Role="TempleAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TempleMember">
+              <PropertyRef Name="temple_member_id" />
+            </Principal>
+            <Dependent Role="TempleAccount">
+              <PropertyRef Name="temple_member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RenHai2012ModelStoreContainer" CdmEntityContainer="RenHai2012Entities">
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="RenHai2012Model.Orders">
+              <MappingFragment StoreEntitySet="訂單主檔">
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="orders_type" ColumnName="orders_type" />
+                <ScalarProperty Name="orders_id" ColumnName="訂單序號" />
+                <ScalarProperty Name="orders_sn" ColumnName="訂單編號" />
+                <ScalarProperty Name="member_detail_id" ColumnName="會員編號" />
+                <ScalarProperty Name="member_name" ColumnName="申請人姓名" />
+                <ScalarProperty Name="tel" ColumnName="申請人電話" />
+                <ScalarProperty Name="zip" ColumnName="郵遞區號" />
+                <ScalarProperty Name="address" ColumnName="申請人地址" />
+                <ScalarProperty Name="mobile" ColumnName="申請人手機" />
+                <ScalarProperty Name="gender" ColumnName="申請人性別" />
+                <ScalarProperty Name="申請人生日" ColumnName="申請人生日" />
+                <ScalarProperty Name="email" ColumnName="申請人EMAIL" />
+                <ScalarProperty Name="total" ColumnName="總額" />
+                <ScalarProperty Name="付款方式" ColumnName="付款方式" />
+                <ScalarProperty Name="transation_date" ColumnName="訂單時間" />
+                <ScalarProperty Name="付款時間" ColumnName="付款時間" />
+                <ScalarProperty Name="orders_state" ColumnName="訂單狀態" />
+                <ScalarProperty Name="查詢序號" ColumnName="查詢序號" />
+                <ScalarProperty Name="付款方式名稱" ColumnName="付款方式名稱" />
+                <ScalarProperty Name="orders_state_name" ColumnName="訂單狀態名稱" />
+                <ScalarProperty Name="銀行帳號" ColumnName="銀行帳號" />
+                <ScalarProperty Name="新增時間" ColumnName="新增時間" />
+                <ScalarProperty Name="InsertUserId" ColumnName="新增人員" />
+                <ScalarProperty Name="member_id" ColumnName="戶長SN" />
+                <ScalarProperty Name="C_Hiden" ColumnName="_Hiden" />
+                <ScalarProperty Name="C_InsertUserID" ColumnName="_InsertUserID" />
+                <ScalarProperty Name="C_InsertDateTime" ColumnName="_InsertDateTime" />
+                <ScalarProperty Name="C_UpdateUserID" ColumnName="_UpdateUserID" />
+                <ScalarProperty Name="C_UpdateDateTime" ColumnName="_UpdateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders_Detail">
+            <EntityTypeMapping TypeName="RenHai2012Model.Orders_Detail">
+              <MappingFragment StoreEntitySet="訂單明細檔">
+                <ScalarProperty Name="detail_sort" ColumnName="detail_sort" />
+                <ScalarProperty Name="is_reject" ColumnName="is_reject" />
+                <ScalarProperty Name="orders_detail_id" ColumnName="訂單序號" />
+                <ScalarProperty Name="orders_sn" ColumnName="訂單編號" />
+                <ScalarProperty Name="product_sn" ColumnName="產品編號" />
+                <ScalarProperty Name="member_detail_id" ColumnName="會員編號" />
+                <ScalarProperty Name="Y" ColumnName="年度" />
+                <ScalarProperty Name="product_name" ColumnName="產品名稱" />
+                <ScalarProperty Name="price" ColumnName="價格" />
+                <ScalarProperty Name="amt" ColumnName="數量" />
+                <ScalarProperty Name="member_name" ColumnName="申請人姓名" />
+                <ScalarProperty Name="address" ColumnName="申請人地址" />
+                <ScalarProperty Name="gender" ColumnName="申請人性別" />
+                <ScalarProperty Name="l_birthday" ColumnName="申請人生日" />
+                <ScalarProperty Name="age" ColumnName="申請人年齡" />
+                <ScalarProperty Name="born_time" ColumnName="申請人時辰" />
+                <ScalarProperty Name="born_sign" ColumnName="申請人生肖" />
+                <ScalarProperty Name="購買時間" ColumnName="購買時間" />
+                <ScalarProperty Name="付款時間" ColumnName="付款時間" />
+                <ScalarProperty Name="memo" ColumnName="祈福事項" />
+                <ScalarProperty Name="zip" ColumnName="郵遞區號" />
+                <ScalarProperty Name="light_name" ColumnName="點燈位置" />
+                <ScalarProperty Name="經手人" ColumnName="經手人" />
+                <ScalarProperty Name="i_InsertDateTime" ColumnName="新增時間" />
+                <ScalarProperty Name="i_InsertUserID" ColumnName="新增人員" />
+                <ScalarProperty Name="race" ColumnName="白米" />
+                <ScalarProperty Name="gold" ColumnName="金牌" />
+                <ScalarProperty Name="tran_mark" ColumnName="異動標記" />
+                <ScalarProperty Name="manjushri" ColumnName="文疏梯次" />
+                <ScalarProperty Name="C_Hiden" ColumnName="_Hiden" />
+                <ScalarProperty Name="C_InsertUserID" ColumnName="_InsertUserID" />
+                <ScalarProperty Name="C_InsertDateTime" ColumnName="_InsertDateTime" />
+                <ScalarProperty Name="C_UpdateUserID" ColumnName="_UpdateUserID" />
+                <ScalarProperty Name="C_UpdateDateTime" ColumnName="_UpdateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="RenHai2012Model.Product">
+              <MappingFragment StoreEntitySet="產品資料表">
+                <ScalarProperty Name="product_sn" ColumnName="產品編號" />
+                <ScalarProperty Name="product_name" ColumnName="產品名稱" />
+                <ScalarProperty Name="category" ColumnName="產品分類" />
+                <ScalarProperty Name="isSelect" ColumnName="選擇" />
+                <ScalarProperty Name="isLight" ColumnName="燈位限制" />
+                <ScalarProperty Name="price" ColumnName="價格" />
+                <ScalarProperty Name="i_Hide" ColumnName="隱藏" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="C_InsertUserID" ColumnName="_InsertUserID" />
+                <ScalarProperty Name="C_InsertDateTime" ColumnName="_InsertDateTime" />
+                <ScalarProperty Name="C_UpdateUserID" ColumnName="_UpdateUserID" />
+                <ScalarProperty Name="C_UpdateDateTime" ColumnName="_UpdateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="RenHai2012Model.Member">
+              <MappingFragment StoreEntitySet="會員戶長資料">
+                <ScalarProperty Name="repeat_mark" ColumnName="重複註記" />
+                <ScalarProperty Name="member_id" ColumnName="戶長SN" />
+                <ScalarProperty Name="tel" ColumnName="電話" />
+                <ScalarProperty Name="zip" ColumnName="郵遞區號" />
+                <ScalarProperty Name="address" ColumnName="地址" />
+                <ScalarProperty Name="householder" ColumnName="姓名" />
+                <ScalarProperty Name="i_InsertDateTime" ColumnName="建立時間" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member_Detail">
+            <EntityTypeMapping TypeName="RenHai2012Model.Member_Detail">
+              <MappingFragment StoreEntitySet="會員資料表">
+                <ScalarProperty Name="is_delete" ColumnName="is_delete" />
+                <ScalarProperty Name="insure_birthday" ColumnName="insure_birthday" />
+                <ScalarProperty Name="sno" ColumnName="sno" />
+                <ScalarProperty Name="member_detail_category_id" ColumnName="member_detail_category_id" />
+                <ScalarProperty Name="isOnLeapMonth" ColumnName="isOnLeapMonth" />
+                <ScalarProperty Name="member_detail_id" ColumnName="序號" />
+                <ScalarProperty Name="member_id" ColumnName="戶長SN" />
+                <ScalarProperty Name="is_holder" ColumnName="Is戶長" />
+                <ScalarProperty Name="member_name" ColumnName="姓名" />
+                <ScalarProperty Name="電話區碼" ColumnName="電話區碼" />
+                <ScalarProperty Name="tel" ColumnName="電話尾碼" />
+                <ScalarProperty Name="zip" ColumnName="郵遞區號" />
+                <ScalarProperty Name="address" ColumnName="地址" />
+                <ScalarProperty Name="mobile" ColumnName="手機" />
+                <ScalarProperty Name="gender" ColumnName="性別" />
+                <ScalarProperty Name="lbirthday" ColumnName="生日" />
+                <ScalarProperty Name="born_time" ColumnName="時辰" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="Memo" ColumnName="祈福事項" />
+                <ScalarProperty Name="born_sign" ColumnName="生肖" />
+                <ScalarProperty Name="city" ColumnName="縣市" />
+                <ScalarProperty Name="country" ColumnName="鄉鎮" />
+                <ScalarProperty Name="i_InsertDateTime" ColumnName="建立日期" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Light_Site">
+            <EntityTypeMapping TypeName="RenHai2012Model.Light_Site">
+              <MappingFragment StoreEntitySet="點燈位置資料表">
+                <ScalarProperty Name="IsReject" ColumnName="IsReject" />
+                <ScalarProperty Name="light_site_id" ColumnName="序號" />
+                <ScalarProperty Name="light_name" ColumnName="位置名稱" />
+                <ScalarProperty Name="Y" ColumnName="年度" />
+                <ScalarProperty Name="is_sellout" ColumnName="空位" />
+                <ScalarProperty Name="product_sn" ColumnName="產品編號" />
+                <ScalarProperty Name="price" ColumnName="價格" />
+                <ScalarProperty Name="C_Hiden" ColumnName="_Hiden" />
+                <ScalarProperty Name="C_InsertUserID" ColumnName="_InsertUserID" />
+                <ScalarProperty Name="C_InsertDateTime" ColumnName="_InsertDateTime" />
+                <ScalarProperty Name="C_UpdateUserID" ColumnName="_UpdateUserID" />
+                <ScalarProperty Name="C_UpdateDateTime" ColumnName="_UpdateDateTime" />
+                <ScalarProperty Name="C_LockUserID" ColumnName="_LockUserID" />
+                <ScalarProperty Name="C_LockDateTime" ColumnName="_LockDateTime" />
+                <ScalarProperty Name="C_LockState" ColumnName="_LockState" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manjushri">
+            <EntityTypeMapping TypeName="RenHai2012Model.Manjushri">
+              <MappingFragment StoreEntitySet="文疏梯次時間表">
+                <ScalarProperty Name="people" ColumnName="人數" />
+                <ScalarProperty Name="LD" ColumnName="農曆日" />
+                <ScalarProperty Name="LM" ColumnName="農曆月" />
+                <ScalarProperty Name="LY" ColumnName="農曆年" />
+                <ScalarProperty Name="set_date" ColumnName="時間" />
+                <ScalarProperty Name="stage" ColumnName="梯次" />
+                <ScalarProperty Name="manjushri_id" ColumnName="序號" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="RenHai2012Model.Users">
+              <MappingFragment StoreEntitySet="人員">
+                <ScalarProperty Name="MD5" ColumnName="MD5" />
+                <ScalarProperty Name="使用IP" ColumnName="使用IP" />
+                <ScalarProperty Name="isadmin" ColumnName="isadmin" />
+                <ScalarProperty Name="電子信箱" ColumnName="電子信箱" />
+                <ScalarProperty Name="抬頭稱呼" ColumnName="抬頭稱呼" />
+                <ScalarProperty Name="職稱代碼" ColumnName="職稱代碼" />
+                <ScalarProperty Name="停權" ColumnName="停權" />
+                <ScalarProperty Name="units_id" ColumnName="單位代碼" />
+                <ScalarProperty Name="生日" ColumnName="生日" />
+                <ScalarProperty Name="手機" ColumnName="手機" />
+                <ScalarProperty Name="家裡電話" ColumnName="家裡電話" />
+                <ScalarProperty Name="住址" ColumnName="住址" />
+                <ScalarProperty Name="users_name" ColumnName="姓名" />
+                <ScalarProperty Name="密碼" ColumnName="密碼" />
+                <ScalarProperty Name="account" ColumnName="帳號" />
+                <ScalarProperty Name="users_id" ColumnName="人員代碼" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="RenHai2012Model.Units">
+              <MappingFragment StoreEntitySet="單位">
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="業務內容" ColumnName="業務內容" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="結束IP" ColumnName="結束IP" />
+                <ScalarProperty Name="起始IP" ColumnName="起始IP" />
+                <ScalarProperty Name="單位主管" ColumnName="單位主管" />
+                <ScalarProperty Name="代碼" ColumnName="代碼" />
+                <ScalarProperty Name="自動傳真" ColumnName="自動傳真" />
+                <ScalarProperty Name="自動電話" ColumnName="自動電話" />
+                <ScalarProperty Name="傳真" ColumnName="傳真" />
+                <ScalarProperty Name="電話" ColumnName="電話" />
+                <ScalarProperty Name="地址" ColumnName="地址" />
+                <ScalarProperty Name="電子信箱" ColumnName="電子信箱" />
+                <ScalarProperty Name="units_name" ColumnName="單位名稱" />
+                <ScalarProperty Name="units_id" ColumnName="單位代碼" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member_Detail_Category">
+            <EntityTypeMapping TypeName="RenHai2012Model.Member_Detail_Category">
+              <MappingFragment StoreEntitySet="Member_Detail_Category">
+                <ScalarProperty Name="member_detail_category_name" ColumnName="member_detail_category_name" />
+                <ScalarProperty Name="member_detail_category_id" ColumnName="member_detail_category_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reject">
+            <EntityTypeMapping TypeName="RenHai2012Model.Reject">
+              <MappingFragment StoreEntitySet="Reject">
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="orders_sn" ColumnName="orders_sn" />
+                <ScalarProperty Name="reject_date" ColumnName="reject_date" />
+                <ScalarProperty Name="reject_id" ColumnName="reject_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reject_Detail">
+            <EntityTypeMapping TypeName="RenHai2012Model.Reject_Detail">
+              <MappingFragment StoreEntitySet="Reject_Detail">
+                <ScalarProperty Name="orders_detail_id" ColumnName="orders_detail_id" />
+                <ScalarProperty Name="member_detail_id" ColumnName="member_detail_id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="light_name" ColumnName="light_name" />
+                <ScalarProperty Name="light_site_id" ColumnName="light_site_id" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="reject_id" ColumnName="reject_id" />
+                <ScalarProperty Name="reject_detail_id" ColumnName="reject_detail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="i_IDX">
+            <EntityTypeMapping TypeName="RenHai2012Model.i_IDX">
+              <MappingFragment StoreEntitySet="i_IDX">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="table_name" ColumnName="table_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fortune_Light">
+            <EntityTypeMapping TypeName="RenHai2012Model.Fortune_Light">
+              <MappingFragment StoreEntitySet="Fortune_Light">
+                <ScalarProperty Name="sort" ColumnName="sort" />
+                <ScalarProperty Name="tran_mark" ColumnName="tran_mark" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="member_name" ColumnName="member_name" />
+                <ScalarProperty Name="member_detail_id" ColumnName="member_detail_id" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="order_sn" ColumnName="order_sn" />
+                <ScalarProperty Name="fortune_light_id" ColumnName="fortune_light_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempleMember">
+            <EntityTypeMapping TypeName="RenHai2012Model.TempleMember">
+              <MappingFragment StoreEntitySet="TempleMember">
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="i_insertDateTime" ColumnName="i_insertDateTime" />
+                <ScalarProperty Name="join_datetime" ColumnName="join_datetime" />
+                <ScalarProperty Name="last_attend_datetime" ColumnName="last_attend_datetime" />
+                <ScalarProperty Name="is_close" ColumnName="is_close" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="addr" ColumnName="addr" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="member_name" ColumnName="member_name" />
+                <ScalarProperty Name="sno" ColumnName="sno" />
+                <ScalarProperty Name="temple_member_id" ColumnName="temple_member_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempleAccount">
+            <EntityTypeMapping TypeName="RenHai2012Model.TempleAccount">
+              <MappingFragment StoreEntitySet="TempleAccount">
+                <ScalarProperty Name="i_UpdateUserName" ColumnName="i_UpdateUserName" />
+                <ScalarProperty Name="i_UpdateDateTime" ColumnName="i_UpdateDateTime" />
+                <ScalarProperty Name="i_UpdateUserID" ColumnName="i_UpdateUserID" />
+                <ScalarProperty Name="i_InsertDateTime" ColumnName="i_InsertDateTime" />
+                <ScalarProperty Name="i_InsertUserName" ColumnName="i_InsertUserName" />
+                <ScalarProperty Name="i_InsertUserID" ColumnName="i_InsertUserID" />
+                <ScalarProperty Name="temple_member_id" ColumnName="temple_member_id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="tran_date" ColumnName="tran_date" />
+                <ScalarProperty Name="product_sn" ColumnName="product_sn" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="temple_account_id" ColumnName="temple_account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

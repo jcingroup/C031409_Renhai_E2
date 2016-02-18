@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    @Scripts.Render("~/membermarkCtr")
+}
+<form class="query-form">
+    <fieldset>
+        <label>戶長姓名</label>
+        <input type="text" ng-model="sd.householder" />
+        <button type="submit">
+            <i class="fa fa-search"></i>查詢
+        </button>
+    </fieldset>
+</form>
+<div class="grid-list">
+    <table class="table-master">
+        <caption>戶長資料重複註記</caption>
+        <tr>
+            <th width="5%">重複</th>
+            <th width="10%">Id</th>
+            <th width="15%">戶長姓名</th>
+            <th width="10%">電話</th>
+            <th width="40%">地址</th>
+            <th width="10%">成員</th>
+        </tr>
+        <tr ng-repeat="gd in Grid_Items">
+            <td class="text-center">
+                <input type="checkbox"
+                       ng-model="gd.repeat_mark"
+                       ng-click="upCheck($index)"
+                       ng-true-value="true"
+                       ng-false-value="false" />
+            </td>
+            <td>{{gd.member_id}}</td>
+            <td>{{gd.householder}}</td>
+            <td>{{gd.tel}}</td>
+            <td>{{gd.address}}</td>
+            <td>
+                <button ng-click="openFamilyData(gd.member_id)">
+                    檢視
+                </button>
+            </td>
+        </tr>
+    </table>
+    @Html.Partial("NavPage")
+</div>
+<div class="dialog-div ng-hide" ng-show="isShow">
+    <table class="table-detail">
+        <caption>
+            家庭成員
+            <button ng-click="closeFamileData()">
+                關閉
+            </button>
+        </caption>
+        <tr>
+            <th width="25%">姓名</th>
+            <th width="25%">電話</th>
+            <th width="50%">地址</th>
+        </tr>
+        <tr ng-repeat="item in member_details">
+            <td>{{item.member_name}}</td>
+            <td>{{item.tel}}</td>
+            <td>{{item.address}}</td>
+        </tr>
+    </table>
+</div>

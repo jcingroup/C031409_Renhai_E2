@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    @Scripts.Render("~/temple_postprintCtr")
+}
+<form class="query-form" ng-submit="Init_Query()">
+    <fieldset>
+        <label>入會日期： 起</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
+        <label>迄</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />
+
+        <button type="submit">
+            <i class="fa fa-search"></i>查詢
+        </button>
+        <button type="button" ng-click="DownLoadExcel_PostPrint()">
+            <i class="fa fa-print"></i>產生郵寄標籤
+        </button>
+        @*<button type="button" ng-click="test()">test</button>*@
+        <div class="text-center" style="color:red">入會日期為空白將自動預設為2004/1/1(93/1/1)</div>
+    </fieldset>
+</form>
+<div class="grid-list">
+    <table class="table-master">
+        <caption>郵寄標籤列印</caption>
+        <tr>
+            <th width="15%">身分證字號</th>
+            <th width="10%">會員姓名</th>
+            <th width="7%">郵遞區號</th>
+            <th width="23%">地址</th>
+            <th width="10%">生日</th>
+            <th width="15%">電話</th>
+            <th width="10%">入會日期</th>
+        </tr>
+        <tr ng-repeat="gd in Grid_Items">
+            <td>{{gd.sno}}</td>
+            <td>{{gd.member_name}}</td>
+            <td class="text-center">{{gd.zip}}</td>
+            <td>{{gd.addr}}</td>
+            <td>{{gd.birthday}}</td>
+            <td>{{gd.tel}}</td>
+            <td>{{gd.join_datetime | getTaiwanCalendarDate }}</td>
+        </tr>
+    </table>
+    @Html.Partial("NavPage")
+</div>
+<iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>

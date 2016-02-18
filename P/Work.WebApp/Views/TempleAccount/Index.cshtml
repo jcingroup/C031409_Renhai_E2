@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">*@
+    @Scripts.Render("~/temple_accountCtr")
+}
+<form class="query-form" ng-submit="Init_Query()">
+    <fieldset>
+        @*<label>繳款日期： 起</label>
+            <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" close-text="Close" ng-click="openStart($event)" />
+            <label>迄</label>
+            <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions"  close-text="Close" ng-click="openEnd($event)" />*@
+        <label>承辦人</label>
+        <select ng-model="sd.InsertUserId" ng-options="m.users_id as m.users_name for m in users"></select>
+        <label>訂單類別</label>
+        <select ng-model="sd.product_sn" ng-options="m.value as m.label for m in godson_account_type_foreach"></select>
+        <label>訂單編號</label>
+        <input type="text" ng-model="sd.account_sn" />
+        <label>會員姓名</label>
+        <input type="text" ng-model="sd.member_name" />
+        <button type="submit">
+            <i class="fa fa-search"></i>查詢
+        </button>
+    </fieldset>
+</form>
+<div class="grid-list">
+    <table class="table-master">
+        <caption>香油(契子觀摩) 會員名冊列印</caption>
+        <tr>
+            <th width="5%">檢視</th>
+            <th width="10%">契子訂單編號</th>
+            <th width="10%">會員姓名</th>
+            <th width="10%">電話</th>
+            <th width="10%">生日</th>
+            <th width="10%">產品名稱</th>
+            <th width="10%">繳款金額</th>
+            <th width="15%">訂購時間</th>
+            <th width="10%">承辦人</th>
+        </tr>
+        <tr ng-repeat="gd in Grid_Items">
+            <td><button type="button" ng-click="openEditDetail(gd.temple_account_id)">檢視</button></td>
+            <td>{{gd.temple_account_id}}</td>
+            <td>{{gd.member_name}}</td>
+            <td>{{gd.tel}}</td>
+            <td>{{gd.birthday}}</td>
+            <td>{{gd.product_sn | godsonProductSn}}</td>
+            <td>{{gd.price}}</td>
+            <td>{{gd.i_InsertDateTime | date: 'y/MM/dd a hh:mm:ss'}}</td>
+            <td>{{gd.i_InsertUserName}}</td>
+        </tr>
+    </table>
+    @Html.Partial("NavPage")
+</div>
+<!-- 子板面 產品明細維護-->
+<div name="frmAcct" class="blue-form ng-hide" ng-show="is_show_acct">
+    <div class="dialog-div">
+        <form ng-submit="submitAcct()">
+            <table>
+                <caption>
+                    資料編輯
+                    <button type="button" ng-click="closeAcct()">關　閉</button>
+                </caption>
+                <tr>
+                    <th>
+                        繳款日期
+                    </th>
+                    <td>
+                        <input type="date" ng-model="fds.tran_date" required  />
+                    </td>
+                    <th>
+                        金額
+                    </th>
+                    <td>
+                        <input type="number" ng-model="fds.price" required  />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        類型
+                    </th>
+                    <td colspan="3">
+                        <select ng-model="fds.product_sn" ng-options="m.value as m.label for m in godson_account_type" required ></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align:center">
+                        <button type="submit">　確　定　</button>
+                        <button type="button" ng-click="print()">列印感謝狀</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>

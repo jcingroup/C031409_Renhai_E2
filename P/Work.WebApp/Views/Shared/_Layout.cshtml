@@ -1,0 +1,37 @@
+﻿@{
+    string getNowController = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    string virtualpath = Url.Content("~");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="~/Content/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/css/Reset.css">
+    <link rel="stylesheet" href="~/Content/css/Upt.css">
+    <link rel="stylesheet" href="~/Content/css/ngDialog.css">
+    <link rel="stylesheet" href="~/Content/css/ngDialog-theme-default.css">
+    <link rel="stylesheet" href="~/Content/css/ngDialog-theme-plain.css">
+    <script type="text/javascript">
+        var gb_approot = '@Url.Content("~")';
+        var apiConnection = '@(virtualpath + "api/" + getNowController)';
+        var apiDConnection = '@(virtualpath + "api/" + getNowController + "Detail")';
+
+        var apiGetAction = 'api/GetAction';
+        var apiDeleteAction = 'api/DeleteAction';
+        var apiPutAction = 'api/PutAction';
+        var apiPostAction = 'api/PostAction';
+        var apiPutActionId = 'api/PutAction/PutId';
+
+        var aj_Init = '@Url.Action("aj_Init")';
+        var aj_AdrTW = '@Url.Action("ajax_AdrTW")';
+    </script>
+    @RenderSection("IncludeScript", false)
+</head>
+<body ng-app="angularApp">
+    <div ng-controller="ctrl">
+        @RenderBody()
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿@model ProcCore.Business.Logic.m_KindProduct
+@using ProcCore.Business.Logic;
+
+<div id="sidebar">
+    <h3>系列產品 Categories</h3>
+    <dl>
+        <!--the class equal current is set to variable -->
+        @{
+            var mdr = Model.children;
+        }
+        @foreach (m_KindProduct mdp in mdr)
+        {
+            if ((int)ViewData["ProductL1"] == mdp.id)
+            {
+            <dt class="current"><span>@mdp.name</span></dt>
+            }
+            else
+            {
+            <dt><span>@mdp.name</span></dt>
+            }
+            foreach (m_KindProduct mds in mdp.children)
+            {
+                if ((int)ViewData["ProductL2"] == mds.id)
+                {
+            <dd class="current"><a href="~/Products/Products_list?id=@mds.id">@mds.name</a></dd>
+                }
+                else
+                {
+            <dd><a href="~/Products/Products_list?id=@mds.id">@mds.name</a></dd>
+                }
+            }
+        }
+    </dl>
+
+    <iframe id="youtube" width="220" height="165" src="http://www.youtube.com/embed/i0UY7mk2jY8" frameborder="0" allowfullscreen></iframe>
+</div>
+<!-- sidebar //-->

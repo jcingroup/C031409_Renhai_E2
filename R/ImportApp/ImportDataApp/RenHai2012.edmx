@@ -1,0 +1,442 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RenHai2012Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="訂單主檔">
+          <Key>
+            <PropertyRef Name="訂單編號" />
+          </Key>
+          <Property Name="訂單序號" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="訂單編號" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="會員編號" Type="int" Nullable="false" />
+          <Property Name="申請人姓名" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="申請人電話" Type="nvarchar" MaxLength="20" />
+          <Property Name="郵遞區號" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="申請人地址" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="申請人手機" Type="nvarchar" MaxLength="20" />
+          <Property Name="申請人性別" Type="nvarchar" MaxLength="1" />
+          <Property Name="申請人生日" Type="nvarchar" MaxLength="20" />
+          <Property Name="申請人EMAIL" Type="nvarchar" MaxLength="100" />
+          <Property Name="總額" Type="int" Nullable="false" />
+          <Property Name="付款方式" Type="nvarchar" MaxLength="1" />
+          <Property Name="訂單時間" Type="datetime" />
+          <Property Name="付款時間" Type="datetime" />
+          <Property Name="訂單狀態" Type="nvarchar" MaxLength="20" />
+          <Property Name="查詢序號" Type="nvarchar" MaxLength="50" />
+          <Property Name="付款方式名稱" Type="nvarchar" MaxLength="20" />
+          <Property Name="訂單狀態名稱" Type="nvarchar" MaxLength="5" />
+          <Property Name="銀行帳號" Type="nvarchar" MaxLength="20" />
+          <Property Name="新增時間" Type="datetime" Nullable="false" />
+          <Property Name="新增人員" Type="int" Nullable="false" />
+          <Property Name="戶長SN" Type="int" Nullable="false" />
+          <Property Name="_Hiden" Type="bit" />
+          <Property Name="_InsertUserID" Type="int" />
+          <Property Name="_InsertDateTime" Type="datetime" />
+          <Property Name="_UpdateUserID" Type="int" />
+          <Property Name="_UpdateDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="訂單明細檔">
+          <Key>
+            <PropertyRef Name="訂單編號" />
+            <PropertyRef Name="產品編號" />
+            <PropertyRef Name="會員編號" />
+          </Key>
+          <Property Name="訂單序號" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="訂單編號" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="產品編號" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="會員編號" Type="int" Nullable="false" />
+          <Property Name="年度" Type="int" Nullable="false" />
+          <Property Name="產品名稱" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="價格" Type="int" Nullable="false" />
+          <Property Name="數量" Type="int" Nullable="false" />
+          <Property Name="申請人姓名" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="申請人地址" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="申請人性別" Type="nvarchar" MaxLength="1" />
+          <Property Name="申請人生日" Type="nvarchar" MaxLength="20" />
+          <Property Name="申請人年齡" Type="nvarchar" MaxLength="3" />
+          <Property Name="申請人時辰" Type="nvarchar" MaxLength="2" />
+          <Property Name="申請人生肖" Type="nchar" MaxLength="1" />
+          <Property Name="購買時間" Type="datetime" />
+          <Property Name="付款時間" Type="datetime" />
+          <Property Name="祈福事項" Type="nvarchar(max)" />
+          <Property Name="郵遞區號" Type="nvarchar" MaxLength="10" />
+          <Property Name="點燈位置" Type="nvarchar" MaxLength="20" />
+          <Property Name="經手人" Type="nvarchar" MaxLength="10" />
+          <Property Name="新增時間" Type="datetime" Nullable="false" />
+          <Property Name="新增人員" Type="int" Nullable="false" />
+          <Property Name="白米" Type="int" Nullable="false" />
+          <Property Name="金牌" Type="int" Nullable="false" />
+          <Property Name="異動標記" Type="bit" Nullable="false" />
+          <Property Name="文疏梯次" Type="int" Nullable="false" />
+          <Property Name="_Hiden" Type="bit" />
+          <Property Name="_InsertUserID" Type="int" />
+          <Property Name="_InsertDateTime" Type="datetime" />
+          <Property Name="_UpdateUserID" Type="int" />
+          <Property Name="_UpdateDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="會員戶長資料">
+          <Key>
+            <PropertyRef Name="戶長SN" />
+          </Key>
+          <Property Name="戶長SN" Type="int" Nullable="false" />
+          <Property Name="電話" Type="varchar" MaxLength="24" />
+          <Property Name="郵遞區號" Type="char" MaxLength="5" />
+          <Property Name="地址" Type="nvarchar" MaxLength="128" />
+          <Property Name="姓名" Type="nvarchar" MaxLength="64" />
+          <Property Name="建立時間" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="會員資料表">
+          <Key>
+            <PropertyRef Name="序號" />
+          </Key>
+          <Property Name="序號" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="戶長SN" Type="int" Nullable="false" />
+          <Property Name="Is戶長" Type="bit" Nullable="false" />
+          <Property Name="姓名" Type="nvarchar" MaxLength="20" />
+          <Property Name="電話區碼" Type="nvarchar" MaxLength="10" />
+          <Property Name="電話尾碼" Type="nvarchar" MaxLength="20" />
+          <Property Name="郵遞區號" Type="varchar" MaxLength="5" />
+          <Property Name="地址" Type="nvarchar" MaxLength="100" />
+          <Property Name="手機" Type="nvarchar" MaxLength="20" />
+          <Property Name="性別" Type="nvarchar" MaxLength="1" />
+          <Property Name="生日" Type="nvarchar" MaxLength="20" />
+          <Property Name="時辰" Type="nvarchar" MaxLength="2" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="100" />
+          <Property Name="祈福事項" Type="nvarchar(max)" />
+          <Property Name="生肖" Type="nvarchar" MaxLength="1" />
+          <Property Name="縣市" Type="nvarchar" MaxLength="5" />
+          <Property Name="鄉鎮" Type="nvarchar" MaxLength="5" />
+          <Property Name="建立日期" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_訂單明細檔_訂單主檔">
+          <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="1" />
+          <End Role="訂單明細檔" Type="Self.訂單明細檔" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="訂單主檔">
+              <PropertyRef Name="訂單編號" />
+            </Principal>
+            <Dependent Role="訂單明細檔">
+              <PropertyRef Name="訂單編號" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_會員資料表_會員戶長資料">
+          <End Role="會員戶長資料" Type="Self.會員戶長資料" Multiplicity="1" />
+          <End Role="會員資料表" Type="Self.會員資料表" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="會員戶長資料">
+              <PropertyRef Name="戶長SN" />
+            </Principal>
+            <Dependent Role="會員資料表">
+              <PropertyRef Name="戶長SN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RenHai2012ModelStoreContainer">
+          <EntitySet Name="訂單主檔" EntityType="Self.訂單主檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="訂單明細檔" EntityType="Self.訂單明細檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="會員戶長資料" EntityType="Self.會員戶長資料" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="會員資料表" EntityType="Self.會員資料表" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_訂單明細檔_訂單主檔" Association="Self.FK_訂單明細檔_訂單主檔">
+            <End Role="訂單主檔" EntitySet="訂單主檔" />
+            <End Role="訂單明細檔" EntitySet="訂單明細檔" />
+          </AssociationSet>
+          <AssociationSet Name="FK_會員資料表_會員戶長資料" Association="Self.FK_會員資料表_會員戶長資料">
+            <End Role="會員戶長資料" EntitySet="會員戶長資料" />
+            <End Role="會員資料表" EntitySet="會員資料表" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RenHai2012Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="訂單主檔">
+          <Key>
+            <PropertyRef Name="訂單編號" />
+          </Key>
+          <Property Name="訂單序號" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="訂單編號" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="會員編號" Type="Int32" Nullable="false" />
+          <Property Name="申請人姓名" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="申請人電話" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="郵遞區號" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="申請人地址" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="申請人手機" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="申請人性別" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="申請人生日" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="申請人EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="總額" Type="Int32" Nullable="false" />
+          <Property Name="付款方式" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="訂單時間" Type="DateTime" Precision="3" />
+          <Property Name="付款時間" Type="DateTime" Precision="3" />
+          <Property Name="訂單狀態" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="查詢序號" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="付款方式名稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="訂單狀態名稱" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="銀行帳號" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="新增時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="新增人員" Type="Int32" Nullable="false" />
+          <Property Name="戶長SN" Type="Int32" Nullable="false" />
+          <Property Name="C_Hiden" Type="Boolean" />
+          <Property Name="C_InsertUserID" Type="Int32" />
+          <Property Name="C_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_UpdateUserID" Type="Int32" />
+          <Property Name="C_UpdateDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="訂單明細檔" Relationship="Self.FK_訂單明細檔_訂單主檔" FromRole="訂單主檔" ToRole="訂單明細檔" />
+        </EntityType>
+        <EntityType Name="訂單明細檔">
+          <Key>
+            <PropertyRef Name="訂單編號" />
+            <PropertyRef Name="產品編號" />
+            <PropertyRef Name="會員編號" />
+          </Key>
+          <Property Name="訂單序號" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="訂單編號" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="產品編號" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="會員編號" Type="Int32" Nullable="false" />
+          <Property Name="年度" Type="Int32" Nullable="false" />
+          <Property Name="產品名稱" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="價格" Type="Int32" Nullable="false" />
+          <Property Name="數量" Type="Int32" Nullable="false" />
+          <Property Name="申請人姓名" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="申請人地址" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="申請人性別" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="申請人生日" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="申請人年齡" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="申請人時辰" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="申請人生肖" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="購買時間" Type="DateTime" Precision="3" />
+          <Property Name="付款時間" Type="DateTime" Precision="3" />
+          <Property Name="祈福事項" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="郵遞區號" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="點燈位置" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="經手人" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="新增時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="新增人員" Type="Int32" Nullable="false" />
+          <Property Name="白米" Type="Int32" Nullable="false" />
+          <Property Name="金牌" Type="Int32" Nullable="false" />
+          <Property Name="異動標記" Type="Boolean" Nullable="false" />
+          <Property Name="文疏梯次" Type="Int32" Nullable="false" />
+          <Property Name="C_Hiden" Type="Boolean" />
+          <Property Name="C_InsertUserID" Type="Int32" />
+          <Property Name="C_InsertDateTime" Type="DateTime" Precision="3" />
+          <Property Name="C_UpdateUserID" Type="Int32" />
+          <Property Name="C_UpdateDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="訂單主檔" Relationship="Self.FK_訂單明細檔_訂單主檔" FromRole="訂單明細檔" ToRole="訂單主檔" />
+        </EntityType>
+        <EntityType Name="會員戶長資料">
+          <Key>
+            <PropertyRef Name="戶長SN" />
+          </Key>
+          <Property Name="戶長SN" Type="Int32" Nullable="false" />
+          <Property Name="電話" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="郵遞區號" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="地址" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="姓名" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="建立時間" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="會員資料表" Relationship="Self.FK_會員資料表_會員戶長資料" FromRole="會員戶長資料" ToRole="會員資料表" />
+        </EntityType>
+        <EntityType Name="會員資料表">
+          <Key>
+            <PropertyRef Name="序號" />
+          </Key>
+          <Property Name="序號" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="戶長SN" Type="Int32" Nullable="false" />
+          <Property Name="Is戶長" Type="Boolean" Nullable="false" />
+          <Property Name="姓名" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="電話區碼" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="電話尾碼" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="郵遞區號" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="地址" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="手機" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="性別" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="生日" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="時辰" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="祈福事項" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="生肖" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="縣市" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="鄉鎮" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="建立日期" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="會員戶長資料" Relationship="Self.FK_會員資料表_會員戶長資料" FromRole="會員資料表" ToRole="會員戶長資料" />
+        </EntityType>
+        <Association Name="FK_訂單明細檔_訂單主檔">
+          <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="1" />
+          <End Role="訂單明細檔" Type="Self.訂單明細檔" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="訂單主檔">
+              <PropertyRef Name="訂單編號" />
+            </Principal>
+            <Dependent Role="訂單明細檔">
+              <PropertyRef Name="訂單編號" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_會員資料表_會員戶長資料">
+          <End Role="會員戶長資料" Type="Self.會員戶長資料" Multiplicity="1" />
+          <End Role="會員資料表" Type="Self.會員資料表" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="會員戶長資料">
+              <PropertyRef Name="戶長SN" />
+            </Principal>
+            <Dependent Role="會員資料表">
+              <PropertyRef Name="戶長SN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RenHai2012Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="訂單主檔" EntityType="Self.訂單主檔" />
+          <EntitySet Name="訂單明細檔" EntityType="Self.訂單明細檔" />
+          <EntitySet Name="會員戶長資料" EntityType="Self.會員戶長資料" />
+          <EntitySet Name="會員資料表" EntityType="Self.會員資料表" />
+          <AssociationSet Name="FK_訂單明細檔_訂單主檔" Association="Self.FK_訂單明細檔_訂單主檔">
+            <End Role="訂單主檔" EntitySet="訂單主檔" />
+            <End Role="訂單明細檔" EntitySet="訂單明細檔" />
+          </AssociationSet>
+          <AssociationSet Name="FK_會員資料表_會員戶長資料" Association="Self.FK_會員資料表_會員戶長資料">
+            <End Role="會員戶長資料" EntitySet="會員戶長資料" />
+            <End Role="會員資料表" EntitySet="會員資料表" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RenHai2012ModelStoreContainer" CdmEntityContainer="RenHai2012Entities">
+          <EntitySetMapping Name="訂單主檔">
+            <EntityTypeMapping TypeName="RenHai2012Model.訂單主檔">
+              <MappingFragment StoreEntitySet="訂單主檔">
+                <ScalarProperty Name="訂單序號" ColumnName="訂單序號" />
+                <ScalarProperty Name="訂單編號" ColumnName="訂單編號" />
+                <ScalarProperty Name="會員編號" ColumnName="會員編號" />
+                <ScalarProperty Name="申請人姓名" ColumnName="申請人姓名" />
+                <ScalarProperty Name="申請人電話" ColumnName="申請人電話" />
+                <ScalarProperty Name="郵遞區號" ColumnName="郵遞區號" />
+                <ScalarProperty Name="申請人地址" ColumnName="申請人地址" />
+                <ScalarProperty Name="申請人手機" ColumnName="申請人手機" />
+                <ScalarProperty Name="申請人性別" ColumnName="申請人性別" />
+                <ScalarProperty Name="申請人生日" ColumnName="申請人生日" />
+                <ScalarProperty Name="申請人EMAIL" ColumnName="申請人EMAIL" />
+                <ScalarProperty Name="總額" ColumnName="總額" />
+                <ScalarProperty Name="付款方式" ColumnName="付款方式" />
+                <ScalarProperty Name="訂單時間" ColumnName="訂單時間" />
+                <ScalarProperty Name="付款時間" ColumnName="付款時間" />
+                <ScalarProperty Name="訂單狀態" ColumnName="訂單狀態" />
+                <ScalarProperty Name="查詢序號" ColumnName="查詢序號" />
+                <ScalarProperty Name="付款方式名稱" ColumnName="付款方式名稱" />
+                <ScalarProperty Name="訂單狀態名稱" ColumnName="訂單狀態名稱" />
+                <ScalarProperty Name="銀行帳號" ColumnName="銀行帳號" />
+                <ScalarProperty Name="新增時間" ColumnName="新增時間" />
+                <ScalarProperty Name="新增人員" ColumnName="新增人員" />
+                <ScalarProperty Name="戶長SN" ColumnName="戶長SN" />
+                <ScalarProperty Name="C_Hiden" ColumnName="_Hiden" />
+                <ScalarProperty Name="C_InsertUserID" ColumnName="_InsertUserID" />
+                <ScalarProperty Name="C_InsertDateTime" ColumnName="_InsertDateTime" />
+                <ScalarProperty Name="C_UpdateUserID" ColumnName="_UpdateUserID" />
+                <ScalarProperty Name="C_UpdateDateTime" ColumnName="_UpdateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="訂單明細檔">
+            <EntityTypeMapping TypeName="RenHai2012Model.訂單明細檔">
+              <MappingFragment StoreEntitySet="訂單明細檔">
+                <ScalarProperty Name="訂單序號" ColumnName="訂單序號" />
+                <ScalarProperty Name="訂單編號" ColumnName="訂單編號" />
+                <ScalarProperty Name="產品編號" ColumnName="產品編號" />
+                <ScalarProperty Name="會員編號" ColumnName="會員編號" />
+                <ScalarProperty Name="年度" ColumnName="年度" />
+                <ScalarProperty Name="產品名稱" ColumnName="產品名稱" />
+                <ScalarProperty Name="價格" ColumnName="價格" />
+                <ScalarProperty Name="數量" ColumnName="數量" />
+                <ScalarProperty Name="申請人姓名" ColumnName="申請人姓名" />
+                <ScalarProperty Name="申請人地址" ColumnName="申請人地址" />
+                <ScalarProperty Name="申請人性別" ColumnName="申請人性別" />
+                <ScalarProperty Name="申請人生日" ColumnName="申請人生日" />
+                <ScalarProperty Name="申請人年齡" ColumnName="申請人年齡" />
+                <ScalarProperty Name="申請人時辰" ColumnName="申請人時辰" />
+                <ScalarProperty Name="申請人生肖" ColumnName="申請人生肖" />
+                <ScalarProperty Name="購買時間" ColumnName="購買時間" />
+                <ScalarProperty Name="付款時間" ColumnName="付款時間" />
+                <ScalarProperty Name="祈福事項" ColumnName="祈福事項" />
+                <ScalarProperty Name="郵遞區號" ColumnName="郵遞區號" />
+                <ScalarProperty Name="點燈位置" ColumnName="點燈位置" />
+                <ScalarProperty Name="經手人" ColumnName="經手人" />
+                <ScalarProperty Name="新增時間" ColumnName="新增時間" />
+                <ScalarProperty Name="新增人員" ColumnName="新增人員" />
+                <ScalarProperty Name="白米" ColumnName="白米" />
+                <ScalarProperty Name="金牌" ColumnName="金牌" />
+                <ScalarProperty Name="異動標記" ColumnName="異動標記" />
+                <ScalarProperty Name="文疏梯次" ColumnName="文疏梯次" />
+                <ScalarProperty Name="C_Hiden" ColumnName="_Hiden" />
+                <ScalarProperty Name="C_InsertUserID" ColumnName="_InsertUserID" />
+                <ScalarProperty Name="C_InsertDateTime" ColumnName="_InsertDateTime" />
+                <ScalarProperty Name="C_UpdateUserID" ColumnName="_UpdateUserID" />
+                <ScalarProperty Name="C_UpdateDateTime" ColumnName="_UpdateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="會員戶長資料">
+            <EntityTypeMapping TypeName="RenHai2012Model.會員戶長資料">
+              <MappingFragment StoreEntitySet="會員戶長資料">
+                <ScalarProperty Name="戶長SN" ColumnName="戶長SN" />
+                <ScalarProperty Name="電話" ColumnName="電話" />
+                <ScalarProperty Name="郵遞區號" ColumnName="郵遞區號" />
+                <ScalarProperty Name="地址" ColumnName="地址" />
+                <ScalarProperty Name="姓名" ColumnName="姓名" />
+                <ScalarProperty Name="建立時間" ColumnName="建立時間" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="會員資料表">
+            <EntityTypeMapping TypeName="RenHai2012Model.會員資料表">
+              <MappingFragment StoreEntitySet="會員資料表">
+                <ScalarProperty Name="序號" ColumnName="序號" />
+                <ScalarProperty Name="戶長SN" ColumnName="戶長SN" />
+                <ScalarProperty Name="Is戶長" ColumnName="Is戶長" />
+                <ScalarProperty Name="姓名" ColumnName="姓名" />
+                <ScalarProperty Name="電話區碼" ColumnName="電話區碼" />
+                <ScalarProperty Name="電話尾碼" ColumnName="電話尾碼" />
+                <ScalarProperty Name="郵遞區號" ColumnName="郵遞區號" />
+                <ScalarProperty Name="地址" ColumnName="地址" />
+                <ScalarProperty Name="手機" ColumnName="手機" />
+                <ScalarProperty Name="性別" ColumnName="性別" />
+                <ScalarProperty Name="生日" ColumnName="生日" />
+                <ScalarProperty Name="時辰" ColumnName="時辰" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="祈福事項" ColumnName="祈福事項" />
+                <ScalarProperty Name="生肖" ColumnName="生肖" />
+                <ScalarProperty Name="縣市" ColumnName="縣市" />
+                <ScalarProperty Name="鄉鎮" ColumnName="鄉鎮" />
+                <ScalarProperty Name="建立日期" ColumnName="建立日期" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

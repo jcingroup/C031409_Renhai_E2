@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="487ec4a989bd469387c7d52e21a1d3b0" Name="Diagram1" ZoomLevel="78">
+        <EntityTypeShape EntityType="RenHai2012Model.Orders" Width="1.5" PointX="0.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RenHai2012Model.Orders_Detail" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RenHai2012Model.Product" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RenHai2012Model.Member" Width="1.5" PointX="5.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RenHai2012Model.Member_Detail" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="RenHai2012Model.Light_Site" Width="1.5" PointX="5.625" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="RenHai2012Model.FK_訂單明細檔_訂單主檔" ManuallyRouted="false" />
+        <AssociationConnector Association="RenHai2012Model.FK_訂單明細檔_產品資料表" ManuallyRouted="false" />
+        <AssociationConnector Association="RenHai2012Model.FK_會員資料表_會員戶長資料" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RenHai2012Model.Manjushri" Width="1.5" PointX="8.625" PointY="7.5" />
+        <AssociationConnector Association="RenHai2012Model.FK_訂單明細檔_會員資料表" />
+        <EntityTypeShape EntityType="RenHai2012Model.Users" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RenHai2012Model.Units" Width="1.5" PointX="3.375" PointY="10.75" />
+        <AssociationConnector Association="RenHai2012Model.FK_訂單主檔_人員" />
+        <EntityTypeShape EntityType="RenHai2012Model.Member_Detail_Category" Width="3.125" PointX="5.375" PointY="10.875" />
+        <AssociationConnector Association="RenHai2012Model.FK_會員資料表_Member_Detail_Category" />
+        <EntityTypeShape EntityType="RenHai2012Model.Reject" Width="1.5" PointX="2.75" PointY="15.5" />
+        <EntityTypeShape EntityType="RenHai2012Model.Reject_Detail" Width="1.5" PointX="11.25" PointY="8" />
+        <AssociationConnector Association="RenHai2012Model.FK_Reject_Detail_Reject" />
+        <AssociationConnector Association="RenHai2012Model.FK_Reject_Reject" />
+        <AssociationConnector Association="RenHai2012Model.FK_Reject_Detail_會員資料表" />
+        <EntityTypeShape EntityType="RenHai2012Model.i_IDX" Width="1.5" PointX="9.375" PointY="11.75" />
+        <EntityTypeShape EntityType="RenHai2012Model.Fortune_Light" Width="1.5" PointX="13.25" PointY="3.375" />
+        <AssociationConnector Association="RenHai2012Model.FK_Fortune_Light_訂單主檔" />
+        <AssociationConnector Association="RenHai2012Model.FK_Fortune_Light_會員資料表" />
+        <EntityTypeShape EntityType="RenHai2012Model.TempleMember" Width="1.5" PointX="11.625" PointY="12.125" />
+        <EntityTypeShape EntityType="RenHai2012Model.TempleAccount" Width="1.5" PointX="13.875" PointY="12.25" />
+        <AssociationConnector Association="RenHai2012Model.FK_Temple_Account_Temple_Member" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

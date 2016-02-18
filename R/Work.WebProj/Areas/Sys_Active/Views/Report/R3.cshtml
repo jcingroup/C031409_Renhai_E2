@@ -1,0 +1,54 @@
+﻿@model ProcCore.Business.DB0.c_Import
+@{
+    ViewBag.Caption = MvcSiteMapProvider.SiteMaps.Current.CurrentNode.Title;
+    ViewBag.MenuName = MvcSiteMapProvider.SiteMaps.Current.CurrentNode.ParentNode.Title;
+}
+@section IncludeCSS{}
+
+@section IncludeScript{
+
+    @Html.Partial("Manage/commJSINC")
+    @Html.Partial("Manage/jsCommVar")
+    <script type="text/javascript">
+        var ePassword = '@Resources.Res.ePassword';
+        var agApp = angular.module('angularApp', ['commfun', 'ui.bootstrap', 'toaster', 'pasvaz.bindonce']);
+        agApp.controller('ctrl', ['$scope', '$http', '$filter', 'toaster', 'gridpage', function ($scope, $http, $filter, toaster, gridpage) {
+
+            $scope.ToPrint = function () {
+                var parm = [];
+                parm.push('rid=export');
+
+                if ($scope.sd.hasOwnProperty('sdate'))
+                    parm.push('sdate=' + $filter('date')($scope.sd.sdate, 'yyyy-MM-dd'));
+
+                if ($scope.sd.hasOwnProperty('edate'))
+                    parm.push('edate=' + $filter('date')($scope.sd.edate, 'yyyy-MM-dd'));
+
+                console.info(parm);
+                window.open(gb_approot + 'Report.aspx?' + parm.join('&'), 'ReportView', config = 'width=800,height=640');
+            }
+        }]);
+    </script>
+}
+
+@section sidebar{
+    @Html.Partial("Manage/vucMenu")
+}
+
+<form ng-submit="initQuery()">
+    <fieldset class="search-form">
+        <legend class="sr-only">@Resources.Res.Search</legend>
+        <p>
+            <label></label>
+            <input type="date" placeholder="啟始日期" ng-model="@Html.ngName("sdate", Html.ngSH())"> ~
+            <input type="date" placeholder="結束日期" ng-model="@Html.ngName("edate", Html.ngSH())">
+        </p>
+        <button type="button" ng-click="ToPrint()"><i class="fa-print"></i></button>
+    </fieldset>
+    <h3>@ViewBag.MenuName</h3>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <caption>@ViewBag.Caption</caption>
+        </table>
+    </div>
+</form>

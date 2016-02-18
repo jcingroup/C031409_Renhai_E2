@@ -1,0 +1,97 @@
+﻿@using DotWeb.CommSetup
+@using ProcCore.Business.DB0
+@{
+    var LastLoginDateTime = Request.Cookies[CommWebSetup.Cookie_LastLogin];
+    LastLoginDateTime = new HttpCookie(CommWebSetup.Cookie_LastLogin, DateTime.Now.ToString());
+
+    var Cookie_UserName = Request.Cookies[CommWebSetup.Cookie_UserName];
+}
+@using MvcSiteMapProvider.Web.Html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Resources.Res.System_Name</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    @Styles.Render("~/_Code/Style")
+    @RenderSection("IncludeCSS", false)
+</head>
+<body ng-app="angularApp">
+    <toaster-container toaster-options="{'time-out': 2000}"> </toaster-container>
+    <div id="container" ng-controller="ctrl">
+        <div id="header">
+            <nav role="navigation">
+
+                <h1 class="logo"><a href="#" title="@Resources.Res.Info_Home" tabindex="-1"><span>@Resources.Res.System_Name</span></a></h1><!-- logo -->
+                <a class="toggle" tabindex="-1">行動版切換選單按鈕</a>
+
+                <div class="nav-bar">
+                    <ul class="nav-r">
+
+                        <li class="lang dropdown">
+                            <a href="#" tabindex="-1"><i class="fa-flag"></i> <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @foreach (var md in (IEnumerable<i_Lang>)ViewBag.Langs)
+                                {
+                                    if ((String)ViewBag.Lang == md.lang)
+                                    {
+                                        <li class="active"><a href="@Url.Action("SetLanguage")?L=@md.lang&A=@HttpContext.Current.Request.Url.AbsolutePath" tabindex="-1">@md.area</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="@Url.Action("SetLanguage")?L=@md.lang&A=@HttpContext.Current.Request.Url.AbsolutePath" tabindex="-1">@md.area</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li><!-- lang -->
+                        <li class="time dropdown">
+                            <a href="#" tabindex="-1">
+                                <i class="fa-clock-o"></i> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a tabindex="-1"><i class="fa-eye"></i> @Resources.Res.Info_Last_Login</a></li>
+                                <li><a tabindex="-1">@LastLoginDateTime.Value</a></li>
+                            </ul><!-- dropdown-menu -->
+                        </li><!-- time -->
+                        <li class="user dropdown">
+                            <a href="#" tabindex="-1">
+                                <i class="fa-user"></i> <span>@Cookie_UserName.Value</span> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="~/Sys_Base/User/Password" tabindex="-1"><i class="fa-lock"></i> @Resources.Res.Button_Change_Password</a></li>
+                                <li><a href="~/MNGLogin/Logout" tabindex="-1"><i class="fa-power-off"></i> @Resources.Res.Button_Logout</a></li>
+                            </ul><!-- dropdown-menu -->
+                        </li><!-- user -->
+
+                    </ul><!-- nav-r -->
+                </div><!-- nav-bar -->
+
+            </nav><!-- nav -->
+        </div><!-- header //-->
+        <div id="main">
+            <div id="sidebar">
+                @RenderSection("sidebar", false)
+            </div><!-- sidebar //-->
+            <div id="content">
+                <ol id="breadcrumb">
+                    @Html.MvcSiteMap().SiteMapPath()
+                </ol>
+                <div class="wrap">
+                    @RenderBody()
+                </div><!-- wrap -->
+            </div><!-- content //-->
+            <a class="goTop" href="#breadcrumb"><i class="fa-angle-double-up"></i></a>
+        </div><!-- main //-->
+    </div><!-- container //-->
+    <script type="text/javascript">
+        var gb_approot = '@Url.Content("~")';
+        var gb_area = '@ViewBag.area';
+        var gb_controller = '@ViewBag.controller';
+        var gb_allpath = gb_approot + gb_area + '/' + gb_controller + '/';
+    </script>
+    @RenderSection("IncludeScript", false)
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/myscripts.js"></script>
+</body>
+</html>

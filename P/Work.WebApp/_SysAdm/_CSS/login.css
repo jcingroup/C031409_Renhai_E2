@@ -1,0 +1,108 @@
+﻿@charset "utf-8";
+
+/*      css reset
+-----------------------------------------------------------------------*/
+* {margin: 0;padding: 0;}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: normal;
+	font-family: inherit;
+	vertical-align: baseline;
+	line-height:1.5em;
+	letter-spacing :0;
+	font-size:100%;
+	}
+/* remember to define focus styles! */
+:focus {outline: 0;}
+ol, ul {list-style: none;}
+/* tables still need 'cellspacing="0"' in the markup */
+table {border-collapse: collapse;border-spacing: 0;}
+caption, th, td {text-align: left;font-weight: normal;vertical-align:middle;}
+blockquote:before, blockquote:after,q:before, q:after {content: "";}
+blockquote, q {quotes: "" "";}
+
+/*      basic elements
+-----------------------------------------------------------------------*/
+body {
+	color: #333333;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 0.8em;
+	background: #78002C url(../MainDoor/Body/images/login_bg.gif) no-repeat center 0;
+}
+html, body {height: 100%;text-align: center;}
+a , a:link , a:active{
+	color:#191919;
+	font-size: 0.9em;
+	text-decoration: none;
+	vertical-align: middle;
+	blur:expression(this.onFocus=this.blur());/*ie 消除虛線框*/
+	}
+a:hover {color:#0071f0;}
+a:focus { -moz-outline-style: none; }/*ff 消除虛線框*/
+h1 {text-indent:-5000px;}
+.atten {font-weight:bolder;color:#BD0000;}
+
+/*      page
+-----------------------------------------------------------------------*/
+#container {
+	overflow:hidden;
+  width:100%;
+  min-height:100%; height:auto; *height:600px;
+  margin:auto;/*ff*/  *margin:0;/*ie*/  
+  position:relative;
+  background: url(../MainDoor/Body/images/login_bg2.png) no-repeat right top; 
+  _behavior:url(../../_CSS/iepngfix.htc)
+  }
+
+h1 {
+	background: url(../MainDoor/Body/images/title.png) no-repeat 0 0;	
+	width:616px;height:163px;
+	text-indent:-5000px;
+	position:absolute;
+	left:50%;margin-left:-345px;
+	top:80px;
+	_behavior:url(../../_CSS/iepngfix.htc)
+	}
+
+form {
+	background: transparent url(../MainDoor/Body/images/login.png) no-repeat top left;
+	width:601px;
+	height:356px;
+	position:absolute;
+	left:50%;margin-left:-230px;
+	top:232px;
+	text-align:left;
+	padding:60px 50px;
+	_behavior:url(../../_CSS/iepngfix.htc)
+	}
+
+label {
+	font-size:1em;
+	font-weight:bold;
+	width:130px;
+	display:inline-block;
+	}
+
+p {margin:10px 0;}
+
+input {
+	width:210px;
+	padding:3px;
+	background: transparent url(../images/input_bg.gif) repeat-x top left;
+	border:1px solid #cccccc;
+	}
+
+p.login input {margin:10px 0 0 115px;background:none;border:none;padding:0;width:auto;}
+
+form p img {vertical-align:middle;margin-top:2px}

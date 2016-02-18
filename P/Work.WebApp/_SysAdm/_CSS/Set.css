@@ -1,0 +1,258 @@
+BODY{
+	scrollbar-face-color:#b0c4de;
+	scrollbar-highlight-color: rgb(255,255,255);
+	scrollbar-shadow-color:black;
+	scrollbar-3dlight-color: #d3d3d3;
+	scrollbar-arrow-color: black;
+	scrollbar-track-color:#d3d3d3;
+	scrollbar-darkshadow-color:#b0c4de;
+	scrollbar-base-color: rgb(17,0,254);
+	margin:10px;
+	font-size:10pt;
+	color:black;
+	text-align:center;
+	}
+P{
+	margin:0px;
+	font-size:10pt;
+	line-height:9pt;
+
+	}
+A{
+	text-decoration:none;
+	color:blue;
+	}
+A:hover{
+
+	color:#800000;
+	}
+A:visited{
+	color:navy;
+	}
+TABLE{
+	}
+CAPTION{
+	font-size:10pt;
+	text-decoration:underline;
+	}
+TD{
+	font-size:10pt;
+	line-height:14pt;
+	}
+TH{
+	padding-left:5px;
+	padding-right:5px;
+	line-height:14pt;
+	font-size:10pt;
+	color:black;
+	font-weight:normal;
+	}
+INPUT{
+	border:0;
+	border-bottom:1 solid black;
+	font-size:10pt;
+	}
+TEXTAREA{
+	line-height:14pt;
+	font-size:10pt;
+	border:1 groove black;
+	}
+SELECT{
+	font-size:10pt;
+	}
+OPTION{
+
+	}
+IFRAME{
+	border:2 groove white;}
+FORM{
+	margin:0px;
+	}
+Cite{
+	color:silver;
+	font-size:8pt}
+.ErrMsg{
+	color:red;
+	font-size:8pt;
+}
+.Note{
+	color:green;
+}
+.Button{
+	border:1 groove navy;
+	background-image:url('../_images/bg-line2.gif');
+	color:white;
+	font-size:10pt;
+	}
+
+
+.GriDiv{
+	}
+
+.GridTable{
+	margin-top:10px;
+	margin-bottom:10px;
+	border-right:1 ridge silver;
+	border-left:1 ridge silver;
+	border-bottom:1 ridge silver;
+
+	}
+.GridCaption{
+	background:#E6E6FA;
+	text-align:left;
+	color:black;
+	border-top:2 groove white;
+	border-left:2 groove white;
+	border-right:1 ridge white;
+	border-bottom:2 groove white;
+	font-size:10pt;
+	}
+	.GridCaptionQ{
+	background:mistyrose;
+	text-align:left;
+	color:black;
+	border-top:2 groove white;
+	border-left:2 groove white;
+	border-right:1 ridge white;
+	border-bottom:2 groove white;
+	font-size:10pt;
+	}
+.GridTdCaption{
+	font-size:11pt;
+	color:black;
+	}
+.GridTrORow{
+	background:white;
+	height:30px;
+	}
+
+.GridTrERow{
+	background:#E6E6FA;
+	height:30px;
+	}
+
+.GridTrSpace{
+	background:#DCDCDC;
+	height:30px;
+	}
+
+.GridTD{
+
+	font-size:10pt;
+	color:black;
+	border-right:1 solid silver;
+	border-bottom:1 solid silver;
+
+
+	}
+.GridTDSubmit{
+	border-bottom:1 solid silver;
+
+	}
+.GridTDTool{
+	text-align:right;
+}
+
+.GridSpace{
+
+	}
+
+.GridTH{
+	text-align:right;
+	font-size:10pt;
+	color:black;
+
+	vertical-align:center;
+
+	}
+
+.GridCheck{
+
+	}
+.GridSubmit{
+		height:20px;
+		font-size:10pt;
+		background:#E6E6FA;
+		color:black;
+		border:1 solid gray;
+		padding:0;
+		Cursor:Hand;
+	}
+
+
+.GridIns{
+	height:20px;
+	font-size:10pt;
+	border:1 solid black;
+	color:black;
+	background:#FFFFFF ;
+	Cursor:Hand;
+}
+
+.GridInput{
+	border:0;
+	border-Bottom:1 solid black;
+}
+.uptgrid{
+	color:#ffffff;
+	width:100%;
+	}
+
+
+.GridSubmitR{
+		height:17px;
+		font-size:8pt;
+		background:#FFE6E7;
+		color:black;
+		border:1 solid gray;
+		padding:0;
+	}
+
+.topCid:hover{
+
+	color:#800000;
+	}
+.topCid:visited{
+	color:navy;
+	}
+.topCid{
+	text-decoration:none;
+	color:blue;
+	font-size:10pt;
+}
+
+
+.Readonly01{
+	background-color:#CCCCFF;
+	}
+
+.ButtonOpen{
+		height:20px;
+		font-size:10pt;
+		background:#E6E6FA;
+		color:black;
+		border:1 solid gray;
+		padding:0;
+		Cursor:Hand;
+		}
+		
+
+label.error {
+            float: none;
+            color: red;
+            padding-left: .5em;
+            vertical-align: top;
+}
+.ajaxWait{
+	display:none;
+	width:200px;
+	height:25px; 
+	line-height:25px; 
+	text-align:center; 
+	color:#009900; 
+	font-size:12px; 
+	border:1px solid #ccc; 
+	background:#f8f8f8; 
+	position:absolute;
+	padding:2px;
+}

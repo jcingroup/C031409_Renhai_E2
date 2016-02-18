@@ -1,0 +1,33 @@
+﻿/* 重設間距、邊框 (盡量少用) */
+@mixin reset_space {
+  margin:0;
+  padding:0;
+  border:0;
+}
+
+
+
+/* 不固定尺寸圖片 完全置中fix (支援IE8) */
+@mixin pic_center($max-width, $max-height) {
+  display: block;
+  width: $max-width;
+  text-align: center;
+  line-height : $max-height;
+  
+  img {
+    max-width: 100%;
+    max-height: $max-height;
+    vertical-align: middle;
+  }
+}
+
+
+/* 圖片代替文字 */
+@mixin pic_text($src) {
+  display:block;
+  width:image-width($src);
+  height:image-height($src);
+  text-indent:-9999px;
+  background:url($src) no-repeat;
+  border:0;
+}

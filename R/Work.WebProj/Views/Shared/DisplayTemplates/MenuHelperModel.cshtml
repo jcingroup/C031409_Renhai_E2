@@ -1,0 +1,37 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+
+<h3>
+    <span>
+        <i class="fa-square text-success"></i>
+        <i class="fa-square text-info"></i>
+        <i class="fa-square text-warning"></i>
+        <i class="fa-square text-danger"></i>
+    </span>
+    <em>@Resources.Res.Info_Menu</em>
+</h3>
+<ul class="menu">
+    @foreach (var node in Model.Nodes)
+    {
+        <li>
+            @if (node.Children.Any())
+            {
+                @Html.DisplayFor(m => node)
+
+                if (node.IsInCurrentPath)
+                {
+                    <ul class="submenu in" id="menu-@node.Key">
+                        @Html.DisplayFor(m => node.Children)
+                    </ul>
+                }
+                else
+                {
+                    <ul class="submenu" id="menu-@node.Key">
+                        @Html.DisplayFor(m => node.Children)
+                    </ul>
+                }
+            }
+        </li>
+    }
+</ul>

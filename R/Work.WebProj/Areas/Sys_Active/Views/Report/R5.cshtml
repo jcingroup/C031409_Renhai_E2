@@ -1,0 +1,76 @@
+﻿@model ProcCore.Business.DB0.Product
+@{
+    ViewBag.Caption = MvcSiteMapProvider.SiteMaps.Current.CurrentNode.Title;
+    ViewBag.MenuName = MvcSiteMapProvider.SiteMaps.Current.CurrentNode.ParentNode.Title;
+}
+@section IncludeCSS{}
+
+@section IncludeScript{
+
+    @Html.Partial("Manage/commJSINC")
+    @Html.Partial("Manage/jsCommVar")
+    @if (!User.IsInRole("Admins"))
+    {
+        <script>
+            limitPage('@Resources.Res.ePassword', '@Url.Content(CommWebSetup.ManageDefCTR)');
+        </script>
+    }
+    <script type="text/javascript">
+
+        var agApp = angular.module('angularApp', ['commfun', 'ui.bootstrap', 'toaster', 'pasvaz.bindonce']);
+        agApp.controller('ctrl', ['$scope', '$http', '$filter', 'toaster', 'gridpage', function ($scope, $http, $filter, toaster, gridpage) {
+
+            $scope.view_style_array = [
+                { value: 'both', label: '列印廠內進價及廠外進價' },
+                { value: 'inner', label: '只列印廠內進價' },
+                { value: 'outter', label: '只列印廠外進價' },
+            ];
+
+            $scope.print_style = 'both';
+            console.log($scope.print_style);
+            $scope.ToPrint = function () {
+                var parm = [];
+
+                if ($scope.hasOwnProperty('print_style'))
+                    parm.push('print_style=' + $scope.print_style);
+
+                if ($scope.hasOwnProperty('category_id'))
+                    parm.push('category=' + $scope.category_id);
+
+                parm.push('rid=product');
+                console.info(parm);
+                window.open(gb_approot + 'Report.aspx?' + parm.join('&'), 'ReportView', config = 'width=800,height=640');
+            }
+
+            $http.post(aj_Init)
+            .success(function (data, status, headers, config) {
+                $scope.category = data;
+            });
+
+        }]);
+    </script>
+}
+
+@section sidebar{
+    @Html.Partial("Manage/vucMenu")
+}
+
+<form ng-submit="initQuery()">
+    <fieldset class="search-form">
+        <legend class="sr-only">@Resources.Res.Search</legend>
+        <p>
+            <label></label>
+            <select ng-model="print_style" ng-options="m.value as m.label for m in view_style_array"></select>
+            <select ng-model="category_id" ng-options="m.product_category_l1_id as m.category_l1_name for m in category">
+                <option>==產品分類==</option>
+            </select>
+        </p>
+        <button type="button" ng-click="ToPrint()"><i class="fa-print"></i></button>
+    </fieldset>
+    <h3>@ViewBag.MenuName</h3>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <caption>@ViewBag.Caption</caption>
+        </table>
+    </div>
+</form>

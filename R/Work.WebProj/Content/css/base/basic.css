@@ -1,0 +1,204 @@
+﻿@charset "utf-8";
+
+/*      CSS reset::YUI 3.6.0 (20130312)
+-----------------------------------------------------------------------*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;vertical-align:baseline;vertical-align:bottom\9;}
+body{line-height:1;}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}
+ol,ul{list-style:none}
+caption,th{text-align:left}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,
+q:before, q:after {content: ''; content: none;}
+abbr,acronym{border:0;font-variant:normal}
+sup{vertical-align:text-top}
+sub{vertical-align:text-bottom}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}
+input,textarea,select{*font-size:100%}
+
+a,a:link,a:active,a:visited {
+	text-decoration: none;
+	vertical-align:baseline; vertical-align:middle\9;
+	outline: none; /* ff 消除虛線框*/
+	blur:expression(this.onFocus=this.blur()); /* ie消除虛線框 */
+	}
+a:focus {
+	outline: none;
+	-moz-outline-style: none; /* ff 消除虛線框 */
+	}
+
+
+/*      basic elements
+-----------------------------------------------------------------------*/
+body {
+	width: 100%;
+	background: url(../../images/bg.jpg) no-repeat center top;
+	color: #000;
+	font: 0.95em/125% '微軟正黑體', 'Microsoft JhengHei', Georgia, sans-serif;
+	}
+html,body {
+	height:100%;
+	text-align:center;
+	}
+a {
+	color:#972b00;
+	transition: color .5s ease;
+	}
+a:hover {
+	color: #E56408;
+	}
+h3,h4,h5 {
+	font-weight:bold;
+	line-height:140%;
+	}
+h3 { 
+	text-align: center;
+	color:#C4AD2D;
+	font-size:1.8em;
+	line-height:105%;
+	margin:0 0 30px 0;
+	}
+h3 span {
+	color:#6A5F21;
+	margin:0 5px;
+}
+h4 {
+	color:#4594CF;
+	font-size:1.6em;
+	margin:15px 0 10px 0;
+	}
+h5 {
+	color:#8C8142;
+	font-size:1.3em;
+	margin:10px 0 5px 0;
+	}
+p {
+	margin-bottom:10px;
+	padding: 10px 0 0 53px;
+	line-height:210%;
+	background: url('../../images/icon.jpg') no-repeat 0 0;
+}
+strong {
+	font-size:1.3em;
+	font-weight:bold;
+	}
+cite {
+	color:#F3981C;
+	font-size:1.4em;
+	font-weight:bold;
+	line-height:160%;
+	display:block;
+	margin:20px 0;
+	}
+hr {
+ color:none;
+ border:none;
+ height:1px;
+ background:#FDF3DF
+ }
+
+table {
+	width:100%;
+	border:2px solid #CAD8F1;
+}
+th, td { 
+	background: #fff;
+	padding: 10px 8px;
+	vertical-align: middle;
+	border:1px solid #CAD8F1;
+}
+caption {
+	border:2px solid #CAD8F1;
+	border-bottom:none;
+}
+th {
+	font-weight: bold;
+	color:#396487;
+}
+
+input, select, option, textarea {
+	background: #F7F7F7;
+	color:#312000;
+	font-size:.9em;
+	padding:2px 5px;
+	border:none;
+	}
+input:hover, select:hover, option:hover, textarea:hover,
+input:focus, select:focus, option:focus, textarea:focus {
+	outline: none;
+	background: #FCFAE0;
+}
+input[type="checkbox"],
+input[type="radio"] {
+	background:none;
+}
+textarea {
+	width:98%;
+	height:100px;
+}
+
+
+/*      Generic Classes
+-----------------------------------------------------------------------*/
+.full { width:100% } /* 寬度100% */
+.float-l,.float-r { margin:0 0 20px 0; position:relative;}
+.float-l { float:left; margin-right:10px; }
+.float-r { float:right; margin-left:10px; }
+.align-c { text-align:center } /* 水平罝中,文字置中 */
+.align-l { text-align:left; } /* 向左對齊 */
+.align-r { text-align:right; } /* 向右對齊 */
+.valign-t { vertical-align:top; } /* 垂直置頂 */
+.valign-m { vertical-align:middle; } /* 垂直置中 */
+.valign-b { vertical-align:bottom; } /* 垂直置底 */
+
+.clear { clear:both } /* 清除浮動 */
+.clearfix:after { clear: both; content: ' '; display: block; font-size: 0; line-height: 0; visibility: hidden; width: 0; height: 0; }
+.clearfix { display: inline-block; }
+
+.msg { color:#D84F2E } /* 提示信息 */
+
+.hide { display:none; }
+
+.btn { 
+	background: #3483BB;
+	color:#fff;
+	font-size: 1.1em;
+	font-weight:bold;
+	text-align:center;
+	display:inline-block;
+	padding:5px 25px;
+	cursor:pointer; cursor:hand;
+	transition: background .5s ease;
+	}
+.btn:hover, .btn:active {
+	background: #396487;
+}
+
+.breadCrumb {
+	background: url('../../images/icon_title.gif') no-repeat 0 0;
+	padding: 10px 5px 10px 25px;
+	position: absolute;
+	left: 122px;top: 242px;
+	z-index: 200;
+	}
+.breadCrumb li {
+	display:inline;
+	color:#526605;
+	font-size: 1.5em;
+	font-weight: bold;
+	line-height:120%;
+	vertical-align:middle;
+	margin:0 2px;
+	}
+.breadCrumb a {
+	background:url('../../images/icon4.gif') no-repeat right center;
+	color:#8EB00E;
+	font-size:.75em;	
+	padding-right:3px;
+	}
+.breadCrumb a:hover {
+	color:#A8CF11
+	}
