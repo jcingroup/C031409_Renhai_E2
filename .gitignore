@@ -212,3 +212,4 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 P/Work.WebApp/_Code/Log/*
+P/Work.WebApp/ScriptsCtrl/*.js

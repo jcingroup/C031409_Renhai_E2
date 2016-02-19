@@ -296,7 +296,8 @@ angular.module('angularApp', ['commfun', 'siyfion.sfTypeahead']).config(['$httpP
         $scope.NowPage = page;
         gridpage.CountPage($scope);
     };
-    $scope.JumpPageKey = function () {
+    $scope.JumpPageKey = function (page) {
+        $scope.NowPage = page;
         gridpage.CountPage($scope);
     };
     $scope.Init_Query = function () {

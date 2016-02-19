@@ -13,11 +13,10 @@
         </button>
         <span>
             <label for="">第</label>
-            <input
-                   type="number"
+            <input type="number"
                    min="1"
                    style="width:50px;"
-                   ng-model="NowPage" ng-change="JumpPageKey()" tabindex="-1">
+                   ng-model="NowPage" ng-change="JumpPageKey(NowPage)" tabindex="-1">
             <label for="">頁，共{{TotalPage}}頁/{{RecordCount}}筆</label>
         </span>
         <button class="button-box" type="button" title="往下一頁"

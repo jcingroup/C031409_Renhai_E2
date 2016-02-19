@@ -27,7 +27,8 @@ angular.module('angularApp').controller('ctrl', ['$scope', '$http', 'gridpage', 
         $scope.NowPage = page;
         gridpage.CountPage($scope);
     };
-    $scope.JumpPageKey = function () {
+    $scope.JumpPageKey = function (page) {
+        $scope.NowPage = page;
         gridpage.CountPage($scope);
     };
     $scope.Init_Query = function () {

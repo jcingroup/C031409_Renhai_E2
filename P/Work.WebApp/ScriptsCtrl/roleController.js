@@ -27,7 +27,8 @@ agApp.controller('ctrl', ['$scope', '$http', 'toaster', 'gridpage', function ($s
         $scope.NowPage = page;
         gridpage.CountPage($scope);
     };
-    $scope.JumpPageKey = function () {
+    $scope.JumpPageKey = function (page) {
+        $scope.NowPage = page;
         gridpage.CountPage($scope);
     };
     $scope.Init_Query = function () {

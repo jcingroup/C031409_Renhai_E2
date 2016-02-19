@@ -27,7 +27,7 @@
     check_del_value: boolean;
 
     JumpPage(page: number): void;
-    JumpPageKey(): void;
+    JumpPageKey(page: number): void;
     Init_Query(): void;
     ExpandSub($index: number): void;
     Master_Grid_Delete(): void;
@@ -62,7 +62,7 @@ interface INGScope extends ng.IScope {
     check_del_value: boolean;
 
     JumpPage(page: number): void;
-    JumpPageKey(e): void;
+    JumpPageKey(page: number): void;
     Init_Query(): void;
     ExpandSub($index: number): void;
     Master_Grid_Delete(): void;

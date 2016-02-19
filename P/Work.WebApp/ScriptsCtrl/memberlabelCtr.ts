@@ -33,7 +33,8 @@ angular
         $scope.NowPage = page;
         gridpage.CountPage($scope);
     };
-    $scope.JumpPageKey = function () {
+    $scope.JumpPageKey = function (page: number) {
+        $scope.NowPage = page;
         gridpage.CountPage($scope);
     };
     $scope.Init_Query = function () {
