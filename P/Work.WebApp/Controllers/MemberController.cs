@@ -31,11 +31,13 @@ namespace DotWeb.Controllers
                     {
                         md.sno = md.sno.ToUpper();
                         bool isTemple = db.TempleMember.Any(x => x.sno == md.sno);
-                        DateTime? getJoinDate = db.TempleMember.Where(x => x.sno == md.sno).FirstOrDefault().join_datetime;
-                        md.member_name += "(契子)";
-                        if (getJoinDate != null)
-                        {
-                            md.join_date = DateTime.Parse(getJoinDate.ToString()).ToString("yyyy/MM/dd");
+                        if (isTemple) {
+                            DateTime? getJoinDate = db.TempleMember.Where(x => x.sno == md.sno).FirstOrDefault().join_datetime;
+                            md.member_name += "(契子)";
+                            if (getJoinDate != null)
+                            {
+                                md.join_date = DateTime.Parse(getJoinDate.ToString()).ToString("yyyy/MM/dd");
+                            }
                         }
                     }
                 }
