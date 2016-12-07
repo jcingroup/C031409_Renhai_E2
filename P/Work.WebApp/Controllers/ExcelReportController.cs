@@ -134,12 +134,14 @@ namespace DotWeb.Controllers
                 md.香油_專案專款 = mds.Any(x => x.product_sn == e_祈福產品.香油_專案專款) ? mds.First(x => x.product_sn == e_祈福產品.香油_專案專款).price : 0;
                 md.香油_契子觀摩 = mds.Any(x => x.product_sn == e_祈福產品.香油_契子觀摩) ? mds.Where(x => x.product_sn == e_祈福產品.香油_契子觀摩).Sum(x => x.price) : 0;
                 //香油其它
-                md.香油_其它一 = mds.Any(x => x.product_sn == e_祈福產品.香油_其它一) ? mds.Where(x => x.product_sn == e_祈福產品.香油_其它一).Sum(x => x.price) : 0;
-                md.香油_其它二 = mds.Any(x => x.product_sn == e_祈福產品.香油_其它二) ? mds.Where(x => x.product_sn == e_祈福產品.香油_其它二).Sum(x => x.price) : 0;
-                md.香油_其它三 = mds.Any(x => x.product_sn == e_祈福產品.香油_其它三) ? mds.Where(x => x.product_sn == e_祈福產品.香油_其它三).Sum(x => x.price) : 0;
-                md.香油_其它四 = mds.Any(x => x.product_sn == e_祈福產品.香油_其它四) ? mds.Where(x => x.product_sn == e_祈福產品.香油_其它四).Sum(x => x.price) : 0;
-                md.香油_其它五 = mds.Any(x => x.product_sn == e_祈福產品.香油_其它五) ? mds.Where(x => x.product_sn == e_祈福產品.香油_其它五).Sum(x => x.price) : 0;
-                md.香油_其它六 = mds.Any(x => x.product_sn == e_祈福產品.香油_其它六) ? mds.Where(x => x.product_sn == e_祈福產品.香油_其它六).Sum(x => x.price) : 0;
+                md.香油_牛軋糖 = mds.Any(x => x.product_sn == e_祈福產品.香油_牛軋糖) ? mds.Where(x => x.product_sn == e_祈福產品.香油_牛軋糖).Sum(x => x.price) : 0;
+                //2016/12/7 下架 md.香油_農民曆廣告 = mds.Any(x => x.product_sn == e_祈福產品.香油_農民曆廣告) ? mds.Where(x => x.product_sn == e_祈福產品.香油_農民曆廣告).Sum(x => x.price) : 0;
+                md.香油_衣服 = mds.Any(x => x.product_sn == e_祈福產品.香油_衣服) ? mds.Where(x => x.product_sn == e_祈福產品.香油_衣服).Sum(x => x.price) : 0;
+                md.香油_薦拔祖先 = mds.Any(x => x.product_sn == e_祈福產品.香油_薦拔祖先) ? mds.Where(x => x.product_sn == e_祈福產品.香油_薦拔祖先).Sum(x => x.price) : 0;
+                md.香油_冤親債主 = mds.Any(x => x.product_sn == e_祈福產品.香油_冤親債主) ? mds.Where(x => x.product_sn == e_祈福產品.香油_冤親債主).Sum(x => x.price) : 0;
+                md.香油_嬰靈 = mds.Any(x => x.product_sn == e_祈福產品.香油_嬰靈) ? mds.Where(x => x.product_sn == e_祈福產品.香油_嬰靈).Sum(x => x.price) : 0;
+                //2016/12/7 加入
+                md.香油_屋頂整修費 = mds.Any(x => x.product_sn == e_祈福產品.香油_屋頂整修費) ? mds.Where(x => x.product_sn == e_祈福產品.香油_屋頂整修費).Sum(x => x.price) : 0;
 
                 md.太歲 = mds.Any(x => x.product_sn == e_祈福產品.安太歲) ? mds.First(x => x.product_sn == e_祈福產品.安太歲).price : 0;
                 md.法會_入斗 = mds.Any(x => x.product_sn == e_祈福產品.入斗) ? mds.First(x => x.product_sn == e_祈福產品.入斗).price : 0;
@@ -216,14 +218,14 @@ namespace DotWeb.Controllers
                 sheet.Cells["C20"].Value = md.香油_契子觀摩;
                 sheet.Cells["E20"].Value = md.香油_專案專款;
 
-                sheet.Cells["C21"].Value = md.香油_其它一;
-                sheet.Cells["E21"].Value = md.香油_其它二;
+                sheet.Cells["C21"].Value = md.香油_牛軋糖;
+                sheet.Cells["E21"].Value = md.香油_屋頂整修費;
 
-                sheet.Cells["C22"].Value = md.香油_其它三;
-                sheet.Cells["E22"].Value = md.香油_其它四;
+                sheet.Cells["C22"].Value = md.香油_衣服;
+                sheet.Cells["E22"].Value = md.香油_薦拔祖先;
 
-                sheet.Cells["C23"].Value = md.香油_其它五;
-                sheet.Cells["E23"].Value = md.香油_其它六;
+                sheet.Cells["C23"].Value = md.香油_冤親債主;
+                sheet.Cells["E23"].Value = md.香油_嬰靈;
 
                 sheet.Cells["C24"].Value = md.租金;
                 sheet.Cells["E24"].Value = md.保運;

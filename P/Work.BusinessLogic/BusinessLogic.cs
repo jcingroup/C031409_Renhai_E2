@@ -2100,12 +2100,15 @@ namespace ProcCore.Business.Logic
         public static string 香油_專案專款 = "706";
         public static string 租金 = "707";
         public static string 香油_其它 = "760";
-        public static string 香油_其它一 = "761";
-        public static string 香油_其它二 = "762";
-        public static string 香油_其它三 = "763";
-        public static string 香油_其它四 = "764";
-        public static string 香油_其它五 = "765";
-        public static string 香油_其它六 = "766";
+
+        public static string 香油_牛軋糖 = "761";
+        public static string 香油_農民曆廣告 = "762";//2016/12/7 下架
+        public static string 香油_衣服 = "763";
+        public static string 香油_薦拔祖先 = "764";
+        public static string 香油_冤親債主 = "765";
+        public static string 香油_嬰靈 = "766";
+        public static string 香油_屋頂整修費 = "767";//2016/12/7 加入
+
         public static string 契子會_入會 = "751";
         //public static String 契子會_自強活動 = "752";
         public static string 契子會_大會 = "752";
@@ -5190,12 +5193,14 @@ namespace ProcCore.Business.Logic
         public int 香油_媽祖聖誕典禮 { get; set; }
 
         public int 香油_其它 { get; set; }
-        public int 香油_其它一 { get; set; }
-        public int 香油_其它二 { get; set; }
-        public int 香油_其它三 { get; set; }
-        public int 香油_其它四 { get; set; }
-        public int 香油_其它五 { get; set; }
-        public int 香油_其它六 { get; set; }
+        public int 香油_牛軋糖 { get; set; }
+        public int 香油_農民曆廣告 { get; set; }//2016/12/7 下架
+        public int 香油_衣服 { get; set; }
+        public int 香油_薦拔祖先 { get; set; }
+        public int 香油_冤親債主 { get; set; }
+        public int 香油_嬰靈 { get; set; }
+        public int 香油_屋頂整修費 { get; set; }//2016/12/7 加入
+
         public int 香油_契子觀摩 { get; set; }
 
         public int 契子會_入會 { get; set; }
