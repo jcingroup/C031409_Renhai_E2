@@ -142,6 +142,8 @@ namespace DotWeb.Controllers
                 md.香油_嬰靈 = mds.Any(x => x.product_sn == e_祈福產品.香油_嬰靈) ? mds.Where(x => x.product_sn == e_祈福產品.香油_嬰靈).Sum(x => x.price) : 0;
                 //2016/12/7 加入
                 md.香油_屋頂整修費 = mds.Any(x => x.product_sn == e_祈福產品.香油_屋頂整修費) ? mds.Where(x => x.product_sn == e_祈福產品.香油_屋頂整修費).Sum(x => x.price) : 0;
+                //2016/12/30 加入
+                md.香油_祈福玉珮 = mds.Any(x => x.product_sn == e_祈福產品.香油_祈福玉珮) ? mds.Where(x => x.product_sn == e_祈福產品.香油_祈福玉珮).Sum(x => x.price) : 0;
 
                 md.太歲 = mds.Any(x => x.product_sn == e_祈福產品.安太歲) ? mds.First(x => x.product_sn == e_祈福產品.安太歲).price : 0;
                 md.法會_入斗 = mds.Any(x => x.product_sn == e_祈福產品.入斗) ? mds.First(x => x.product_sn == e_祈福產品.入斗).price : 0;
@@ -227,16 +229,18 @@ namespace DotWeb.Controllers
                 sheet.Cells["C23"].Value = md.香油_冤親債主;
                 sheet.Cells["E23"].Value = md.香油_嬰靈;
 
-                sheet.Cells["C24"].Value = md.租金;
-                sheet.Cells["E24"].Value = md.保運;
+                sheet.Cells["C24"].Value = md.香油_祈福玉珮;
 
-                sheet.Cells["C25"].Value = md.金牌 + "面";
-                sheet.Cells["E25"].Value = md.白米 + "斤";
+                sheet.Cells["C25"].Value = md.租金;
+                sheet.Cells["E25"].Value = md.保運;
 
-                sheet.Cells["D26"].Formula = "C8+E8+E15+SUM(C16:C24) + SUM(E16:E24)";
-                sheet.Cells["D26"].Calculate();
-                sheet.Cells["D27"].Value = md.負責人;
-                sheet.Cells["D30"].Value = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                sheet.Cells["C26"].Value = md.金牌 + "面";
+                sheet.Cells["E26"].Value = md.白米 + "斤";
+
+                sheet.Cells["D27"].Formula = "C8+E8+E15+SUM(C16:C24) + SUM(E16:E24)";
+                sheet.Cells["D27"].Calculate();
+                sheet.Cells["D28"].Value = md.負責人;
+                sheet.Cells["D31"].Value = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                 #endregion
 
                 rAjaxResult.result = true;

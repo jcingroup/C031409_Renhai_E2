@@ -2108,6 +2108,7 @@ namespace ProcCore.Business.Logic
         public static string 香油_冤親債主 = "765";
         public static string 香油_嬰靈 = "766";
         public static string 香油_屋頂整修費 = "767";//2016/12/7 加入
+        public static string 香油_祈福玉珮 = "768";//2016/12/30 加入
 
         public static string 契子會_入會 = "751";
         //public static String 契子會_自強活動 = "752";
@@ -5200,6 +5201,7 @@ namespace ProcCore.Business.Logic
         public int 香油_冤親債主 { get; set; }
         public int 香油_嬰靈 { get; set; }
         public int 香油_屋頂整修費 { get; set; }//2016/12/7 加入
+        public int 香油_祈福玉珮 { get; set; }//2016/12/30 加入
 
         public int 香油_契子觀摩 { get; set; }
 
