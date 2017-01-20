@@ -237,7 +237,7 @@ namespace DotWeb.Controllers
                 sheet.Cells["C26"].Value = md.金牌 + "面";
                 sheet.Cells["E26"].Value = md.白米 + "斤";
 
-                sheet.Cells["D27"].Formula = "C8+E8+E15+SUM(C16:C24) + SUM(E16:E24)";
+                sheet.Cells["D27"].Formula = "C8+E8+E15+SUM(C16:C25) + SUM(E16:E25)";
                 sheet.Cells["D27"].Calculate();
                 sheet.Cells["D28"].Value = md.負責人;
                 sheet.Cells["D31"].Value = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
