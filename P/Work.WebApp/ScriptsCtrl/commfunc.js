@@ -188,6 +188,8 @@ angular.module('commfun').factory('gridpage', ['$http', function ($http) {
                     s[key] = $scope.sd[key];
                 }
             }
+            var path = $scope.apiPath ? $scope.apiPath : apiConnection;
+            console.log('path', path);
             if ($scope.NowPage >= 1) {
                 $http.get(apiConnection, { params: s }).success(function (data, status, headers, config) {
                     $scope.Grid_Items = data.rows;

@@ -16,6 +16,8 @@
     StartCount: number;
     EndCount: number;
 
+    apiPath: string;//其他get api 連結
+
     fd: any; //編輯欄位
     sd: any; //查詢欄位
 
@@ -43,6 +45,8 @@
 interface INGScope extends ng.IScope {
 
     InitData: any;
+
+    apiPath: string;//其他get api 連結
 
     firstpage: number;
     lastpage: number;

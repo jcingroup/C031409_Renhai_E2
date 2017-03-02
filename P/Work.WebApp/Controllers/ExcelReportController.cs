@@ -125,7 +125,7 @@ namespace DotWeb.Controllers
                 md.媽祖殿燈籠頭燈加總 = md.頭燈前排福燈 + md.頭燈後排福燈 + md.前排福燈 + md.後排福燈 + md.左排福燈 + md.右排福燈 + md.上排福燈;
 
                 md.香油錢 = mds.Any(x => x.product_sn == e_祈福產品.香油錢) ? mds.First(x => x.product_sn == e_祈福產品.香油錢).price : 0;
-                md.香油_媽祖聖誕 = mds.Any(x => x.product_sn == e_祈福產品.香油_媽祖聖誕) ? mds.First(x => x.product_sn == e_祈福產品.香油_媽祖聖誕).price : 0;
+                md.香油_媽祖聖誕擲筊 = mds.Any(x => x.product_sn == e_祈福產品.香油_媽祖聖誕擲筊) ? mds.First(x => x.product_sn == e_祈福產品.香油_媽祖聖誕擲筊).price : 0;
                 md.香油_媽祖回鑾 = mds.Any(x => x.product_sn == e_祈福產品.香油_媽祖回鑾) ? mds.First(x => x.product_sn == e_祈福產品.香油_媽祖回鑾).price : 0;
                 md.香油_祈願卡 = mds.Any(x => x.product_sn == e_祈福產品.香油_祈願卡) ? mds.First(x => x.product_sn == e_祈福產品.香油_祈願卡).price : 0;
 
@@ -158,8 +158,9 @@ namespace DotWeb.Controllers
                 md.小斗 = mds.Any(x => x.product_sn == e_祈福產品.小斗) ? mds.First(x => x.product_sn == e_祈福產品.小斗).price : 0;
                 md.主斗 = mds.Any(x => x.product_sn == e_祈福產品.主斗) ? mds.First(x => x.product_sn == e_祈福產品.主斗).price : 0;
                 md.副斗 = mds.Any(x => x.product_sn == e_祈福產品.副斗) ? mds.First(x => x.product_sn == e_祈福產品.副斗).price : 0;
+                md.福斗 = mds.Any(x => x.product_sn == e_祈福產品.福斗) ? mds.First(x => x.product_sn == e_祈福產品.福斗).price : 0;
 
-                md.合計禮斗 = md.大斗 + md.中斗 + md.小斗 + md.主斗 + md.副斗;
+                md.合計禮斗 = md.大斗 + md.中斗 + md.小斗 + md.主斗 + md.副斗 + md.福斗;
 
                 //md.合計金額 = mds.Where(x => x.product_sn != e_祈福產品.捐白米 && x.product_sn != e_祈福產品.捐金牌).Select(x=>x.price).DefaultIfEmpty().Sum();
 
@@ -215,7 +216,7 @@ namespace DotWeb.Controllers
                 sheet.Cells["E18"].Value = md.契子會_大會;
 
                 sheet.Cells["C19"].Value = md.契子會_入會;
-                sheet.Cells["E19"].Value = md.香油_媽祖聖誕典禮 + md.香油_媽祖聖誕;
+                sheet.Cells["E19"].Value = md.香油_媽祖聖誕典禮;
 
                 sheet.Cells["C20"].Value = md.香油_契子觀摩;
                 sheet.Cells["E20"].Value = md.香油_專案專款;
@@ -230,6 +231,7 @@ namespace DotWeb.Controllers
                 sheet.Cells["E23"].Value = md.香油_嬰靈;
 
                 sheet.Cells["C24"].Value = md.香油_祈福玉珮;
+                sheet.Cells["E24"].Value = md.香油_媽祖聖誕擲筊;
 
                 sheet.Cells["C25"].Value = md.租金;
                 sheet.Cells["E25"].Value = md.保運;

@@ -74,7 +74,7 @@
         orders: server.Orders;
         product: server.Product;
     }
-    interface Product {
+    interface Product extends server.BaseEntityTable{
         product_sn: string;
         product_name: string;
         category: string;

@@ -256,6 +256,8 @@ angular.module('commfun').factory('gridpage', ['$http', function ($http: ng.IHtt
                     s[key] = $scope.sd[key];
                 }
             }
+            var path = $scope.apiPath ? $scope.apiPath : apiConnection;
+            console.log('path',path);
 
             if ($scope.NowPage >= 1) {
                 $http.get(apiConnection, { params: s })

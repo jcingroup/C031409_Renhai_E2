@@ -15,7 +15,7 @@
             <div><a href="<%=ResolveUrl("~/MemberMark") %>">會員重複標記</a></div>
             <div><a href="<%=ResolveUrl("~/TempleMember") %>">契子會會員管理</a></div>
             <div><a href="<%=ResolveUrl("~/ExcelReport/downloadExcel_PostMember?year=2015") %>">會員郵寄標籤列印</a></div>
-            <div><a href="<%=ResolveUrl("~/ExcelReport/ajax_MakeExcel?Date1=2016-12-01&Date2=2016-12-07&Time1=01&Time2=24&People=1000001") %>">統計表列印</a></div>
+            <div><a href="<%=ResolveUrl("~/ExcelReport/ajax_MakeExcel?Date1=2017-01-01&Date2=2017-12-07&Time1=01&Time2=24&People=1000001") %>">統計表列印</a></div>
         </div>
     </form>
 </body>

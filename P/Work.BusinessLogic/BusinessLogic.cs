@@ -2095,7 +2095,7 @@ namespace ProcCore.Business.Logic
         //public static String 香油_進香活動 = "704";
         //public static String 香油_自強活動 = "705";
         public static string 香油_媽祖回鑾 = "703";
-        public static string 香油_媽祖聖誕 = "704";
+        public static string 香油_媽祖聖誕擲筊 = "704";//2017/3/2香油_媽祖聖誕改名為香油_媽祖聖誕擲筊
         public static string 香油_媽祖聖誕典禮 = "705";
         public static string 香油_專案專款 = "706";
         public static string 租金 = "707";
@@ -2117,7 +2117,8 @@ namespace ProcCore.Business.Logic
         public static string 捐金牌 = "10";
         public static string 捐白米 = "11";
         public static string 主斗 = "380";
-        public static string 副斗 = "381";
+        public static string 副斗 = "381";//2017/3/2改名為斗首
+        public static string 福斗 = "385";//2017/3/2新增
         public static string 大斗 = "382";
         public static string 中斗 = "383";
         public static string 小斗 = "384";
@@ -5188,7 +5189,7 @@ namespace ProcCore.Business.Logic
         public int 香油錢 { get; set; }
         public int 香油_信徒觀摩 { get; set; }
         public int 香油_祈願卡 { get; set; }
-        public int 香油_媽祖聖誕 { get; set; }
+        public int 香油_媽祖聖誕擲筊 { get; set; }
         public int 香油_媽祖回鑾 { get; set; }
         public int 香油_專案專款 { get; set; }
         public int 香油_媽祖聖誕典禮 { get; set; }
@@ -5209,7 +5210,8 @@ namespace ProcCore.Business.Logic
         public int 契子會_大會 { get; set; }
 
         public int 主斗 { get; set; }
-        public int 副斗 { get; set; }
+        public int 副斗 { get; set; }//2017/3/2改名為斗首
+        public int 福斗 { get; set; }//2017/3/2新增
         public int 大斗 { get; set; }
         public int 中斗 { get; set; }
         public int 小斗 { get; set; }
@@ -5306,7 +5308,7 @@ namespace ProcCore.Business.Logic
                 md.觀音頭燈 = mds.Any(x => x.產品編號 == e_祈福產品.觀音頭燈) ? mds.First(x => x.產品編號 == e_祈福產品.觀音頭燈).數量 : 0;
 
                 md.香油錢 = mds.Any(x => x.產品編號 == e_祈福產品.香油錢) ? mds.First(x => x.產品編號 == e_祈福產品.香油錢).數量 : 0;
-                md.香油_媽祖聖誕 = mds.Any(x => x.產品編號 == e_祈福產品.香油_媽祖聖誕) ? mds.First(x => x.產品編號 == e_祈福產品.香油_媽祖聖誕).數量 : 0;
+                md.香油_媽祖聖誕擲筊 = mds.Any(x => x.產品編號 == e_祈福產品.香油_媽祖聖誕擲筊) ? mds.First(x => x.產品編號 == e_祈福產品.香油_媽祖聖誕擲筊).數量 : 0;
                 md.香油_媽祖回鑾 = mds.Any(x => x.產品編號 == e_祈福產品.香油_媽祖回鑾) ? mds.First(x => x.產品編號 == e_祈福產品.香油_媽祖回鑾).數量 : 0;
                 md.香油_祈願卡 = mds.Any(x => x.產品編號 == e_祈福產品.香油_祈願卡) ? mds.First(x => x.產品編號 == e_祈福產品.香油_祈願卡).數量 : 0;
                 md.香油_契子觀摩 = mds.Any(x => x.產品編號 == e_祈福產品.香油_契子觀摩) ? mds.First(x => x.產品編號 == e_祈福產品.香油_契子觀摩).數量 : 0;
