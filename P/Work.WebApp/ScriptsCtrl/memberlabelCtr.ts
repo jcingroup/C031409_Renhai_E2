@@ -27,7 +27,7 @@ angular
     $scope.selectZipcode = commData.member_label_print;
     $scope.sd = {
         zipcode: '320',
-        year: 2015
+        year: 2016
     }
     $scope.JumpPage = function (page: number) {
         $scope.NowPage = page;
