@@ -277,6 +277,16 @@
         lD: string;
         people: number;
     }
+
+    interface AssemblyBatch extends server.BaseEntityTable {
+        batch_sn: number;
+        batch_title: string;
+        batch_date: any;
+        lunar_y: any;
+        lunar_m: any;
+        lunar_d: any;
+        batch_qty: number;
+    }
 }
 
 //下面為擴充屬性

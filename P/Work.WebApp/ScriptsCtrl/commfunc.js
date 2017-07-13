@@ -158,6 +158,14 @@ angular.module('commfun', []).service('workService', ['$http', function ($http) 
     };
     this.showToaster = function (type, title, message) {
     };
+    this.setApplyYearRange = function () {
+        var y = [];
+        var getNowYear = (new Date()).getFullYear();
+        for (var i = 2016; i <= getNowYear; i++) {
+            y.push(i);
+        }
+        return y;
+    };
 }]);
 angular.module('commfun').directive('capitalize', function () {
     return {

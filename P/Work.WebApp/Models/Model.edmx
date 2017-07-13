@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RenHai2012Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AssemblyBatch">
+          <Key>
+            <PropertyRef Name="batch_sn" />
+          </Key>
+          <Property Name="batch_sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="batch_title" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="batch_date" Type="datetime" Nullable="false" />
+          <Property Name="lunar_y" Type="nvarchar" MaxLength="16" />
+          <Property Name="lunar_m" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="lunar_d" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="batch_qty" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Fortune_Light">
           <Key>
             <PropertyRef Name="fortune_light_id" />
@@ -443,6 +455,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RenHai2012ModelStoreContainer">
+          <EntitySet Name="AssemblyBatch" EntityType="Self.AssemblyBatch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fortune_Light" EntityType="Self.Fortune_Light" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="i_IDX" EntityType="Self.i_IDX" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Member_Detail_Category" EntityType="Self.Member_Detail_Category" Schema="dbo" store:Type="Tables" />
@@ -781,6 +794,7 @@
             <End Role="TempleMember" EntitySet="TempleMember" />
             <End Role="TempleAccount" EntitySet="TempleAccount" />
           </AssociationSet>
+          <EntitySet Name="AssemblyBatch" EntityType="RenHai2012Model.AssemblyBatch" />
         </EntityContainer>
         <EntityType Name="Manjushri">
           <Key>
@@ -1039,6 +1053,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AssemblyBatch">
+          <Key>
+            <PropertyRef Name="batch_sn" />
+          </Key>
+          <Property Name="batch_sn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="batch_title" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="batch_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="lunar_y" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="lunar_m" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="lunar_d" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="batch_qty" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1348,6 +1374,19 @@
                 <ScalarProperty Name="product_sn" ColumnName="product_sn" />
                 <ScalarProperty Name="product_name" ColumnName="product_name" />
                 <ScalarProperty Name="temple_account_id" ColumnName="temple_account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssemblyBatch">
+            <EntityTypeMapping TypeName="RenHai2012Model.AssemblyBatch">
+              <MappingFragment StoreEntitySet="AssemblyBatch">
+                <ScalarProperty Name="batch_qty" ColumnName="batch_qty" />
+                <ScalarProperty Name="lunar_d" ColumnName="lunar_d" />
+                <ScalarProperty Name="lunar_m" ColumnName="lunar_m" />
+                <ScalarProperty Name="lunar_y" ColumnName="lunar_y" />
+                <ScalarProperty Name="batch_date" ColumnName="batch_date" />
+                <ScalarProperty Name="batch_title" ColumnName="batch_title" />
+                <ScalarProperty Name="batch_sn" ColumnName="batch_sn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

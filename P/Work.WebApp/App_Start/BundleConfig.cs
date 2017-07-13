@@ -84,6 +84,11 @@ namespace Work.WebApp
                 .Include("~/Scripts/ui-bootstrap-tpls-0.12.0.js")
                 .Include("~/ScriptsCtrl/memberlabelCtr.js")
                 );
+            bundles.Add(new ScriptBundle("~/assemblybatchCtr")
+            .Include(commFile)
+            .Include("~/Scripts/ui-bootstrap-tpls-0.12.0.js")
+            .Include("~/ScriptsCtrl/assemblybatchCtr.js")
+            );
 
             bundles.Add(new ScriptBundle("~/testCtr")
                 .Include(commFile)

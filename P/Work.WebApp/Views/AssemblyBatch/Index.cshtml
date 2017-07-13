@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    @Scripts.Render("~/assemblybatchCtr")
+}
+<div ui-view></div>
+<script type="text/ng-template" id="dataGrid">
+    <form class="query-form" ng-submit="Init_Query()">
+        <fieldset>
+            <!--
+                  <label>法會時間(國曆)： 起</label>
+            <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
+            <label>迄</label>
+            <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />
+            -->
+            <label>法會年度： </label>
+            <select ng-model="sd.year" ng-options="m as (m+'年') for m in year_list"></select>
+            <button type="submit">
+                <i class="fa fa-search"></i>查詢
+            </button>
+            <button type="button" ng-click="copy()">
+                <i class="fa fa-files-o"></i>複製前一年(今年沒資料才可按)
+            </button>
+        </fieldset>
+    </form>
+    <div class="grid-list">
+        <table class="table-master">
+            <caption>
+                超渡法會梯次管理
+                <button type="button" ng-click="Master_Open_New()">新增法會梯次</button>
+            </caption>
+            <tr>
+                <th width="5%" class="text-center">編輯</th>
+                <th width="5%" class="text-center">刪除</th>
+                <th width="10%">梯次名稱</th>
+                <th width="10%">法會時間(國曆)</th>
+                <th width="10%">農曆年</th>
+                <th width="10%">農曆月</th>
+                <th width="10%">農曆日</th>
+                <th width="10%">梯次上限人數</th>
+            </tr>
+            <tr ng-repeat="gd in Grid_Items">
+                <td>
+                    <button type="button" ng-click="Master_Open_Modify($index)"
+                            title="@Resources.Res.Button_Sure_Modify">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" ng-click="masterDelete($index)"
+                            title="@Resources.Res.Button_Sure_Modify">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
+                <td>{{gd.batch_title}}</td>
+                <td>{{gd.batch_date | date:'yyyy-MM-dd HH:mm'}}</td>
+                <td>{{gd.lunar_y}}</td>
+                <td>{{gd.lunar_m}}</td>
+                <td>{{gd.lunar_d}}</td>
+                <td>{{gd.batch_qty}}</td>
+            </tr>
+        </table>
+        @Html.Partial("NavPage")
+    </div>
+</script>
+<script type="text/ng-template" id="dataEdit">
+    <!-- 編輯畫面-->
+    <form ng-submit="submitData()" class="red-form">
+        <table class="table-master">
+            <caption>
+                法會梯次填寫
+                <button type="button" ng-click="goGrid()">回表列</button>
+            </caption>
+            <tr>
+                <th>梯次名稱</th>
+                <td colspan="3">
+                    <input type="text" maxlength="64" ng-model="fd.batch_title" />
+                </td>
+            </tr>
+            <tr>
+                <th>法會時間(國曆)</th>
+                <td>
+                    <input type="date" ng-model="fd.batch_date" required />
+                </td>
+                <th>法會時間(農曆)</th>
+                <td width="30%">
+                    <input type="text" ng-model="fd.lunar_y" required style="width:15%" /> 年
+                    <input type="text" ng-model="fd.lunar_m" required style="width:15%" /> 月
+                    <input type="text" ng-model="fd.lunar_d" required style="width:15%" />日
+                </td>
+            </tr>
+            <tr>
+                <th>梯次上限人數</th>
+                <td colspan="3">
+                    <input type="number" min="1" ng-model="fd.batch_qty" required />
+                </td>
+            </tr>
+        </table>
+        <div style="text-align:center">
+            <button type="submit">確認儲存</button>
+        </div>
+    </form>
+    <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
+</script>

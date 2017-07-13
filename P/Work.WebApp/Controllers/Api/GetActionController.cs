@@ -350,6 +350,7 @@ namespace DotWeb.Api
             }
         }
         #endregion
+
     }
 
     //GetFortuneLight

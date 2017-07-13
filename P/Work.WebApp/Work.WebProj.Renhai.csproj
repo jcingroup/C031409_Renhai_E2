@@ -163,6 +163,7 @@
     <Compile Include="Controllers\Api\TempleAccountController.cs" />
     <Compile Include="Controllers\Api\TempleMarkCloseController.cs" />
     <Compile Include="Controllers\Api\MemberLabelController.cs" />
+    <Compile Include="Controllers\Api\AssemblyBatchController.cs" />
     <Compile Include="Controllers\Api\TempleMemberController.cs" />
     <Compile Include="Controllers\Api\RejectReportController.cs" />
     <Compile Include="Controllers\Api\PutActionController.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Controllers\MemberLabelController.cs" />
     <Compile Include="Controllers\TempleMarkCloseController.cs" />
     <Compile Include="Controllers\SetDataController.cs" />
+    <Compile Include="Controllers\AssemblyBatchController.cs" />
     <Compile Include="Controllers\TempleMemberController.cs" />
     <Compile Include="Controllers\RejectReportController.cs" />
     <Compile Include="Controllers\RejectLightController.cs" />
@@ -194,6 +196,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssemblyBatch.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BaseApiController.cs" />
     <Compile Include="Models\Fortune_Light.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -202,6 +207,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Member_Detail_Category.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_AssemblyBatch.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\m_Fortune_Light.cs">
@@ -579,13 +587,14 @@
     <Content Include="Views\FortuneLightLabel\Index.cshtml" />
     <Content Include="Views\RejectReport\Index.cshtml" />
     <Content Include="Views\TempleMember\Index.cshtml" />
-    <Content Include="Views\TempleMember\PostPrint.cshtml" />
     <Content Include="Views\TempleAccountPrint\Index.cshtml" />
     <Content Include="Views\TempleMarkClose\Index.cshtml" />
-    <Content Include="Views\TempleMember\MemberPrint.cshtml" />
     <Content Include="Views\TempleAccount\Index.cshtml" />
     <Content Include="Views\MemberLabel\Index.cshtml" />
     <Content Include="Views\SetData\Product.cshtml" />
+    <Content Include="Views\AssemblyBatch\Index.cshtml" />
+    <Content Include="Views\TempleMember\MemberPrint.cshtml" />
+    <Content Include="Views\TempleMember\PostPrint.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -680,6 +689,7 @@
     <TypeScriptCompile Include="ScriptsCtrl\d.ts\angular-ui-router.d.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\templemarkcloseCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\productCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\assemblybatchCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\templememberprintallCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\templeaccountCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\memberlabelCtr.ts" />

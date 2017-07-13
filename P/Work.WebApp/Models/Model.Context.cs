@@ -41,5 +41,6 @@ namespace Work.WebApp.Models
         public virtual DbSet<Fortune_Light> Fortune_Light { get; set; }
         public virtual DbSet<TempleMember> TempleMember { get; set; }
         public virtual DbSet<TempleAccount> TempleAccount { get; set; }
+        public virtual DbSet<AssemblyBatch> AssemblyBatch { get; set; }
     }
 }

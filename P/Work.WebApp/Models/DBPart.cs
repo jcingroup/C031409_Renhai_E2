@@ -163,5 +163,12 @@ namespace Work.WebApp.Models
         public string mobile { get; set; }
         public int? temple_member_id { get; set; }
     }
+    public class q_AssemblyBatch : QueryBase
+    {
+        public DateTime? startDate { get; set; }
+        public DateTime? endDate { get; set; }
+        public int? year { get; set; }
+        public string keyword { get; set; }
+    }
     #endregion
 }

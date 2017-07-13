@@ -141,6 +141,7 @@ module services {
         getUsers: () => ng.IHttpPromise<IResultData<server.Users[]>>;
         getFortune: (orders_sn: string) => ng.IHttpPromise<IResultData<number[]>>;
         showToaster: (type: emToasterType, title: string, message: string) => void;
+        setApplyYearRange: () => number[];
     }
 };
 
@@ -221,7 +222,18 @@ angular.module('commfun', []).service('workService', ['$http', function ($http: 
         //if (type == emToasterType.note)
         //    toaster.pop('note', title, message);
     }
+    this.setApplyYearRange = function (): number[] {
+        var y: number[] = [];
+        var getNowYear: number = (new Date()).getFullYear();
 
+        //for (var i = getNowYear - 1; i <= getNowYear + 1; i++) {
+        //    y.push(i);
+        //}
+        for (var i = 2016; i <= getNowYear; i++) {
+            y.push(i);
+        }
+        return y;
+    };
 }]);
 angular.module('commfun').directive('capitalize', function () {
     return {
@@ -257,7 +269,7 @@ angular.module('commfun').factory('gridpage', ['$http', function ($http: ng.IHtt
                 }
             }
             var path = $scope.apiPath ? $scope.apiPath : apiConnection;
-            console.log('path',path);
+            //console.log('path',path);
 
             if ($scope.NowPage >= 1) {
                 $http.get(apiConnection, { params: s })
