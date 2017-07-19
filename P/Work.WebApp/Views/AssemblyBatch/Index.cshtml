@@ -24,9 +24,9 @@
             <button type="button" ng-click="copy()" ng-show="@(ViewBag.ID == 1000001?"true":"false")">
                 <i class="fa fa-files-o"></i>複製前一年(今年沒資料才可按)
             </button>
-            <button type="button" ng-click="copySite()" ng-show="@(ViewBag.ID == 1000001?"true":"false")">
+            @*<button type="button" ng-click="copySite()" ng-show="@(ViewBag.ID == 1000001?"true":"false")">
                 <i class="fa fa-files-o"></i>燈位
-            </button>
+            </button>*@
         </fieldset>
     </form>
     <div class="grid-list">
@@ -38,13 +38,14 @@
             <tr>
                 <th width="5%" class="text-center">編輯</th>
                 <th width="5%" class="text-center">刪除</th>
-                <th width="10%">梯次名稱</th>
-                <th width="6%">法會時間(國曆)</th>
+                <th width="8%">梯次名稱</th>
+                <th width="8%">法會時間(國曆)</th>
                 <th width="6%">法會時段</th>
                 <th width="8%">農曆年</th>
                 <th width="8%">農曆月</th>
                 <th width="8%">農曆日</th>
-                <th width="10%">梯次上限人數</th>
+                <th width="5%">上限人數</th>
+                <th width="5%">報名人數</th>
             </tr>
             <tr ng-repeat="gd in Grid_Items">
                 <td>
@@ -66,11 +67,13 @@
                 <td>{{gd.lunar_m}}</td>
                 <td>{{gd.lunar_d}}</td>
                 <td>{{gd.batch_qty}}</td>
+                <td>{{gd.count}}</td>
             </tr>
         </table>
         @Html.Partial("NavPage")
     </div>
-    <span style="color:red">1.請每年度各別新增法會批次資料(請勿不同年度,修改時間後重複使用)</span>
+    <span style="color:red">1.請每年度各別新增法會梯次資料(請勿不同年度,修改時間後重複使用)</span></br>
+    <span style="color:red">2.法會每梯次500人</span>
 </script>
 <script type="text/ng-template" id="dataEdit">
     <!-- 編輯畫面-->

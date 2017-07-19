@@ -40,6 +40,7 @@ namespace DotWeb.Api
                                  lunar_m = x.lunar_m,
                                  lunar_d = x.lunar_d,
                                  batch_qty = x.batch_qty,
+                                 count = x.訂單明細檔.Where(y => y.is_reject != true).Count()
                              });
 
                 if (q.year != null)
