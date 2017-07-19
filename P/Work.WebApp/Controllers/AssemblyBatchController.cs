@@ -80,7 +80,7 @@ namespace DotWeb.Controllers
                         var md = new AssemblyBatch()
                         {
                             batch_title = i.batch_title,
-                            batch_date = i.batch_date.AddYears(1),
+                            batch_date = i.batch_date.AddYears(1).Date,
                             lunar_y = (year - 1911).ToString(),
                             lunar_m = i.lunar_m,
                             lunar_d = i.lunar_d,

@@ -79,7 +79,7 @@ namespace DotWeb.Api
                 item = db0.AssemblyBatch.Find(md.batch_sn);
 
                 item.batch_title = md.batch_title;
-                item.batch_date = md.batch_date;
+                item.batch_date = md.batch_date.Date;
                 item.lunar_y = md.lunar_y;
                 item.lunar_m = md.lunar_m;
                 item.lunar_d = md.lunar_d;
@@ -116,6 +116,8 @@ namespace DotWeb.Api
                 db0 = getDB0();
                 //md.temple_member_id = GetNewId(CodeTable.TempleMember);
 
+                md.batch_date = md.batch_date.Date;
+
                 db0.AssemblyBatch.Add(md);
                 db0.SaveChanges();
 
@@ -141,7 +143,14 @@ namespace DotWeb.Api
             try
             {
                 db0 = getDB0();
-
+                bool exist = db0.Orders_Detail.Any(x => x.assembly_batch_sn == id);
+                if (exist)
+                {
+                    rAjaxResult.result = false;
+                    rAjaxResult.message = "已有交易紀錄無法刪除!!";
+                    return rAjaxResult;
+                }
+                
                 var item = db0.AssemblyBatch.Find(id);
 
                 db0.AssemblyBatch.Remove(item);
