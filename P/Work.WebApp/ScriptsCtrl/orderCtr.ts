@@ -23,6 +23,7 @@
     product_category: string;
     allowSetAssembly: string[];
     allowYear: number;
+    timeperiod_list: IKeyValueS[];
 
 
     ShowEdit(): void;
@@ -755,7 +756,7 @@ angular.module('angularApp')
         var allowSetRace: string[] = ['白米'];
         var allowSetGold: string[] = ['金牌'];
         var allowSetGodSon: string[] = ['契子'];
-
+        $scope.timeperiod_list = commData.batch_timeperiod;
         $scope.allowYear = allowyear;
         $scope.allowSetAssembly = ['超渡法會'];
 

@@ -374,6 +374,7 @@ namespace DotWeb.Api
                                  lunar_y = x.AssemblyBatch.lunar_y,
                                  lunar_m = x.AssemblyBatch.lunar_m,
                                  lunar_d = x.AssemblyBatch.lunar_d,
+                                 batch_timeperiod = x.AssemblyBatch.batch_timeperiod,
                                  assembly_batch_sn = x.assembly_batch_sn,
                                  orders_sn = x.orders_sn,
                                  member_name = x.member_name,
@@ -425,6 +426,7 @@ namespace DotWeb.Api
                     {
                         batch_sn = x.batch_sn,
                         batch_date = x.batch_date,
+                        batch_timeperiod = x.batch_timeperiod,
                         batch_title = x.batch_title,
                         count = x.訂單明細檔.Where(z => z.is_reject != true).Count()
                     }).OrderBy(x => x.batch_date).ToList();

@@ -284,7 +284,9 @@
     interface AssemblyBatch extends server.BaseEntityTable {
         batch_sn: number;
         batch_title: string;
+        time_sn: string;
         batch_date: any;
+        batch_timeperiod: string;
         lunar_y: any;
         lunar_m: any;
         lunar_d: any;

@@ -1,7 +1,10 @@
 ﻿interface IAssemblyBatch extends IScopeM<server.AssemblyBatch> {
     sd: any;
     masterDelete($index): void //主檔單一筆刪除
-    year_list: number[]
+    year_list: number[];
+    timeperiod_list: IKeyValueS[];
+
+    matchOptions(): string;//filter
 
     copy(): void;
     copySite(): void;
@@ -50,6 +53,7 @@ angular
         templateUrl: 'dataEdit',
         controller: 'ctrl_edit'
     })
+
 }]);
 var apiPath: string = gb_approot + 'api/AssemblyBatch';
 angular
@@ -65,7 +69,7 @@ angular
         var today: Date = new Date();
         var fday: Date = new Date(today.getFullYear() + "/1/1");
         $scope.year_list = workService.setApplyYearRange();
-
+        $scope.timeperiod_list = commData.batch_timeperiod;
         $scope.sd = {//預設日期為今天
             year: today.getFullYear()
         }
@@ -220,6 +224,7 @@ angular
             });
         };
 
+
         //日曆小幫手---start---
         // Disable weekend selection
         //$scope.disabled = function (date, mode) {
@@ -268,8 +273,11 @@ angular.module('angularApp')
 
 
             if (submitCheck) {
+                var md = jQuery.extend({}, $scope.fd);
+                md.batch_date = setDateS(md.batch_date);
+
                 if ($scope.edit_type == IEditType.insert) {
-                    $http.post(apiPath, $scope.fd)
+                    $http.post(apiPath, md)
                         .success(function (data: IResultBase, status, headers, config) {
                         if (data.result) {
                             $scope.fd.batch_sn = data.id;
@@ -286,7 +294,7 @@ angular.module('angularApp')
                 }
                 if ($scope.edit_type == IEditType.update) {
 
-                    $http.put(apiPath, $scope.fd)
+                    $http.put(apiPath, md)
                         .success(function (data: IResultBase, status, headers, config) {
                         if (data.result) {
                             alert('更新完成');
@@ -331,7 +339,7 @@ angular.module('angularApp')
             getMasterData(get_id);
         } else { //進入為新增模式
             $scope.edit_type = IEditType.insert;
-            $scope.fd = <server.AssemblyBatch>{ batch_qty: 500 };
+            $scope.fd = <server.AssemblyBatch>{ batch_qty: 500, batch_timeperiod: 'All' };
         }
     }]);
 

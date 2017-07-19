@@ -566,6 +566,7 @@ angular.module('angularApp').controller('ctrl_general', ['$scope', '$http', 'wor
     var allowSetRace = ['白米'];
     var allowSetGold = ['金牌'];
     var allowSetGodSon = ['契子'];
+    $scope.timeperiod_list = commData.batch_timeperiod;
     $scope.allowYear = allowyear;
     $scope.allowSetAssembly = ['超渡法會'];
     $scope.born_sign = commData.born_sign;

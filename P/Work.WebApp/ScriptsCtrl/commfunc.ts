@@ -358,3 +358,14 @@ angular.module('commfun').filter('godsonProductSn', function () {
         return s;
     }
 });
+
+angular.module('commfun').filter('OptionStr', function () {
+    return function (input, data) {
+        var res = "";
+        var item = data.filter(function (x) { return x.value == input; });
+        if (item.length > 0) {
+            res = item[0].label;
+        }
+        return res;
+    }
+});

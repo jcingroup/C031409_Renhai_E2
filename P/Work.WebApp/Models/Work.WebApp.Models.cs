@@ -90,6 +90,7 @@ namespace Work.WebApp.Models
     {
         public string batch_title { get; set; }
         public System.DateTime batch_date { get; set; }
+        public string batch_timeperiod { get; set; }
         public string lunar_y { get; set; }
         public string lunar_m { get; set; }
         public string lunar_d { get; set; }

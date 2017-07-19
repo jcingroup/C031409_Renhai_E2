@@ -76,11 +76,13 @@ namespace DotWeb.Controllers
 
                     foreach (var i in list)
                     {
-
+                        DateTime newdate = i.batch_date.AddYears(1);
                         var md = new AssemblyBatch()
                         {
                             batch_title = i.batch_title,
-                            batch_date = i.batch_date.AddYears(1).Date,
+                            time_sn = newdate.ToString("yyyyMMdd") + i.batch_timeperiod,
+                            batch_date = newdate.Date,
+                            batch_timeperiod = i.batch_timeperiod,
                             lunar_y = (year - 1911).ToString(),
                             lunar_m = i.lunar_m,
                             lunar_d = i.lunar_d,

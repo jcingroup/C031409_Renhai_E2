@@ -3,6 +3,7 @@
     masterDelete($index): void //主檔單一筆刪除
     year_list: number[]
     bath_list: server.AssemblyBatch[];
+    timeperiod_list: IKeyValueS[];
 
     //日曆小幫手測試
     disabled(date: Date, mode: string): void;
@@ -55,6 +56,7 @@ angular
         var today: Date = new Date();
         var fday: Date = new Date(today.getFullYear() + "/1/1");
         $scope.year_list = workService.setApplyYearRange();
+        $scope.timeperiod_list = commData.batch_timeperiod;
 
         $scope.sd = {//預設日期為今天
             year: today.getFullYear()

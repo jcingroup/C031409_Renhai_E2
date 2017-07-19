@@ -1,5 +1,10 @@
 var commData;
 (function (commData) {
+    commData.batch_timeperiod = [
+        { value: "All", label: "整天" },
+        { value: "AM", label: "上午" },
+        { value: "PM", label: "下午" }
+    ];
     commData.born_sign = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
     commData.born_time = [
         { value: '吉', label: '00:00~23:59 吉時' },

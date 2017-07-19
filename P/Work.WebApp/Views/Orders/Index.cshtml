@@ -304,7 +304,7 @@
                     </th>
                     <td>
                         <select ng-model="cart.assembly_batch_sn" ng-disabled="cart.y!=allowYear"
-                                ng-options="m.batch_sn as (m.batch_title+'('+(m.batch_date | date:'yyyy-MM-dd')+')') for m in Abath_List"></select>
+                                ng-options="m.batch_sn as (m.batch_title+'('+(m.batch_date | date:'yyyy-MM-dd')+(m.batch_timeperiod |  OptionStr:timeperiod_list)+')') for m in Abath_List"></select>
                     </td>
                 </tr>
                 <tr ng-show="allowSetAssembly.indexOf(product_category) >= 0">

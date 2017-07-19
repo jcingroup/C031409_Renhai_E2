@@ -11,6 +11,8 @@
           </Key>
           <Property Name="batch_sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="batch_title" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="time_sn" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="batch_timeperiod" Type="nvarchar" MaxLength="16" Nullable="false" />
           <Property Name="batch_date" Type="datetime" Nullable="false" />
           <Property Name="lunar_y" Type="nvarchar" MaxLength="16" />
           <Property Name="lunar_m" Type="nvarchar" MaxLength="16" Nullable="false" />
@@ -1088,6 +1090,8 @@
           </Key>
           <Property Name="batch_sn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="batch_title" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="time_sn" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="batch_timeperiod" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="batch_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="lunar_y" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="lunar_m" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
@@ -1431,6 +1435,8 @@
                 <ScalarProperty Name="lunar_m" ColumnName="lunar_m" />
                 <ScalarProperty Name="lunar_y" ColumnName="lunar_y" />
                 <ScalarProperty Name="batch_date" ColumnName="batch_date" />
+                <ScalarProperty Name="batch_timeperiod" ColumnName="batch_timeperiod" />
+                <ScalarProperty Name="time_sn" ColumnName="time_sn" />
                 <ScalarProperty Name="batch_title" ColumnName="batch_title" />
                 <ScalarProperty Name="batch_sn" ColumnName="batch_sn" />
               </MappingFragment>

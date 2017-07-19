@@ -29,12 +29,13 @@ namespace DotWeb.Api
             using (db0 = getDB0())
             {
                 var items = (from x in db0.AssemblyBatch
-                             orderby x.batch_date 
+                             orderby x.batch_date
                              select new m_AssemblyBatch()
                              {
                                  batch_sn = x.batch_sn,
                                  batch_title = x.batch_title,
                                  batch_date = x.batch_date,
+                                 batch_timeperiod = x.batch_timeperiod,
                                  lunar_y = x.lunar_y,
                                  lunar_m = x.lunar_m,
                                  lunar_d = x.lunar_d,
@@ -78,8 +79,18 @@ namespace DotWeb.Api
                 db0 = getDB0();
                 item = db0.AssemblyBatch.Find(md.batch_sn);
 
+                item.time_sn = md.batch_date.ToString("yyyyMMdd") + md.batch_timeperiod;
+                bool check_time = db0.AssemblyBatch.Any(x => x.time_sn == item.time_sn & x.batch_sn != md.batch_sn);
+                if (check_time)
+                {
+                    rAjaxResult.message = "法會時間(國立)及時段不可重複!!";
+                    rAjaxResult.result = false;
+                    return rAjaxResult;
+                }
+
                 item.batch_title = md.batch_title;
                 item.batch_date = md.batch_date.Date;
+                item.batch_timeperiod = md.batch_timeperiod;
                 item.lunar_y = md.lunar_y;
                 item.lunar_m = md.lunar_m;
                 item.lunar_d = md.lunar_d;
@@ -117,6 +128,15 @@ namespace DotWeb.Api
                 //md.temple_member_id = GetNewId(CodeTable.TempleMember);
 
                 md.batch_date = md.batch_date.Date;
+                md.time_sn = md.batch_date.ToString("yyyyMMdd") + md.batch_timeperiod;
+                bool check_time = db0.AssemblyBatch.Any(x => x.time_sn == md.time_sn);
+                if (check_time)
+                {
+                    rAjaxResult.message = "法會時間(國立)及時段不可重複!!";
+                    rAjaxResult.result = false;
+                    return rAjaxResult;
+                }
+
 
                 db0.AssemblyBatch.Add(md);
                 db0.SaveChanges();
@@ -150,7 +170,7 @@ namespace DotWeb.Api
                     rAjaxResult.message = "已有交易紀錄無法刪除!!";
                     return rAjaxResult;
                 }
-                
+
                 var item = db0.AssemblyBatch.Find(id);
 
                 db0.AssemblyBatch.Remove(item);
