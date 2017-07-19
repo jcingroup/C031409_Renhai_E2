@@ -46,5 +46,9 @@ namespace Work.WebApp.Models
     public Nullable<System.DateTime> C_UpdateDateTime { get; set; }
     public Nullable<bool> is_reject { get; set; }
     public int detail_sort { get; set; }
+    public string departed_address { get; set; }
+    public string departed_name { get; set; }
+    public Nullable<int> assembly_batch_sn { get; set; }
+    public string departed_qty { get; set; }
     }
 }

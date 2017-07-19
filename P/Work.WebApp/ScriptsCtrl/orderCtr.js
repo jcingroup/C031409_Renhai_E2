@@ -566,6 +566,8 @@ angular.module('angularApp').controller('ctrl_general', ['$scope', '$http', 'wor
     var allowSetRace = ['白米'];
     var allowSetGold = ['金牌'];
     var allowSetGodSon = ['契子'];
+    $scope.allowYear = allowyear;
+    $scope.allowSetAssembly = ['超渡法會'];
     $scope.born_sign = commData.born_sign;
     $scope.born_time = commData.born_time;
     $scope.isShowEdit = false;
@@ -610,7 +612,8 @@ angular.module('angularApp').controller('ctrl_general', ['$scope', '$http', 'wor
         $scope.isShowEdit = false;
     };
     $scope.ShowEditAddProduct = function () {
-        $scope.cart = { member_detail_id: -1 };
+        $scope.cart = { member_detail_id: -1, y: allowyear };
+        GetAssemblyBatch(null);
         $scope.isShowEditProduct = true;
         $scope.isViewWorking = false;
     };
@@ -622,6 +625,7 @@ angular.module('angularApp').controller('ctrl_general', ['$scope', '$http', 'wor
             }
         }).success(function (data, status, headers, config) {
             if (data.result) {
+                GetAssemblyBatch(data.data.y);
                 $scope.cart = data.data;
                 $scope.isShowEditProduct = true;
                 $scope.isViewWorking = true;
@@ -774,6 +778,19 @@ angular.module('angularApp').controller('ctrl_general', ['$scope', '$http', 'wor
         });
     }
     ;
+    function GetAssemblyBatch(year) {
+        workService.getAssemblyBatch(year).success(function (data, status, headers, config) {
+            if (data.result) {
+                $scope.Abath_List = data.data;
+            }
+            else {
+                alert(data.message);
+            }
+        }).error(function (data, status, headers, config) {
+            alert('ajax error' + data);
+        });
+    }
+    ;
     function GetMemberDetail(member_detail_id) {
         workService.getMemberDetail(member_detail_id).success(function (data, status, headers, config) {
             if (data.result) {
@@ -840,6 +857,7 @@ angular.module('angularApp').controller('ctrl_general', ['$scope', '$http', 'wor
                     $scope.cart.product_sn = n.product_sn;
                     $scope.cart.race = 0;
                     $scope.cart.gold = 0;
+                    $scope.product_category = n.category;
                     if (allowSetPrice.indexOf(n.category) >= 0) {
                         $scope.cart_price_disable = false;
                         $scope.cart_race_disable = true;

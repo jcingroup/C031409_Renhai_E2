@@ -35,3 +35,4 @@ var Info_Update_Success;
 var p0;
 var member_id;
 var orders_type;
+var allowyear;

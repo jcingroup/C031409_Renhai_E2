@@ -107,6 +107,12 @@ namespace DotWeb.Controllers
                 if (cartData.product_sn == e_祈福產品.保運 && (cartData.LY == 1 && cartData.LM == 1 && cartData.LD == 1))
                     throw new Exception("保運日不正確");
 
+                if (getProduct.category == "超渡法會" && (cartData.assembly_batch_sn == null || cartData.departed_name == null || cartData.departed_address == null))
+                    throw new Exception("超渡法會資料需顯寫完整");
+
+                if (cartData.product_sn == e_祈福產品.超渡法會_嬰靈 && (cartData.departed_qty == null))
+                    throw new Exception("超渡法會(嬰靈)未填寫「嬰靈數量」");
+
                 cart.Item.Add(cartData);
                 cart.total = cart.Item.Sum(x => x.price);
                 cart.race = cart.Item.Sum(x => x.race);
@@ -400,7 +406,8 @@ namespace DotWeb.Controllers
                     gender = orders.gender,
                     tel = orders.tel,
                     zip = orders.zip,
-                    total = orders.total
+                    total = orders.total,
+                    y = orders.y
                 };
                 cart.Item = new List<cartDetail>();
                 foreach (var item in orders_detail)
@@ -430,7 +437,12 @@ namespace DotWeb.Controllers
                         gender = item.gender,
                         address = item.address,
                         light_name = item.light_name,
-                        detail_sort = item.detail_sort
+                        detail_sort = item.detail_sort,
+                        departed_name = item.departed_name,
+                        departed_address = item.departed_address,
+                        departed_qty = item.departed_qty,
+                        assembly_batch_sn = item.assembly_batch_sn,
+                        y = orders.y
                     });
                 }
 

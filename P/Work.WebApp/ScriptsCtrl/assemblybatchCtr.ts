@@ -4,6 +4,7 @@
     year_list: number[]
 
     copy(): void;
+    copySite(): void;
 
     //日曆小幫手測試
     disabled(date: Date, mode: string): void;
@@ -207,6 +208,17 @@ angular
                 }
             });
         };
+        $scope.copySite = function () {
+            $http.get(gb_approot + 'AssemblyBatch/addPlace')
+                .success(function (data: IResultBase, status, headers, config) {
+                if (data.result) {
+                    alert('新增燈位');
+                    $scope.Init_Query();
+                } else {
+                    alert(data.message);
+                }
+            });
+        };
 
         //日曆小幫手---start---
         // Disable weekend selection
@@ -319,7 +331,7 @@ angular.module('angularApp')
             getMasterData(get_id);
         } else { //進入為新增模式
             $scope.edit_type = IEditType.insert;
-            $scope.fd = <server.AssemblyBatch>{};
+            $scope.fd = <server.AssemblyBatch>{ batch_qty: 500 };
         }
     }]);
 

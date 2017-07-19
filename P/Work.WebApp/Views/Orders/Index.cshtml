@@ -292,6 +292,35 @@
                         {{cart.join_date}}
                     </td>
                 </tr>
+                <tr ng-show="allowSetAssembly.indexOf(product_category) >= 0">
+                    <th>
+                        超渡法會_往者名
+                    </th>
+                    <td>
+                        <input type="text" ng-model="cart.departed_name" maxlength="64" />
+                    </td>
+                    <th>
+                        超渡法會梯次
+                    </th>
+                    <td>
+                        <select ng-model="cart.assembly_batch_sn" ng-disabled="cart.y!=allowYear"
+                                ng-options="m.batch_sn as (m.batch_title+'('+(m.batch_date | date:'yyyy-MM-dd')+')') for m in Abath_List"></select>
+                    </td>
+                </tr>
+                <tr ng-show="allowSetAssembly.indexOf(product_category) >= 0">
+                    <th>
+                        超渡法會_牌位地址
+                    </th>
+                    <td>
+                        <input type="text" ng-model="cart.departed_address" maxlength="256" />
+                    </td>
+                    <th>
+                        超渡法會_嬰靈數量
+                    </th>
+                    <td>
+                        <input type="text" ng-model="cart.departed_qty" maxlength="16" />
+                    </td>
+                </tr>
                 <tr>
                     <th>去年點燈種類</th>
                     <td colspan="3">

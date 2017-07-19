@@ -137,6 +137,7 @@ module services {
         getLightByMD: (product_sn: string) => ng.IHttpPromise<IResultData<server.Light_Site[]>>;
         getProductFortune: () => ng.IHttpPromise<IResultData<server.Product[]>>;
         getManjushri: () => ng.IHttpPromise<IResultData<server.Manjushri[]>>;
+        getAssemblyBatch: (year?: number) => ng.IHttpPromise<IResultData<server.AssemblyBatch[]>>;
         getCalcLunar: (Y: number, M: number, D: number) => ng.IHttpPromise<server.LuniInfo>;
         getUsers: () => ng.IHttpPromise<IResultData<server.Users[]>>;
         getFortune: (orders_sn: string) => ng.IHttpPromise<IResultData<number[]>>;
@@ -191,6 +192,11 @@ angular.module('commfun', []).service('workService', ['$http', function ($http: 
     this.getManjushri = function () {
         return $http.get(gb_approot + 'Manjushri/GetManjushri', { params: { t: uniqid() } });
     };
+
+    this.getAssemblyBatch = function (year?: number) {
+        return $http.get(gb_approot + 'AssemblyBatch/GetAssemblyBatch', { params: { year: year, t: uniqid() } });
+    };
+
 
     this.getCalcLunar = function (Y, M, D) {
         //Y:是民國值 不是西元

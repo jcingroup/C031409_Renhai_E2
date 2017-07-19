@@ -34,6 +34,7 @@
         <EntityTypeShape EntityType="RenHai2012Model.TempleAccount" Width="1.5" PointX="13.875" PointY="12.25" />
         <AssociationConnector Association="RenHai2012Model.FK_Temple_Account_Temple_Member" />
         <EntityTypeShape EntityType="RenHai2012Model.AssemblyBatch" Width="1.5" PointX="5.375" PointY="13.75" />
+        <AssociationConnector Association="RenHai2012Model.FK_訂單明細檔_AssemblyBatch" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

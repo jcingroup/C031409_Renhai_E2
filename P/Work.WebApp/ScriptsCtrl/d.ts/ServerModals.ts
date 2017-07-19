@@ -145,6 +145,7 @@
         Item: server.cartDetail[];
         orders_sn: string;
         transation_date: Date;
+        y?: number;
     }
     interface cartDetail {
         price: number;
@@ -181,6 +182,8 @@
         LD: number;
         isOnLeapMonth: boolean;
         isOnOrder: boolean;
+
+        y: number;
     }
     interface LuniInfo {
         SY: number;

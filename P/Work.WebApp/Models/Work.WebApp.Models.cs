@@ -24,6 +24,7 @@ namespace Work.WebApp.Models
         //修改時會用到
         public string orders_sn { get; set; }
         public DateTime? transation_date { get; set; }
+        public int? y { get; set; }
     }
     public class cartDetail
     {
@@ -64,6 +65,15 @@ namespace Work.WebApp.Models
         public bool isOnLeapMonth { get; set; }
         public bool isOnOrder { get; set; }
         public int detail_sort { get; set; }
+
+        /// <summary>
+        /// 超渡法會用
+        /// </summary>
+        public string departed_address { get; set; }
+        public string departed_name { get; set; }
+        public string departed_qty { get; set; }
+        public int? assembly_batch_sn { get; set; }
+        public int? y { get; set; }
     }
     public class LuniInfo
     {

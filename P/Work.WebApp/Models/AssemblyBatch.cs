@@ -15,6 +15,11 @@ namespace Work.WebApp.Models
     using Newtonsoft.Json;
     public partial class AssemblyBatch 
     {
+        public AssemblyBatch()
+        {
+            this.訂單明細檔 = new HashSet<Orders_Detail>();
+        }
+    
         public int batch_sn { get; set; }
         public string batch_title { get; set; }
         public System.DateTime batch_date { get; set; }
@@ -22,5 +27,8 @@ namespace Work.WebApp.Models
         public string lunar_m { get; set; }
         public string lunar_d { get; set; }
         public int batch_qty { get; set; }
+    
+    	[JsonIgnore]
+        public virtual ICollection<Orders_Detail> 訂單明細檔 { get; set; }
     }
 }

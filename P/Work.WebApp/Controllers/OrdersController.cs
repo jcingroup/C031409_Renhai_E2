@@ -156,6 +156,34 @@ namespace DotWeb.Controllers
                         }
                         #endregion
                     }
+
+
+                }
+                #endregion
+
+                #region 超渡法會梯次統計
+                //統計法會梯次
+                var groupOrderAssemblyBatchQty = cart.Item.Where(x => x.assembly_batch_sn != null).GroupBy(x => x.assembly_batch_sn,
+                  (key, Num) => new
+                  {
+                      assembly_batch_sn = key,
+                      needQty = Num.Count()
+                  });
+
+                foreach (var orderqty in groupOrderAssemblyBatchQty)
+                {
+                    var getBatchInfo = db0.AssemblyBatch.Where(x => x.batch_sn == orderqty.assembly_batch_sn & x.batch_date.Year == this.LightYear).FirstOrDefault();
+                    if (getBatchInfo != null)
+                    {
+                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn).Count();
+                        int EmptySerial = getBatchInfo.batch_qty - qty;//多餘空位
+                        if (EmptySerial < orderqty.needQty)
+                        {
+                            r.message = string.Format("{0}超渡法會梯次人數已達上限,請選擇其他梯次!", getBatchInfo.batch_title);
+                            r.result = false;
+                            return defJSON(r);
+                        }
+                    }
                 }
                 #endregion
 
@@ -246,7 +274,11 @@ namespace DotWeb.Controllers
                         C_InsertDateTime = DateTime.Now,
                         C_InsertUserID = this.UserId,
                         i_InsertUserID = this.UserId,
-                        detail_sort = item.detail_sort
+                        detail_sort = item.detail_sort,
+                        departed_name = item.departed_name,//超渡法會
+                        departed_address = item.departed_address,
+                        departed_qty = item.departed_qty,
+                        assembly_batch_sn = item.assembly_batch_sn
                     });
                 }
 
@@ -367,6 +399,31 @@ namespace DotWeb.Controllers
                 }
                 #endregion
 
+                #region 超渡法會梯次統計
+                //統計法會梯次
+                var groupOrderAssemblyBatchQty = cart.Item.Where(x => x.assembly_batch_sn != null).GroupBy(x => x.assembly_batch_sn,
+                  (key, Num) => new
+                  {
+                      assembly_batch_sn = key,
+                      needQty = Num.Count()
+                  });
+                foreach (var orderqty in groupOrderAssemblyBatchQty)
+                {
+                    var getBatchInfo = db0.AssemblyBatch.Where(x => x.batch_sn == orderqty.assembly_batch_sn & x.batch_date.Year == this.LightYear).FirstOrDefault();
+                    if (getBatchInfo != null)
+                    {
+                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & x.orders_sn != cart.orders_sn).Count();
+                        int EmptySerial = getBatchInfo.batch_qty - qty;//多餘空位
+                        if (EmptySerial < orderqty.needQty)
+                        {
+                            r.message = string.Format("{0}超渡法會梯次人數已達上限,請選擇其他梯次!", getBatchInfo.batch_title);
+                            r.result = false;
+                            return defJSON(r);
+                        }
+                    }
+                }
+                #endregion
+
                 #region 訂單主檔修改
                 IList<Orders_Detail> orders_detail = db0.Orders_Detail
                     .Where(x => x.orders_sn == md.orders_sn).ToList();
@@ -415,6 +472,17 @@ namespace DotWeb.Controllers
                         get_detail_item.born_time = item.born_time;
                         get_detail_item.gender = item.gender;
                         get_detail_item.detail_sort = item.detail_sort;
+                        //超渡法會
+                        get_detail_item.departed_name = item.departed_name;//往生者姓名(時辰)
+                        get_detail_item.departed_address = item.departed_address;//往生者地址
+                        get_detail_item.departed_qty = item.departed_qty;//嬰靈數量
+
+                        #region 換法會梯次
+                        if (get_detail_item.assembly_batch_sn != item.assembly_batch_sn)
+                        {
+                            get_detail_item.assembly_batch_sn = item.assembly_batch_sn;//法會梯次
+                        }
+                        #endregion
                     }
                     else
                     {
@@ -478,7 +546,11 @@ namespace DotWeb.Controllers
                             C_UpdateUserID = this.UserId,
                             C_UpdateDateTime = DateTime.Now,
                             tran_mark = false,
-                            detail_sort = item.detail_sort
+                            detail_sort = item.detail_sort,
+                            departed_name = item.departed_name,//超渡法會
+                            departed_address = item.departed_address,
+                            departed_qty = item.departed_qty,
+                            assembly_batch_sn = item.assembly_batch_sn
                         });
                     }
                 }
@@ -1980,7 +2052,8 @@ namespace DotWeb.Controllers
                     mobile = order.mobile,
                     total = order.total,
                     orders_sn = order.orders_sn,
-                    transation_date = order.transation_date
+                    transation_date = order.transation_date,
+                    y = order.y
                 };
 
                 cart.Item = new List<cartDetail>();
@@ -2010,7 +2083,12 @@ namespace DotWeb.Controllers
                         l_birthday = detail.l_birthday,
                         light_name = detail.light_name,
                         isOnOrder = true,
-                        detail_sort = detail.detail_sort
+                        detail_sort = detail.detail_sort,
+                        departed_name = detail.departed_name,//超渡法會
+                        departed_address = detail.departed_address,
+                        departed_qty = detail.departed_qty,
+                        assembly_batch_sn = detail.assembly_batch_sn,
+                        y = order.y
                     };
 
                     if (ss != null && ss.Length == 3)

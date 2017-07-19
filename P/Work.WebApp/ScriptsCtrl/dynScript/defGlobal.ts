@@ -40,3 +40,4 @@ var Info_Update_Success: string;
 var p0: number;
 var member_id: number;
 var orders_type: e_orders_type;
+var allowyear: number;

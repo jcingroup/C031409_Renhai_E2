@@ -2104,9 +2104,9 @@ namespace ProcCore.Business.Logic
         public static string 香油_牛軋糖 = "761";
         public static string 香油_農民曆廣告 = "762";//2016/12/7 下架
         public static string 香油_衣服 = "763";
-        public static string 香油_薦拔祖先 = "764";
-        public static string 香油_冤親債主 = "765";
-        public static string 香油_嬰靈 = "766";
+        public static string 香油_薦拔祖先 = "764";//2017/7/19 下架
+        public static string 香油_冤親債主 = "765";//2017/7/19 下架
+        public static string 香油_嬰靈 = "766";//2017/7/19 下架
         public static string 香油_屋頂整修費 = "767";//2016/12/7 加入
         public static string 香油_祈福玉珮 = "768";//2016/12/30 加入
 
@@ -2130,7 +2130,15 @@ namespace ProcCore.Business.Logic
         public static string 左排福燈 = "394";
         public static string 後排福燈 = "395";
         public static string 上排福燈 = "396";
+
+        //2017/7/17
+        public static string 超渡法會_祖先甲 = "1401";
+        public static string 超渡法會_祖先乙 = "1402";
+        public static string 超渡法會_冤親債主 = "1403";
+        public static string 超渡法會_嬰靈 = "1404";
+
     }
+
     #endregion
 
     #region 會員資料表
@@ -5198,9 +5206,9 @@ namespace ProcCore.Business.Logic
         public int 香油_牛軋糖 { get; set; }
         public int 香油_農民曆廣告 { get; set; }//2016/12/7 下架
         public int 香油_衣服 { get; set; }
-        public int 香油_薦拔祖先 { get; set; }
-        public int 香油_冤親債主 { get; set; }
-        public int 香油_嬰靈 { get; set; }
+        public int 香油_薦拔祖先 { get; set; }//2017/7/19 下架
+        public int 香油_冤親債主 { get; set; }//2017/7/19 下架
+        public int 香油_嬰靈 { get; set; }//2017/7/19 下架
         public int 香油_屋頂整修費 { get; set; }//2016/12/7 加入
         public int 香油_祈福玉珮 { get; set; }//2016/12/30 加入
 
@@ -5233,6 +5241,10 @@ namespace ProcCore.Business.Logic
         public int 左排福燈 { get; set; }
         public int 後排福燈 { get; set; }
         public int 上排福燈 { get; set; }
+
+        public int 超渡法會_薦拔祖先 { get; set; }
+        public int 超渡法會_冤親債主 { get; set; }
+        public int 超渡法會_嬰靈 { get; set; }
     }
     public class m_統計數據
     {

@@ -4,6 +4,7 @@
     lights: server.Light_Site[];
     pds_fortune: server.Product[];//福燈類
     mjs: server.Manjushri[];
+    Abath_List: server.AssemblyBatch[];
     cart: server.cartDetail;
     born_sign: string[];
     downloadExcel: string;
@@ -18,6 +19,11 @@
     isTodayOrder: boolean;
     users: server.Users[];
     order_detail: server.Orders_Detail[];
+    //超渡法會
+    product_category: string;
+    allowSetAssembly: string[];
+    allowYear: number;
+
 
     ShowEdit(): void;
     CloseEdit(): void;
@@ -750,6 +756,9 @@ angular.module('angularApp')
         var allowSetGold: string[] = ['金牌'];
         var allowSetGodSon: string[] = ['契子'];
 
+        $scope.allowYear = allowyear;
+        $scope.allowSetAssembly = ['超渡法會'];
+
         $scope.born_sign = commData.born_sign;
         $scope.born_time = commData.born_time;
         $scope.isShowEdit = false;
@@ -802,7 +811,8 @@ angular.module('angularApp')
         };
 
         $scope.ShowEditAddProduct = function () {
-            $scope.cart = <server.cartDetail>{ member_detail_id: -1 };
+            $scope.cart = <server.cartDetail>{ member_detail_id: -1, y: allowyear };
+            GetAssemblyBatch(null);
             $scope.isShowEditProduct = true;
             $scope.isViewWorking = false;
         };
@@ -815,6 +825,7 @@ angular.module('angularApp')
             })
                 .success(function (data: IResultData<server.cartDetail>, status, headers, config) {
                 if (data.result) {
+                    GetAssemblyBatch(data.data.y);//一年度取得法會梯次
                     $scope.cart = data.data;
                     $scope.isShowEditProduct = true;
                     $scope.isViewWorking = true;
@@ -974,6 +985,19 @@ angular.module('angularApp')
                 alert('ajax error' + data);
             });
         };
+        function GetAssemblyBatch(year) {
+            workService.getAssemblyBatch(year)
+                .success(function (data: IResultData<server.AssemblyBatch[]>, status, headers, config) {
+                if (data.result) {
+                    $scope.Abath_List = data.data;
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                alert('ajax error' + data);
+            });
+        };
         function GetMemberDetail(member_detail_id: number) {
             workService.getMemberDetail(member_detail_id)
                 .success(function (data: IResultData<server.Member_Detail>, status, headers, config) {
@@ -1049,6 +1073,7 @@ angular.module('angularApp')
                         $scope.cart.product_sn = n.product_sn;
                         $scope.cart.race = 0;
                         $scope.cart.gold = 0;
+                        $scope.product_category = n.category;//取得產品分類
                         if (allowSetPrice.indexOf(n.category) >= 0) { //香油類...等產品可設定單價
                             $scope.cart_price_disable = false;
                             $scope.cart_race_disable = true;

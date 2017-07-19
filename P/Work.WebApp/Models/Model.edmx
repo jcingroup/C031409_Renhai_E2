@@ -211,6 +211,10 @@
           <Property Name="_InsertDateTime" Type="datetime" />
           <Property Name="_UpdateUserID" Type="int" />
           <Property Name="_UpdateDateTime" Type="datetime" />
+          <Property Name="departed_address" Type="nvarchar" MaxLength="256" />
+          <Property Name="departed_name" Type="nvarchar" MaxLength="64" />
+          <Property Name="departed_qty" Type="nvarchar" MaxLength="16" />
+          <Property Name="assembly_batch_sn" Type="int" />
         </EntityType>
         <EntityType Name="產品資料表">
           <Key>
@@ -394,6 +398,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_訂單明細檔_AssemblyBatch">
+          <End Role="AssemblyBatch" Type="Self.AssemblyBatch" Multiplicity="0..1" />
+          <End Role="訂單明細檔" Type="Self.訂單明細檔" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssemblyBatch">
+              <PropertyRef Name="batch_sn" />
+            </Principal>
+            <Dependent Role="訂單明細檔">
+              <PropertyRef Name="assembly_batch_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_訂單明細檔_訂單主檔">
           <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="1" />
           <End Role="訂單明細檔" Type="Self.訂單明細檔" Multiplicity="*" />
@@ -499,6 +515,10 @@
           <AssociationSet Name="FK_訂單主檔_人員" Association="Self.FK_訂單主檔_人員">
             <End Role="人員" EntitySet="人員" />
             <End Role="訂單主檔" EntitySet="訂單主檔" />
+          </AssociationSet>
+          <AssociationSet Name="FK_訂單明細檔_AssemblyBatch" Association="Self.FK_訂單明細檔_AssemblyBatch">
+            <End Role="AssemblyBatch" EntitySet="AssemblyBatch" />
+            <End Role="訂單明細檔" EntitySet="訂單明細檔" />
           </AssociationSet>
           <AssociationSet Name="FK_訂單明細檔_訂單主檔" Association="Self.FK_訂單明細檔_訂單主檔">
             <End Role="訂單主檔" EntitySet="訂單主檔" />
@@ -607,6 +627,11 @@
           <NavigationProperty Name="Member_Detail" Relationship="RenHai2012Model.FK_訂單明細檔_會員資料表" FromRole="Orders_Detail" ToRole="Member_Detail" />
           <Property Name="is_reject" Type="Boolean" Nullable="true" />
           <Property Name="detail_sort" Type="Int32" Nullable="false" />
+          <Property Name="departed_address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="departed_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="assembly_batch_sn" Type="Int32" />
+          <Property Name="departed_qty" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AssemblyBatch" Relationship="RenHai2012Model.FK_訂單明細檔_AssemblyBatch" FromRole="Orders_Detail" ToRole="AssemblyBatch" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -795,6 +820,10 @@
             <End Role="TempleAccount" EntitySet="TempleAccount" />
           </AssociationSet>
           <EntitySet Name="AssemblyBatch" EntityType="RenHai2012Model.AssemblyBatch" />
+          <AssociationSet Name="FK_訂單明細檔_AssemblyBatch" Association="RenHai2012Model.FK_訂單明細檔_AssemblyBatch">
+            <End Role="AssemblyBatch" EntitySet="AssemblyBatch" />
+            <End Role="Orders_Detail" EntitySet="Orders_Detail" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Manjushri">
           <Key>
@@ -1064,7 +1093,20 @@
           <Property Name="lunar_m" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="lunar_d" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="batch_qty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="訂單明細檔" Relationship="RenHai2012Model.FK_訂單明細檔_AssemblyBatch" FromRole="AssemblyBatch" ToRole="Orders_Detail" />
         </EntityType>
+        <Association Name="FK_訂單明細檔_AssemblyBatch">
+          <End Type="RenHai2012Model.AssemblyBatch" Role="AssemblyBatch" Multiplicity="0..1" />
+          <End Type="RenHai2012Model.Orders_Detail" Role="Orders_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssemblyBatch">
+              <PropertyRef Name="batch_sn" />
+            </Principal>
+            <Dependent Role="Orders_Detail">
+              <PropertyRef Name="assembly_batch_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1110,6 +1152,10 @@
           <EntitySetMapping Name="Orders_Detail">
             <EntityTypeMapping TypeName="RenHai2012Model.Orders_Detail">
               <MappingFragment StoreEntitySet="訂單明細檔">
+                <ScalarProperty Name="departed_qty" ColumnName="departed_qty" />
+                <ScalarProperty Name="assembly_batch_sn" ColumnName="assembly_batch_sn" />
+                <ScalarProperty Name="departed_name" ColumnName="departed_name" />
+                <ScalarProperty Name="departed_address" ColumnName="departed_address" />
                 <ScalarProperty Name="detail_sort" ColumnName="detail_sort" />
                 <ScalarProperty Name="is_reject" ColumnName="is_reject" />
                 <ScalarProperty Name="orders_detail_id" ColumnName="訂單序號" />

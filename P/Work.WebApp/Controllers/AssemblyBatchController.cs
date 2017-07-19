@@ -16,24 +16,53 @@ namespace DotWeb.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.ID = this.UserId;
             return View();
         }
 
+        [HttpGet]
+        public string GetAssemblyBatch(int? year)
+        {
+            rAjaxGetItems<AssemblyBatch> r = new rAjaxGetItems<AssemblyBatch>();
+            RenHai2012Entities db = null;
+            try
+            {
+                db = getDB();
+                int y = year == null ? this.LightYear : (int)year;
+                var getAssemblyBatch = db.AssemblyBatch.Where(x => x.batch_date.Year == y)
+                                         .OrderBy(x => x.batch_date).ToList();
+
+                r.data = getAssemblyBatch;
+                r.result = true;
+                return defJSON(r);
+            }
+            catch (Exception ex)
+            {
+                r.result = false;
+                r.message = ex.Message;
+                return defJSON(r);
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
         #region (2017/7/13)祈福法會
         [HttpGet]
         public string CopyLastYear()
         {
             ResultInfo rAjaxResult = new ResultInfo();
             var db0 = getDB();
-            //var tx = defAsyncScope();
+            var tx = defAsyncScope();
             try
             {
                 #region working a
-                int year = DateTime.Now.Year;
+                int year = DotWeb.CommSetup.CommWebSetup.WorkYear;
+                int lastyear = year - 1;
                 List<AssemblyBatch> mds = new List<AssemblyBatch>();
                 if (!db0.AssemblyBatch.Any(x => x.batch_date.Year == year))
                 {
-                    int lastyear = year - 1;
+
                     var list = db0.AssemblyBatch.Where(x => x.batch_date.Year == lastyear).ToList();
 
                     foreach (var i in list)
@@ -54,6 +83,7 @@ namespace DotWeb.Controllers
 
                     db0.AssemblyBatch.AddRange(mds);
                     db0.SaveChanges();
+                    tx.Complete();
                     rAjaxResult.result = true;
                 }
                 else
@@ -73,7 +103,102 @@ namespace DotWeb.Controllers
             }
             finally
             {
-                //tx.Dispose();
+                tx.Dispose();
+                db0.Dispose();
+            }
+        }
+
+        [HttpGet]
+        public string addPlace()
+        {
+            ResultInfo rAjaxResult = new ResultInfo();
+            var db0 = getDB();
+            var tx = defAsyncScope();
+            try
+            {
+                string[] allowedSN = new string[] { e_祈福產品.超渡法會_祖先甲, e_祈福產品.超渡法會_祖先乙, e_祈福產品.超渡法會_冤親債主, e_祈福產品.超渡法會_嬰靈 };
+                int year = DotWeb.CommSetup.CommWebSetup.WorkYear;
+
+                if (this.UserId == 1000001 & !db0.Light_Site.Any(x => x.Y == year & allowedSN.Contains(x.product_sn)))
+                {
+                    #region working a
+                    List<Light_Site> mds = new List<Light_Site>();
+
+                    for (var i = 1; i <= 1000; i++)
+                    {
+                        string num = i.ToString().PadLeft(4, '0');
+                        Light_Site md01 = new Light_Site()
+                        {
+                            light_name = "祖先甲" + num,
+                            Y = year,
+                            is_sellout = "0",
+                            product_sn = e_祈福產品.超渡法會_祖先甲,
+                            price = 1200,
+                            C_Hiden = false,
+                            C_LockState = false,
+                            IsReject = false
+                        };
+                        Light_Site md02 = new Light_Site()
+                        {
+                            light_name = "祖先乙" + num,
+                            Y = year,
+                            is_sellout = "0",
+                            product_sn = e_祈福產品.超渡法會_祖先乙,
+                            price = 1200,
+                            C_Hiden = false,
+                            C_LockState = false,
+                            IsReject = false
+                        };
+                        Light_Site md03 = new Light_Site()
+                        {
+                            light_name = "冤親債主" + num,
+                            Y = year,
+                            is_sellout = "0",
+                            product_sn = e_祈福產品.超渡法會_冤親債主,
+                            price = 1200,
+                            C_Hiden = false,
+                            C_LockState = false,
+                            IsReject = false
+                        };
+                        Light_Site md04 = new Light_Site()
+                        {
+                            light_name = "嬰靈" + num,
+                            Y = year,
+                            is_sellout = "0",
+                            product_sn = e_祈福產品.超渡法會_嬰靈,
+                            price = 1200,
+                            C_Hiden = false,
+                            C_LockState = false,
+                            IsReject = false
+                        };
+
+                        mds.Add(md01);
+                        mds.Add(md02);
+                        mds.Add(md03);
+                        mds.Add(md04);
+                    }
+                    db0.Light_Site.AddRange(mds);
+                    db0.SaveChanges();
+                    tx.Complete();
+                    #endregion
+                }
+                else
+                {
+                    rAjaxResult.result = false;
+                    rAjaxResult.message = "此權限無法新增法會燈位!";
+                }
+
+                return defJSON(rAjaxResult);
+            }
+            catch (Exception ex)
+            {
+                rAjaxResult.result = false;
+                rAjaxResult.message = ex.Message;
+                return defJSON(rAjaxResult);
+            }
+            finally
+            {
+                tx.Dispose();
                 db0.Dispose();
             }
         }
