@@ -138,6 +138,7 @@ module services {
         getProductFortune: () => ng.IHttpPromise<IResultData<server.Product[]>>;
         getManjushri: () => ng.IHttpPromise<IResultData<server.Manjushri[]>>;
         getAssemblyBatch: (year?: number) => ng.IHttpPromise<IResultData<server.AssemblyBatch[]>>;
+        getQueryBatchList: (year?: number) => ng.IHttpPromise<IResultData<server.AssemblyBatch[]>>;
         getCalcLunar: (Y: number, M: number, D: number) => ng.IHttpPromise<server.LuniInfo>;
         getUsers: () => ng.IHttpPromise<IResultData<server.Users[]>>;
         getFortune: (orders_sn: string) => ng.IHttpPromise<IResultData<number[]>>;
@@ -195,6 +196,9 @@ angular.module('commfun', []).service('workService', ['$http', function ($http: 
 
     this.getAssemblyBatch = function (year?: number) {
         return $http.get(gb_approot + 'AssemblyBatch/GetAssemblyBatch', { params: { year: year, t: uniqid() } });
+    };
+    this.getQueryBatchList = function (year?: number) {
+        return $http.get(gb_approot + apiGetAction + '/GetBatchList', { params: { year: year, t: uniqid() } });
     };
 
 
@@ -278,7 +282,7 @@ angular.module('commfun').factory('gridpage', ['$http', function ($http: ng.IHtt
             //console.log('path',path);
 
             if ($scope.NowPage >= 1) {
-                $http.get(apiConnection, { params: s })
+                $http.get(path, { params: s })
                     .success(function (data: widegt.GridInfo2, status, headers, config) {
                     $scope.Grid_Items = data.rows;
                     $scope.TotalPage = data.total;

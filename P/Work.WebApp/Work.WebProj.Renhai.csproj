@@ -595,6 +595,7 @@
     <Content Include="Views\AssemblyBatch\Index.cshtml" />
     <Content Include="Views\TempleMember\MemberPrint.cshtml" />
     <Content Include="Views\TempleMember\PostPrint.cshtml" />
+    <Content Include="Views\AssemblyBatch\BatchCount.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -686,6 +687,7 @@
     <None Include="Properties\PublishProfiles\發行至仁海宮伺服器.pubxml" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="ScriptsCtrl\batchCountCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\d.ts\angular-ui-router.d.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\templemarkcloseCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\productCtr.ts" />

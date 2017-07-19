@@ -149,6 +149,9 @@ angular.module('commfun', []).service('workService', ['$http', function ($http) 
     this.getAssemblyBatch = function (year) {
         return $http.get(gb_approot + 'AssemblyBatch/GetAssemblyBatch', { params: { year: year, t: uniqid() } });
     };
+    this.getQueryBatchList = function (year) {
+        return $http.get(gb_approot + apiGetAction + '/GetBatchList', { params: { year: year, t: uniqid() } });
+    };
     this.getCalcLunar = function (Y, M, D) {
         var setDate = new Date(Y + 1911, M, D);
         return $http.get(gb_approot + apiGetAction + '/GetLunisolar', { params: { t: uniqid(), dt: setDate } });
@@ -201,7 +204,7 @@ angular.module('commfun').factory('gridpage', ['$http', function ($http) {
             }
             var path = $scope.apiPath ? $scope.apiPath : apiConnection;
             if ($scope.NowPage >= 1) {
-                $http.get(apiConnection, { params: s }).success(function (data, status, headers, config) {
+                $http.get(path, { params: s }).success(function (data, status, headers, config) {
                     $scope.Grid_Items = data.rows;
                     $scope.TotalPage = data.total;
                     $scope.NowPage = data.page;

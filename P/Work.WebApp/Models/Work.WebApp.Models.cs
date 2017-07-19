@@ -83,4 +83,15 @@ namespace Work.WebApp.Models
         public int D { get; set; }
         public bool IsLeap { get; set; }
     }
+    /// <summary>
+    /// 超渡法會
+    /// </summary>
+    public class BatchList : m_Orders_Detail
+    {
+        public string batch_title { get; set; }
+        public System.DateTime batch_date { get; set; }
+        public string lunar_y { get; set; }
+        public string lunar_m { get; set; }
+        public string lunar_d { get; set; }
+    }
 }

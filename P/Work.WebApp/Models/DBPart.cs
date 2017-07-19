@@ -77,6 +77,10 @@ namespace Work.WebApp.Models
         public DateTime? member_insertDateTime { get; set; }
         public string l_insertDateTime { get; set; }//國曆繳款日期
     }
+    public partial class m_AssemblyBatch
+    {
+        public int count { get; set; }
+    }
     #endregion
     #region q_Model_Define
     public class q_AspNetRoles : QueryBase
@@ -169,6 +173,11 @@ namespace Work.WebApp.Models
         public DateTime? endDate { get; set; }
         public int? year { get; set; }
         public string keyword { get; set; }
+    }
+    public class q_BatchList : QueryBase
+    {
+        public int? year { get; set; }
+        public int? assembly_batch_sn { get; set; }
     }
     #endregion
 }

@@ -90,6 +90,12 @@ namespace Work.WebApp
             .Include("~/ScriptsCtrl/assemblybatchCtr.js")
             );
 
+            bundles.Add(new ScriptBundle("~/batchCountCtr")
+            .Include(commFile)
+            .Include("~/Scripts/ui-bootstrap-tpls-0.12.0.js")
+            .Include("~/ScriptsCtrl/batchCountCtr.js")
+            );
+
             bundles.Add(new ScriptBundle("~/testCtr")
                 .Include(commFile)
                 .Include("~/Scripts/angularjs/angular-cookies.js")

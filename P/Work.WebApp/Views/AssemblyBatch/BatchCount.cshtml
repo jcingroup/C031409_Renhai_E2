@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    @Scripts.Render("~/batchCountCtr")
+}
+<div ui-view></div>
+<script type="text/ng-template" id="dataGrid">
+    <form class="query-form" ng-submit="Init_Query()">
+        <fieldset>
+            <label>法會年度： </label>
+            <select ng-model="sd.year" ng-options="m as (m+'年') for m in year_list"></select>
+            <label>法會梯次： </label>
+            <select ng-model="sd.assembly_batch_sn" ng-options="m.batch_sn as (m.batch_title+'__'+m.count) for m in bath_list"></select>
+            <button type="submit">
+                <i class="fa fa-search"></i>查詢
+            </button>
+        </fieldset>
+    </form>
+    <div class="grid-list">
+        <table class="table-master">
+            <tr>
+                <th width="10%">梯次</th>
+                <th width="10%">梯次時間_國</th>
+                <th width="10%">梯次時間_農</th>
+                <th width="10%">訂單編號</th>
+                <th width="10%">申請人</th>
+                <th width="20%">申請人地址</th>
+            </tr>
+            <tr ng-repeat="gd in Grid_Items">
+                <td>{{gd.batch_title}}</td>
+                <td>{{gd.batch_date | date:'yyyy-MM-dd'}}</td>
+                <td>{{gd.lunar_y+'/'+gd.lunar_m+'/'+gd.lunar_d}}</td>
+                <td>{{gd.orders_sn}}</td>
+                <td>{{gd.member_name}}</td>
+                <td>{{gd.address}}</td>
+            </tr>
+        </table>
+        @Html.Partial("NavPage")
+    </div>
+    <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
+</script>

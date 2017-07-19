@@ -19,6 +19,15 @@ namespace DotWeb.Controllers
             ViewBag.ID = this.UserId;
             return View();
         }
+        /// <summary>
+        /// 取得年度批次
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult BatchCount()
+        {
+            ViewBag.ID = this.UserId;
+            return View();
+        }
 
         [HttpGet]
         public string GetAssemblyBatch(int? year)

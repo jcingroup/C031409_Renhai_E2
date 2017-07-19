@@ -289,6 +289,8 @@
         lunar_m: any;
         lunar_d: any;
         batch_qty: number;
+        //擴充
+        count: number;
     }
 }
 
