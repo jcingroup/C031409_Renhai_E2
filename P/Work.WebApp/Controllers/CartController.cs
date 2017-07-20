@@ -107,12 +107,14 @@ namespace DotWeb.Controllers
                 if (cartData.product_sn == e_祈福產品.保運 && (cartData.LY == 1 && cartData.LM == 1 && cartData.LD == 1))
                     throw new Exception("保運日不正確");
 
-                if (getProduct.category == "超渡法會" && (cartData.assembly_batch_sn == null || cartData.departed_name == null || cartData.departed_address == null))
-                    throw new Exception("超渡法會資料需顯寫完整");
+                if (getProduct.category == "超渡法會" && cartData.assembly_batch_sn == null)
+                    throw new Exception("超渡法會梯次未填寫!");
+
+                if ((cartData.product_sn == e_祈福產品.超渡法會_祖先甲 || cartData.product_sn == e_祈福產品.超渡法會_祖先乙) && (cartData.departed_name == null || cartData.departed_address == null))
+                    throw new Exception("超渡法會(祖先)資料「超渡_往者名」、[超渡_牌位地址]未填寫完整");
 
                 if (cartData.product_sn == e_祈福產品.超渡法會_嬰靈 && (cartData.departed_qty == null))
                     throw new Exception("超渡法會(嬰靈)未填寫「嬰靈數量」");
-
                 cart.Item.Add(cartData);
                 cart.total = cart.Item.Sum(x => x.price);
                 cart.race = cart.Item.Sum(x => x.race);

@@ -294,13 +294,13 @@
                 </tr>
                 <tr ng-show="allowSetAssembly.indexOf(product_category) >= 0">
                     <th>
-                        超渡法會_往者名
+                        超渡_往者名
                     </th>
                     <td>
                         <input type="text" ng-model="cart.departed_name" maxlength="64" />
                     </td>
                     <th>
-                        超渡法會梯次
+                        超渡梯次
                     </th>
                     <td>
                         <select ng-model="cart.assembly_batch_sn" ng-disabled="cart.y!=allowYear"
@@ -309,15 +309,18 @@
                 </tr>
                 <tr ng-show="allowSetAssembly.indexOf(product_category) >= 0">
                     <th>
-                        超渡法會_牌位地址
+                        超渡_牌位地址
                     </th>
-                    <td>
-                        <input type="text" ng-model="cart.departed_address" maxlength="256" />
+                    <td colspan="{{cart.product_sn==1404 ? 1:3}}">
+                        <span ng-show="cart.product_sn==1401 || cart.product_sn==1402">
+                            <input type="text" ng-model="cart.departed_address" maxlength="256" />
+                        </span>
+                        <span ng-show="cart.product_sn==1403 || cart.product_sn==1404" style="color:orangered">冤親、嬰靈 地址用祈福地址</span>
                     </td>
-                    <th>
-                        超渡法會_嬰靈數量
+                    <th ng-show="cart.product_sn==1404">
+                        超渡_嬰靈數量
                     </th>
-                    <td>
+                    <td ng-show="cart.product_sn==1404">
                         <input type="text" ng-model="cart.departed_qty" maxlength="16" />
                     </td>
                 </tr>
