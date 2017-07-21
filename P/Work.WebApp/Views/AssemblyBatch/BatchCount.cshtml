@@ -14,6 +14,8 @@
             <select ng-model="sd.year" ng-options="m as (m+'年') for m in year_list"></select>
             <label>法會梯次： </label>
             <select ng-model="sd.assembly_batch_sn" ng-options="m.batch_sn as (m.batch_title+'('+(m.batch_date | date:'yyyyMMdd')+(m.batch_timeperiod |  OptionStr:timeperiod_list)+')'+'__'+m.count) for m in bath_list"></select>
+            <label>產品種類： </label>
+            <select ng-model="sd.product_sn" ng-options="m.value as m.label for m in batch_prod"></select>
             <button type="submit">
                 <i class="fa fa-search"></i>查詢
             </button>
@@ -22,11 +24,12 @@
     <div class="grid-list">
         <table class="table-master">
             <tr>
-                <th width="10%">梯次</th>
-                <th width="10%">梯次時間_國</th>
-                <th width="10%">梯次時段</th>
+                <th width="8%">梯次</th>
+                <th width="8%">梯次時間_國</th>
+                <th width="5%">梯次時段</th>
                 <th width="10%">梯次時間_農</th>
                 <th width="10%">訂單編號</th>
+                <th width="12%">產品名稱</th>
                 <th width="10%">申請人</th>
                 <th width="20%">申請人地址</th>
             </tr>
@@ -36,6 +39,7 @@
                 <td>{{gd.batch_timeperiod | OptionStr:timeperiod_list}}</td>
                 <td>{{gd.lunar_y+'/'+gd.lunar_m+'/'+gd.lunar_d}}</td>
                 <td>{{gd.orders_sn}}</td>
+                <td>{{gd.product_name}}</td>
                 <td>{{gd.member_name}}</td>
                 <td>{{gd.address}}</td>
             </tr>

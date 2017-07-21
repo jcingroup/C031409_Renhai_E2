@@ -4,7 +4,13 @@
         { value: "AM", label: "上午" },
         { value: "PM", label: "下午" }
     ];
-
+    export var batch_prod: IKeyValueS[] = [
+        { value: null, label: "全部" },
+        { value: "1401", label: "超渡法會(個別祖先)" },
+        { value: "1402", label: "超渡法會(歷代祖先)" },
+        { value: "1403", label: "超渡法會(冤親債主)" },
+        { value: "1404", label: "超渡法會(嬰靈)" }
+    ];
     export var born_sign: string[] = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
     export var born_time: IKeyValueS[] = [
         { value: '吉', label: '00:00~23:59 吉時' },

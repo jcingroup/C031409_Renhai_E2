@@ -4,6 +4,7 @@
     year_list: number[]
     bath_list: server.AssemblyBatch[];
     timeperiod_list: IKeyValueS[];
+    batch_prod: IKeyValueS[];
 
     //日曆小幫手測試
     disabled(date: Date, mode: string): void;
@@ -57,9 +58,11 @@ angular
         var fday: Date = new Date(today.getFullYear() + "/1/1");
         $scope.year_list = workService.setApplyYearRange();
         $scope.timeperiod_list = commData.batch_timeperiod;
+        $scope.batch_prod = commData.batch_prod;
 
         $scope.sd = {//預設日期為今天
-            year: today.getFullYear()
+            year: today.getFullYear(),
+            product_sn: null
         }
         $scope.show_master_edit = false;
         $scope.edit_type = 0;// IEditType.none; //ref 2

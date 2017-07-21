@@ -40,7 +40,11 @@ namespace DotWeb.Api
                                  lunar_m = x.lunar_m,
                                  lunar_d = x.lunar_d,
                                  batch_qty = x.batch_qty,
-                                 count = x.訂單明細檔.Where(y => y.is_reject != true).Count()
+                                 count = x.訂單明細檔.Where(y => y.is_reject != true).Count(),
+                                 count_1401 = x.訂單明細檔.Where(y => y.is_reject != true & y.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲).Count(),
+                                 count_1402 = x.訂單明細檔.Where(y => y.is_reject != true & y.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙).Count(),
+                                 count_1403 = x.訂單明細檔.Where(y => y.is_reject != true & y.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主).Count(),
+                                 count_1404 = x.訂單明細檔.Where(y => y.is_reject != true & y.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈).Count()
                              });
 
                 if (q.year != null)

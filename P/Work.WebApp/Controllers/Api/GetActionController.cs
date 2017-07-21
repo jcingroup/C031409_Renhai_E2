@@ -379,7 +379,9 @@ namespace DotWeb.Api
                                  orders_sn = x.orders_sn,
                                  member_name = x.member_name,
                                  address = x.address,
-                                 Y = x.Y
+                                 Y = x.Y,
+                                 product_name = x.product_name,
+                                 product_sn = x.product_sn
                              });
 
                 if (q.year != null)
@@ -390,6 +392,11 @@ namespace DotWeb.Api
                 if (q.assembly_batch_sn != null)
                 {
                     items = items.Where(x => x.assembly_batch_sn == q.assembly_batch_sn);
+                }
+
+                if (q.product_sn != null)
+                {
+                    items = items.Where(x => x.product_sn == q.product_sn);
                 }
 
 

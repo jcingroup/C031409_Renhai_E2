@@ -80,6 +80,10 @@ namespace Work.WebApp.Models
     public partial class m_AssemblyBatch
     {
         public int count { get; set; }
+        public int count_1401 { get; set; }//祖先甲乙
+        public int count_1402 { get; set; }//祖先乙
+        public int count_1403 { get; set; }//冤親債主
+        public int count_1404 { get; set; }//嬰靈
     }
     #endregion
     #region q_Model_Define
@@ -178,6 +182,7 @@ namespace Work.WebApp.Models
     {
         public int? year { get; set; }
         public int? assembly_batch_sn { get; set; }
+        public string product_sn { get; set; }
     }
     #endregion
 }
