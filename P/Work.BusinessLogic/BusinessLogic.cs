@@ -2138,7 +2138,20 @@ namespace ProcCore.Business.Logic
         public static string 超渡法會_嬰靈 = "1404";
 
     }
-
+    public static class e_祈福產品分類
+    {
+        public static string 點燈 = "點燈";
+        public static string 金牌 = "金牌";
+        public static string 白米 = "白米";
+        public static string 超渡法會 = "超渡法會";
+        public static string 禮斗 = "禮斗";
+        public static string 福燈 = "福燈";
+        public static string 太歲 = "太歲";
+        public static string 香油 = "香油";
+        public static string 契子 = "契子";
+        public static string 入斗 = "入斗";
+        public static string 保運 = "保運";
+    }
     #endregion
 
     #region 會員資料表

@@ -25,19 +25,20 @@
                     <i class="fa fa-files-o"></i>複製前一年(今年沒資料才可按)
                 </button>*@
             @*<button type="button" ng-click="copySite()" ng-show="@(ViewBag.ID == 1000001?"true":"false")">
-                    <i class="fa fa-files-o"></i>燈位
+                    <i class="fa fa-files-o"></i>依法會複製燈位
                 </button>*@
         </fieldset>
     </form>
     <div class="grid-list">
         <table class="table-master">
-            <caption>
-                超渡法會梯次管理
-                <button type="button" ng-click="Master_Open_New()">新增法會梯次</button>
-            </caption>
+           @* <caption>
+    超渡法會梯次管理
+    <button type="button" ng-click="Master_Open_New()">新增法會梯次</button>
+            </caption>*@
             <tr>
                 <th width="5%" class="text-center">編輯</th>
-                <th width="5%" class="text-center">刪除</th>
+                <th width="5%" ng-show="@(ViewBag.ID == 1000001?"true":"false")" class="text-center">產生燈位</th>
+                @*<th width="5%" class="text-center">刪除</th>*@
                 <th width="8%">梯次名稱</th>
                 <th width="8%">法會時間(國曆)</th>
                 <th width="6%">法會時段</th>
@@ -54,12 +55,18 @@
                         <i class="fa fa-pencil"></i>
                     </button>
                 </td>
-                <td>
+                <td ng-show="@(ViewBag.ID == 1000001?"true":"false")">
+                    <button type="button" ng-click="copySite($index)"
+                            title="@Resources.Res.Button_Sure_Modify">
+                        <i class="fa fa-files-o"></i>
+                    </button>
+                </td>
+                @*<td>
                     <button type="button" ng-click="masterDelete($index)"
                             title="@Resources.Res.Button_Sure_Modify">
                         <i class="fa fa-trash-o"></i>
                     </button>
-                </td>
+                </td>*@
                 <td>{{gd.batch_title}}</td>
                 <td>{{gd.batch_date | date:'yyyy-MM-dd'}}</td>
                 <td>{{gd.batch_timeperiod | OptionStr:timeperiod_list}}</td>
@@ -75,6 +82,7 @@
                                 <th class="text-center">歷代祖先</th>
                                 <th class="text-center">冤親債主</th>
                                 <th class="text-center">嬰靈</th>
+                                <th class="text-center">合計</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,6 +91,7 @@
                                 <td class="text-center">{{gd.count_1402}}</td>
                                 <td class="text-center">{{gd.count_1403}}</td>
                                 <td class="text-center">{{gd.count_1404}}</td>
+                                <td class="text-center">{{gd.count}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -125,7 +134,7 @@
             <tr>
                 <th>梯次上限人數</th>
                 <td colspan="3">
-                    <input type="number" min="1" ng-model="fd.batch_qty" required disabled />
+                    <input type="number" min="0" ng-model="fd.batch_qty" required  />
                 </td>
             </tr>
         </table>

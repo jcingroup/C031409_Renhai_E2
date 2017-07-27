@@ -29,7 +29,7 @@ namespace DotWeb.Api
             using (db0 = getDB0())
             {
                 var items = (from x in db0.AssemblyBatch
-                             orderby x.batch_date
+                             orderby x.batch_date, x.batch_timeperiod
                              select new m_AssemblyBatch()
                              {
                                  batch_sn = x.batch_sn,

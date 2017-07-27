@@ -27,5 +27,6 @@ namespace Work.WebApp.Models
     public Nullable<System.DateTime> C_LockDateTime { get; set; }
     public Nullable<bool> C_LockState { get; set; }
     public bool IsReject { get; set; }
+    public Nullable<int> assembly_batch_sn { get; set; }
     }
 }

@@ -7,7 +7,7 @@
     matchOptions(): string;//filter
 
     copy(): void;
-    copySite(): void;
+    copySite($index): void;
 
     //日曆小幫手測試
     disabled(date: Date, mode: string): void;
@@ -212,8 +212,9 @@ angular
                 }
             });
         };
-        $scope.copySite = function () {
-            $http.get(gb_approot + 'AssemblyBatch/addPlace')
+        $scope.copySite = function ($index) {
+            var get_id = $scope.Grid_Items[$index].batch_sn;
+            $http.get(gb_approot + 'AssemblyBatch/addPlace', { params: { batch_sn: get_id } })
                 .success(function (data: IResultBase, status, headers, config) {
                 if (data.result) {
                     alert('新增燈位');

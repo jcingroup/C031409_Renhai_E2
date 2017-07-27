@@ -84,6 +84,7 @@ namespace Work.WebApp.Models
         public int count_1402 { get; set; }//祖先乙
         public int count_1403 { get; set; }//冤親債主
         public int count_1404 { get; set; }//嬰靈
+        public int index { get; set; }
     }
     #endregion
     #region q_Model_Define

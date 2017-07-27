@@ -120,77 +120,114 @@ namespace DotWeb.Controllers
         }
 
         [HttpGet]
-        public string addPlace()
+        public string addPlace(int batch_sn)
         {
             ResultInfo rAjaxResult = new ResultInfo();
             var db0 = getDB();
             var tx = defAsyncScope();
             try
             {
-                string[] allowedSN = new string[] { e_祈福產品.超渡法會_祖先甲, e_祈福產品.超渡法會_祖先乙, e_祈福產品.超渡法會_冤親債主, e_祈福產品.超渡法會_嬰靈 };
+                //string[] allowedSN = new string[] { e_祈福產品.超渡法會_祖先甲, e_祈福產品.超渡法會_祖先乙, e_祈福產品.超渡法會_冤親債主, e_祈福產品.超渡法會_嬰靈 };
                 int year = DotWeb.CommSetup.CommWebSetup.WorkYear;
 
-                if (this.UserId == 1000001 & !db0.Light_Site.Any(x => x.Y == year & allowedSN.Contains(x.product_sn)))
+                //取得目前法會梯次資料
+                var batchlist = db0.AssemblyBatch.Where(x => x.batch_date.Year == year)
+                                                 .OrderBy(x => new { x.batch_date, x.batch_timeperiod }).ToList();
+                var batchsIndex = batchlist.Select((x, i) => new BatchList()
+                {
+                    batch_sn = x.batch_sn,
+                    index = i + 1
+                }).ToList();
+
+                if (this.UserId == 1000001 & batchsIndex.Any(x => x.batch_sn == batch_sn))
                 {
                     #region working a
                     List<Light_Site> mds = new List<Light_Site>();
 
-                    for (var i = 1; i <= 1000; i++)
-                    {
-                        string num = i.ToString().PadLeft(4, '0');
-                        Light_Site md01 = new Light_Site()
-                        {
-                            light_name = "祖先甲" + num,
-                            Y = year,
-                            is_sellout = "0",
-                            product_sn = e_祈福產品.超渡法會_祖先甲,
-                            price = 1200,
-                            C_Hiden = false,
-                            C_LockState = false,
-                            IsReject = false
-                        };
-                        Light_Site md02 = new Light_Site()
-                        {
-                            light_name = "祖先乙" + num,
-                            Y = year,
-                            is_sellout = "0",
-                            product_sn = e_祈福產品.超渡法會_祖先乙,
-                            price = 1200,
-                            C_Hiden = false,
-                            C_LockState = false,
-                            IsReject = false
-                        };
-                        Light_Site md03 = new Light_Site()
-                        {
-                            light_name = "冤親債主" + num,
-                            Y = year,
-                            is_sellout = "0",
-                            product_sn = e_祈福產品.超渡法會_冤親債主,
-                            price = 1200,
-                            C_Hiden = false,
-                            C_LockState = false,
-                            IsReject = false
-                        };
-                        Light_Site md04 = new Light_Site()
-                        {
-                            light_name = "嬰靈" + num,
-                            Y = year,
-                            is_sellout = "0",
-                            product_sn = e_祈福產品.超渡法會_嬰靈,
-                            price = 1200,
-                            C_Hiden = false,
-                            C_LockState = false,
-                            IsReject = false
-                        };
+                    var batch = batchsIndex.First(x => x.batch_sn == batch_sn);
+                    int index = batch.index;
 
-                        mds.Add(md01);
-                        mds.Add(md02);
-                        mds.Add(md03);
-                        mds.Add(md04);
+                    var check_1401 = db0.Light_Site.Any(x => x.Y == year & x.assembly_batch_sn == batch.batch_sn & x.product_sn == e_祈福產品.超渡法會_祖先甲);
+                    var check_1402 = db0.Light_Site.Any(x => x.Y == year & x.assembly_batch_sn == batch.batch_sn & x.product_sn == e_祈福產品.超渡法會_祖先乙);
+                    var check_1403 = db0.Light_Site.Any(x => x.Y == year & x.assembly_batch_sn == batch.batch_sn & x.product_sn == e_祈福產品.超渡法會_冤親債主);
+                    var check_1404 = db0.Light_Site.Any(x => x.Y == year & x.assembly_batch_sn == batch.batch_sn & x.product_sn == e_祈福產品.超渡法會_嬰靈);
+
+                    if (check_1401 & check_1402 & check_1403 & check_1404)
+                    {
+                        rAjaxResult.result = false;
+                        rAjaxResult.message = "此法會梯次已有燈位!";
                     }
-                    db0.Light_Site.AddRange(mds);
-                    db0.SaveChanges();
-                    tx.Complete();
+                    else
+                    {
+                        #region 加燈位
+                        for (var i = 1; i <= 500; i++)
+                        {
+                            string num = i.ToString().PadLeft(4, '0');
+                            Light_Site md01 = new Light_Site()
+                            {
+                                light_name = string.Format("{0}-祖先甲{1}", index, num),
+                                Y = year,
+                                is_sellout = "0",
+                                product_sn = e_祈福產品.超渡法會_祖先甲,
+                                price = 1200,
+                                C_Hiden = false,
+                                C_LockState = false,
+                                IsReject = false,
+                                assembly_batch_sn = batch.batch_sn
+                            };
+                            Light_Site md02 = new Light_Site()
+                            {
+                                light_name = string.Format("{0}-祖先乙{1}", index, num),
+                                Y = year,
+                                is_sellout = "0",
+                                product_sn = e_祈福產品.超渡法會_祖先乙,
+                                price = 1200,
+                                C_Hiden = false,
+                                C_LockState = false,
+                                IsReject = false,
+                                assembly_batch_sn = batch.batch_sn
+                            };
+                            Light_Site md03 = new Light_Site()
+                            {
+                                light_name = string.Format("{0}-冤親債主{1}", index, num),
+                                Y = year,
+                                is_sellout = "0",
+                                product_sn = e_祈福產品.超渡法會_冤親債主,
+                                price = 1200,
+                                C_Hiden = false,
+                                C_LockState = false,
+                                IsReject = false,
+                                assembly_batch_sn = batch.batch_sn
+                            };
+                            Light_Site md04 = new Light_Site()
+                            {
+                                light_name = string.Format("{0}-嬰靈{1}", index, num),
+                                Y = year,
+                                is_sellout = "0",
+                                product_sn = e_祈福產品.超渡法會_嬰靈,
+                                price = 1200,
+                                C_Hiden = false,
+                                C_LockState = false,
+                                IsReject = false,
+                                assembly_batch_sn = batch.batch_sn
+                            };
+
+                            if (!check_1401)
+                                mds.Add(md01);
+                            if (!check_1402)
+                                mds.Add(md02);
+                            if (!check_1403)
+                                mds.Add(md03);
+                            if (!check_1404)
+                                mds.Add(md04);
+                        }
+
+                        db0.Light_Site.AddRange(mds);
+                        db0.SaveChanges();
+                        tx.Complete();
+                        #endregion
+                    }
+                            
                     #endregion
                 }
                 else
@@ -219,4 +256,20 @@ namespace DotWeb.Controllers
             return defJSON(new { });
         }
     }
+
+    public class BatchList
+    {
+        public int batch_sn { get; set; }
+        public int index { get; set; }
+    }
+    public class ICar : Car
+    {
+        public int Index { get; set; }
+    }
+    public class Car
+    {
+        public string Color { get; set; }
+        public int Price { get; set; }
+    }
+
 }

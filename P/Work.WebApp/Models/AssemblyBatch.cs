@@ -18,6 +18,7 @@ namespace Work.WebApp.Models
         public AssemblyBatch()
         {
             this.訂單明細檔 = new HashSet<Orders_Detail>();
+            this.點燈位置資料表 = new HashSet<Light_Site>();
         }
     
         public int batch_sn { get; set; }
@@ -32,5 +33,7 @@ namespace Work.WebApp.Models
     
     	[JsonIgnore]
         public virtual ICollection<Orders_Detail> 訂單明細檔 { get; set; }
+    	[JsonIgnore]
+        public virtual ICollection<Light_Site> 點燈位置資料表 { get; set; }
     }
 }

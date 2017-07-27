@@ -315,6 +315,7 @@
           <Property Name="_LockDateTime" Type="datetime" />
           <Property Name="_LockState" Type="bit" />
           <Property Name="IsReject" Type="bit" Nullable="false" />
+          <Property Name="assembly_batch_sn" Type="int" />
         </EntityType>
         <Association Name="FK_Fortune_Light_訂單主檔">
           <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="1" />
@@ -472,6 +473,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_點燈位置資料表_AssemblyBatch">
+          <End Role="AssemblyBatch" Type="Self.AssemblyBatch" Multiplicity="0..1" />
+          <End Role="點燈位置資料表" Type="Self.點燈位置資料表" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssemblyBatch">
+              <PropertyRef Name="batch_sn" />
+            </Principal>
+            <Dependent Role="點燈位置資料表">
+              <PropertyRef Name="assembly_batch_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RenHai2012ModelStoreContainer">
           <EntitySet Name="AssemblyBatch" EntityType="Self.AssemblyBatch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fortune_Light" EntityType="Self.Fortune_Light" Schema="dbo" store:Type="Tables" />
@@ -541,6 +554,10 @@
           <AssociationSet Name="FK_會員資料表_會員戶長資料" Association="Self.FK_會員資料表_會員戶長資料">
             <End Role="會員戶長資料" EntitySet="會員戶長資料" />
             <End Role="會員資料表" EntitySet="會員資料表" />
+          </AssociationSet>
+          <AssociationSet Name="FK_點燈位置資料表_AssemblyBatch" Association="Self.FK_點燈位置資料表_AssemblyBatch">
+            <End Role="AssemblyBatch" EntitySet="AssemblyBatch" />
+            <End Role="點燈位置資料表" EntitySet="點燈位置資料表" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -719,6 +736,8 @@
           <Property Name="C_LockDateTime" Type="DateTime" Precision="3" />
           <Property Name="C_LockState" Type="Boolean" />
           <Property Name="IsReject" Type="Boolean" Nullable="false" />
+          <Property Name="assembly_batch_sn" Type="Int32" />
+          <NavigationProperty Name="AssemblyBatch" Relationship="RenHai2012Model.FK_點燈位置資料表_AssemblyBatch" FromRole="Light_Site" ToRole="AssemblyBatch" />
         </EntityType>
         <Association Name="FK_訂單明細檔_訂單主檔">
           <End Role="訂單主檔" Type="RenHai2012Model.Orders" Multiplicity="1" />
@@ -825,6 +844,10 @@
           <AssociationSet Name="FK_訂單明細檔_AssemblyBatch" Association="RenHai2012Model.FK_訂單明細檔_AssemblyBatch">
             <End Role="AssemblyBatch" EntitySet="AssemblyBatch" />
             <End Role="Orders_Detail" EntitySet="Orders_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_點燈位置資料表_AssemblyBatch" Association="RenHai2012Model.FK_點燈位置資料表_AssemblyBatch">
+            <End Role="AssemblyBatch" EntitySet="AssemblyBatch" />
+            <End Role="Light_Site" EntitySet="Light_Site" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Manjushri">
@@ -1098,6 +1121,7 @@
           <Property Name="lunar_d" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="batch_qty" Type="Int32" Nullable="false" />
           <NavigationProperty Name="訂單明細檔" Relationship="RenHai2012Model.FK_訂單明細檔_AssemblyBatch" FromRole="AssemblyBatch" ToRole="Orders_Detail" />
+          <NavigationProperty Name="點燈位置資料表" Relationship="RenHai2012Model.FK_點燈位置資料表_AssemblyBatch" FromRole="AssemblyBatch" ToRole="Light_Site" />
         </EntityType>
         <Association Name="FK_訂單明細檔_AssemblyBatch">
           <End Type="RenHai2012Model.AssemblyBatch" Role="AssemblyBatch" Multiplicity="0..1" />
@@ -1107,6 +1131,18 @@
               <PropertyRef Name="batch_sn" />
             </Principal>
             <Dependent Role="Orders_Detail">
+              <PropertyRef Name="assembly_batch_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_點燈位置資料表_AssemblyBatch">
+          <End Type="RenHai2012Model.AssemblyBatch" Role="AssemblyBatch" Multiplicity="0..1" />
+          <End Type="RenHai2012Model.Light_Site" Role="Light_Site" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssemblyBatch">
+              <PropertyRef Name="batch_sn" />
+            </Principal>
+            <Dependent Role="Light_Site">
               <PropertyRef Name="assembly_batch_sn" />
             </Dependent>
           </ReferentialConstraint>
@@ -1260,6 +1296,7 @@
           <EntitySetMapping Name="Light_Site">
             <EntityTypeMapping TypeName="RenHai2012Model.Light_Site">
               <MappingFragment StoreEntitySet="點燈位置資料表">
+                <ScalarProperty Name="assembly_batch_sn" ColumnName="assembly_batch_sn" />
                 <ScalarProperty Name="IsReject" ColumnName="IsReject" />
                 <ScalarProperty Name="light_site_id" ColumnName="序號" />
                 <ScalarProperty Name="light_name" ColumnName="位置名稱" />

@@ -35,6 +35,7 @@
         <AssociationConnector Association="RenHai2012Model.FK_Temple_Account_Temple_Member" />
         <EntityTypeShape EntityType="RenHai2012Model.AssemblyBatch" Width="1.5" PointX="5.375" PointY="14" />
         <AssociationConnector Association="RenHai2012Model.FK_訂單明細檔_AssemblyBatch" />
+        <AssociationConnector Association="RenHai2012Model.FK_點燈位置資料表_AssemblyBatch" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

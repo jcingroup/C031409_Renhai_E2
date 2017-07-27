@@ -85,20 +85,23 @@ namespace DotWeb.Controllers
                 #region 燈位產品類別數量及連續配位檢查
 
                 //先群組各項產品的訂購量
-                var groupOrderProductQty = cart.Item.GroupBy(x => x.product_sn,
+                var groupOrderProductQty = cart.Item.GroupBy(x => new { x.product_sn, x.assembly_batch_sn },
                 (key, Num) => new
                 {
-                    product_sn = key,
+                    product_sn = key.product_sn,
+                    batch_sn = key.assembly_batch_sn,
                     needQty = Num.Count()
                 });
 
                 //查詢連續配位SQL語法
-                string sql = string.Empty;
+                string sql_comm = string.Empty;
+                string sql_batch = string.Empty;
                 if (md.is_light_serial)
                 {
-                    sql = @"select start_num=min(序號),end_num=max(序號),nums= max(序號)-min(序號) + 1 from 
-                    (select row_number()over (order by 序號) as rid,* from 點燈位置資料表 Where 年度 = @Y And 產品編號=@P And 空位='0') A 
-	                group by 序號-RID";
+                    sql_comm = @"select start_num=min(序號),end_num=max(序號),nums= max(序號)-min(序號) + 1 from 
+                    (select row_number()over (order by 序號) as rid,* from 點燈位置資料表 Where 年度 = @Y And 產品編號=@P And 空位='0') A group by 序號-RID";
+                    sql_batch = @"select start_num=min(序號),end_num=max(序號),nums= max(序號)-min(序號) + 1 from 
+                    (select row_number()over (order by 序號) as rid,* from 點燈位置資料表 Where 年度 = @Y And 產品編號=@P And 空位='0' AND assembly_batch_sn=@batch_sn ) A group by 序號-RID";
                 }
 
                 //記錄取燈位時的始啟燈位編號
@@ -112,7 +115,8 @@ namespace DotWeb.Controllers
                     {
                         #region 數量檢查是否足夠
                         int statisticsCount = db0.Light_Site.Where(x => x.Y == this.LightYear
-                                        && x.product_sn == getOrderQty.product_sn && x.is_sellout == "0").Count(); //統計燈位目前還剩的數量
+                                            && x.product_sn == getOrderQty.product_sn && x.is_sellout == "0" & x.assembly_batch_sn == getOrderQty.batch_sn).Count(); //統計燈位目前還剩的數量;
+
 
                         if (statisticsCount < getOrderQty.needQty)
                         {
@@ -125,8 +129,17 @@ namespace DotWeb.Controllers
                         #region 連續配位資料處理
                         if (md.is_light_serial) //採用連續配位
                         {
-                            SqlParameter[] sps = new SqlParameter[] { new SqlParameter("@Y", this.LightYear), new SqlParameter("@P", getOrderQty.product_sn) };
-                            var getLightSerial = db0.Database.SqlQuery<LightSerial>(sql, sps).ToList();
+                            var sps = new List<SqlParameter> { new SqlParameter("@Y", this.LightYear), new SqlParameter("@P", getOrderQty.product_sn) };
+                            #region 法會連續配位
+                            string sql = sql_comm;
+                            if (getProductInfo.category == e_祈福產品分類.超渡法會 & getOrderQty.batch_sn != null)
+                            {
+                                sql = sql_batch;
+                                sps.Add(new SqlParameter("@batch_sn", getOrderQty.batch_sn));
+                            }
+                            #endregion
+
+                            var getLightSerial = db0.Database.SqlQuery<LightSerial>(sql, sps.ToArray()).ToList();
                             var isHaveSerial = getLightSerial.Any(x => x.nums >= getOrderQty.needQty);
                             if (!isHaveSerial)
                             {
@@ -166,20 +179,24 @@ namespace DotWeb.Controllers
                 var groupOrderAssemblyBatchQty = cart.Item.Where(x => x.assembly_batch_sn != null).GroupBy(x => x.assembly_batch_sn,
                   (key, Num) => new
                   {
-                      assembly_batch_sn = key,
+                      batch_sn = key,
                       needQty = Num.Count()
                   });
-
+                string[] allowedSN = new string[] { 
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
                 foreach (var orderqty in groupOrderAssemblyBatchQty)
                 {
-                    var getBatchInfo = db0.AssemblyBatch.Where(x => x.batch_sn == orderqty.assembly_batch_sn & x.batch_date.Year == this.LightYear).FirstOrDefault();
+                    var getBatchInfo = db0.AssemblyBatch.Where(x => x.batch_sn == orderqty.batch_sn & x.batch_date.Year == this.LightYear).FirstOrDefault();
                     if (getBatchInfo != null)
                     {
-                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn).Count();
+                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & allowedSN.Contains(x.product_sn)).Count();
                         int EmptySerial = getBatchInfo.batch_qty - qty;//多餘空位
                         if (EmptySerial < orderqty.needQty)
                         {
-                            r.message = string.Format("{0}超渡法會梯次人數已達上限,請選擇其他梯次!", getBatchInfo.batch_title);
+                            r.message = string.Format("{0}超渡法會梯次人數僅剩{1}位,目前選取人數已達上限,請選擇其他梯次!", getBatchInfo.batch_title, EmptySerial);
                             r.result = false;
                             return defJSON(r);
                         }
@@ -225,7 +242,8 @@ namespace DotWeb.Controllers
                                     Where(x => x.Y == this.LightYear &&
                                         x.product_sn == item.product_sn &&
                                         x.is_sellout == "0" &&
-                                        x.light_site_id >= getNewLight.start_num)
+                                        x.light_site_id >= getNewLight.start_num &&
+                                        x.assembly_batch_sn == item.assembly_batch_sn)
                                         .OrderBy(x => x.light_site_id)
                                         .Take(1)
                                         .First();
@@ -325,19 +343,24 @@ namespace DotWeb.Controllers
                 #region 燈位產品類別數量及連續配位檢查
 
                 //先群組各項產品的訂購量
-                var groupOrderProductQty = cart.Item.Where(x => x.isOnOrder == false).GroupBy(x => x.product_sn,
+                var groupOrderProductQty = cart.Item.Where(x => x.isOnOrder == false).GroupBy(x => new { x.product_sn, x.assembly_batch_sn },
                 (key, Num) => new
                 {
-                    product_sn = key,
+                    product_sn = key.product_sn,
+                    batch_sn = key.assembly_batch_sn,
                     needQty = Num.Count()
                 });
 
                 //查詢連續配位SQL語法
-                string sql = string.Empty;
+                string sql_comm = string.Empty;
+                string sql_batch = string.Empty;
                 if (md.is_light_serial && groupOrderProductQty.Count() > 0)
                 {
-                    sql = @"select start_num=min(序號),end_num=max(序號),nums= max(序號)-min(序號) + 1 from 
+                    sql_comm = @"select start_num=min(序號),end_num=max(序號),nums= max(序號)-min(序號) + 1 from 
                     (select row_number()over (order by 序號) as rid,* from 點燈位置資料表 Where 年度 = @Y And 產品編號=@P And 空位='0') A 
+	                group by 序號-RID";
+                    sql_batch = @"select start_num=min(序號),end_num=max(序號),nums= max(序號)-min(序號) + 1 from 
+                    (select row_number()over (order by 序號) as rid,* from 點燈位置資料表 Where 年度 = @Y And 產品編號=@P And 空位='0' AND assembly_batch_sn=@batch_sn) A 
 	                group by 序號-RID";
                 }
 
@@ -352,7 +375,7 @@ namespace DotWeb.Controllers
                     {
                         #region 數量檢查是否足夠
                         int statisticsCount = db0.Light_Site.Where(x => x.Y == this.LightYear
-                                        && x.product_sn == getOrderQty.product_sn && x.is_sellout == "0").Count(); //統計燈位目前還剩的數量
+                                        && x.product_sn == getOrderQty.product_sn && x.is_sellout == "0" & x.assembly_batch_sn == getOrderQty.batch_sn).Count(); //統計燈位目前還剩的數量
 
                         if (statisticsCount < getOrderQty.needQty)
                         {
@@ -365,8 +388,16 @@ namespace DotWeb.Controllers
                         #region 連續配位資料處理
                         if (md.is_light_serial) //採用連續配位
                         {
-                            SqlParameter[] sps = new SqlParameter[] { new SqlParameter("@Y", this.LightYear), new SqlParameter("@P", getOrderQty.product_sn) };
-                            var getLightSerial = db0.Database.SqlQuery<LightSerial>(sql, sps).ToList();
+                            var sps = new List<SqlParameter> { new SqlParameter("@Y", this.LightYear), new SqlParameter("@P", getOrderQty.product_sn) };
+                            #region 法會連續配位
+                            string sql = sql_comm;
+                            if (getProductInfo.category == e_祈福產品分類.超渡法會 & getOrderQty.batch_sn != null)
+                            {
+                                sql = sql_batch;
+                                sps.Add(new SqlParameter("@batch_sn", getOrderQty.batch_sn));
+                            }
+                            #endregion
+                            var getLightSerial = db0.Database.SqlQuery<LightSerial>(sql, sps.ToArray()).ToList();
                             var isHaveSerial = getLightSerial.Any(x => x.nums >= getOrderQty.needQty);
                             if (!isHaveSerial)
                             {
@@ -401,22 +432,27 @@ namespace DotWeb.Controllers
 
                 #region 超渡法會梯次統計
                 //統計法會梯次
-                var groupOrderAssemblyBatchQty = cart.Item.Where(x => x.assembly_batch_sn != null).GroupBy(x => x.assembly_batch_sn,
+                var groupOrderAssemblyBatchQty = cart.Item.Where(x => x.assembly_batch_sn != null & x.isOnOrder == false).GroupBy(x => x.assembly_batch_sn,
                   (key, Num) => new
                   {
                       assembly_batch_sn = key,
                       needQty = Num.Count()
                   });
+                string[] allowedSN = new string[] { 
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
                 foreach (var orderqty in groupOrderAssemblyBatchQty)
                 {
                     var getBatchInfo = db0.AssemblyBatch.Where(x => x.batch_sn == orderqty.assembly_batch_sn & x.batch_date.Year == this.LightYear).FirstOrDefault();
                     if (getBatchInfo != null)
                     {
-                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & x.orders_sn != cart.orders_sn).Count();
+                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & allowedSN.Contains(x.product_sn)).Count();
                         int EmptySerial = getBatchInfo.batch_qty - qty;//多餘空位
                         if (EmptySerial < orderqty.needQty)
                         {
-                            r.message = string.Format("{0}超渡法會梯次人數已達上限,請選擇其他梯次!", getBatchInfo.batch_title);
+                            r.message = string.Format("{0}超渡法會梯次人數僅剩{1}位,目前選取人數已達上限,請選擇其他梯次!", getBatchInfo.batch_title, EmptySerial);
                             r.result = false;
                             return defJSON(r);
                         }
@@ -478,10 +514,10 @@ namespace DotWeb.Controllers
                         get_detail_item.departed_qty = item.departed_qty;//嬰靈數量
 
                         #region 換法會梯次
-                        if (get_detail_item.assembly_batch_sn != item.assembly_batch_sn)
-                        {
-                            get_detail_item.assembly_batch_sn = item.assembly_batch_sn;//法會梯次
-                        }
+                        //if (get_detail_item.assembly_batch_sn != item.assembly_batch_sn)
+                        //{
+                        //    get_detail_item.assembly_batch_sn = item.assembly_batch_sn;//法會梯次
+                        //}
                         #endregion
                     }
                     else
@@ -499,7 +535,8 @@ namespace DotWeb.Controllers
                                     Where(x => x.Y == this.LightYear &&
                                         x.product_sn == item.product_sn &&
                                         x.is_sellout == "0" &&
-                                        x.light_site_id >= getNewLight.start_num)
+                                        x.light_site_id >= getNewLight.start_num &&
+                                        x.assembly_batch_sn == item.assembly_batch_sn)
                                         .OrderBy(x => x.light_site_id)
                                         .Take(1)
                                         .First();
