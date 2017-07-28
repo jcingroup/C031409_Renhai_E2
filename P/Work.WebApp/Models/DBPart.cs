@@ -86,6 +86,24 @@ namespace Work.WebApp.Models
         public int count_1404 { get; set; }//嬰靈
         public int index { get; set; }
     }
+    /// <summary>
+    /// 過濾地址不重複
+    /// </summary>
+    public class AddressCompare : IEqualityComparer<m_Member>
+    {
+        #region IEqualityComparer<m_Member> m_Member
+
+        public bool Equals(m_Member x, m_Member y)
+        {
+            return (x.zip == y.zip && x.address == y.address);
+        }
+
+        public int GetHashCode(m_Member obj)
+        {
+            return obj.ToString().GetHashCode();
+        }
+        #endregion
+    }
     #endregion
     #region q_Model_Define
     public class q_AspNetRoles : QueryBase
@@ -108,7 +126,10 @@ namespace Work.WebApp.Models
     {
         public int? member_id { get; set; }
         public int? year { get; set; }
+        public DateTime? startDate { get; set; }
+        public DateTime? endDate { get; set; }
         public string zipcode { get; set; }
+        public int? type { get; set; }
 
     }
     public class q_Order_Detail : QueryBase

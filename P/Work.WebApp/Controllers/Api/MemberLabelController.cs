@@ -3,6 +3,7 @@ using ProcCore.ReturnAjaxResult;
 using ProcCore.Web;
 using ProcCore.WebCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Work.WebApp.Models;
@@ -27,18 +28,57 @@ namespace DotWeb.Api
 
             using (db0 = getDB0())
             {
-                string[] light_category = new string[] { "點燈", "福燈" };
-                var items = (from x in db0.Member_Detail
-                             orderby x.Member.zip, x.Member.address //地址排序
-                             //orderby x.householder //姓名
-                             where x.is_holder & x.Orders_Detail.Any(y => y.Y == q.year & light_category.Contains(y.Product.category)) & !x.Member.repeat_mark & !x.is_delete
-                             select new m_Member_Detail()
-                             {
-                                 member_id = x.member_id,
-                                 address = x.Member.address,
-                                 zip = x.Member.zip,
-                                 householder = x.Member.householder
-                             }).Distinct();
+                IQueryable<m_Member_Detail> items = null;
+                if (q.startDate != null && q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    if (q.type == 2)
+                    {//2017/7/28 列印2016年有購買香油超渡法會之產品(暫時性程式)
+                        string[] prod_sn = new string[] { ProcCore.Business.Logic.e_祈福產品.香油_薦拔祖先, ProcCore.Business.Logic.e_祈福產品.香油_冤親債主, ProcCore.Business.Logic.e_祈福產品.香油_嬰靈 };
+
+                        items = (from x in db0.Member_Detail
+                                 orderby x.Member.zip, x.Member.address //地址排序
+                                 //orderby x.householder //姓名
+                                 where x.is_holder & x.Orders_Detail.Any(y => y.i_InsertDateTime >= start & y.i_InsertDateTime < end & prod_sn.Contains(y.product_sn)) & !x.Member.repeat_mark & !x.is_delete
+                                 select new m_Member_Detail()
+                                 {
+                                     member_id = x.member_id,
+                                     address = x.Member.address,
+                                     zip = x.Member.zip,
+                                     householder = x.Member.householder
+                                 }).Distinct();
+                    }
+                    else
+                    {
+                        string[] light_category = new string[] { ProcCore.Business.Logic.e_祈福產品分類.點燈, ProcCore.Business.Logic.e_祈福產品分類.福燈 };
+                        items = (from x in db0.Member_Detail
+                                 orderby x.Member.zip, x.Member.address //地址排序
+                                 //orderby x.householder //姓名
+                                 where x.is_holder & x.Orders_Detail.Any(y => y.i_InsertDateTime >= start & y.i_InsertDateTime < end & light_category.Contains(y.Product.category)) & !x.Member.repeat_mark & !x.is_delete
+                                 select new m_Member_Detail()
+                                 {
+                                     member_id = x.member_id,
+                                     address = x.Member.address,
+                                     zip = x.Member.zip,
+                                     householder = x.Member.householder
+                                 }).Distinct();
+                    }
+
+                }
+                else
+                {
+                    return (new GridInfo2<m_Member_Detail>()
+                    {
+                        rows = new List<m_Member_Detail>(),
+                        total = 1,
+                        page = 1,
+                        records = 0,
+                        startcount = 1,
+                        endcount = 0
+                    });
+                }
+
 
                 string[] zip = new string[] { "320", "324", "326" };
 

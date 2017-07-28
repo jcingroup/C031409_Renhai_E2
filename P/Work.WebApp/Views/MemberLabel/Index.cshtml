@@ -3,11 +3,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section IncludeScript{
-    @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">*@
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     @Scripts.Render("~/memberlabelCtr")
 }
 <form class="query-form" ng-submit="Init_Query()">
     <fieldset>
+        <label>訂單日期： 起</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
+        <label>迄</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />
         <label>郵遞區號:</label>
         <select ng-model="sd.zipcode">
             <option value="320">中壢320</option>
@@ -15,13 +19,21 @@
             <option value="326">楊梅326</option>
             <option value="Other">其他未分</option>
         </select>
+        <select ng-model="sd.type" ng-show="@(ViewBag.ID == 1000001?"true":"false")">
+            <option value="1">查詢1</option>
+            <option value="2">查詢2</option>
+        </select>
         <button type="submit">
             <i class="fa fa-search"></i>查詢
         </button>
+        <br />
         <button type="button" ng-click="DownLoadExcel_PostPrint()">
             <i class="fa fa-print"></i>產生郵寄標籤
         </button>
-        <label class="text-center" style="color:red">備註：查詢出2016年訂單主檔的戶長資料，地址重覆會篩選掉。</label>
+        <button type="button" ng-click="DownLoadExcel_PostPrint(2)" ng-show="@(ViewBag.ID == 1000001?"true":"false")">
+            <i class="fa fa-files-o"></i>產生香油(薦拔祖先)、香油(冤親債主)、香油(嬰靈)郵寄標籤
+        </button>
+        <label class="text-center" style="color:red">備註：查詢有購買產品為點燈或福燈之訂單主檔的戶長資料。</label>
     </fieldset>
 </form>
 <div class="grid-list">

@@ -16,6 +16,7 @@ namespace DotWeb.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.ID = this.UserId;
             return View();
         }
         public string aj_init()

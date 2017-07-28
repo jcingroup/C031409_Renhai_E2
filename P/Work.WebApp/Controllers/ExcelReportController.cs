@@ -18,6 +18,8 @@ namespace DotWeb.Controllers
 {
     public class ExcelReportController : BaseController
     {
+        string folder_path_tmp = "~/_Code/Excel/";
+        string folder_path_save = "~/_Code/Log/";
         // 此控製器for asp叫用
         public ActionResult Index()
         {
@@ -180,7 +182,7 @@ namespace DotWeb.Controllers
                 #endregion
                 #endregion
 
-                string ExcelTemplateFile = Server.MapPath("~/_Code/Excel/統計表.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "統計表.xlsx");
                 FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 excel = new ExcelPackage(finfo, true);
                 ExcelWorksheet sheet = excel.Workbook.Worksheets["SheetPrint"];
@@ -255,7 +257,7 @@ namespace DotWeb.Controllers
                 rAjaxResult.result = true;
 
                 string filename = "統計表[" + md.負責人 + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
-                string filepath = Server.MapPath("~/_Code/Log/" + filename);
+                string filepath = Server.MapPath(folder_path_save + filename);
                 fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
                 excel.SaveAs(fs);
                 fs.Position = 0;
@@ -294,7 +296,7 @@ namespace DotWeb.Controllers
                     fortune_conut = items.Count();
                 }
 
-                string ExcelTemplateFile = Server.MapPath("~/_Code/Excel/感謝狀.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "感謝狀.xlsx");
                 FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 excel = new ExcelPackage(finfo, true);
 
@@ -557,7 +559,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 string filename = "感謝狀[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
-                string filepath = Server.MapPath("~/_Code/Log/" + filename);
+                string filepath = Server.MapPath(folder_path_save + filename);
                 fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
                 excel.SaveAs(fs);
                 fs.Position = 0;
@@ -585,7 +587,7 @@ namespace DotWeb.Controllers
 
                 var user = db0.Users.Find(this.UserId);
 
-                string ExcelTemplateFile = Server.MapPath("~/_Code/Excel/福燈標籤8.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "福燈標籤8.xlsx");
                 FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 excel = new ExcelPackage(finfo, true);
                 ExcelWorksheet sheet = excel.Workbook.Worksheets["SheetPrint"];
@@ -806,7 +808,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 string filename = "福燈標籤[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
-                string filepath = Server.MapPath("~/_Code/Log/" + filename);
+                string filepath = Server.MapPath(folder_path_save + filename);
                 fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
                 excel.SaveAs(fs);
                 fs.Position = 0;
@@ -950,7 +952,7 @@ namespace DotWeb.Controllers
                 var user = db0.Users.Find(temple_account.i_InsertUserID);
                 var product = db0.Product.Find(temple_account.product_sn);
 
-                string ExcelTemplateFile = Server.MapPath("~/_Code/Excel/契子會.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "契子會.xlsx");
                 FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 excel = new ExcelPackage(finfo, true);
 
@@ -996,7 +998,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 string filename = "感謝狀[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
-                string filepath = Server.MapPath("~/_Code/Log/" + filename);
+                string filepath = Server.MapPath(folder_path_save + filename);
                 fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
                 excel.SaveAs(fs);
                 fs.Position = 0;
@@ -1176,7 +1178,7 @@ namespace DotWeb.Controllers
 
                 var user = db0.Users.Find(this.UserId);
 
-                string ExcelTemplateFile = Server.MapPath("~/_Code/Excel/契子郵寄標籤.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "契子郵寄標籤.xlsx");
                 FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 excel = new ExcelPackage(finfo, true);
                 ExcelWorksheet sheet = excel.Workbook.Worksheets["SheetPrint"];
@@ -1274,7 +1276,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 string filename = "契子郵寄標籤[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
-                string filepath = Server.MapPath("~/_Code/Log/" + filename);
+                string filepath = Server.MapPath(folder_path_save + filename);
                 fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
                 excel.SaveAs(fs);
                 fs.Position = 0;
@@ -1406,7 +1408,7 @@ namespace DotWeb.Controllers
                 db0.Dispose();
             }
         }
-        public FileResult downloadExcel_PostMember(string zipcode, int year)
+        public FileResult downloadExcel_PostMember(string zipcode, string startDate, string endDate, int type = 1)
         {
             ExcelPackage excel = null;
             FileStream fs = null;
@@ -1416,19 +1418,29 @@ namespace DotWeb.Controllers
 
                 var user = db0.Users.Find(this.UserId);
 
-                string ExcelTemplateFile = Server.MapPath("~/_Code/Excel/郵寄標籤.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "郵寄標籤.xlsx");
                 FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 excel = new ExcelPackage(finfo, true);
                 ExcelWorksheet sheet = excel.Workbook.Worksheets["label"];
 
                 sheet.View.TabSelected = true;
                 #region 取得會員戶長資料
-                string[] light_category = new string[] { "點燈", "福燈" };
+                if (startDate == null || endDate == null)
+                {//沒填寫訂單起訖日不列印
+                    return null;
+                }
+                DateTime start = (DateTime.Parse(startDate));
+                DateTime end = (DateTime.Parse(endDate)).AddDays(1);
 
-                var getItems = (from x in db0.Member_Detail
+                IQueryable<m_Member> getItems = null;
+                if (type == 2)
+                {//2017/7/28 列印2016年有購買香油超渡法會之產品(暫時性程式)
+                    string[] prod_sn = new string[] { e_祈福產品.香油_薦拔祖先, e_祈福產品.香油_冤親債主, e_祈福產品.香油_嬰靈 };
+
+                    getItems = (from x in db0.Member_Detail
                                 orderby x.Member.zip, x.Member.address //地址排序
                                 //orderby x.householder //姓名
-                                where x.is_holder & x.Orders_Detail.Any(y => y.Y == year & light_category.Contains(y.Product.category)) & !x.Member.repeat_mark & !x.is_delete
+                                where x.is_holder & x.Orders_Detail.Any(y => y.i_InsertDateTime >= start & y.i_InsertDateTime < end & prod_sn.Contains(y.product_sn)) & !x.Member.repeat_mark & !x.is_delete
                                 select new m_Member()
                                 {
                                     member_id = x.member_id,
@@ -1436,6 +1448,24 @@ namespace DotWeb.Controllers
                                     zip = x.Member.zip,
                                     householder = x.Member.householder
                                 }).Distinct();
+                }
+                else
+                {
+                    string[] light_category = new string[] { e_祈福產品分類.點燈, e_祈福產品分類.福燈 };
+
+                    getItems = (from x in db0.Member_Detail
+                                orderby x.Member.zip, x.Member.address //地址排序
+                                //orderby x.householder //姓名
+                                where x.is_holder & x.Orders_Detail.Any(y => y.i_InsertDateTime >= start & y.i_InsertDateTime < end & light_category.Contains(y.Product.category)) & !x.Member.repeat_mark & !x.is_delete
+                                select new m_Member()
+                                {
+                                    member_id = x.member_id,
+                                    address = x.Member.address,
+                                    zip = x.Member.zip,
+                                    householder = x.Member.householder
+                                }).Distinct();
+                }
+
 
                 string[] zip = new string[] { "320", "324", "326" };
 
@@ -1453,8 +1483,6 @@ namespace DotWeb.Controllers
                 }
                 //地址不重複
                 //var GetUnique = getItems.GroupBy(x => x.address).Select(g => g.First()).ToList();
-
-
 
                 #endregion
 
@@ -1511,7 +1539,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 string filename = "郵寄標籤[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
-                string filepath = Server.MapPath("~/_Code/Log/" + filename);
+                string filepath = Server.MapPath(folder_path_save + filename);
                 fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
                 excel.SaveAs(fs);
                 fs.Position = 0;
@@ -1541,7 +1569,7 @@ namespace DotWeb.Controllers
 
                 var user = db0.Users.Find(this.UserId);
 
-                string ExcelTemplateFile = Server.MapPath("~/_Code/Excel/test.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "test.xlsx");
                 FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 excel = new ExcelPackage(finfo, true);
                 ExcelWorksheet sheet = excel.Workbook.Worksheets.First();
@@ -1600,7 +1628,7 @@ namespace DotWeb.Controllers
                 }
 
                 string filename = "TEST[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
-                string filepath = Server.MapPath("~/_Code/Log/" + filename);
+                string filepath = Server.MapPath(folder_path_save + filename);
                 fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
                 excel.SaveAs(fs);
                 fs.Position = 0;
@@ -1619,6 +1647,162 @@ namespace DotWeb.Controllers
                 db0.Dispose();
             }
         }
+
+        #region 法會梯次報表
+        public FileResult ExportExcelFile(MemoryStream stream, string name)
+        {
+            try
+            {
+                string out_file_name = name + "[" + UserName + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", out_file_name);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        #region 名冊
+        /// <summary>
+        /// 個別祖先
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        public FileResult Ancestor(q_法會名冊 q)
+        {
+            var outputStream = stmAncestor(q);
+            string setFileName = "超度法會(薦拔祖先-個別祖先)名冊";
+            return ExportExcelFile(outputStream, setFileName);
+        }
+        private MemoryStream stmAncestor(q_法會名冊 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(薦拔祖先-個別祖先)名冊.xlsx");
+                FileInfo finfo = new FileInfo(ExcelTemplateFile);
+                ExcelPackage excel = new ExcelPackage(finfo, true);
+                ExcelWorksheet sheet = excel.Workbook.Worksheets["SheetPrint"];
+
+                #region 取得資料
+                //var items = getEquipUseStateData(CustId, YY);
+                #endregion
+
+                #region Excel Handle
+                //makeEquipUseState(items, getSheet);
+                #endregion
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private List<string> getAncestorData(q_法會名冊 q)
+        {
+            //List<Api.EquipUseStateController.m_EquipUseState> res = new List<Api.EquipUseStateController.m_EquipUseState>();
+            //using (var db0 = getDB0())
+            //{
+            //    res = db0.EquipUseState
+            //           .Where(x => x.CustID == CustId && x.YY == YY)
+            //           .Select(x => new Api.EquipUseStateController.m_EquipUseState()
+            //           {
+            //               CustID = x.CustID,
+            //               YY = x.YY,
+            //               system_type = x.system_type,
+            //               PNO = x.PNO,
+            //               PlantNameType = x.PlantNameType,
+            //               operator_state = x.operator_state,//操作管理現況
+            //               maintain_state = x.maintain_state,//維護現況
+            //               system_name = x.system_name,//系統名稱
+            //               plant_name = x.plant_name,//設備名稱
+            //               PlantNo = x.PlantNo,//設備編號
+            //               Brand = x.Brand,//廠牌
+            //               Style = x.Style,//型式
+            //               CapacityQty = x.CapacityQty,//容量
+            //               CapacityUnit = x.CapacityUnit,//設備容量單位
+            //               RunHH = x.RunHH,//運轉時數
+            //           }).ToList();
+            //}
+            //return res;
+            return null;
+        }
+        //private void makeEquipUseState(List<Api.EquipUseStateController.m_EquipUseState> data, IXLWorksheet sheet)
+        //{
+
+        //    int row_index = 5;
+        //    int count = data.Count() - 1;
+        //    if (count > 0) { sheet.Row(row_index).InsertRowsBelow(count); }
+        //    int index = 1;
+        //    foreach (var i in data)
+        //    {
+        //        if (index != 1)
+        //            sheet.Cell(row_index, 1).Value = sheet.Range("A5:E5");
+
+        //        sheet.Cell(row_index, 1).Value = index;
+        //        sheet.Cell(row_index, 2).Value = i.system_name;
+        //        sheet.Cell(row_index, 3).Value = i.plant_name;
+
+        //        #region (2016/12/1)開會說只顯示選擇的資料
+        //        //sheet.Cell(row_index, 4).Value = string.Format("{0}依標準程序規定操作", checkValByInt((int)i.operator_state, 1));
+        //        //sheet.Cell(row_index + 1, 4).Value = string.Format("{0}依使用者經驗操作", checkValByInt((int)i.operator_state, 0));
+
+        //        //sheet.Cell(row_index, 5).Value = string.Format("{0}定期實施維護保養", checkValByInt((int)i.maintain_state, 1));
+        //        //sheet.Cell(row_index + 1, 5).Value = string.Format("{0}不定期實施維護保養", checkValByInt((int)i.maintain_state, 0));
+        //        #endregion
+        //        sheet.Cell(row_index, 4).Value = (i.operator_state == 1) ? "依標準程序規定操作" : "依使用者經驗操作";
+        //        sheet.Cell(row_index, 5).Value = (i.maintain_state == 1) ? "定期實施維護保養" : "不定期實施維護保養";
+
+        //        row_index++;
+        //        index++;
+        //    }
+        //}
+
+        #endregion
+
+        #region 疏文、蝶文
+        #endregion
+        #region 超渡法會模型
+        public class q_法會名冊
+        {
+            /// <summary>
+            /// 年度
+            /// </summary>
+            public int year { get; set; }
+            /// <summary>
+            /// 法會梯次
+            /// </summary>
+            public int? batch_sn { get; set; }
+            /// <summary>
+            /// 產品種類
+            /// </summary>
+            public int? product_sn { get; set; }
+        }
+        public class m_法會名冊
+        {
+            /// <summary>
+            /// 燈位名稱
+            /// </summary>
+            public string LightSite_name { get; set; }
+            /// <summary>
+            /// 申請人姓名
+            /// </summary>
+            public string apply_name { get; set; }
+            /// <summary>
+            /// 牌位地址或祈福地址(祖先用牌位地址;冤親、嬰靈 地址用祈福地址)
+            /// </summary>
+            public string address { get; set; }
+            /// <summary>
+            /// 往者名
+            /// </summary>
+            public string departed_name { get; set; }
+            public string tel { get; set; }
+        }
+        #endregion
+        #endregion
 
         public void light_name(ExcelWorksheet sheet, int row, int column)
         {
