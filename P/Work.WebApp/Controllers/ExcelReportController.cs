@@ -1700,33 +1700,33 @@ namespace DotWeb.Controllers
 
             if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲)
             {
-                outputStream = stmAncestor(q);
+                outputStream = stmAncestorRoll(q);
                 setFileName = "超度法會(薦拔祖先-個別祖先)名冊";
             }
             else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙)
             {
-                outputStream = stmAncestorS(q);
+                outputStream = stmAncestorSRoll(q);
                 setFileName = "超度法會(薦拔祖先-歷代祖先)名冊";
             }
             else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主)
             {
-                outputStream = stmKarmic(q);
+                outputStream = stmKarmicRoll(q);
                 setFileName = "超度法會(渡脫冤親債主)名冊";
             }
             else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈)
             {
-                outputStream = stmInfantSpirits(q);
+                outputStream = stmInfantSpiritsRoll(q);
                 setFileName = "超度法會(超渡無緣嬰靈)名冊";
             }
             else
             {
-                var ex_1401 = AncestorEX(q);
+                var ex_1401 = AncestorRollEX(q);
                 ex_1401.Worksheet(1).CopyTo(wb, ex_1401.Worksheet(1).Name);
-                var ex_1402 = AncestorSEX(q);
+                var ex_1402 = AncestorSRollEX(q);
                 ex_1402.Worksheet(1).CopyTo(wb, ex_1402.Worksheet(1).Name);
-                var ex_1403 = KarmicEX(q);
+                var ex_1403 = KarmicRollEX(q);
                 ex_1403.Worksheet(1).CopyTo(wb, ex_1403.Worksheet(1).Name);
-                var ex_1404 = InfantSpiritsEX(q);
+                var ex_1404 = InfantSpiritsRollEX(q);
                 ex_1404.Worksheet(1).CopyTo(wb, ex_1404.Worksheet(1).Name);
 
                 //刪除避免跑版而存放的第一個sheet
@@ -1804,19 +1804,19 @@ namespace DotWeb.Controllers
         }
 
         #region 個別祖先
-        public FileResult Ancestor(q_法會 q)
+        public FileResult AncestorRoll(q_法會 q)
         {
-            var outputStream = stmAncestor(q);
+            var outputStream = stmAncestorRoll(q);
             string setFileName = "超度法會(薦拔祖先-個別祖先)名冊";
             return ExportExcelFile(outputStream, setFileName);
         }
-        protected XLWorkbook AncestorEX(q_法會 q)
+        protected XLWorkbook AncestorRollEX(q_法會 q)
         {
-            var outputStream = stmAncestor(q);
+            var outputStream = stmAncestorRoll(q);
             XLWorkbook excel = new XLWorkbook(outputStream);
             return excel;
         }
-        private MemoryStream stmAncestor(q_法會 q)
+        private MemoryStream stmAncestorRoll(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             try
@@ -1836,7 +1836,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 #region Excel Handle
-                makeAncestor(items, getSheet, styleSheet);
+                makeAncestorRoll(items, getSheet, styleSheet);
                 #endregion
 
                 styleSheet.Delete();
@@ -1851,12 +1851,13 @@ namespace DotWeb.Controllers
                 return null;
             }
         }
-        private void makeAncestor(List<m_法會名冊> data, IXLWorksheet sheet, IXLWorksheet style)
+        private void makeAncestorRoll(List<m_法會名冊> data, IXLWorksheet sheet, IXLWorksheet style)
         {
             int count = data.Count();
             #region 複製樣板
+            int PageRow = 32;
             //一頁十筆;樣板列高32欄寬13
-            copyTmp(count, 10, 32, 13, sheet, style);
+            copyTmp(count, 10, PageRow, 13, sheet, style);
             #endregion
 
 
@@ -1879,7 +1880,7 @@ namespace DotWeb.Controllers
                 if (col_index > 13)
                 {
                     //換頁
-                    row_index += 32;
+                    row_index += PageRow;
                     col_index = 4;
                 }
             }
@@ -1888,19 +1889,19 @@ namespace DotWeb.Controllers
         }
         #endregion
         #region 歷代祖先
-        public FileResult AncestorS(q_法會 q)
+        public FileResult AncestorSRoll(q_法會 q)
         {
-            var outputStream = stmAncestorS(q);
+            var outputStream = stmAncestorSRoll(q);
             string setFileName = "超度法會(薦拔祖先-歷代祖先)名冊";
             return ExportExcelFile(outputStream, setFileName);
         }
-        protected XLWorkbook AncestorSEX(q_法會 q)
+        protected XLWorkbook AncestorSRollEX(q_法會 q)
         {
-            var outputStream = stmAncestorS(q);
+            var outputStream = stmAncestorSRoll(q);
             XLWorkbook excel = new XLWorkbook(outputStream);
             return excel;
         }
-        private MemoryStream stmAncestorS(q_法會 q)
+        private MemoryStream stmAncestorSRoll(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             try
@@ -1915,7 +1916,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 #region Excel Handle
-                makeAncestorS(items, getSheet, styleSheet);
+                makeAncestorSRoll(items, getSheet, styleSheet);
                 #endregion
 
                 styleSheet.Delete();
@@ -1930,12 +1931,13 @@ namespace DotWeb.Controllers
                 return null;
             }
         }
-        private void makeAncestorS(List<m_法會名冊> data, IXLWorksheet sheet, IXLWorksheet style)
+        private void makeAncestorSRoll(List<m_法會名冊> data, IXLWorksheet sheet, IXLWorksheet style)
         {
             int count = data.Count();
             #region 複製樣板
+            int PageRow = 32;
             //一頁十筆;樣板列高32欄寬13
-            copyTmp(count, 10, 32, 13, sheet, style);
+            copyTmp(count, 10, PageRow, 13, sheet, style);
             #endregion
 
 
@@ -1958,7 +1960,7 @@ namespace DotWeb.Controllers
                 if (col_index > 13)
                 {
                     //換頁
-                    row_index += 32;
+                    row_index += PageRow;
                     col_index = 4;
                 }
             }
@@ -1967,19 +1969,19 @@ namespace DotWeb.Controllers
         }
         #endregion
         #region 冤親債主
-        public FileResult Karmic(q_法會 q)
+        public FileResult KarmicRoll(q_法會 q)
         {
-            var outputStream = stmKarmic(q);
+            var outputStream = stmKarmicRoll(q);
             string setFileName = "超度法會(渡脫冤親債主)名冊";
             return ExportExcelFile(outputStream, setFileName);
         }
-        protected XLWorkbook KarmicEX(q_法會 q)
+        protected XLWorkbook KarmicRollEX(q_法會 q)
         {
-            var outputStream = stmKarmic(q);
+            var outputStream = stmKarmicRoll(q);
             XLWorkbook excel = new XLWorkbook(outputStream);
             return excel;
         }
-        private MemoryStream stmKarmic(q_法會 q)
+        private MemoryStream stmKarmicRoll(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             try
@@ -1994,7 +1996,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 #region Excel Handle
-                makeKarmic(items, getSheet, styleSheet);
+                makeKarmicRoll(items, getSheet, styleSheet);
                 #endregion
 
                 styleSheet.Delete();
@@ -2009,12 +2011,13 @@ namespace DotWeb.Controllers
                 return null;
             }
         }
-        private void makeKarmic(List<m_法會名冊> data, IXLWorksheet sheet, IXLWorksheet style)
+        private void makeKarmicRoll(List<m_法會名冊> data, IXLWorksheet sheet, IXLWorksheet style)
         {
             int count = data.Count();
             #region 複製樣板
+            int PageRow = 32;
             //一頁十筆;樣板列高32欄寬13
-            copyTmp(count, 10, 32, 13, sheet, style);
+            copyTmp(count, 10, PageRow, 13, sheet, style);
             #endregion
 
 
@@ -2045,7 +2048,7 @@ namespace DotWeb.Controllers
                 if (col_index > 13)
                 {
                     //換頁
-                    row_index += 32;
+                    row_index += PageRow;
                     col_index = 4;
                 }
             }
@@ -2054,19 +2057,19 @@ namespace DotWeb.Controllers
         }
         #endregion
         #region 嬰靈
-        public FileResult InfantSpirits(q_法會 q)
+        public FileResult InfantSpiritsRoll(q_法會 q)
         {
-            var outputStream = stmInfantSpirits(q);
+            var outputStream = stmInfantSpiritsRoll(q);
             string setFileName = "超度法會(超渡無緣嬰靈)名冊";
             return ExportExcelFile(outputStream, setFileName);
         }
-        protected XLWorkbook InfantSpiritsEX(q_法會 q)
+        protected XLWorkbook InfantSpiritsRollEX(q_法會 q)
         {
-            var outputStream = stmInfantSpirits(q);
+            var outputStream = stmInfantSpiritsRoll(q);
             XLWorkbook excel = new XLWorkbook(outputStream);
             return excel;
         }
-        private MemoryStream stmInfantSpirits(q_法會 q)
+        private MemoryStream stmInfantSpiritsRoll(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             try
@@ -2081,7 +2084,7 @@ namespace DotWeb.Controllers
                 #endregion
 
                 #region Excel Handle
-                makeInfantSpirits(items, getSheet, styleSheet);
+                makeInfantSpiritsRoll(items, getSheet, styleSheet);
                 #endregion
 
                 styleSheet.Delete();
@@ -2096,12 +2099,13 @@ namespace DotWeb.Controllers
                 return null;
             }
         }
-        private void makeInfantSpirits(List<m_法會名冊> data, IXLWorksheet sheet, IXLWorksheet style)
+        private void makeInfantSpiritsRoll(List<m_法會名冊> data, IXLWorksheet sheet, IXLWorksheet style)
         {
             int count = data.Count();
             #region 複製樣板
+            int PageRow = 32;
             //一頁十筆;樣板列高32欄寬13
-            copyTmp(count, 10, 32, 13, sheet, style);
+            copyTmp(count, 10, PageRow, 13, sheet, style);
             #endregion
 
 
@@ -2125,7 +2129,7 @@ namespace DotWeb.Controllers
                 if (col_index > 13)
                 {
                     //換頁
-                    row_index += 32;
+                    row_index += PageRow;
                     col_index = 4;
                 }
             }
@@ -2137,11 +2141,11 @@ namespace DotWeb.Controllers
 
         #region 疏文、蝶文
         /// <summary>
-        /// 取得疏文資料(四個產品共用)
+        /// 取得疏文、蝶文資料(四個產品共用)
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
-        private List<m_疏文名單> getShuWenData(q_法會 q)
+        private List<m_疏文名單> getShuWenData(q_法會 q, string prod_sn = null)
         {
             List<m_疏文名單> res = new List<m_疏文名單>();
             using (var db0 = getDB())
@@ -2157,10 +2161,9 @@ namespace DotWeb.Controllers
                            departed_address = x.departed_address,
                            departed_name = x.departed_name,
                            batch_title = x.AssemblyBatch.batch_title,
+                           departed_qty = x.departed_qty,//嬰靈用
+                           batch_date = x.AssemblyBatch.batch_date,//蝶文用
                            batch_sn = x.assembly_batch_sn,
-                           l_birthday = x.l_birthday,
-                           born_time = x.born_time,
-                           departed_qty = x.departed_qty,
                            product_sn = x.product_sn
                        });
                 string[] allowedSN = new string[] { 
@@ -2169,14 +2172,22 @@ namespace DotWeb.Controllers
                     ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
                     ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
 
-                if (allowedSN.Contains(q.product_sn))
+                if (prod_sn == null)
                 {
-                    tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                    if (allowedSN.Contains(q.product_sn))
+                    {
+                        tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                    }
+                    else
+                    {
+                        tmp = tmp.Where(x => allowedSN.Contains(x.product_sn));
+                    }
                 }
                 else
                 {
-                    tmp = tmp.Where(x => allowedSN.Contains(x.product_sn));
+                    tmp = tmp.Where(x => x.product_sn == prod_sn);
                 }
+
                 if (q.batch_sn != null)
                     tmp = tmp.Where(x => x.batch_sn == q.batch_sn);
 
@@ -2237,6 +2248,7 @@ namespace DotWeb.Controllers
             }
             return res;
         }
+
         #region 金紙疏文(四個產品)
         public FileResult PaperMoneyShuWen(q_法會 q)
         {
@@ -2249,7 +2261,7 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "金紙疏文.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會金紙疏文.xlsx");
                 XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
                 IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
                 IXLWorksheet styleSheet = excel.Worksheet("style");
@@ -2283,8 +2295,9 @@ namespace DotWeb.Controllers
         {
             int count = data.list.Count();
             #region 複製樣板
+            int PageRow = 13;
             //一頁1筆;樣板列高13欄寬35
-            copyTmp(count, 1, 13, 35, sheet, style);
+            copyTmp(count, 1, PageRow, 35, sheet, style);
             #endregion
 
 
@@ -2305,11 +2318,335 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index + 3, 30).Value = i.address;//祈福地址
                 sheet.Cell(row_index + 11, 33).Value = i.LightSite_name;//燈位
 
-                row_index += 13;
+                row_index += PageRow;
             }
 
             sheet.Name = string.Format("金紙疏文({0}筆)", count);
         }
+        #endregion
+        #region 蝶文
+        public FileResult DieWen(q_法會 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            string setFileName = "超度法會蝶文";
+            //用已存在excel進行複製,如果自訂新XLWorkbook會出現跑版問題
+            string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "BasicTable.xlsx");
+            var wb = new XLWorkbook(ExcelTemplateFile);
+
+            if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲)
+            {
+                outputStream = stmAncestorDieWen(q);
+                setFileName = "超度法會蝶文(薦拔祖先-個別祖先)";
+            }
+            else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙)
+            {
+                outputStream = stmAncestorSDieWen(q);
+                setFileName = "超度法會蝶文(薦拔祖先-歷代祖先)";
+            }
+            else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主)
+            {
+                outputStream = stmKarmicDieWen(q);
+                setFileName = "超度法會蝶文(渡脫冤親債主)";
+            }
+            else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈)
+            {
+                outputStream = stmInfantSpiritsDieWen(q);
+                setFileName = "超度法會蝶文(超渡無緣嬰靈)";
+            }
+            else
+            {
+                var ex_1401 = AncestorDieWenEX(q);
+                ex_1401.Worksheet(1).CopyTo(wb, ex_1401.Worksheet(1).Name);
+                var ex_1402 = AncestorSDieWenEX(q);
+                ex_1402.Worksheet(1).CopyTo(wb, ex_1402.Worksheet(1).Name);
+                var ex_1403 = KarmicDieWenEX(q);
+                ex_1403.Worksheet(1).CopyTo(wb, ex_1403.Worksheet(1).Name);
+                var ex_1404 = InfantSpiritsDieWenEX(q);
+                ex_1404.Worksheet(1).CopyTo(wb, ex_1404.Worksheet(1).Name);
+
+                //刪除避免跑版而存放的第一個sheet
+                IXLWorksheet getSheet = wb.Worksheet("Tmp");
+                getSheet.Delete();
+
+                wb.SaveAs(outputStream);
+                outputStream.Position = 0;
+            }
+            wb.Dispose();
+            return ExportExcelFile(outputStream, setFileName);
+        }
+        #region 個別祖先
+        protected XLWorkbook AncestorDieWenEX(q_法會 q)
+        {
+            var outputStream = stmAncestorDieWen(q);
+            XLWorkbook excel = new XLWorkbook(outputStream);
+            return excel;
+        }
+        private MemoryStream stmAncestorDieWen(q_法會 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會蝶文_個別祖先.xlsx");
+                XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
+                IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
+                IXLWorksheet styleSheet = excel.Worksheet("style");
+
+                #region 取得資料
+                var items = getShuWenData(q, ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲);
+                #endregion
+
+                #region Excel Handle
+                makeAncestorDieWen(items, getSheet, styleSheet);
+                #endregion
+
+                styleSheet.Delete();
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private void makeAncestorDieWen(List<m_疏文名單> data, IXLWorksheet sheet, IXLWorksheet style)
+        {
+            int count = data.Count();
+            #region 複製樣板
+            int PageRow = 15;
+            //一頁1筆;樣板列高15欄寬33
+            copyTmp(count, 1, PageRow, 33, sheet, style);
+            #endregion
+
+            MyTaiwanCalendar.PlayTCL pTCL = new MyTaiwanCalendar.PlayTCL();
+            int row_index = 1;//+15
+
+            foreach (var i in data)
+            {//一頁一筆資料,一頁列高15
+
+                var getTwLC = pTCL.getTaiwanLCDate(i.batch_date);
+                //法會農曆日期
+                sheet.Cell(row_index + 2, 6).Value = getTwLC.year;
+                sheet.Cell(row_index + 6, 6).Value = getTwLC.month;
+                sheet.Cell(row_index + 11, 6).Value = getTwLC.day;
+
+                sheet.Cell(row_index + 3, 10).Value = i.departed_name;//祖先姓氏
+                sheet.Cell(row_index + 6, 24).Value = i.apply_name;//申請人
+                sheet.Cell(row_index + 6, 26).Value = i.departed_address;//法會地址
+                sheet.Cell(row_index + 13, 31).Value = i.LightSite_name;//燈位
+
+                row_index += PageRow;
+            }
+            sheet.Name = string.Format("超渡法會蝶文-個別祖先({0}筆)", count);
+        }
+        #endregion
+        #region 歷代祖先
+        protected XLWorkbook AncestorSDieWenEX(q_法會 q)
+        {
+            var outputStream = stmAncestorSDieWen(q);
+            XLWorkbook excel = new XLWorkbook(outputStream);
+            return excel;
+        }
+        private MemoryStream stmAncestorSDieWen(q_法會 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會蝶文_歷代祖先.xlsx");
+                XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
+                IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
+                IXLWorksheet styleSheet = excel.Worksheet("style");
+
+                #region 取得資料
+                var items = getShuWenData(q, ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙);
+                #endregion
+
+                #region Excel Handle
+                makeAncestorSDieWen(items, getSheet, styleSheet);
+                #endregion
+
+                styleSheet.Delete();
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private void makeAncestorSDieWen(List<m_疏文名單> data, IXLWorksheet sheet, IXLWorksheet style)
+        {
+            int count = data.Count();
+            #region 複製樣板
+            int PageRow = 13;
+            //一頁1筆;樣板列高13欄寬33
+            copyTmp(count, 1, PageRow, 33, sheet, style);
+            #endregion
+
+            MyTaiwanCalendar.PlayTCL pTCL = new MyTaiwanCalendar.PlayTCL();
+            int row_index = 1;//+13
+
+            foreach (var i in data)
+            {//一頁一筆資料,一頁列高13
+
+                var getTwLC = pTCL.getTaiwanLCDate(i.batch_date);
+                //法會農曆日期
+                sheet.Cell(row_index + 2, 6).Value = getTwLC.year;
+                sheet.Cell(row_index + 5, 6).Value = getTwLC.month;
+                sheet.Cell(row_index + 10, 6).Value = getTwLC.day;
+
+                sheet.Cell(row_index + 1, 10).Value = i.departed_name;//祖先姓氏
+                sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
+                sheet.Cell(row_index + 5, 26).Value = i.departed_address;//法會地址
+                sheet.Cell(row_index + 11, 31).Value = i.LightSite_name;//燈位
+
+                row_index += PageRow;
+            }
+            sheet.Name = string.Format("超渡法會蝶文-歷代祖先({0}筆)", count);
+        }
+        #endregion
+        #region 冤親債主
+        protected XLWorkbook KarmicDieWenEX(q_法會 q)
+        {
+            var outputStream = stmKarmicDieWen(q);
+            XLWorkbook excel = new XLWorkbook(outputStream);
+            return excel;
+        }
+        private MemoryStream stmKarmicDieWen(q_法會 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會牒文_冤親債主.xlsx");
+                XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
+                IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
+                IXLWorksheet styleSheet = excel.Worksheet("style");
+
+                #region 取得資料
+                var items = getShuWenData(q, ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主);
+                #endregion
+
+                #region Excel Handle
+                makeKarmicDieWen(items, getSheet, styleSheet);
+                #endregion
+
+                styleSheet.Delete();
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private void makeKarmicDieWen(List<m_疏文名單> data, IXLWorksheet sheet, IXLWorksheet style)
+        {
+            int count = data.Count();
+            #region 複製樣板
+            int PageRow = 15;
+            //一頁1筆;樣板列高15欄寬33
+            copyTmp(count, 1, PageRow, 33, sheet, style);
+            #endregion
+
+            MyTaiwanCalendar.PlayTCL pTCL = new MyTaiwanCalendar.PlayTCL();
+            int row_index = 1;//+15
+
+            foreach (var i in data)
+            {//一頁一筆資料,一頁列高15
+
+                var getTwLC = pTCL.getTaiwanLCDate(i.batch_date);
+                //法會農曆日期
+                sheet.Cell(row_index + 2, 5).Value = getTwLC.year;
+                sheet.Cell(row_index + 5, 5).Value = getTwLC.month;
+                sheet.Cell(row_index + 11, 5).Value = getTwLC.day;
+
+                sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
+                sheet.Cell(row_index + 5, 26).Value = i.address;//祈福地址
+                sheet.Cell(row_index + 13, 31).Value = i.LightSite_name;//燈位
+
+                row_index += PageRow;
+            }
+
+            sheet.Name = string.Format("超渡法會蝶文-渡脫冤親債主({0}筆)", count);
+        }
+        #endregion
+        #region 嬰靈
+        protected XLWorkbook InfantSpiritsDieWenEX(q_法會 q)
+        {
+            var outputStream = stmInfantSpiritsDieWen(q);
+            XLWorkbook excel = new XLWorkbook(outputStream);
+            return excel;
+        }
+        private MemoryStream stmInfantSpiritsDieWen(q_法會 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會蝶文_超渡嬰靈.xlsx");
+                XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
+                IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
+                IXLWorksheet styleSheet = excel.Worksheet("style");
+
+                #region 取得資料
+                var items = getShuWenData(q, ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈);//取得訂單資料
+                #endregion
+
+                #region Excel Handle
+                makeInfantSpiritsDieWen(items, getSheet, styleSheet);
+                #endregion
+
+                styleSheet.Delete();
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private void makeInfantSpiritsDieWen(List<m_疏文名單> data, IXLWorksheet sheet, IXLWorksheet style)
+        {
+            int count = data.Count();
+            #region 複製樣板
+            int PageRow = 15;
+            //一頁1筆;樣板列高15欄寬33
+            copyTmp(count, 1, PageRow, 33, sheet, style);
+            #endregion
+
+            MyTaiwanCalendar.PlayTCL pTCL = new MyTaiwanCalendar.PlayTCL();
+            int row_index = 1;//+15
+
+            foreach (var i in data)
+            {//一頁一筆資料,一頁列高15
+
+                var getTwLC = pTCL.getTaiwanLCDate(i.batch_date);
+                //法會農曆日期
+                sheet.Cell(row_index + 2, 6).Value = getTwLC.year;
+                sheet.Cell(row_index + 5, 6).Value = getTwLC.month;
+                sheet.Cell(row_index + 11, 6).Value = getTwLC.day;
+
+                sheet.Cell(row_index + 8, 10).Value = i.departed_qty;//嬰靈數量
+                sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
+                sheet.Cell(row_index + 5, 26).Value = i.address;//祈福地址
+                sheet.Cell(row_index + 13, 31).Value = i.LightSite_name;//燈位
+
+                row_index += PageRow;
+            }
+
+            sheet.Name = string.Format("超渡法會蝶文-超渡無緣嬰靈({0}筆)", count);
+        }
+        #endregion
         #endregion
 
         #endregion

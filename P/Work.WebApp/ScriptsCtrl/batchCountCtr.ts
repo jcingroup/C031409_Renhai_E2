@@ -20,6 +20,7 @@
     downloadExcel: string;
     DownLoadExcel_BatchRollPrint(): void;//法會名冊
     DownLoadExcel_PaperMoneyShuWenPrint(): void;//金紙疏文
+    DownLoadExcel_DieWenPrint(): void;//蝶文
     //download excel
 }
 interface JQuery {
@@ -142,6 +143,19 @@ angular
             parm.push('product_sn=' + $scope.sd.product_sn);
             parm.push('tid=' + uniqid());
             var url = gb_approot + 'ExcelReport/PaperMoneyShuWen?' + parm.join('&');
+            $scope.downloadExcel = url;
+        }
+        $scope.DownLoadExcel_DieWenPrint = function () {
+            if ($scope.sd.product_sn == null) {
+                alert("請選擇「產品種類」後再列印名冊！")
+                return;
+            }
+            var parm = [];
+            parm.push('year=' + $scope.sd.year);
+            parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
+            parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('tid=' + uniqid());
+            var url = gb_approot + 'ExcelReport/DieWen?' + parm.join('&');
             $scope.downloadExcel = url;
         }
     }]);
