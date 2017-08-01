@@ -47,6 +47,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML">
+      <HintPath>..\Core.Dll\ClosedXML.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.38\lib\net40\Dapper.dll</HintPath>
     </Reference>
@@ -638,6 +641,11 @@
     <Content Include="_Code\Excel\契子郵寄標籤.xlsx" />
     <Content Include="_Code\Excel\郵寄標籤.xls" />
     <Content Include="_Code\Excel\郵寄標籤.xlsx" />
+    <Content Include="_Code\Excel\超度法會%28渡脫冤親債主%29名冊.xlsx" />
+    <Content Include="_Code\Excel\超度法會%28超渡無緣嬰靈%29名冊.xlsx" />
+    <Content Include="_Code\Excel\超度法會%28薦拔祖先-個別祖先%29名冊.xlsx" />
+    <Content Include="_Code\Excel\超度法會%28薦拔祖先-歷代祖先%29名冊.xlsx" />
+    <Content Include="_Code\Excel\BasicTable.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

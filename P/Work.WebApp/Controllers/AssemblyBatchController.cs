@@ -39,7 +39,7 @@ namespace DotWeb.Controllers
                 db = getDB();
                 int y = year == null ? this.LightYear : (int)year;
                 var getAssemblyBatch = db.AssemblyBatch.Where(x => x.batch_date.Year == y)
-                                         .OrderBy(x => x.batch_date).ToList();
+                                         .OrderBy(x => new { x.batch_date, x.batch_timeperiod }).ToList();
 
                 r.data = getAssemblyBatch;
                 r.result = true;
@@ -227,7 +227,7 @@ namespace DotWeb.Controllers
                         tx.Complete();
                         #endregion
                     }
-                            
+
                     #endregion
                 }
                 else

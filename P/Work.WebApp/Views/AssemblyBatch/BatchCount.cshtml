@@ -13,11 +13,18 @@
             <label>法會年度： </label>
             <select ng-model="sd.year" ng-options="m as (m+'年') for m in year_list"></select>
             <label>法會梯次： </label>
-            <select ng-model="sd.assembly_batch_sn" ng-options="m.batch_sn as (m.batch_title+'('+(m.batch_date | date:'yyyyMMdd')+(m.batch_timeperiod |  OptionStr:timeperiod_list)+')'+'__'+m.count) for m in bath_list"></select>
+            <select ng-model="sd.assembly_batch_sn" ng-options="m.batch_sn as (m.batch_title+'('+(m.batch_date | date:'yyyyMMdd')+(m.batch_timeperiod |  OptionStr:timeperiod_list)+')'+'__'+m.count) for m in bath_list">
+                <option value="">全部</option>
+            </select>
             <label>產品種類： </label>
             <select ng-model="sd.product_sn" ng-options="m.value as m.label for m in batch_prod"></select>
             <button type="submit">
                 <i class="fa fa-search"></i>查詢
+            </button>
+        </fieldset>
+        <fieldset>
+            <button type="button" ng-click="DownLoadExcel_BatchRollPrint()" ng-show="@(ViewBag.ID == 1000001?"true":"false")">
+                <i class="fa fa-print"></i>名冊列印
             </button>
         </fieldset>
     </form>

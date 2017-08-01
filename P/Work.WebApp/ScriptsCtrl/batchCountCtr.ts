@@ -15,6 +15,11 @@
     openedEnd: boolean;
     dateOptions: any;
     //日曆小幫手測試
+
+    //download excel
+    downloadExcel: string;
+    DownLoadExcel_BatchRollPrint(): void;
+    //download excel
 }
 interface JQuery {
     modal(options?: string): JQuery;
@@ -115,6 +120,20 @@ angular
                 GetBathList(newValue);
             }
         });
+
+        $scope.DownLoadExcel_BatchRollPrint = function () {
+            if ($scope.sd.product_sn == null) {
+                alert("請選擇「產品種類」後再列印名冊！")
+                return;
+            }
+            var parm = [];
+            parm.push('year=' + $scope.sd.year);
+            parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
+            parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('tid=' + uniqid());
+            var url = gb_approot + 'ExcelReport/BatchRoll?' + parm.join('&');
+            $scope.downloadExcel = url;
+        }
     }]);
 
 
