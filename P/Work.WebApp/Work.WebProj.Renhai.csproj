@@ -647,6 +647,11 @@
     <Content Include="_Code\Excel\超度法會%28薦拔祖先-個別祖先%29名冊.xlsx" />
     <Content Include="_Code\Excel\超度法會%28薦拔祖先-歷代祖先%29名冊.xlsx" />
     <Content Include="_Code\Excel\BasicTable.xlsx" />
+    <Content Include="_Code\Excel\超度法會金紙疏文.xlsx" />
+    <Content Include="_Code\Excel\超渡法會牒文_冤親債主.xlsx" />
+    <Content Include="_Code\Excel\超渡法會蝶文_個別祖先.xlsx" />
+    <Content Include="_Code\Excel\超渡法會蝶文_歷代祖先.xlsx" />
+    <Content Include="_Code\Excel\超渡法會蝶文_超渡嬰靈.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
