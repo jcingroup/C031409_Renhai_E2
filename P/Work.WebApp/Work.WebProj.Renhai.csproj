@@ -212,6 +212,7 @@
     <Compile Include="Models\Member_Detail_Category.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyTaiwanCalendar.cs" />
     <Compile Include="Models\m_AssemblyBatch.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

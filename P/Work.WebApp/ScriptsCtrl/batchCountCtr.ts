@@ -18,7 +18,8 @@
 
     //download excel
     downloadExcel: string;
-    DownLoadExcel_BatchRollPrint(): void;
+    DownLoadExcel_BatchRollPrint(): void;//法會名冊
+    DownLoadExcel_PaperMoneyShuWenPrint(): void;//金紙疏文
     //download excel
 }
 interface JQuery {
@@ -132,6 +133,15 @@ angular
             parm.push('product_sn=' + $scope.sd.product_sn);
             parm.push('tid=' + uniqid());
             var url = gb_approot + 'ExcelReport/BatchRoll?' + parm.join('&');
+            $scope.downloadExcel = url;
+        }
+        $scope.DownLoadExcel_PaperMoneyShuWenPrint = function () {
+            var parm = [];
+            parm.push('year=' + $scope.sd.year);
+            parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
+            parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('tid=' + uniqid());
+            var url = gb_approot + 'ExcelReport/PaperMoneyShuWen?' + parm.join('&');
             $scope.downloadExcel = url;
         }
     }]);

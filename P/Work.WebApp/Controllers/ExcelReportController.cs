@@ -1664,9 +1664,33 @@ namespace DotWeb.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// 複製樣板
+        /// </summary>
+        /// <param name="Count">資料筆數</param>
+        /// <param name="PageSize">一頁放幾筆資料</param>
+        /// <param name="PageRows">一頁列高多少</param>
+        /// <param name="PageCols">一頁欄寬多少</param>
+        /// <param name="sheet">要複製到的工作表</param>
+        /// <param name="style">複製的樣板工作表</param>
+        private void copyTmp(int Count, float PageSize, int PageRows, int PageCols, IXLWorksheet sheet, IXLWorksheet style)
+        {
+            int page = Count != 0 ? (int)Math.Ceiling(Count / PageSize) : 0;//一頁PageSize筆資料
+            if (page >= 1)
+            {
+                for (var i = 0; i < page; i++)
+                {//從第二頁開始複製列高
+                    sheet.Cell(1 + (i * PageRows), 1).Value = style.Range(1, 1, PageRows, PageCols);
+                    for (var j = 1; j <= PageRows; j++)
+                    {//一頁PageRows列
+                        sheet.Row(j + (i * PageRows)).Height = style.Row(j).Height;
+                    }
+                }
+            }
+        }
         #region 名冊
 
-        public FileResult BatchRoll(q_法會名冊 q)
+        public FileResult BatchRoll(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             string setFileName = "超度法會名冊";
@@ -1721,7 +1745,7 @@ namespace DotWeb.Controllers
         /// <param name="q"></param>
         /// <param name="prod_sn">以此參數判斷為哪個產品呼叫此function</param>
         /// <returns></returns>
-        private List<m_法會名冊> getRollData(q_法會名冊 q, string prod_sn)
+        private List<m_法會名冊> getRollData(q_法會 q, string prod_sn)
         {
             List<m_法會名冊> res = new List<m_法會名冊>();
             using (var db0 = getDB())
@@ -1744,7 +1768,12 @@ namespace DotWeb.Controllers
                            departed_qty = x.departed_qty,
                            product_sn = x.product_sn
                        });
-                if (prod_sn != null & prod_sn != "null")
+                string[] allowedSN = new string[] { 
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
+                if (allowedSN.Contains(prod_sn))
                 {
                     tmp = tmp.Where(x => x.product_sn == prod_sn);
                 }
@@ -1775,19 +1804,19 @@ namespace DotWeb.Controllers
         }
 
         #region 個別祖先
-        public FileResult Ancestor(q_法會名冊 q)
+        public FileResult Ancestor(q_法會 q)
         {
             var outputStream = stmAncestor(q);
             string setFileName = "超度法會(薦拔祖先-個別祖先)名冊";
             return ExportExcelFile(outputStream, setFileName);
         }
-        protected XLWorkbook AncestorEX(q_法會名冊 q)
+        protected XLWorkbook AncestorEX(q_法會 q)
         {
             var outputStream = stmAncestor(q);
             XLWorkbook excel = new XLWorkbook(outputStream);
             return excel;
         }
-        private MemoryStream stmAncestor(q_法會名冊 q)
+        private MemoryStream stmAncestor(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             try
@@ -1826,7 +1855,8 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            copyRollTmp(count, sheet, style);
+            //一頁十筆;樣板列高32欄寬13
+            copyTmp(count, 10, 32, 13, sheet, style);
             #endregion
 
 
@@ -1854,23 +1884,23 @@ namespace DotWeb.Controllers
                 }
             }
 
-            sheet.Name = "超渡法會-個別祖先名冊";
+            sheet.Name = string.Format("超渡法會-個別祖先名冊({0}筆)", count);
         }
         #endregion
         #region 歷代祖先
-        public FileResult AncestorS(q_法會名冊 q)
+        public FileResult AncestorS(q_法會 q)
         {
             var outputStream = stmAncestorS(q);
             string setFileName = "超度法會(薦拔祖先-歷代祖先)名冊";
             return ExportExcelFile(outputStream, setFileName);
         }
-        protected XLWorkbook AncestorSEX(q_法會名冊 q)
+        protected XLWorkbook AncestorSEX(q_法會 q)
         {
             var outputStream = stmAncestorS(q);
             XLWorkbook excel = new XLWorkbook(outputStream);
             return excel;
         }
-        private MemoryStream stmAncestorS(q_法會名冊 q)
+        private MemoryStream stmAncestorS(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             try
@@ -1904,7 +1934,8 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            copyRollTmp(count, sheet, style);
+            //一頁十筆;樣板列高32欄寬13
+            copyTmp(count, 10, 32, 13, sheet, style);
             #endregion
 
 
@@ -1932,23 +1963,23 @@ namespace DotWeb.Controllers
                 }
             }
 
-            sheet.Name = "超渡法會-歷代祖先名冊";
+            sheet.Name = string.Format("超渡法會-歷代祖先名冊({0}筆)", count);
         }
         #endregion
         #region 冤親債主
-        public FileResult Karmic(q_法會名冊 q)
+        public FileResult Karmic(q_法會 q)
         {
             var outputStream = stmKarmic(q);
             string setFileName = "超度法會(渡脫冤親債主)名冊";
             return ExportExcelFile(outputStream, setFileName);
         }
-        protected XLWorkbook KarmicEX(q_法會名冊 q)
+        protected XLWorkbook KarmicEX(q_法會 q)
         {
             var outputStream = stmKarmic(q);
             XLWorkbook excel = new XLWorkbook(outputStream);
             return excel;
         }
-        private MemoryStream stmKarmic(q_法會名冊 q)
+        private MemoryStream stmKarmic(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             try
@@ -1982,7 +2013,8 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            copyRollTmp(count, sheet, style);
+            //一頁十筆;樣板列高32欄寬13
+            copyTmp(count, 10, 32, 13, sheet, style);
             #endregion
 
 
@@ -2018,23 +2050,23 @@ namespace DotWeb.Controllers
                 }
             }
 
-            sheet.Name = "超渡法會-渡脫冤親債主名冊";
+            sheet.Name = string.Format("超渡法會-渡脫冤親債主名冊({0}筆)", count);
         }
         #endregion
         #region 嬰靈
-        public FileResult InfantSpirits(q_法會名冊 q)
+        public FileResult InfantSpirits(q_法會 q)
         {
             var outputStream = stmInfantSpirits(q);
             string setFileName = "超度法會(超渡無緣嬰靈)名冊";
             return ExportExcelFile(outputStream, setFileName);
         }
-        protected XLWorkbook InfantSpiritsEX(q_法會名冊 q)
+        protected XLWorkbook InfantSpiritsEX(q_法會 q)
         {
             var outputStream = stmInfantSpirits(q);
             XLWorkbook excel = new XLWorkbook(outputStream);
             return excel;
         }
-        private MemoryStream stmInfantSpirits(q_法會名冊 q)
+        private MemoryStream stmInfantSpirits(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
             try
@@ -2068,7 +2100,8 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            copyRollTmp(count, sheet, style);
+            //一頁十筆;樣板列高32欄寬13
+            copyTmp(count, 10, 32, 13, sheet, style);
             #endregion
 
 
@@ -2097,15 +2130,191 @@ namespace DotWeb.Controllers
                 }
             }
 
-            sheet.Name = "超渡法會-超渡無緣嬰靈名冊";
+            sheet.Name = string.Format("超渡法會-超渡無緣嬰靈名冊({0}筆)", count);
         }
         #endregion
         #endregion
 
         #region 疏文、蝶文
+        /// <summary>
+        /// 取得疏文資料(四個產品共用)
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        private List<m_疏文名單> getShuWenData(q_法會 q)
+        {
+            List<m_疏文名單> res = new List<m_疏文名單>();
+            using (var db0 = getDB())
+            {
+                var tmp = db0.Orders_Detail
+                       .Where(x => x.Y == q.year & x.is_reject != true)
+                       .OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
+                       .Select(x => new m_疏文名單()
+                       {
+                           LightSite_name = x.light_name,
+                           apply_name = x.member_name,
+                           address = x.address,
+                           departed_address = x.departed_address,
+                           departed_name = x.departed_name,
+                           batch_title = x.AssemblyBatch.batch_title,
+                           batch_sn = x.assembly_batch_sn,
+                           l_birthday = x.l_birthday,
+                           born_time = x.born_time,
+                           departed_qty = x.departed_qty,
+                           product_sn = x.product_sn
+                       });
+                string[] allowedSN = new string[] { 
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
+                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
+
+                if (allowedSN.Contains(q.product_sn))
+                {
+                    tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                }
+                else
+                {
+                    tmp = tmp.Where(x => allowedSN.Contains(x.product_sn));
+                }
+                if (q.batch_sn != null)
+                    tmp = tmp.Where(x => x.batch_sn == q.batch_sn);
+
+                res = tmp.ToList();
+            }
+            return res;
+        }
+        /// <summary>
+        /// 取得法會農曆日期
+        /// </summary>
+        /// <param name="year">法會年度</param>
+        /// <param name="batch_sn">法會梯次</param>
+        /// <returns></returns>
+        private m_法會日期 getBatchTaiwanLCData(int year, int? batch_sn = null)
+        {
+            MyTaiwanCalendar.PlayTCL pTCL = new MyTaiwanCalendar.PlayTCL();
+            m_法會日期 res = null;
+            using (var db0 = getDB())
+            {
+                #region 取得所需的法會日期
+                var tmp = db0.AssemblyBatch
+                       .Where(x => x.batch_date.Year == year)
+                       .OrderBy(x => new { x.batch_date, x.batch_timeperiod })
+                       .Select(x => new { x.batch_sn, x.batch_date });
+                if (batch_sn != null)
+                    tmp = tmp.Where(x => x.batch_sn == batch_sn);
+                var tmp2 = tmp.Select(x => x.batch_date).Distinct().ToList();
+                #endregion
+
+                #region 將法會日期轉成農曆
+                IList<m_法會日期> LcDays = new List<m_法會日期>();
+                foreach (var i in tmp2)
+                {
+                    var getTwLC = pTCL.getTaiwanLCDate(i);
+                    m_法會日期 LcDay = new m_法會日期()
+                    {
+                        y = getTwLC.year,
+                        m = getTwLC.month,
+                        d = getTwLC.day
+                    };
+                    LcDays.Add(LcDay);
+                }
+                #endregion
+
+                var LCyymm = LcDays.FirstOrDefault();
+                if (LCyymm != null)
+                {//有一筆以上才回傳結果
+                    string LCdd = string.Join("、", LcDays.Select(x => "初" + x.d).ToList());
+                    m_法會日期 LcDay = new m_法會日期()
+                    {
+                        y = LCyymm.y,
+                        m = LCyymm.m,
+                        d = LCdd
+                    };
+                    res = LcDay;
+                }
+
+            }
+            return res;
+        }
+        #region 金紙疏文(四個產品)
+        public FileResult PaperMoneyShuWen(q_法會 q)
+        {
+            var outputStream = stmPaperMoneyShuWen(q);
+            string setFileName = "金紙疏文";
+            return ExportExcelFile(outputStream, setFileName);
+        }
+        private MemoryStream stmPaperMoneyShuWen(q_法會 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "金紙疏文.xlsx");
+                XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
+                IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
+                IXLWorksheet styleSheet = excel.Worksheet("style");
+
+                #region 取得資料
+                var items = getShuWenData(q);//取得訂單資料
+                var date = getBatchTaiwanLCData(q.year);//取得法會梯次農曆日期
+                m_疏文 data = new m_疏文()
+                {
+                    list = items,
+                    date = date
+                };
+                #endregion
+
+                #region Excel Handle
+                makePaperMoneyShuWen(data, getSheet, styleSheet);
+                #endregion
+                styleSheet.Delete();
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private void makePaperMoneyShuWen(m_疏文 data, IXLWorksheet sheet, IXLWorksheet style)
+        {
+            int count = data.list.Count();
+            #region 複製樣板
+            //一頁1筆;樣板列高13欄寬35
+            copyTmp(count, 1, 13, 35, sheet, style);
+            #endregion
+
+
+            int row_index = 1;//+13
+
+            foreach (var i in data.list)
+            {//一頁一筆資料,一頁列高13
+
+                //法會農曆日期
+                if (data.date != null)
+                {
+                    sheet.Cell(row_index + 2, 2).Value = data.date.y;
+                    sheet.Cell(row_index + 4, 2).Value = data.date.m;
+                    sheet.Cell(row_index + 7, 2).Value = data.date.d;
+                }
+
+                sheet.Cell(row_index + 4, 29).Value = i.apply_name;//申請人
+                sheet.Cell(row_index + 3, 30).Value = i.address;//祈福地址
+                sheet.Cell(row_index + 11, 33).Value = i.LightSite_name;//燈位
+
+                row_index += 13;
+            }
+
+            sheet.Name = string.Format("金紙疏文({0}筆)", count);
+        }
+        #endregion
+
         #endregion
         #region 超渡法會模型
-        public class q_法會名冊
+        public class q_法會
         {
             /// <summary>
             /// 年度
@@ -2167,6 +2376,66 @@ namespace DotWeb.Controllers
             /// </summary>
             public string departed_qty { get; set; }
             public string product_sn { get; set; }
+        }
+
+        public class m_疏文
+        {
+            public IEnumerable<m_疏文名單> list { get; set; }
+            public m_法會日期 date { get; set; }
+        }
+        public class m_疏文名單
+        {
+            /// <summary>
+            /// 梯次名稱
+            /// </summary>
+            public string batch_title { get; set; }
+            /// <summary>
+            /// 梯次編號
+            /// </summary>
+            public int? batch_sn { get; set; }
+            /// <summary>
+            /// 梯次日期
+            /// </summary>
+            public DateTime batch_date { get; set; }
+            /// <summary>
+            /// 燈位名稱
+            /// </summary>
+            public string LightSite_name { get; set; }
+            /// <summary>
+            /// 申請人姓名
+            /// </summary>
+            public string apply_name { get; set; }
+            /// <summary>
+            /// 祈福地址(祖先用牌位地址;冤親、嬰靈 地址用祈福地址)
+            /// </summary>
+            public string address { get; set; }
+            /// <summary>
+            /// 牌位地址(祖先用牌位地址;冤親、嬰靈 地址用祈福地址)
+            /// </summary>
+            public string departed_address { get; set; }
+            /// <summary>
+            /// 往者名
+            /// </summary>
+            public string departed_name { get; set; }
+            /// <summary>
+            /// 生日時辰-年月日
+            /// </summary>
+            public string l_birthday { get; set; }
+            /// <summary>
+            /// 生日時辰-時辰
+            /// </summary>
+            public string born_time { get; set; }
+            /// <summary>
+            /// 人數(嬰靈用)
+            /// </summary>
+            public string departed_qty { get; set; }
+            public string product_sn { get; set; }
+        }
+        public class m_法會日期
+        {
+            public string y { get; set; }
+            public string m { get; set; }
+            public string d { get; set; }
         }
         #endregion
         #endregion
