@@ -125,7 +125,7 @@ angular
         });
 
         $scope.DownLoadExcel_BatchRollPrint = function () {
-            if ($scope.sd.product_sn == null) {
+            if ($scope.sd.product_sn == null && userid != '1000001') {
                 alert("請選擇「產品種類」後再列印名冊！")
                 return;
             }
@@ -147,7 +147,7 @@ angular
             $scope.downloadExcel = url;
         }
         $scope.DownLoadExcel_DieWenPrint = function () {
-            if ($scope.sd.product_sn == null) {
+            if ($scope.sd.product_sn == null && userid != '1000001') {
                 alert("請選擇「產品種類」後再列印名冊！")
                 return;
             }
@@ -172,7 +172,7 @@ angular
             var url = gb_approot + 'ExcelReport/ShuWen?' + parm.join('&');
             $scope.downloadExcel = url;
         }
-        
+
     }]);
 
 

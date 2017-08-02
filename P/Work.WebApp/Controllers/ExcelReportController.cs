@@ -1879,6 +1879,7 @@ namespace DotWeb.Controllers
 
             int row_index = 1;//+32
             int col_index = 4;//4-13
+            int col_header = 3;//每頁副標頭
 
             foreach (var i in data)
             {
@@ -1892,6 +1893,23 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index + 26, col_index).Value = i.tel;
                 sheet.Cell(row_index + 30, col_index).Value = strBatch;
 
+                #region 合併儲存格
+                if (col_index == 4)
+                {//新一頁
+                    sheet.Range(row_index, 1, row_index + 31, 1).Merge(false);//大標
+                    //副標
+                    sheet.Range(row_index, col_header, row_index + 1, col_header).Merge(false);
+                    sheet.Range(row_index + 2, col_header, row_index + 5, col_header).Merge(false);
+                    sheet.Range(row_index + 6, col_header, row_index + 21, col_header).Merge(false);
+                    sheet.Range(row_index + 22, col_header, row_index + 25, col_header).Merge(false);
+                    sheet.Range(row_index + 26, col_header, row_index + 29, col_header).Merge(false);
+                }
+                sheet.Range(row_index, col_index, row_index + 1, col_index).Merge(false);
+                sheet.Range(row_index + 2, col_index, row_index + 5, col_index).Merge(false);
+                sheet.Range(row_index + 6, col_index, row_index + 21, col_index).Merge(false);
+                sheet.Range(row_index + 22, col_index, row_index + 25, col_index).Merge(false);
+                sheet.Range(row_index + 26, col_index, row_index + 29, col_index).Merge(false);
+                #endregion
                 col_index++;
                 if (col_index > 13)
                 {
@@ -1960,6 +1978,7 @@ namespace DotWeb.Controllers
 
             int row_index = 1;//+32
             int col_index = 4;//4-13
+            int col_header = 3;//每頁副標頭
 
             foreach (var i in data)
             {
@@ -1972,6 +1991,24 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index + 22, col_index).Value = i.departed_name;
                 sheet.Cell(row_index + 26, col_index).Value = i.tel;
                 sheet.Cell(row_index + 30, col_index).Value = strBatch;
+
+                #region 合併儲存格
+                if (col_index == 4)
+                {//新一頁
+                    sheet.Range(row_index, 1, row_index + 31, 1).Merge(false);//大標
+                    //副標
+                    sheet.Range(row_index, col_header, row_index + 1, col_header).Merge(false);
+                    sheet.Range(row_index + 2, col_header, row_index + 5, col_header).Merge(false);
+                    sheet.Range(row_index + 6, col_header, row_index + 21, col_header).Merge(false);
+                    sheet.Range(row_index + 22, col_header, row_index + 25, col_header).Merge(false);
+                    sheet.Range(row_index + 26, col_header, row_index + 29, col_header).Merge(false);
+                }
+                sheet.Range(row_index, col_index, row_index + 1, col_index).Merge(false);
+                sheet.Range(row_index + 2, col_index, row_index + 5, col_index).Merge(false);
+                sheet.Range(row_index + 6, col_index, row_index + 21, col_index).Merge(false);
+                sheet.Range(row_index + 22, col_index, row_index + 25, col_index).Merge(false);
+                sheet.Range(row_index + 26, col_index, row_index + 29, col_index).Merge(false);
+                #endregion
 
                 col_index++;
                 if (col_index > 13)
@@ -2041,6 +2078,7 @@ namespace DotWeb.Controllers
 
             int row_index = 1;//+32
             int col_index = 4;//4-13
+            int col_header = 3;//每頁副標頭
 
             foreach (var i in data)
             {
@@ -2061,6 +2099,23 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index + 25, col_index).Value = i.born_time;
                 sheet.Cell(row_index + 26, col_index).Value = i.tel;
                 sheet.Cell(row_index + 30, col_index).Value = strBatch;
+
+                #region 合併儲存格
+                if (col_index == 4)
+                {//新一頁
+                    sheet.Range(row_index, 1, row_index + 31, 1).Merge(false);//大標
+                    //副標
+                    sheet.Range(row_index, col_header, row_index + 1, col_header).Merge(false);
+                    sheet.Range(row_index + 2, col_header, row_index + 5, col_header).Merge(false);
+                    sheet.Range(row_index + 6, col_header, row_index + 21, col_header).Merge(false);
+                    sheet.Range(row_index + 22, col_header, row_index + 25, col_header).Merge(false);
+                    sheet.Range(row_index + 26, col_header, row_index + 29, col_header).Merge(false);
+                }
+                sheet.Range(row_index, col_index, row_index + 1, col_index).Merge(false);
+                sheet.Range(row_index + 2, col_index, row_index + 5, col_index).Merge(false);
+                sheet.Range(row_index + 6, col_index, row_index + 21, col_index).Merge(false);
+                sheet.Range(row_index + 26, col_index, row_index + 29, col_index).Merge(false);
+                #endregion
 
                 col_index++;
                 if (col_index > 13)
@@ -2130,6 +2185,7 @@ namespace DotWeb.Controllers
 
             int row_index = 1;//+32
             int col_index = 4;//4-13
+            int col_header = 3;//每頁副標頭
 
             foreach (var i in data)
             {
@@ -2143,6 +2199,24 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index + 25, col_index).Value = i.departed_qty;
                 sheet.Cell(row_index + 26, col_index).Value = i.tel;
                 sheet.Cell(row_index + 30, col_index).Value = strBatch;
+
+                #region 合併儲存格
+                if (col_index == 4)
+                {//新一頁
+                    sheet.Range(row_index, 1, row_index + 31, 1).Merge(false);//大標
+                    //副標
+                    sheet.Range(row_index, col_header, row_index + 1, col_header).Merge(false);
+                    sheet.Range(row_index + 2, col_header, row_index + 5, col_header).Merge(false);
+                    sheet.Range(row_index + 6, col_header, row_index + 21, col_header).Merge(false);
+                    sheet.Range(row_index + 22, col_header, row_index + 24, col_header).Merge(false);
+                    sheet.Range(row_index + 26, col_header, row_index + 29, col_header).Merge(false);
+                }
+                sheet.Range(row_index, col_index, row_index + 1, col_index).Merge(false);
+                sheet.Range(row_index + 2, col_index, row_index + 5, col_index).Merge(false);
+                sheet.Range(row_index + 6, col_index, row_index + 21, col_index).Merge(false);
+                sheet.Range(row_index + 22, col_index, row_index + 24, col_index).Merge(false);
+                sheet.Range(row_index + 26, col_index, row_index + 29, col_index).Merge(false);
+                #endregion
 
                 col_index++;
                 if (col_index > 13)
@@ -2331,17 +2405,21 @@ namespace DotWeb.Controllers
                     sheet.Cell(row_index + 2, 2).Value = data.date.y;
                     sheet.Cell(row_index + 4, 2).Value = data.date.m;
                     sheet.Cell(row_index + 7, 2).Value = data.date.d;
+                    sheet.Range(row_index + 7, 2, row_index + 10, 2).Merge(false);
                 }
 
                 sheet.Cell(row_index + 4, 29).Value = i.apply_name;//申請人
+                sheet.Range(row_index + 4, 29, row_index + 10, 29).Merge(false);
                 sheet.Cell(row_index + 3, 30).Value = i.address;//祈福地址
+                sheet.Range(row_index + 3, 30, row_index + 11, 30).Merge(false);
                 sheet.Cell(row_index + 11, 33).Value = i.LightSite_name;//燈位
+                sheet.Range(row_index + 11, 33, row_index + 11, 34).Merge(false);
 
                 row_index += PageRow;
             }
 
             sheet.Name = string.Format("金紙疏文({0}筆)", count);
-            copyPrint(sheet,style);
+            copyPrint(sheet, style);
         }
         #endregion
         #region 疏文(個別祖先、歷代祖先)
@@ -2438,12 +2516,18 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index + 2, 2).Value = getTwLC.year;
                 sheet.Cell(row_index + 4, 2).Value = getTwLC.month;
                 sheet.Cell(row_index + 8, 2).Value = getTwLC.day;
+                sheet.Range(row_index + 8, 2, row_index + 9, 2).Merge(false);
 
                 sheet.Cell(row_index + 4, 5).Value = i.departed_name;//祖先姓氏
+                sheet.Range(row_index + 4, 5, row_index + 9, 5).Merge(false);
                 sheet.Cell(row_index + 7, 16).Value = getTwLC.day;//法會日期
+                sheet.Range(row_index + 7, 16, row_index + 8, 16).Merge(false);
                 sheet.Cell(row_index + 4, 23).Value = i.apply_name;//申請人
+                sheet.Range(row_index + 4, 23, row_index + 8, 23).Merge(false);
                 sheet.Cell(row_index + 5, 26).Value = i.address;//祈福地址
+                sheet.Range(row_index + 5, 26, row_index + 11, 26).Merge(false);
                 sheet.Cell(row_index + 11, 31).Value = i.LightSite_name;//燈位
+                sheet.Range(row_index + 11, 31, row_index + 11, 32).Merge(false);
 
                 row_index += PageRow;
             }
@@ -2507,13 +2591,21 @@ namespace DotWeb.Controllers
                 //法會農曆日期
                 sheet.Cell(row_index + 2, 2).Value = getTwLC.year;
                 sheet.Cell(row_index + 4, 2).Value = getTwLC.month;
+                sheet.Range(row_index + 4, 2, row_index + 6, 2).Merge(false);
                 sheet.Cell(row_index + 10, 2).Value = getTwLC.day;
+                sheet.Range(row_index + 10, 2, row_index + 11, 2).Merge(false);
 
                 sheet.Cell(row_index + 3, 5).Value = i.departed_name;//祖先姓氏
+                sheet.Range(row_index + 3, 5, row_index + 4, 5).Merge(false);
+                sheet.Range(row_index + 6, 5, row_index + 11, 5).Merge(false);
                 sheet.Cell(row_index + 9, 16).Value = getTwLC.day;//法會日期
+                sheet.Range(row_index + 9, 16, row_index + 10, 16).Merge(false);
                 sheet.Cell(row_index + 5, 23).Value = i.apply_name;//申請人
+                sheet.Range(row_index + 5, 23, row_index + 10, 23).Merge(false);
                 sheet.Cell(row_index + 7, 26).Value = i.address;//祈福地址
+                sheet.Range(row_index + 7, 26, row_index + 13, 26).Merge(false);
                 sheet.Cell(row_index + 13, 31).Value = i.LightSite_name;//燈位
+                sheet.Range(row_index + 13, 31, row_index + 13, 32).Merge(false);
 
                 row_index += PageRow;
             }
@@ -2628,13 +2720,19 @@ namespace DotWeb.Controllers
                 var getTwLC = pTCL.getTaiwanLCDate(i.batch_date);
                 //法會農曆日期
                 sheet.Cell(row_index + 2, 6).Value = getTwLC.year;
+                sheet.Range(row_index + 2, 6, row_index + 3, 6).Merge(false);
                 sheet.Cell(row_index + 6, 6).Value = getTwLC.month;
+                sheet.Range(row_index + 6, 6, row_index + 7, 6).Merge(false);
                 sheet.Cell(row_index + 11, 6).Value = getTwLC.day;
 
                 sheet.Cell(row_index + 3, 10).Value = i.departed_name;//祖先姓氏
+                sheet.Range(row_index + 3, 10, row_index + 6, 10).Merge(false);
                 sheet.Cell(row_index + 6, 24).Value = i.apply_name;//申請人
+                sheet.Range(row_index + 6, 24, row_index + 9, 24).Merge(false);
                 sheet.Cell(row_index + 6, 26).Value = i.departed_address;//法會地址
+                sheet.Range(row_index + 6, 26, row_index + 13, 26).Merge(false);
                 sheet.Cell(row_index + 13, 31).Value = i.LightSite_name;//燈位
+                sheet.Range(row_index + 13, 31, row_index + 13, 32).Merge(false);
 
                 row_index += PageRow;
             }
@@ -2698,12 +2796,16 @@ namespace DotWeb.Controllers
                 //法會農曆日期
                 sheet.Cell(row_index + 2, 6).Value = getTwLC.year;
                 sheet.Cell(row_index + 5, 6).Value = getTwLC.month;
+                sheet.Range(row_index + 5, 6, row_index + 6, 6).Merge(false);
                 sheet.Cell(row_index + 10, 6).Value = getTwLC.day;
 
                 sheet.Cell(row_index + 1, 10).Value = i.departed_name;//祖先姓氏
                 sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
+                sheet.Range(row_index + 5, 24, row_index + 8, 24).Merge(false);
                 sheet.Cell(row_index + 5, 26).Value = i.departed_address;//法會地址
+                sheet.Range(row_index + 5, 26, row_index + 11, 26).Merge(false);
                 sheet.Cell(row_index + 11, 31).Value = i.LightSite_name;//燈位
+                sheet.Range(row_index + 11, 31, row_index + 11, 32).Merge(false);
 
                 row_index += PageRow;
             }
@@ -2767,11 +2869,15 @@ namespace DotWeb.Controllers
                 //法會農曆日期
                 sheet.Cell(row_index + 2, 5).Value = getTwLC.year;
                 sheet.Cell(row_index + 5, 5).Value = getTwLC.month;
+                sheet.Range(row_index + 5, 5, row_index + 6, 5).Merge(false);
                 sheet.Cell(row_index + 11, 5).Value = getTwLC.day;
 
                 sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
+                sheet.Range(row_index + 5, 24, row_index + 9, 24).Merge(false);
                 sheet.Cell(row_index + 5, 26).Value = i.address;//祈福地址
+                sheet.Range(row_index + 5, 26, row_index + 13, 26).Merge(false);
                 sheet.Cell(row_index + 13, 31).Value = i.LightSite_name;//燈位
+                sheet.Range(row_index + 13, 31, row_index + 13, 32).Merge(false);
 
                 row_index += PageRow;
             }
@@ -2836,12 +2942,16 @@ namespace DotWeb.Controllers
                 //法會農曆日期
                 sheet.Cell(row_index + 2, 6).Value = getTwLC.year;
                 sheet.Cell(row_index + 5, 6).Value = getTwLC.month;
+                sheet.Range(row_index + 5, 6, row_index + 6, 6).Merge(false);
                 sheet.Cell(row_index + 11, 6).Value = getTwLC.day;
 
                 sheet.Cell(row_index + 8, 10).Value = i.departed_qty;//嬰靈數量
                 sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
+                sheet.Range(row_index + 5, 24, row_index + 9, 24).Merge(false);
                 sheet.Cell(row_index + 5, 26).Value = i.address;//祈福地址
+                sheet.Range(row_index + 5, 26, row_index + 13, 26).Merge(false);
                 sheet.Cell(row_index + 13, 31).Value = i.LightSite_name;//燈位
+                sheet.Range(row_index + 13, 31, row_index + 13, 32).Merge(false);
 
                 row_index += PageRow;
             }

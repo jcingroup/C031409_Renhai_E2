@@ -36,3 +36,4 @@ var p0;
 var member_id;
 var orders_type;
 var allowyear;
+var userid;

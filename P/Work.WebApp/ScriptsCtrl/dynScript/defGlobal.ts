@@ -41,3 +41,4 @@ var p0: number;
 var member_id: number;
 var orders_type: e_orders_type;
 var allowyear: number;
+var userid: any;
