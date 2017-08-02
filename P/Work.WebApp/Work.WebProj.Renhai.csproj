@@ -652,6 +652,8 @@
     <Content Include="_Code\Excel\超渡法會蝶文_個別祖先.xlsx" />
     <Content Include="_Code\Excel\超渡法會蝶文_歷代祖先.xlsx" />
     <Content Include="_Code\Excel\超渡法會蝶文_超渡嬰靈.xlsx" />
+    <Content Include="_Code\Excel\超渡法會疏文_歷代祖先.xlsx" />
+    <Content Include="_Code\Excel\超渡法會疏文_個別祖先.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
