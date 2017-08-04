@@ -2519,7 +2519,7 @@ namespace DotWeb.Controllers
                 sheet.Range(row_index + 8, 2, row_index + 9, 2).Merge(false);
 
                 sheet.Cell(row_index + 4, 5).Value = i.departed_name;//祖先姓氏
-                sheet.Range(row_index + 4, 5, row_index + 9, 5).Merge(false);
+                sheet.Range(row_index + 4, 5, row_index + 9, 6).Merge(false);
                 sheet.Cell(row_index + 7, 16).Value = getTwLC.day;//法會日期
                 sheet.Range(row_index + 7, 16, row_index + 8, 16).Merge(false);
                 sheet.Cell(row_index + 4, 23).Value = i.apply_name;//申請人
@@ -2596,8 +2596,8 @@ namespace DotWeb.Controllers
                 sheet.Range(row_index + 10, 2, row_index + 11, 2).Merge(false);
 
                 sheet.Cell(row_index + 3, 5).Value = i.departed_name;//祖先姓氏
-                sheet.Range(row_index + 3, 5, row_index + 4, 5).Merge(false);
-                sheet.Range(row_index + 6, 5, row_index + 11, 5).Merge(false);
+                sheet.Range(row_index + 3, 5, row_index + 4, 6).Merge(false);
+                sheet.Range(row_index + 6, 5, row_index + 11, 6).Merge(false);
                 sheet.Cell(row_index + 9, 16).Value = getTwLC.day;//法會日期
                 sheet.Range(row_index + 9, 16, row_index + 10, 16).Merge(false);
                 sheet.Cell(row_index + 5, 23).Value = i.apply_name;//申請人
