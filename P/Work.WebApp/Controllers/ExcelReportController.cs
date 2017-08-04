@@ -2232,9 +2232,9 @@ namespace DotWeb.Controllers
         }
         #endregion
         #endregion
-        #region 疏文、蝶文
+        #region 疏文、牒文
         /// <summary>
-        /// 取得疏文、蝶文資料(四個產品共用)
+        /// 取得疏文、牒文資料(四個產品共用)
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
@@ -2255,7 +2255,7 @@ namespace DotWeb.Controllers
                            departed_name = x.departed_name,
                            batch_title = x.AssemblyBatch.batch_title,
                            departed_qty = x.departed_qty,//嬰靈用
-                           batch_date = x.AssemblyBatch.batch_date,//蝶文用
+                           batch_date = x.AssemblyBatch.batch_date,//牒文用
                            batch_sn = x.assembly_batch_sn,
                            product_sn = x.product_sn
                        });
@@ -2614,31 +2614,31 @@ namespace DotWeb.Controllers
         }
         #endregion
         #endregion
-        #region 蝶文
+        #region 牒文
         public FileResult DieWen(q_法會 q)
         {
             MemoryStream outputStream = new MemoryStream();
-            string setFileName = "超度法會蝶文";
+            string setFileName = "超度法會牒文";
 
             if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲)
             {
                 outputStream = stmAncestorDieWen(q);
-                setFileName = "超度法會蝶文(薦拔祖先-個別祖先)";
+                setFileName = "超度法會牒文(薦拔祖先-個別祖先)";
             }
             else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙)
             {
                 outputStream = stmAncestorSDieWen(q);
-                setFileName = "超度法會蝶文(薦拔祖先-歷代祖先)";
+                setFileName = "超度法會牒文(薦拔祖先-歷代祖先)";
             }
             else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主)
             {
                 outputStream = stmKarmicDieWen(q);
-                setFileName = "超度法會蝶文(渡脫冤親債主)";
+                setFileName = "超度法會牒文(渡脫冤親債主)";
             }
             else if (q.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈)
             {
                 outputStream = stmInfantSpiritsDieWen(q);
-                setFileName = "超度法會蝶文(超渡無緣嬰靈)";
+                setFileName = "超度法會牒文(超渡無緣嬰靈)";
             }
             else
             {
@@ -2677,7 +2677,7 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會蝶文_個別祖先.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會牒文_個別祖先.xlsx");
                 XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
                 IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
                 IXLWorksheet styleSheet = excel.Worksheet("style");
@@ -2736,7 +2736,7 @@ namespace DotWeb.Controllers
 
                 row_index += PageRow;
             }
-            sheet.Name = string.Format("超渡法會蝶文-個別祖先({0}筆)", count);
+            sheet.Name = string.Format("超渡法會牒文-個別祖先({0}筆)", count);
             copyPrint(sheet, style);
         }
         #endregion
@@ -2752,7 +2752,7 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會蝶文_歷代祖先.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會牒文_歷代祖先.xlsx");
                 XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
                 IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
                 IXLWorksheet styleSheet = excel.Worksheet("style");
@@ -2809,7 +2809,7 @@ namespace DotWeb.Controllers
 
                 row_index += PageRow;
             }
-            sheet.Name = string.Format("超渡法會蝶文-歷代祖先({0}筆)", count);
+            sheet.Name = string.Format("超渡法會牒文-歷代祖先({0}筆)", count);
             copyPrint(sheet, style);
         }
         #endregion
@@ -2882,7 +2882,7 @@ namespace DotWeb.Controllers
                 row_index += PageRow;
             }
 
-            sheet.Name = string.Format("超渡法會蝶文-渡脫冤親債主({0}筆)", count);
+            sheet.Name = string.Format("超渡法會牒文-渡脫冤親債主({0}筆)", count);
             copyPrint(sheet, style);
         }
         #endregion
@@ -2898,7 +2898,7 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會蝶文_超渡嬰靈.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會牒文_超渡嬰靈.xlsx");
                 XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
                 IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
                 IXLWorksheet styleSheet = excel.Worksheet("style");
@@ -2956,7 +2956,7 @@ namespace DotWeb.Controllers
                 row_index += PageRow;
             }
 
-            sheet.Name = string.Format("超渡法會蝶文-超渡無緣嬰靈({0}筆)", count);
+            sheet.Name = string.Format("超渡法會牒文-超渡無緣嬰靈({0}筆)", count);
             copyPrint(sheet, style);
         }
         #endregion
