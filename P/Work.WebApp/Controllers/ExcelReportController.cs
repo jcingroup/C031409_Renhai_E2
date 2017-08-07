@@ -1780,6 +1780,7 @@ namespace DotWeb.Controllers
                            batch_title = x.AssemblyBatch.batch_title,
                            batch_sn = x.assembly_batch_sn,
                            l_birthday = x.l_birthday,
+                           isOnLeapMonth = x.Member_Detail.isOnLeapMonth,
                            born_time = x.born_time,
                            departed_qty = x.departed_qty,
                            product_sn = x.product_sn
@@ -1837,7 +1838,7 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(薦拔祖先-個別祖先)名冊.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(個別祖先)名冊.xlsx");
                 #region EPPlus
                 //FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 //ExcelPackage excel = new ExcelPackage(finfo, true);
@@ -1871,56 +1872,38 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            int PageRow = 32;
-            //一頁十筆;樣板列高32欄寬13
-            copyTmp(count, 10, PageRow, 13, sheet, style);
+            //一頁十筆;樣板列高12欄寬6
+            copyTmp(count, 10, 12, 6, sheet, style);
             #endregion
 
 
-            int row_index = 1;//+32
-            int col_index = 4;//4-13
-            int col_header = 3;//每頁副標頭
+            int row_index = 3;
+            int index = 1;
 
             foreach (var i in data)
             {
-                //只顯示中文數字
-                string strBatch = Regex.Replace(i.batch_title, "[^一二三四五六七八九十]", "");
-
-                sheet.Cell(row_index, col_index).Value = i.LightSite_name;
-                sheet.Cell(row_index + 2, col_index).Value = i.apply_name;
-                sheet.Cell(row_index + 6, col_index).Value = i.departed_address;
-                sheet.Cell(row_index + 22, col_index).Value = i.departed_name;
-                sheet.Cell(row_index + 26, col_index).Value = i.tel;
-                sheet.Cell(row_index + 30, col_index).Value = strBatch;
-
                 #region 合併儲存格
-                if (col_index == 4)
-                {//新一頁
-                    sheet.Range(row_index, 1, row_index + 31, 1).Merge(false);//大標
-                    //副標
-                    sheet.Range(row_index, col_header, row_index + 1, col_header).Merge(false);
-                    sheet.Range(row_index + 2, col_header, row_index + 5, col_header).Merge(false);
-                    sheet.Range(row_index + 6, col_header, row_index + 21, col_header).Merge(false);
-                    sheet.Range(row_index + 22, col_header, row_index + 25, col_header).Merge(false);
-                    sheet.Range(row_index + 26, col_header, row_index + 29, col_header).Merge(false);
+                if (index % 10 == 1)
+                {//餘數為1,新一頁
+                    sheet.Range(row_index - 2, 1, row_index - 2, 6).Merge(false);//大標                  
                 }
-                sheet.Range(row_index, col_index, row_index + 1, col_index).Merge(false);
-                sheet.Range(row_index + 2, col_index, row_index + 5, col_index).Merge(false);
-                sheet.Range(row_index + 6, col_index, row_index + 21, col_index).Merge(false);
-                sheet.Range(row_index + 22, col_index, row_index + 25, col_index).Merge(false);
-                sheet.Range(row_index + 26, col_index, row_index + 29, col_index).Merge(false);
                 #endregion
-                col_index++;
-                if (col_index > 13)
-                {
-                    //換頁
-                    row_index += PageRow;
-                    col_index = 4;
+                sheet.Cell(row_index, 1).Value = i.LightSite_name;
+                sheet.Cell(row_index, 2).Value = i.apply_name;
+                sheet.Cell(row_index, 3).Value = i.departed_address;
+                sheet.Cell(row_index, 4).Value = i.departed_name;
+                sheet.Cell(row_index, 5).Value = i.tel;
+
+                if (index % 10 == 0)
+                {//換頁
+                    row_index += 2;
                 }
+                index++;
+                row_index++;
             }
 
             sheet.Name = string.Format("超渡法會-個別祖先名冊({0}筆)", count);
-            //copyPrint(sheet, style);
+            copyPrint(sheet, style);
         }
         #endregion
         #region 歷代祖先
@@ -1941,7 +1924,7 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(薦拔祖先-歷代祖先)名冊.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(歷代祖先)名冊.xlsx");
                 XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
                 IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
                 IXLWorksheet styleSheet = excel.Worksheet("style");
@@ -1970,57 +1953,37 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            int PageRow = 32;
-            //一頁十筆;樣板列高32欄寬13
-            copyTmp(count, 10, PageRow, 13, sheet, style);
+            //一頁十筆;樣板列高12欄寬6
+            copyTmp(count, 10, 12, 6, sheet, style);
             #endregion
 
-
-            int row_index = 1;//+32
-            int col_index = 4;//4-13
-            int col_header = 3;//每頁副標頭
+            int row_index = 3;
+            int index = 1;
 
             foreach (var i in data)
             {
-                //只顯示中文數字
-                string strBatch = Regex.Replace(i.batch_title, "[^一二三四五六七八九十]", "");
-
-                sheet.Cell(row_index, col_index).Value = i.LightSite_name;
-                sheet.Cell(row_index + 2, col_index).Value = i.apply_name;
-                sheet.Cell(row_index + 6, col_index).Value = i.departed_address;
-                sheet.Cell(row_index + 22, col_index).Value = i.departed_name;
-                sheet.Cell(row_index + 26, col_index).Value = i.tel;
-                sheet.Cell(row_index + 30, col_index).Value = strBatch;
-
                 #region 合併儲存格
-                if (col_index == 4)
-                {//新一頁
-                    sheet.Range(row_index, 1, row_index + 31, 1).Merge(false);//大標
-                    //副標
-                    sheet.Range(row_index, col_header, row_index + 1, col_header).Merge(false);
-                    sheet.Range(row_index + 2, col_header, row_index + 5, col_header).Merge(false);
-                    sheet.Range(row_index + 6, col_header, row_index + 21, col_header).Merge(false);
-                    sheet.Range(row_index + 22, col_header, row_index + 25, col_header).Merge(false);
-                    sheet.Range(row_index + 26, col_header, row_index + 29, col_header).Merge(false);
+                if (index % 10 == 1)
+                {//餘數為1,新一頁
+                    sheet.Range(row_index - 2, 1, row_index - 2, 6).Merge(false);//大標                  
                 }
-                sheet.Range(row_index, col_index, row_index + 1, col_index).Merge(false);
-                sheet.Range(row_index + 2, col_index, row_index + 5, col_index).Merge(false);
-                sheet.Range(row_index + 6, col_index, row_index + 21, col_index).Merge(false);
-                sheet.Range(row_index + 22, col_index, row_index + 25, col_index).Merge(false);
-                sheet.Range(row_index + 26, col_index, row_index + 29, col_index).Merge(false);
                 #endregion
+                sheet.Cell(row_index, 1).Value = i.LightSite_name;
+                sheet.Cell(row_index, 2).Value = i.apply_name;
+                sheet.Cell(row_index, 3).Value = i.departed_address;
+                sheet.Cell(row_index, 4).Value = i.departed_name;
+                sheet.Cell(row_index, 5).Value = i.tel;
 
-                col_index++;
-                if (col_index > 13)
-                {
-                    //換頁
-                    row_index += PageRow;
-                    col_index = 4;
+                if (index % 10 == 0)
+                {//換頁
+                    row_index += 2;
                 }
+                index++;
+                row_index++;
             }
 
             sheet.Name = string.Format("超渡法會-歷代祖先名冊({0}筆)", count);
-            //copyPrint(sheet, style);
+            copyPrint(sheet, style);
         }
         #endregion
         #region 冤親債主
@@ -2041,7 +2004,7 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(渡脫冤親債主)名冊.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(冤親債主)名冊.xlsx");
                 XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
                 IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
                 IXLWorksheet styleSheet = excel.Worksheet("style");
@@ -2070,60 +2033,43 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            int PageRow = 32;
-            //一頁十筆;樣板列高32欄寬13
-            copyTmp(count, 10, PageRow, 13, sheet, style);
+            //一頁十筆;樣板列高12欄寬10
+            copyTmp(count, 10, 12, 10, sheet, style);
             #endregion
 
-
-            int row_index = 1;//+32
-            int col_index = 4;//4-13
-            int col_header = 3;//每頁副標頭
+            int row_index = 3;
+            int index = 1;
 
             foreach (var i in data)
             {
-                //只顯示中文數字
-                string strBatch = Regex.Replace(i.batch_title, "[^一二三四五六七八九十]", "");
+                #region 合併儲存格
+                if (index % 10 == 1)
+                {//餘數為1,新一頁
+                    sheet.Range(row_index - 2, 1, row_index - 2, 10).Merge(false);//大標                  
+                }
+                #endregion
 
-                sheet.Cell(row_index, col_index).Value = i.LightSite_name;
-                sheet.Cell(row_index + 2, col_index).Value = i.apply_name;
-                sheet.Cell(row_index + 6, col_index).Value = i.address;
+                sheet.Cell(row_index, 1).Value = i.LightSite_name;
+                sheet.Cell(row_index, 2).Value = i.apply_name;
+                sheet.Cell(row_index, 3).Value = i.address;
                 //生日時辰
                 string[] lbirthday = i.l_birthday != null ? i.l_birthday.Split('/') : new string[] { };
                 if (lbirthday.Length == 3)
                 {
-                    sheet.Cell(row_index + 22, col_index).Value = int.Parse(lbirthday[0]);
-                    sheet.Cell(row_index + 23, col_index).Value = int.Parse(lbirthday[1]);
-                    sheet.Cell(row_index + 24, col_index).Value = int.Parse(lbirthday[2]);
+                    sheet.Cell(row_index, 4).Value = int.Parse(lbirthday[0]);
+                    sheet.Cell(row_index, 5).Value = i.isOnLeapMonth ? "閏" : "";
+                    sheet.Cell(row_index, 6).Value = int.Parse(lbirthday[1]);
+                    sheet.Cell(row_index, 7).Value = int.Parse(lbirthday[2]);
                 }
-                sheet.Cell(row_index + 25, col_index).Value = i.born_time;
-                sheet.Cell(row_index + 26, col_index).Value = i.tel;
-                sheet.Cell(row_index + 30, col_index).Value = strBatch;
+                sheet.Cell(row_index, 8).Value = i.born_time;
+                sheet.Cell(row_index, 9).Value = i.tel;
 
-                #region 合併儲存格
-                if (col_index == 4)
-                {//新一頁
-                    sheet.Range(row_index, 1, row_index + 31, 1).Merge(false);//大標
-                    //副標
-                    sheet.Range(row_index, col_header, row_index + 1, col_header).Merge(false);
-                    sheet.Range(row_index + 2, col_header, row_index + 5, col_header).Merge(false);
-                    sheet.Range(row_index + 6, col_header, row_index + 21, col_header).Merge(false);
-                    sheet.Range(row_index + 22, col_header, row_index + 25, col_header).Merge(false);
-                    sheet.Range(row_index + 26, col_header, row_index + 29, col_header).Merge(false);
+                if (index % 10 == 0)
+                {//換頁
+                    row_index += 2;
                 }
-                sheet.Range(row_index, col_index, row_index + 1, col_index).Merge(false);
-                sheet.Range(row_index + 2, col_index, row_index + 5, col_index).Merge(false);
-                sheet.Range(row_index + 6, col_index, row_index + 21, col_index).Merge(false);
-                sheet.Range(row_index + 26, col_index, row_index + 29, col_index).Merge(false);
-                #endregion
-
-                col_index++;
-                if (col_index > 13)
-                {
-                    //換頁
-                    row_index += PageRow;
-                    col_index = 4;
-                }
+                index++;
+                row_index++;
             }
 
             sheet.Name = string.Format("超渡法會-渡脫冤親債主名冊({0}筆)", count);
@@ -2148,7 +2094,7 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(超渡無緣嬰靈)名冊.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超度法會(超渡嬰靈)名冊.xlsx");
                 XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
                 IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
                 IXLWorksheet styleSheet = excel.Worksheet("style");
@@ -2177,54 +2123,33 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            int PageRow = 32;
-            //一頁十筆;樣板列高32欄寬13
-            copyTmp(count, 10, PageRow, 13, sheet, style);
+            //一頁十筆;樣板列高12欄寬6
+            copyTmp(count, 10, 12, 6, sheet, style);
             #endregion
 
-
-            int row_index = 1;//+32
-            int col_index = 4;//4-13
-            int col_header = 3;//每頁副標頭
+            int row_index = 3;
+            int index = 1;
 
             foreach (var i in data)
             {
-                //只顯示中文數字
-                string strBatch = Regex.Replace(i.batch_title, "[^一二三四五六七八九十]", "");
-
-                sheet.Cell(row_index, col_index).Value = i.LightSite_name;
-                sheet.Cell(row_index + 2, col_index).Value = i.apply_name;
-                sheet.Cell(row_index + 6, col_index).Value = i.address;
-                sheet.Cell(row_index + 22, col_index).Value = i.departed_name;
-                sheet.Cell(row_index + 25, col_index).Value = i.departed_qty;
-                sheet.Cell(row_index + 26, col_index).Value = i.tel;
-                sheet.Cell(row_index + 30, col_index).Value = strBatch;
-
                 #region 合併儲存格
-                if (col_index == 4)
-                {//新一頁
-                    sheet.Range(row_index, 1, row_index + 31, 1).Merge(false);//大標
-                    //副標
-                    sheet.Range(row_index, col_header, row_index + 1, col_header).Merge(false);
-                    sheet.Range(row_index + 2, col_header, row_index + 5, col_header).Merge(false);
-                    sheet.Range(row_index + 6, col_header, row_index + 21, col_header).Merge(false);
-                    sheet.Range(row_index + 22, col_header, row_index + 24, col_header).Merge(false);
-                    sheet.Range(row_index + 26, col_header, row_index + 29, col_header).Merge(false);
+                if (index % 10 == 1)
+                {//餘數為1,新一頁
+                    sheet.Range(row_index - 2, 1, row_index - 2, 6).Merge(false);//大標                  
                 }
-                sheet.Range(row_index, col_index, row_index + 1, col_index).Merge(false);
-                sheet.Range(row_index + 2, col_index, row_index + 5, col_index).Merge(false);
-                sheet.Range(row_index + 6, col_index, row_index + 21, col_index).Merge(false);
-                sheet.Range(row_index + 22, col_index, row_index + 24, col_index).Merge(false);
-                sheet.Range(row_index + 26, col_index, row_index + 29, col_index).Merge(false);
                 #endregion
+                sheet.Cell(row_index, 1).Value = i.LightSite_name;
+                sheet.Cell(row_index, 2).Value = i.apply_name;
+                sheet.Cell(row_index, 3).Value = i.address;
+                sheet.Cell(row_index, 4).Value = i.departed_qty;
+                sheet.Cell(row_index, 5).Value = i.tel;
 
-                col_index++;
-                if (col_index > 13)
-                {
-                    //換頁
-                    row_index += PageRow;
-                    col_index = 4;
+                if (index % 10 == 0)
+                {//換頁
+                    row_index += 2;
                 }
+                index++;
+                row_index++;
             }
 
             sheet.Name = string.Format("超渡法會-超渡無緣嬰靈名冊({0}筆)", count);
@@ -3017,6 +2942,10 @@ namespace DotWeb.Controllers
             /// 生日時辰-年月日
             /// </summary>
             public string l_birthday { get; set; }
+            /// <summary>
+            /// 是否為閏月
+            /// </summary>
+            public bool isOnLeapMonth { get; set; }
             /// <summary>
             /// 生日時辰-時辰
             /// </summary>

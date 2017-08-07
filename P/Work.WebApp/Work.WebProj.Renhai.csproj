@@ -642,10 +642,6 @@
     <Content Include="_Code\Excel\契子郵寄標籤.xlsx" />
     <Content Include="_Code\Excel\郵寄標籤.xls" />
     <Content Include="_Code\Excel\郵寄標籤.xlsx" />
-    <Content Include="_Code\Excel\超度法會%28渡脫冤親債主%29名冊.xlsx" />
-    <Content Include="_Code\Excel\超度法會%28超渡無緣嬰靈%29名冊.xlsx" />
-    <Content Include="_Code\Excel\超度法會%28薦拔祖先-個別祖先%29名冊.xlsx" />
-    <Content Include="_Code\Excel\超度法會%28薦拔祖先-歷代祖先%29名冊.xlsx" />
     <Content Include="_Code\Excel\BasicTable.xlsx" />
     <Content Include="_Code\Excel\超度法會金紙疏文.xlsx" />
     <Content Include="_Code\Excel\超渡法會牒文_冤親債主.xlsx" />
@@ -654,6 +650,10 @@
     <Content Include="_Code\Excel\超渡法會牒文_超渡嬰靈.xlsx" />
     <Content Include="_Code\Excel\超渡法會疏文_歷代祖先.xlsx" />
     <Content Include="_Code\Excel\超渡法會疏文_個別祖先.xlsx" />
+    <Content Include="_Code\Excel\超度法會%28個別祖先%29名冊.xlsx" />
+    <Content Include="_Code\Excel\超度法會%28冤親債主%29名冊.xlsx" />
+    <Content Include="_Code\Excel\超度法會%28歷代祖先%29名冊.xlsx" />
+    <Content Include="_Code\Excel\超度法會%28超渡嬰靈%29名冊.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
