@@ -648,6 +648,10 @@ namespace DotWeb.Controllers
                         getItem.born_sign = item.born_sign;
                         getItem.born_time = item.born_time;
                         getItem.address = item.address;
+                        //超渡法會修改
+                        getItem.departed_name = item.departed_name;
+                        getItem.departed_address = item.departed_address;
+                        getItem.departed_qty = item.departed_qty;
 
                         getItem.C_UpdateDateTime = DateTime.Now;
                     }

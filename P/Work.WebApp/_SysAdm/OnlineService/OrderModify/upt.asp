@@ -157,6 +157,9 @@ Dim p0	'訂單編號
                                         <td class="TableHeadTD">生辰</td>
                                         <td class="TableHeadTD">生肖</td>
                                         <td class="TableHeadTD">地址</td>
+                                        <td class="TableHeadTD">往者名</td>
+                                        <td class="TableHeadTD">牌位地址</td>
+                                        <td class="TableHeadTD">嬰靈數</td>
                                     </tr>
                                     <tbody ng-repeat="gd in Items">
                                         <tr>
@@ -175,7 +178,13 @@ Dim p0	'訂單編號
                                             <td class="TableBodyTD">
                                                 <select ng-model="gd.born_sign" ng-options="m.id as m.text for m in options_born_sign"></select></td>
                                             <td class="TableBodyTD">
-                                                <input type="text" ng-model="gd.address" style="width: 210px" /></td>
+                                                <input type="text" ng-model="gd.address" style="width: 150px" /></td>
+                                            <td class="TableBodyTD">
+                                                <input type="text" ng-model="gd.departed_name" style="width: 50px" /></td>
+                                            <td class="TableBodyTD">
+                                                <input type="text" ng-model="gd.departed_address" style="width: 150px" /></td>
+                                            <td class="TableBodyTD">
+                                                <input type="text" ng-model="gd.departed_qty" style="width: 40px" /></td>
                                         </tr>
                                 </table>
                             </td>
