@@ -589,13 +589,20 @@ namespace DotWeb.Controllers
         public String ajax_getLiDo()
         {
             ReturnAjaxData rAjaxResult = new ReturnAjaxData();
-            a_訂單主副 ac = new a_訂單主副() { Connection = getSQLConnection(), logPlamInfo = plamInfo };
+            //a_訂單主副 ac = new a_訂單主副() { Connection = getSQLConnection(), logPlamInfo = plamInfo };
+            RenHai2012Entities db = new RenHai2012Entities();
             try
             {
-                RunQueryPackage<m_訂單明細檔> r = ac.SearchMaster禮斗明細表(this.LightYear, LoginUserID);
-                HandleRunEnd(r);
-                rAjaxResult.Module = r.SearchData
-                    .Select(x => new { 名稱 = x.產品名稱, 姓名 = x.申請人姓名, 地址 = x.申請人地址 });
+                //RunQueryPackage<m_訂單明細檔> r = ac.SearchMaster禮斗明細表(this.LightYear, LoginUserID);
+                //HandleRunEnd(r);
+                //rAjaxResult.Module = r.SearchData
+                //    .Select(x => new { 名稱 = x.點燈位置, 姓名 = x.申請人姓名, 地址 = x.申請人地址 });
+                rAjaxResult.Module = db.Orders_Detail
+                    //.OrderByDescending(x => x.i_InsertDateTime)
+                                     .OrderBy(x => new { x.product_sn, x.light_name })
+                                     .Where(x => x.Product.category == e_祈福產品分類.禮斗 & x.Y == this.LightYear)
+                                     .Select(x => new { 燈位名稱 = x.light_name, 產品名稱 = x.product_name, 姓名 = x.member_name, 地址 = x.address, 電話 = x.Member_Detail.tel })
+                                     .ToList();
             }
             catch (LogicError ex)
             {
@@ -605,7 +612,12 @@ namespace DotWeb.Controllers
             {
                 rAjaxLogErrHandle(ex, rAjaxResult);
             }
-            return (new JavaScriptSerializer() { MaxJsonLength = 1024 * 1024 }).Serialize(rAjaxResult);
+            finally
+            {
+                db.Dispose();
+            }
+            //return (new JavaScriptSerializer() { MaxJsonLength = 1024 * 1024 }).Serialize(rAjaxResult);
+            return defJSON(rAjaxResult);
         }
 
         [HttpPost]

@@ -4,26 +4,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="../../_Css/Set.css">
     <style type="text/css">
-        .GridTable
-        {
+        .GridTable {
             margin-top: 10px;
             border: 5 double #778899;
         }
-        TH
-        {
+
+        TH {
             background: #F5F5DC;
         }
-        
-        .TDLine
-        {
+
+        .TDLine {
             background-color: #FF7573;
             color: #FFFFFF;
             text-align: center;
             font-size: 11pt;
         }
-        
-        .TableHeadTR
-        {
+
+        .TableHeadTR {
             background-color: #1F6CBD;
             color: #FFFFFF;
             text-align: center;
@@ -31,33 +28,30 @@
             padding-top: 3px;
             padding-bottom: 3px;
         }
-        .TableHeadTD
-        {
+
+        .TableHeadTD {
             border-style: solid;
             border-width: 1px;
             border-bottom-color: #333333;
             border-right-color: #CCCCCC;
         }
-        
-        .TableBodyTR
-        {
+
+        .TableBodyTR {
             background-color: #EEF5FC;
             padding-top: 1px;
             padding-bottom: 1px;
             padding-left: 5px;
             padding-right: 5px;
         }
-        
-        .TableBodyTD
-        {
+
+        .TableBodyTD {
             border-style: solid;
             border-width: 1px;
             border-bottom-color: #AAAAAA;
             border-right-color: #EEEEEE;
         }
-        
-        .TableBodyTdNum
-        {
+
+        .TableBodyTdNum {
             text-align: right;
             border-style: solid;
             border-width: 1px;
@@ -68,16 +62,14 @@
 </head>
 <body>
     <!--#include file="../../_include/top.asp"-->
-    <table class="gridtable" style="width: 99%;border: 1px">
+    <table class="gridtable" style="width: 99%; border: 1px">
         <tr>
             <td class="gridcaption" style="margin: 0px">
                 <table style="width: 100%">
                     <tr>
-                        <td class="gridtdcaption" id="CaptionText">
-                            禮斗訂購明細表
+                        <td class="gridtdcaption" id="CaptionText">禮斗訂購明細表
                         </td>
-                        <td style="text-align: right">
-                        </td>
+                        <td style="text-align: right"></td>
                     </tr>
                 </table>
             </td>
@@ -88,13 +80,14 @@
                     <!--Order Detail Start-->
                     <tr>
                         <td colspan="4">
-                            <table id="TableProductDetailView" style="width: 100%; margin: 1px; padding: 1px;
-                                border: 1px">
+                            <table id="TableProductDetailView" style="width: 100%; margin: 1px; padding: 1px; border: 1px">
                                 <thead>
                                     <tr class="TableHeadTR">
                                         <td class="TableHeadTD">禮斗名稱</td>
+                                        <td class="TableHeadTD">燈位名稱</td>
                                         <td class="TableHeadTD">姓名</td>
                                         <td class="TableHeadTD">住址</td>
+                                        <td class="TableHeadTD">電話</td>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -131,9 +124,9 @@
 			            data: {},
 			            cache: false,
 			            global: true,
-			            error: function (jqXHR, textStatus, errorThrown) { 
-							alert(errorThrown);
-						},
+			            error: function (jqXHR, textStatus, errorThrown) {
+			                alert(errorThrown);
+			            },
 			            success: function (response) {
 			                var stai = jQuery.parseJSON(response);
 			                if (stai.result) {
@@ -144,9 +137,11 @@
                                     .append
                                     (
                                             $('<tr class="TableBodyTR">')
-											    .append($('<td class="TableBodyTD">').html(stai.Module[i].名稱))
+											    .append($('<td class="TableBodyTD">').html(stai.Module[i].產品名稱))
+                                                .append($('<td class="TableBodyTD">').html(stai.Module[i].燈位名稱))
                                                 .append($('<td class="TableBodyTdNum">').html(stai.Module[i].姓名))
                                                 .append($('<td class="TableBodyTdNum">').html(stai.Module[i].地址))
+                                                .append($('<td class="TableBodyTdNum">').html(stai.Module[i].電話))
 			                        )
 			                    }
 			                } else {

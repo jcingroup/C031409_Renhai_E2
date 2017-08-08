@@ -2284,6 +2284,7 @@ namespace DotWeb.Controllers
                 IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
                 IXLWorksheet styleSheet = excel.Worksheet("style");
 
+                Log.Write(new Log.LogPlamInfo() { AllowWrite = true }, this.GetType().Name + "." + System.Reflection.MethodInfo.GetCurrentMethod().Name, "取得金紙疏文資料開始...");
                 #region 取得資料
                 var items = getShuWenData(q);//取得訂單資料
                 var date = getBatchTaiwanLCData(q.year);//取得法會梯次農曆日期
@@ -2293,10 +2294,13 @@ namespace DotWeb.Controllers
                     date = date
                 };
                 #endregion
-
+                Log.Write(new Log.LogPlamInfo() { AllowWrite = true }, this.GetType().Name + "." + System.Reflection.MethodInfo.GetCurrentMethod().Name, "取得金紙疏文資料結束...");
+                Log.Write(new Log.LogPlamInfo() { AllowWrite = true }, this.GetType().Name + "." + System.Reflection.MethodInfo.GetCurrentMethod().Name, "取得金紙疏文套版開始...");
                 #region Excel Handle
                 makePaperMoneyShuWen(data, getSheet, styleSheet);
                 #endregion
+                Log.Write(new Log.LogPlamInfo() { AllowWrite = true }, this.GetType().Name + "." + System.Reflection.MethodInfo.GetCurrentMethod().Name, "取得金紙疏文套版結束...");
+
                 styleSheet.Delete();
 
                 excel.SaveAs(outputStream);
