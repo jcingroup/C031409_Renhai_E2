@@ -1651,6 +1651,138 @@ namespace DotWeb.Controllers
             }
         }
 
+        #region 禮斗名冊
+        public FileResult LiDoRoll(q_LiDo q)
+        {
+            var outputStream = stmLiDoRoll(q);
+            string setFileName = "禮斗名冊";
+            return ExportExcelFile(outputStream, setFileName);
+        }
+        private MemoryStream stmLiDoRoll(q_LiDo q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "禮斗金名冊格式.xlsx");
+                XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
+                IXLWorksheet getSheet = excel.Worksheet("SheetPrint");
+                IXLWorksheet styleSheet = excel.Worksheet("style");
+
+                #region 取得資料
+                var items = getLiDoData(q);//取得訂單資料
+                #endregion
+                #region Excel Handle
+                makeLiDoRoll(items, getSheet, styleSheet);
+                #endregion
+
+                styleSheet.Delete();
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private List<m_LiDo> getLiDoData(q_LiDo q)
+        {
+            List<m_LiDo> res = new List<m_LiDo>();
+            using (var db0 = getDB())
+            {
+                var tmp = db0.Orders_Detail
+                       .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == e_祈福產品分類.禮斗)
+                       .OrderBy(x => new { x.product_sn, x.light_name })
+                       .Select(x => new m_LiDo()
+                       {
+                           light_name = x.light_name,
+                           householder = x.Member_Detail.Member.householder,
+                           zip = x.zip,
+                           address = x.address,
+                           tel = x.Member_Detail.Member.tel,
+                           product_sn = x.product_sn
+                       });
+
+                if (q.product_sn != null)
+                {
+                    tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                }
+
+                res = tmp.ToList();
+            }
+            return res;
+        }
+        private void makeLiDoRoll(List<m_LiDo> data, IXLWorksheet sheet, IXLWorksheet style)
+        {
+            int count = data.Count();
+            #region 複製樣板
+            int PageRow = 6;
+            //一頁10筆;樣板列高6欄寬11
+            copyTmp(count, 10, PageRow, 11, sheet, style);
+            #endregion
+
+            int row_index = 1;//+6
+            int col_index = 10;//10-1
+
+            foreach (var i in data)
+            {
+                sheet.Cell(row_index, col_index).Value = i.light_name;
+                sheet.Cell(row_index + 1, col_index).Value = i.householder;
+                sheet.Cell(row_index + 2, col_index).Value = i.zip;
+                sheet.Cell(row_index + 3, col_index).Value = i.address;
+                sheet.Cell(row_index + 4, col_index).Value = i.tel;
+
+                #region 合併儲存格
+                if (col_index == 10)
+                {//新一頁
+                    sheet.Range(row_index + 2, 11, row_index + 3, 11).Merge(false);//地址
+                }
+                #endregion
+                if (col_index == 1)
+                {
+                    //換頁
+                    row_index += PageRow;
+                    col_index = 10;
+                }
+                else {
+                    col_index--; 
+                }    
+            }
+
+            sheet.Name = string.Format("禮斗名冊({0}筆)", count);
+            copyPrint(sheet, style);
+        }
+        public class q_LiDo
+        {
+            /// <summary>
+            /// 年度
+            /// </summary>
+            public int year { get; set; }
+            /// <summary>
+            /// 產品種類
+            /// </summary>
+            public string product_sn { get; set; }
+        }
+        public class m_LiDo
+        {
+            /// <summary>
+            /// 燈位名稱
+            /// </summary>
+            public string light_name { get; set; }
+            /// <summary>
+            /// 戶長姓名
+            /// </summary>
+            public string householder { get; set; }
+            public string address { get; set; }
+            public string zip { get; set; }
+            public string tel { get; set; }
+            public string product_sn { get; set; }
+        }
+        #endregion
+
         #region 法會梯次報表
         public FileResult ExportExcelFile(MemoryStream stream, string name)
         {

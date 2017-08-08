@@ -70,6 +70,9 @@
                         <td class="gridtdcaption" id="CaptionText">禮斗訂購明細表
                         </td>
                         <td style="text-align: right"></td>
+                        <td style="width: 80px; text-align: center">
+                            <input type="button" id="btn_ExportExcel" class="button" value="禮斗名冊" style="margin-right: 10px;" />
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -99,12 +102,19 @@
             </td>
         </tr>
     </table>
+      <iframe id="ifm_exceldownload" src="" style="border: 0px; width: 0px; height: 0px"></iframe>
     <!--#include file="../../_include/bottom.asp"-->
 </body>
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
         $.ReFreshDetailHTML();
+        $('#btn_ExportExcel').click(function () {
+            var today = new Date();
+            var parms = [];
+            parms.push('year=' + today.getFullYear());
+            $("#ifm_exceldownload").attr("src", "../../../ExcelReport/LiDoRoll?" + parms.join('&'));
+        });
     })
 </script>
 <script type="text/javascript">

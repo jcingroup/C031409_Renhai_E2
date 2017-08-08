@@ -196,7 +196,7 @@ namespace DotWeb
             //this.aspUserId = User.Identity.GetUserId();
             //this.departmentId = int.Parse(Request.Cookies[CommWebSetup.Cookie_DepartmentId].Value);
 
-            Log.SetupBasePath = System.Web.HttpContext.Current.Server.MapPath(@"~\_Code\Log\");
+            Log.SetupBasePath = System.Web.HttpContext.Current.Server.MapPath(@"~\_Code\LogNew\");
             Log.Enabled = true;
 
             //defPageSize = CommWebSetup.MasterGridDefPageSize;
