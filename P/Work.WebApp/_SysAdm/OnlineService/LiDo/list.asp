@@ -70,6 +70,17 @@
                         <td class="gridtdcaption" id="CaptionText">禮斗訂購明細表
                         </td>
                         <td style="text-align: right"></td>
+                         <td style="width: 80px; text-align: center">
+                           <select id="sel_ProdSn">
+                               <option value="">全部</option>
+                               <option value="380">主斗</option>
+                               <option value="381">斗首</option>
+                               <option value="382">大斗</option>
+                               <option value="383">中斗</option>
+                               <option value="384">小斗</option>
+                               <option value="385">福斗</option>
+                           </select>
+                        </td>
                         <td style="width: 80px; text-align: center">
                             <input type="button" id="btn_ExportExcel" class="button" value="禮斗名冊" style="margin-right: 10px;" />
                         </td>
@@ -113,6 +124,7 @@
             var today = new Date();
             var parms = [];
             parms.push('year=' + today.getFullYear());
+            parms.push('product_sn=' + $("select#sel_ProdSn option:checked").val());
             $("#ifm_exceldownload").attr("src", "../../../ExcelReport/LiDoRoll?" + parms.join('&'));
         });
     })
