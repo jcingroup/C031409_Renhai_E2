@@ -19,6 +19,7 @@
     //download excel
     downloadExcel: string;
     DownLoadExcel_BatchRollPrint(): void;//法會名冊
+    DownLoadExcel_BatchAllRollPrint(): void;//法會總名冊
     DownLoadExcel_PaperMoneyShuWenPrint(): void;//金紙疏文
     DownLoadExcel_DieWenPrint(): void;//蝶文
     DownLoadExcel_ShuWenPrint(): void;//個別、歷代祖先 疏文
@@ -135,6 +136,15 @@ angular
             parm.push('product_sn=' + $scope.sd.product_sn);
             parm.push('tid=' + uniqid());
             var url = gb_approot + 'ExcelReport/BatchRoll?' + parm.join('&');
+            $scope.downloadExcel = url;
+        }
+        $scope.DownLoadExcel_BatchAllRollPrint = function () {
+            var parm = [];
+            parm.push('year=' + $scope.sd.year);
+            parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
+            parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('tid=' + uniqid());
+            var url = gb_approot + 'ExcelReport/BatchAllRoll?' + parm.join('&');
             $scope.downloadExcel = url;
         }
         $scope.DownLoadExcel_PaperMoneyShuWenPrint = function () {

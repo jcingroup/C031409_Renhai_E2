@@ -1747,9 +1747,10 @@ namespace DotWeb.Controllers
                     row_index += PageRow;
                     col_index = 10;
                 }
-                else {
-                    col_index--; 
-                }    
+                else
+                {
+                    col_index--;
+                }
             }
 
             sheet.Name = string.Format("禮斗名冊({0}筆)", count);
@@ -1835,6 +1836,96 @@ namespace DotWeb.Controllers
             sheet.PageSetup.Margins.Footer = style.PageSetup.Margins.Footer;
             sheet.PageSetup.Margins.Header = style.PageSetup.Margins.Header;
         }
+        #region 總名冊
+        public FileResult BatchAllRoll(q_法會 q)
+        {
+            var outputStream = stmBatchAllRoll(q);
+            string setFileName = "超渡法會總名冊";
+            return ExportExcelFile(outputStream, setFileName);
+        }
+        private MemoryStream stmBatchAllRoll(q_法會 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "超渡法會總名冊.xlsx");
+                XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
+                IXLWorksheet getSheet = excel.Worksheet("Sheet1");
+
+                #region 取得資料
+                var items = getBatchAllRollData(q);//取得訂單資料
+                #endregion
+                #region Excel Handle
+                makeBatchAllRoll(items, getSheet);
+                #endregion
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private List<m_法會總名冊> getBatchAllRollData(q_法會 q)
+        {
+            List<m_法會總名冊> res = new List<m_法會總名冊>();
+            using (var db0 = getDB())
+            {
+                var tmp = db0.Orders_Detail
+                       .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == e_祈福產品分類.超渡法會)
+                       .OrderBy(x => new { x.assembly_batch_sn, x.product_sn, x.light_name })
+                       .Select(x => new m_法會總名冊()
+                       {
+                           orders_sn = x.orders_sn,
+                           member_name = x.member_name,
+                           light_name = x.light_name,
+                           address = x.address,
+                           memo = x.memo,
+                           batch_sn = x.assembly_batch_sn
+                       });
+
+                if (q.batch_sn != null)
+                {
+                    tmp = tmp.Where(x => x.batch_sn == q.batch_sn);
+                }
+
+                res = tmp.ToList();
+            }
+            return res;
+        }
+        private void makeBatchAllRoll(List<m_法會總名冊> data, IXLWorksheet sheet)
+        {
+            int count = data.Count();
+
+            #region 差列
+            //第二列插入與資料相應的筆數
+            if (count - 2 > 0)
+                sheet.Row(2).InsertRowsBelow(count - 2);
+            #endregion
+
+            int row_index = 2;
+            int index = 1;
+
+            foreach (var i in data)
+            {
+                sheet.Cell(row_index, 1).Value = index;
+                sheet.Cell(row_index, 2).Value = i.orders_sn;
+                sheet.Cell(row_index, 3).Value = i.member_name;
+                sheet.Cell(row_index, 5).Value = i.member_name;
+                sheet.Cell(row_index, 6).Value = i.light_name;
+                sheet.Cell(row_index, 7).Value = i.address;
+
+                row_index++;
+                index++;
+            }
+
+            sheet.Name = string.Format("超渡法會總名冊({0}筆)", count);
+        }
+        #endregion
         #region 名冊
 
         public FileResult BatchRoll(q_法會 q)
@@ -3038,6 +3129,24 @@ namespace DotWeb.Controllers
             /// 產品種類
             /// </summary>
             public string product_sn { get; set; }
+        }
+        public class m_法會總名冊
+        {
+            /// <summary>
+            /// 訂單編號
+            /// </summary>
+            public string orders_sn { get; set; }
+            /// <summary>
+            /// 申請人、祈福姓名
+            /// </summary>
+            public string member_name { get; set; }
+            /// <summary>
+            /// 牌位編號
+            /// </summary>
+            public string light_name { get; set; }
+            public string address { get; set; }
+            public string memo { get; set; }
+            public int? batch_sn { get; set; }
         }
         public class m_法會名冊
         {
