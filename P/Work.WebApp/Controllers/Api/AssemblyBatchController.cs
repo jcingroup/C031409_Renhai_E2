@@ -28,11 +28,6 @@ namespace DotWeb.Api
 
             using (db0 = getDB0())
             {
-                string[] allowedSN = new string[] { 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
                 var items = (from x in db0.AssemblyBatch
                              orderby x.batch_date, x.batch_timeperiod
                              select new m_AssemblyBatch()
@@ -45,7 +40,7 @@ namespace DotWeb.Api
                                  lunar_m = x.lunar_m,
                                  lunar_d = x.lunar_d,
                                  batch_qty = x.batch_qty,
-                                 count = x.訂單明細檔.Where(y => y.is_reject != true & allowedSN.Contains(y.product_sn)).Count(),
+                                 count = x.訂單明細檔.Where(y => y.is_reject != true & y.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會).Count(),
                                  count_1401 = x.訂單明細檔.Where(y => y.is_reject != true & y.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲).Count(),
                                  count_1402 = x.訂單明細檔.Where(y => y.is_reject != true & y.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙).Count(),
                                  count_1403 = x.訂單明細檔.Where(y => y.is_reject != true & y.product_sn == ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主).Count(),

@@ -2151,6 +2151,7 @@ namespace ProcCore.Business.Logic
         public static string 契子 = "契子";
         public static string 入斗 = "入斗";
         public static string 保運 = "保運";
+        public static string 祈福許願燈 = "祈福許願燈";
     }
     #endregion
 

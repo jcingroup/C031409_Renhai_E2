@@ -182,17 +182,12 @@ namespace DotWeb.Controllers
                       batch_sn = key,
                       needQty = Num.Count()
                   });
-                string[] allowedSN = new string[] { 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
                 foreach (var orderqty in groupOrderAssemblyBatchQty)
                 {
                     var getBatchInfo = db0.AssemblyBatch.Where(x => x.batch_sn == orderqty.batch_sn & x.batch_date.Year == this.LightYear).FirstOrDefault();
                     if (getBatchInfo != null)
                     {
-                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & allowedSN.Contains(x.product_sn)).Count();
+                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會).Count();
                         int EmptySerial = getBatchInfo.batch_qty - qty;//多餘空位
                         if (EmptySerial < orderqty.needQty)
                         {
@@ -438,17 +433,13 @@ namespace DotWeb.Controllers
                       assembly_batch_sn = key,
                       needQty = Num.Count()
                   });
-                string[] allowedSN = new string[] { 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
+
                 foreach (var orderqty in groupOrderAssemblyBatchQty)
                 {
                     var getBatchInfo = db0.AssemblyBatch.Where(x => x.batch_sn == orderqty.assembly_batch_sn & x.batch_date.Year == this.LightYear).FirstOrDefault();
                     if (getBatchInfo != null)
                     {
-                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & allowedSN.Contains(x.product_sn)).Count();
+                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會).Count();
                         int EmptySerial = getBatchInfo.batch_qty - qty;//多餘空位
                         if (EmptySerial < orderqty.needQty)
                         {

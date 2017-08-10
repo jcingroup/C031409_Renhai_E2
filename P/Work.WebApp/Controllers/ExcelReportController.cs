@@ -1990,7 +1990,7 @@ namespace DotWeb.Controllers
             using (var db0 = getDB())
             {
                 var tmp = db0.Orders_Detail
-                       .Where(x => x.Y == q.year & x.is_reject != true)
+                       .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會)
                        .OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
                        .Select(x => new m_法會名冊()
                        {
@@ -2008,12 +2008,8 @@ namespace DotWeb.Controllers
                            departed_qty = x.departed_qty,
                            product_sn = x.product_sn
                        });
-                string[] allowedSN = new string[] { 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
-                if (allowedSN.Contains(prod_sn))
+
+                if (prod_sn != null)
                 {
                     tmp = tmp.Where(x => x.product_sn == prod_sn);
                 }
@@ -2392,7 +2388,7 @@ namespace DotWeb.Controllers
             using (var db0 = getDB())
             {
                 var tmp = db0.Orders_Detail
-                       .Where(x => x.Y == q.year & x.is_reject != true)
+                       .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會)
                        .OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
                        .Select(x => new m_疏文名單()
                        {
@@ -2407,22 +2403,10 @@ namespace DotWeb.Controllers
                            batch_sn = x.assembly_batch_sn,
                            product_sn = x.product_sn
                        });
-                string[] allowedSN = new string[] { 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
 
                 if (prod_sn == null)
                 {
-                    if (allowedSN.Contains(q.product_sn))
-                    {
-                        tmp = tmp.Where(x => x.product_sn == q.product_sn);
-                    }
-                    else
-                    {
-                        tmp = tmp.Where(x => allowedSN.Contains(x.product_sn));
-                    }
+                    tmp = tmp.Where(x => x.product_sn == q.product_sn);
                 }
                 else
                 {

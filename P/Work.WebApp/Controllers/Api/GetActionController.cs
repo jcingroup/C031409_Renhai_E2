@@ -22,8 +22,9 @@ namespace DotWeb.Api
                 db = getDB0();
                 var getAllProduct = db.Product
                     .Where(x => x.i_Hide == 0
-                        && x.category != "禮斗"
-                        && x.category != "福燈"
+                        && x.category != ProcCore.Business.Logic.e_祈福產品分類.禮斗
+                        && x.category != ProcCore.Business.Logic.e_祈福產品分類.福燈
+                        && x.category != ProcCore.Business.Logic.e_祈福產品分類.祈福許願燈
                         && x.isSelect == false
                         && x.i_Hide == 0
                     //&& x.category != "契子" // ref sa.xls No 2
@@ -358,14 +359,8 @@ namespace DotWeb.Api
 
             using (db0 = getDB0())
             {
-                string[] allowedSN = new string[] { 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
-
                 var items = (from x in db0.Orders_Detail
-                             where x.assembly_batch_sn != null & x.is_reject != true & allowedSN.Contains(x.product_sn)
+                             where x.assembly_batch_sn != null & x.is_reject != true & x.Product.category==ProcCore.Business.Logic.e_祈福產品分類.超渡法會
                              orderby x.i_InsertDateTime
                              select new BatchList()
                              {
@@ -427,12 +422,6 @@ namespace DotWeb.Api
             {
                 db = getDB0();
                 int y = year == null ? DotWeb.CommSetup.CommWebSetup.WorkYear : (int)year;
-                string[] allowedSN = new string[] { 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先甲,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_祖先乙, 
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_冤親債主,
-                    ProcCore.Business.Logic.e_祈福產品.超渡法會_嬰靈 };
-
                 var getAllBath = db.AssemblyBatch
                     .Where(x => x.batch_date.Year == year)
                     .Select(x => new m_AssemblyBatch()
@@ -441,7 +430,7 @@ namespace DotWeb.Api
                         batch_date = x.batch_date,
                         batch_timeperiod = x.batch_timeperiod,
                         batch_title = x.batch_title,
-                        count = x.訂單明細檔.Where(z => z.assembly_batch_sn != null & z.is_reject != true & allowedSN.Contains(z.product_sn)).Count()
+                        count = x.訂單明細檔.Where(z => z.assembly_batch_sn != null & z.is_reject != true & z.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會).Count()
                     }).OrderBy(x => new { x.batch_date, x.batch_timeperiod }).ToList();
 
                 r.data = getAllBath;
