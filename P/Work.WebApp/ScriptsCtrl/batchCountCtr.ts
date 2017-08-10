@@ -158,7 +158,7 @@ angular
         }
         $scope.DownLoadExcel_DieWenPrint = function () {
             if ($scope.sd.product_sn == null && userid != '1000001') {
-                alert("請選擇「產品種類」後再列印名冊！")
+                alert("請選擇「產品種類」後再列印牒文！")
                 return;
             }
             var parm = [];
@@ -171,7 +171,7 @@ angular
         }
         $scope.DownLoadExcel_ShuWenPrint = function () {
             if (!($scope.sd.product_sn == 1401 || $scope.sd.product_sn == 1402)) {
-                alert("請選擇正確的「產品種類」後再列印名冊！")
+                alert("請選擇正確的「產品種類」後再列印疏文！")
                 return;
             }
             var parm = [];

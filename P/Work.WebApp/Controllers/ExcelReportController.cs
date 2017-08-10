@@ -1885,12 +1885,17 @@ namespace DotWeb.Controllers
                            light_name = x.light_name,
                            address = x.address,
                            memo = x.memo,
-                           batch_sn = x.assembly_batch_sn
+                           batch_sn = x.assembly_batch_sn,
+                           product_sn = x.product_sn
                        });
 
                 if (q.batch_sn != null)
                 {
                     tmp = tmp.Where(x => x.batch_sn == q.batch_sn);
+                }
+                if (q.product_sn != null)
+                {
+                    tmp = tmp.Where(x => x.product_sn == q.product_sn);
                 }
 
                 res = tmp.ToList();
@@ -3131,6 +3136,7 @@ namespace DotWeb.Controllers
             public string address { get; set; }
             public string memo { get; set; }
             public int? batch_sn { get; set; }
+            public string product_sn { get; set; }
         }
         public class m_法會名冊
         {

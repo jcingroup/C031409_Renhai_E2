@@ -16,7 +16,8 @@ namespace ProcCore.Business
         general = 0, //一般訂單
         mdlight = 1, //主副斗
         sdlight = 2, //大中小斗
-        fortune_order = 3 //福燈
+        fortune_order = 3, //福燈
+        wishlight = 4 //祈福許願燈
     }
     public enum Orders_State : int
     {
