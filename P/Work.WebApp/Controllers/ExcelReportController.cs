@@ -1893,7 +1893,7 @@ namespace DotWeb.Controllers
                 {
                     tmp = tmp.Where(x => x.batch_sn == q.batch_sn);
                 }
-                if (q.product_sn != null)
+                if (q.product_sn != null & q.product_sn != "null")
                 {
                     tmp = tmp.Where(x => x.product_sn == q.product_sn);
                 }
