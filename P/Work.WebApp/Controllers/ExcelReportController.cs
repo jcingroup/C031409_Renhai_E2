@@ -2847,16 +2847,16 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            int PageRow = 14;
-            //一頁1筆;樣板列高14欄寬33
+            int PageRow = 15;
+            //一頁1筆;樣板列高PageRow欄寬33
             copyTmp(count, 1, PageRow, 33, sheet, style);
             #endregion
 
             MyTaiwanCalendar.PlayTCL pTCL = new MyTaiwanCalendar.PlayTCL();
-            int row_index = 1;//+14
+            int row_index = 1;//+PageRow
 
             foreach (var i in data)
-            {//一頁一筆資料,一頁列高14
+            {//一頁一筆資料,一頁列高PageRow
 
                 var getTwLC = pTCL.getTaiwanLCDate(i.batch_date);
                 //法會農曆日期
@@ -2921,16 +2921,16 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            int PageRow = 13;
-            //一頁1筆;樣板列高13欄寬33
+            int PageRow = 14;
+            //一頁1筆;樣板列高PageRow欄寬33
             copyTmp(count, 1, PageRow, 33, sheet, style);
             #endregion
 
             MyTaiwanCalendar.PlayTCL pTCL = new MyTaiwanCalendar.PlayTCL();
-            int row_index = 1;//+13
+            int row_index = 1;//+PageRow
 
             foreach (var i in data)
-            {//一頁一筆資料,一頁列高13
+            {//一頁一筆資料,一頁列高PageRow
 
                 var getTwLC = pTCL.getTaiwanLCDate(i.batch_date);
                 //法會農曆日期
