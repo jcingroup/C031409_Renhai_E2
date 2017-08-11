@@ -1454,7 +1454,7 @@ namespace DotWeb.Controllers
                 }
                 else
                 {
-                    string[] light_category = new string[] { e_祈福產品分類.點燈, e_祈福產品分類.福燈 };
+                    string[] light_category = new string[] { e_祈福產品分類.點燈, e_祈福產品分類.福燈, e_祈福產品分類.超渡法會 };
 
                     getItems = (from x in db0.Member_Detail
                                 orderby x.Member.zip, x.Member.address //地址排序
@@ -2411,7 +2411,8 @@ namespace DotWeb.Controllers
 
                 if (prod_sn == null)
                 {
-                    tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                    if (q.product_sn != null & q.product_sn != "null")
+                        tmp = tmp.Where(x => x.product_sn == q.product_sn);
                 }
                 else
                 {

@@ -51,7 +51,7 @@ namespace DotWeb.Api
                     }
                     else
                     {
-                        string[] light_category = new string[] { ProcCore.Business.Logic.e_祈福產品分類.點燈, ProcCore.Business.Logic.e_祈福產品分類.福燈 };
+                        string[] light_category = new string[] { ProcCore.Business.Logic.e_祈福產品分類.點燈, ProcCore.Business.Logic.e_祈福產品分類.福燈, ProcCore.Business.Logic.e_祈福產品分類.超渡法會 };
                         items = (from x in db0.Member_Detail
                                  orderby x.Member.zip, x.Member.address //地址排序
                                  //orderby x.householder //姓名
