@@ -231,10 +231,16 @@
     <Compile Include="Models\m_TempleMember.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\m_Wish.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TempleAccount.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TempleMember.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Wish.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Work.WebApp.Models.cs" />
@@ -392,6 +398,7 @@
     <Content Include="Scripts\ngDialog.js" />
     <Content Include="Scripts\typeahead.bundle.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-0.12.0.js" />
+    <Content Include="_Code\Excel\超渡法會總名冊.xlsx" />
     <Content Include="_SysAdm\Education\movie.htm" />
     <Content Include="_SysAdm\Education\RenHaiEdu.htm" />
     <Content Include="_SysAdm\Education\RenHaiEdu.swf" />
@@ -654,6 +661,7 @@
     <Content Include="_Code\Excel\超度法會%28冤親債主%29名冊.xlsx" />
     <Content Include="_Code\Excel\超度法會%28歷代祖先%29名冊.xlsx" />
     <Content Include="_Code\Excel\超度法會%28超渡嬰靈%29名冊.xlsx" />
+    <Content Include="_Code\Excel\禮斗金名冊格式.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
