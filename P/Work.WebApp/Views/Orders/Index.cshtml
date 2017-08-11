@@ -816,3 +816,196 @@
     </div>
     <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
 </script>
+<script type="text/ng-template" id="dataEditWishLightOrders">
+    <table class="table-detail">
+        <caption>
+            訂單明細資料填寫
+            <button type="button" ng-click="ShowEditAddProduct()">新 增 明 細</button>
+            <button type="submit">確　　認</button>
+            <button type="button" ng-click="DownLoadExcel_Thanks()" ng-disabled="edit_type!=2">列印感謝狀</button>
+        </caption>
+        <thead>
+            <tr>
+                <th>會員</th>
+                <th>產品</th>
+                <th>單價</th>
+                <th>檢視</th>
+                <th>刪除</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in fd.Item">
+                <td>{{item.member_name}}</td>
+                <td>{{item.product_name}}</td>
+                <td>{{item.price}}</td>
+                <td>
+                    <button type="button"
+                            ng-click="ShowEditViewProduct(item.member_detail_id,item.product_sn)">
+                        檢視
+                    </button>
+                </td>
+                <td>
+                    <button type="button"
+                            ng-click="RemoveCart(item.member_detail_id,item.product_sn)"
+                            ng-disabled="item.isOnOrder && allowReject==0 && isTodayOrder==false">
+                        刪除
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">總計</td>
+                <td>{{fd.total}}</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="7" style="color:red;text-align:center; margin:0 auto;"><strong>訂單資料隔日後要刪除及退款統一經由會計處理，請香客找會計人員．</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    <!-- 子板面 產品明細維護-->
+    <div name="frmCar" class="blue-form ng-hide" ng-show="isShowEditProduct">
+        <div class="dialog-div">
+            <table>
+                <caption>
+                    資料編輯
+                    <button type="button" ng-click="SubmitCart()" ng-disabled="isViewWorking">新　增</button>
+                    <button type="button" ng-click="CloseEditProduct()">關　閉</button>
+                    <button type="button" ng-click="ShowOrderDetail()">查 去 年</button>
+                </caption>
+                <tr>
+                    <th>
+                        祈福姓名
+                    </th>
+                    <td>
+                        <select ng-model="cart.member_detail_id"
+                                ng-options="m.member_detail_id as m.member_name for m in mb.getMember_Detail" required></select>
+                    </td>
+                    <th>
+                        祈福種類
+                    </th>
+                    <td>
+                        <select ng-model="cart.product_sn"
+                                ng-options="m.product_sn as m.product_name for m in pds" required></select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        祈福性別
+                    </th>
+                    <td>
+                        男<input type="radio" ng-model="cart.gender" value="1" />
+                        女<input type="radio" ng-model="cart.gender" value="2" />
+                    </td>
+                    <th>
+                        單價
+                    </th>
+                    <td>
+                        <input type="number"
+                               ng-model="cart.price"
+                               min="0"
+                               required
+                               ng-disabled="cart_price_disable" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        農曆生日
+                    </th>
+                    <td colspan="3">
+                        <input type="number" max="120" min="-50" ng-model="cart.LY" class="dateText" />年
+                        <input type="number" max="12" min="1" ng-model="cart.LM" class="dateText" />月
+                        <input type="number" max="31" min="1" ng-model="cart.LD" class="dateText" />日
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        出生時辰
+                    </th>
+                    <td>
+                        <select ng-model="cart.born_time" ng-options="m.value as m.label for m in born_time"></select>
+                    </td>
+                    <th>
+                        生肖
+                    </th>
+                    <td>
+                        <select ng-model="cart.born_sign" ng-options="m as m + ' ' for m in born_sign"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        祈福地址
+                    </th>
+                    <td colspan="3">
+                        <input type="text" ng-model="cart.address" maxlength="64" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        電話
+                    </th>
+                    <td>
+                        <input type="text" ng-model="cart.tel" maxlength="16" />
+                    </td>
+                    <th>
+                        行動電話
+                    </th>
+                    <td>
+                        <input type="text" ng-model="cart.mobile" maxlength="16" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        點燈位置
+                    </th>
+                    <td colspan="3">
+                        {{cart.light_name}}
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width:15%">
+                        願望
+                    </th>
+                    <td colspan="3">
+                        <span ng-repeat="m in wishs">
+                            <input type="checkbox"
+                                   ng-model="m.wish_checked"
+                                   ng-true-value="1"
+                                   ng-false-value="0"
+                                   ng-disabled="m.wish_checked==0 && wishlen==2"
+                                   ng-click="checkWishList()" />
+                            {{m.wish_name}}
+                            <br ng-if="($index+1)%6==0" />
+                            <input style="width:30%;" type="text" ng-if="m.can_text" ng-model="m.wish_text" ng-disabled="m.wish_checked==0" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>去年點燈種類</th>
+                    <td colspan="3">
+                        <table class="table-detail">
+                            <thead>
+                                <tr>
+                                    <th>產品</th>
+                                    <th>點燈位置</th>
+                                    <th>單價</th>
+                                    <th>購買日期</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in order_detail">
+                                    <td>{{item.product_name}}</td>
+                                    <td>{{item.light_name}}</td>
+                                    <td>{{item.price}}</td>
+                                    <td>{{item.i_InsertDateTime | date: 'y/MM/dd a hh:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
+</script>

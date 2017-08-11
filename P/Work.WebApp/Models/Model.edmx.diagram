@@ -36,6 +36,7 @@
         <EntityTypeShape EntityType="RenHai2012Model.AssemblyBatch" Width="1.5" PointX="5.375" PointY="14" />
         <AssociationConnector Association="RenHai2012Model.FK_訂單明細檔_AssemblyBatch" />
         <AssociationConnector Association="RenHai2012Model.FK_點燈位置資料表_AssemblyBatch" />
+        <EntityTypeShape EntityType="RenHai2012Model.Wish" Width="1.5" PointX="12.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

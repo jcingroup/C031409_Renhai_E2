@@ -42,5 +42,6 @@ namespace Work.WebApp.Models
         public virtual DbSet<TempleMember> TempleMember { get; set; }
         public virtual DbSet<TempleAccount> TempleAccount { get; set; }
         public virtual DbSet<AssemblyBatch> AssemblyBatch { get; set; }
+        public virtual DbSet<Wish> Wish { get; set; }
     }
 }
