@@ -294,6 +294,16 @@
         //擴充
         count: number;
     }
+    //祈福許願燈:願望種類
+    interface Wish extends server.BaseEntityTable {
+        wish_id: number;
+        wish_name: string;
+        sort: number;
+        can_text: boolean;
+        //擴充
+        wish_checked: any;
+        wish_text: string;
+    }
 }
 
 //下面為擴充屬性

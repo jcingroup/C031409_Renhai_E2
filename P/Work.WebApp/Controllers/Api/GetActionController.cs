@@ -393,7 +393,7 @@ namespace DotWeb.Api
             using (db0 = getDB0())
             {
                 var items = (from x in db0.Orders_Detail
-                             where x.assembly_batch_sn != null & x.is_reject != true & x.Product.category==ProcCore.Business.Logic.e_祈福產品分類.超渡法會
+                             where x.assembly_batch_sn != null & x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會
                              orderby x.i_InsertDateTime
                              select new BatchList()
                              {
@@ -480,6 +480,46 @@ namespace DotWeb.Api
             {
                 db.Dispose();
             }
+        }
+        #endregion
+
+        #region (2017.8.10)祈福許願燈
+        [HttpGet]
+        public rAjaxGetItems<m_WishList> GetWishList()
+        {
+            rAjaxGetItems<m_WishList> r = new rAjaxGetItems<m_WishList>();
+            RenHai2012Entities db = null;
+            try
+            {
+                db = getDB0();
+                var getList = db.Wish
+                    .OrderBy(x => x.sort)
+                    .Select(x => new m_WishList()
+                    {
+                        wish_id = x.wish_id,
+                        wish_name = x.wish_name,
+                        can_text = x.can_text,
+                        wish_checked = false
+                    }).ToList();
+
+                r.data = getList;
+                r.result = true;
+                return r;
+            }
+            catch (Exception ex)
+            {
+                r.result = false;
+                r.message = ex.Message;
+                return r;
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
+        public class m_WishList : m_Wish
+        {
+            public bool wish_checked { get; set; }
         }
         #endregion
 

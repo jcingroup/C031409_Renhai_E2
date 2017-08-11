@@ -41,4 +41,3 @@ namespace Work.WebApp.Models
         public virtual ICollection<Orders> Orders { get; set; }
     }
 }
-
