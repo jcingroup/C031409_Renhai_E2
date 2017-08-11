@@ -2718,16 +2718,16 @@ namespace DotWeb.Controllers
         {
             int count = data.Count();
             #region 複製樣板
-            int PageRow = 15;
-            //一頁1筆;樣板列高15欄寬33
+            int PageRow = 16;
+            //一頁1筆;樣板列高PageRow欄寬33
             copyTmp(count, 1, PageRow, 33, sheet, style);
             #endregion
 
             MyTaiwanCalendar.PlayTCL pTCL = new MyTaiwanCalendar.PlayTCL();
-            int row_index = 1;//+15
+            int row_index = 1;//+PageRow
 
             foreach (var i in data)
-            {//一頁一筆資料,一頁列高15
+            {//一頁一筆資料,一頁列高PageRow
 
                 var getTwLC = pTCL.getTaiwanLCDate(i.batch_date);
                 //法會農曆日期
