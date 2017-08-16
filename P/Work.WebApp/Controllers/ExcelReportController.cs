@@ -1837,7 +1837,8 @@ namespace DotWeb.Controllers
                            address = x.address,
                            memo = x.memo,
                            batch_sn = x.assembly_batch_sn,
-                           product_sn = x.product_sn
+                           product_sn = x.product_sn,
+                           i_InsertDateTime = x.i_InsertDateTime
                        });
 
                 if (q.batch_sn != null)
@@ -1847,6 +1848,13 @@ namespace DotWeb.Controllers
                 if (q.product_sn != null & q.product_sn != "null")
                 {
                     tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                }
+
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    tmp = tmp.Where(x => x.i_InsertDateTime >= start & x.i_InsertDateTime < end);
                 }
 
                 res = tmp.ToList();
@@ -1962,7 +1970,8 @@ namespace DotWeb.Controllers
                            isOnLeapMonth = x.Member_Detail.isOnLeapMonth,
                            born_time = x.born_time,
                            departed_qty = x.departed_qty,
-                           product_sn = x.product_sn
+                           product_sn = x.product_sn,
+                           i_InsertDateTime = x.i_InsertDateTime
                        });
 
                 if (prod_sn != null)
@@ -1972,6 +1981,12 @@ namespace DotWeb.Controllers
                 if (q.batch_sn != null)
                     tmp = tmp.Where(x => x.batch_sn == q.batch_sn);
 
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    tmp = tmp.Where(x => x.i_InsertDateTime >= start & x.i_InsertDateTime < end);
+                }
                 res = tmp.ToList();
             }
             return res;
@@ -2345,7 +2360,8 @@ namespace DotWeb.Controllers
             {
                 var tmp = db0.Orders_Detail
                        .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會)
-                       .OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
+                       //.OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
+                       .OrderBy(x => x.i_InsertDateTime)
                        .Select(x => new m_疏文名單()
                        {
                            LightSite_name = x.light_name,
@@ -2357,7 +2373,8 @@ namespace DotWeb.Controllers
                            departed_qty = x.departed_qty,//嬰靈用
                            batch_date = x.AssemblyBatch.batch_date,//牒文用
                            batch_sn = x.assembly_batch_sn,
-                           product_sn = x.product_sn
+                           product_sn = x.product_sn,
+                           i_InsertDateTime = x.i_InsertDateTime
                        });
 
                 if (prod_sn == null)
@@ -2372,6 +2389,13 @@ namespace DotWeb.Controllers
 
                 if (q.batch_sn != null)
                     tmp = tmp.Where(x => x.batch_sn == q.batch_sn);
+
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    tmp = tmp.Where(x => x.i_InsertDateTime >= start & x.i_InsertDateTime < end);
+                }
 
                 res = tmp.ToList();
             }
@@ -3070,6 +3094,8 @@ namespace DotWeb.Controllers
             /// 產品種類
             /// </summary>
             public string product_sn { get; set; }
+            public DateTime? startDate { get; set; }
+            public DateTime? endDate { get; set; }
         }
         public class m_法會總名冊
         {
@@ -3089,6 +3115,7 @@ namespace DotWeb.Controllers
             public string memo { get; set; }
             public int? batch_sn { get; set; }
             public string product_sn { get; set; }
+            public DateTime i_InsertDateTime { get; set; }
         }
         public class m_法會名冊
         {
@@ -3141,6 +3168,7 @@ namespace DotWeb.Controllers
             /// </summary>
             public string departed_qty { get; set; }
             public string product_sn { get; set; }
+            public DateTime i_InsertDateTime { get; set; }
         }
 
         public class m_疏文
@@ -3195,6 +3223,7 @@ namespace DotWeb.Controllers
             /// </summary>
             public string departed_qty { get; set; }
             public string product_sn { get; set; }
+            public DateTime i_InsertDateTime { get; set; }
         }
         public class m_法會日期
         {

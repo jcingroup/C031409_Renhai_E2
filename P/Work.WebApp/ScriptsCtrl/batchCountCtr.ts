@@ -43,7 +43,8 @@ angular
     $stateProvider
         .state('grid', {
         url: '/grid',
-        templateUrl: 'dataGrid'
+        templateUrl: 'dataGrid',
+        controller: 'ctrl'
     })
     //    .state('edit', {
     //    url: '/edit?batch_id',
@@ -71,7 +72,9 @@ angular
 
         $scope.sd = {//預設日期為今天
             year: today.getFullYear(),
-            product_sn: null
+            product_sn: null,
+            startDate: setDateS(today),
+            endDate: setDateS(today)
         }
         $scope.show_master_edit = false;
         $scope.edit_type = 0;// IEditType.none; //ref 2
@@ -98,10 +101,6 @@ angular
             //$scope.Grid_Items[$index].expland_sub = !$scope.Grid_Items[$index].expland_sub;
         };
 
-        //$http.post(aj_Init, {})
-        //    .success(function (data, status, headers, config) {
-        //    $scope.InitData = data;
-        //});
         function GetBathList(year) {
             workService.getQueryBatchList(year)
                 .success(function (data: IResultData<server.AssemblyBatch[]>, status, headers, config) {
@@ -134,6 +133,8 @@ angular
             parm.push('year=' + $scope.sd.year);
             parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
             parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('startDate=' + setDateS($scope.sd.startDate));
+            parm.push('endDate=' + setDateS($scope.sd.endDate));
             parm.push('tid=' + uniqid());
             var url = gb_approot + 'ExcelReport/BatchRoll?' + parm.join('&');
             $scope.downloadExcel = url;
@@ -143,6 +144,8 @@ angular
             parm.push('year=' + $scope.sd.year);
             parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
             parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('startDate=' + setDateS($scope.sd.startDate));
+            parm.push('endDate=' + setDateS($scope.sd.endDate));
             parm.push('tid=' + uniqid());
             var url = gb_approot + 'ExcelReport/BatchAllRoll?' + parm.join('&');
             $scope.downloadExcel = url;
@@ -152,6 +155,8 @@ angular
             parm.push('year=' + $scope.sd.year);
             parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
             parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('startDate=' + setDateS($scope.sd.startDate));
+            parm.push('endDate=' + setDateS($scope.sd.endDate));
             parm.push('tid=' + uniqid());
             var url = gb_approot + 'ExcelReport/PaperMoneyShuWen?' + parm.join('&');
             $scope.downloadExcel = url;
@@ -165,6 +170,8 @@ angular
             parm.push('year=' + $scope.sd.year);
             parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
             parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('startDate=' + setDateS($scope.sd.startDate));
+            parm.push('endDate=' + setDateS($scope.sd.endDate));
             parm.push('tid=' + uniqid());
             var url = gb_approot + 'ExcelReport/DieWen?' + parm.join('&');
             $scope.downloadExcel = url;
@@ -178,9 +185,39 @@ angular
             parm.push('year=' + $scope.sd.year);
             parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
             parm.push('product_sn=' + $scope.sd.product_sn);
+            parm.push('startDate=' + setDateS($scope.sd.startDate));
+            parm.push('endDate=' + setDateS($scope.sd.endDate));
             parm.push('tid=' + uniqid());
             var url = gb_approot + 'ExcelReport/ShuWen?' + parm.join('&');
             $scope.downloadExcel = url;
+        }
+
+        //日曆小幫手---start---
+        $scope.openStart = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.openedStart = true;
+        };
+        $scope.openEnd = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.openedEnd = true;
+        };
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+        //日曆小幫手---end-----
+        function setDateS(date) {//將日期轉成字串
+            if (date instanceof Date) {
+                var dateS: String = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+                return dateS
+            } else {
+                return $.extend({}, date);
+            }
         }
 
     }]);

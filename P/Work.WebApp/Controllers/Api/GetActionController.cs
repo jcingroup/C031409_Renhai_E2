@@ -409,7 +409,8 @@ namespace DotWeb.Api
                                  address = x.address,
                                  Y = x.Y,
                                  product_name = x.product_name,
-                                 product_sn = x.product_sn
+                                 product_sn = x.product_sn,
+                                 i_InsertDateTime = x.i_InsertDateTime
                              });
 
                 if (q.year != null)
@@ -427,6 +428,12 @@ namespace DotWeb.Api
                     items = items.Where(x => x.product_sn == q.product_sn);
                 }
 
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    items = items.Where(x => x.i_InsertDateTime >= start & x.i_InsertDateTime < end);
+                }
 
                 int page = (q.page == null ? 1 : (int)q.page);
                 int startRecord = PageCount.PageInfo(page, this.defPageSize, items.Count());

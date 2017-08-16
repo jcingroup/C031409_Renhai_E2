@@ -15,7 +15,7 @@
         <fieldset>
             <label>年度： </label>
             <select ng-model="sd.year" ng-options="m as (m+'年') for m in year_list"></select>
-            <label>訂單日期： 起</label>
+            <label>訂單日期： 起</label>{{openedStart}}-{{openedEnd}}
             <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
             <label>迄</label>
             <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />

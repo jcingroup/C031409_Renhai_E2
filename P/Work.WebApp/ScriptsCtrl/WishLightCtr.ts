@@ -36,7 +36,8 @@ angular
     $stateProvider
         .state('grid', {
         url: '/grid',
-        templateUrl: 'dataGrid'
+        templateUrl: 'dataGrid',
+        controller: 'ctrl'
     })
     //    .state('edit', {
     //    url: '/edit?batch_id',
@@ -123,7 +124,7 @@ angular
                 var dateS: String = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
                 return dateS
             } else {
-                return date;
+                return $.extend({}, date);
             }
         }
         //日曆小幫手---start---

@@ -205,6 +205,8 @@ namespace Work.WebApp.Models
         public int? year { get; set; }
         public int? assembly_batch_sn { get; set; }
         public string product_sn { get; set; }
+        public DateTime? startDate { get; set; }
+        public DateTime? endDate { get; set; }
     }
     public class q_WishList : QueryBase
     {
