@@ -74,6 +74,15 @@ namespace Work.WebApp.Models
         public string departed_qty { get; set; }
         public int? assembly_batch_sn { get; set; }
         public int? y { get; set; }
+
+        //祈福許願燈用
+        public List<WishText> wishs { get; set; }
+    }
+    public class WishText
+    {
+        public int wish_id { get; set; }
+        public bool can_text { get; set; }
+        public string wish_text { get; set; }
     }
     public class LuniInfo
     {

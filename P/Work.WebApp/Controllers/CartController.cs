@@ -245,6 +245,128 @@ namespace DotWeb.Controllers
 
             }
         }
+        /// <summary>
+        /// 祈福許願燈購物車
+        /// </summary>
+        /// <param name="cartData"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public string AddWishCart(cartDetail cartData)
+        {
+            rAjaxGetItems<ResultInfo> r = new rAjaxGetItems<ResultInfo>();
+            int limit_Product_Count = CommWebSetup.OrdersRecordMax; //每筆交易產品數量限制
+
+            try
+            {
+                RenHai2012Entities db = getDB();
+
+                #region Session 資料處理
+                cartMaster cart;
+                if (Session[this.cookieCart] == null)
+                {
+                    cart = new cartMaster();
+                    cart.Item = new List<cartDetail>();
+                    Session[this.cookieCart] = cart;
+                }
+                else
+                {
+                    cart = (cartMaster)Session[this.cookieCart];
+                    if (cart.Item == null)
+                    {
+                        cart.Item = new List<cartDetail>();
+                    }
+                }
+                #endregion
+
+                #region 資料檢查
+
+                var getProduct = db.Product.Find(cartData.product_sn);
+
+                if (cartData.member_detail_id < 0)
+                    throw new Exception("未選擇會員姓名");
+
+                if (string.IsNullOrEmpty(cartData.product_sn))
+                    throw new Exception("未選擇產品項目");
+
+                if (cart.Item.Count >= limit_Product_Count)
+                    throw new Exception(string.Format("超過訂購項目{0}", limit_Product_Count));
+
+                if (cart.Item.Any(x => x.product_sn == cartData.product_sn && x.member_detail_id == cartData.member_detail_id))
+                    throw new Exception(string.Format("{0}的'{1}'產品已在訂購清單中", cartData.member_name, cartData.product_name));
+
+                if (string.IsNullOrEmpty(cartData.address))
+                    throw new Exception("地址需輸入");
+
+                if (cartData.product_sn == e_祈福產品.捐金牌 && cartData.gold == 0)
+                    throw new Exception("捐金牌需輸入金牌數");
+
+                if (cartData.product_sn == e_祈福產品.捐白米 && cartData.race == 0)
+                    throw new Exception("捐白米需輸入白米斤數");
+
+                if (getProduct.category == "香油" && cartData.price == 0)
+                    throw new Exception("香油錢需輸入金額");
+
+                if (cartData.product_sn == e_祈福產品.保運 && cartData.manjushri == 0)
+                    throw new Exception("文殊梯次未選擇");
+
+                if (cartData.product_sn == e_祈福產品.姻緣燈 && (cartData.LY == 0 || cartData.LM == 0 || cartData.LD == 0))
+                    throw new Exception("姻緣燈其生日資料需填寫完整");
+
+                if (cartData.product_sn == e_祈福產品.安太歲 && (cartData.LY == 0 || cartData.LM == 0 || cartData.LD == 0))
+                    throw new Exception("安太歲生日不正確");
+
+                if (cartData.product_sn == e_祈福產品.姻緣燈 && (cartData.LY == 1 && cartData.LM == 1 && cartData.LD == 1))
+                    throw new Exception("姻緣燈其生日資料需填寫完整");
+
+                if (cartData.product_sn == e_祈福產品.安太歲 && (cartData.LY == 1 && cartData.LM == 1 && cartData.LD == 1))
+                    throw new Exception("安太歲生日不正確");
+
+                if (cartData.product_sn == e_祈福產品.保運 && (cartData.LY == 1 && cartData.LM == 1 && cartData.LD == 1))
+                    throw new Exception("保運日不正確");
+
+
+                if (getProduct.category == e_祈福產品分類.祈福許願燈 & cartData.wishs == null)
+                {
+                    throw new Exception("祈福許願燈之願望請至少勾選一個!");
+                }
+                int wishcount = cartData.wishs.Count();
+                if (getProduct.category == e_祈福產品分類.祈福許願燈 & wishcount > CommWebSetup.WishLimit)
+                {
+                    throw new Exception(string.Format("祈福許願燈之願望請勿超過{0}個", CommWebSetup.WishLimit));
+                }
+                if (getProduct.category == e_祈福產品分類.祈福許願燈 & cartData.wishs.Any(x => x.can_text & x.wish_text == null))
+                {
+                    throw new Exception("祈福許願燈之願望勾選其他需填寫願望內容");
+                }
+
+                cart.Item.Add(cartData);
+                cart.total = cart.Item.Sum(x => x.price);
+                cart.race = cart.Item.Sum(x => x.race);
+                cart.gold = cart.Item.Sum(x => x.gold);
+
+                for (var i = 0; i < cart.Item.Count(); i++)
+                {
+                    cart.Item[i].detail_sort = i + 1;
+                }
+
+                #endregion
+
+                //db = getDB();
+                db.Dispose();
+                r.result = true;
+                return defJSON(r);
+            }
+            catch (Exception ex)
+            {
+                r.result = false;
+                r.message = ex.Message;
+                return defJSON(r);
+            }
+            finally
+            {
+
+            }
+        }
         [HttpGet]
         public string ClearCart()
         {
@@ -444,7 +566,9 @@ namespace DotWeb.Controllers
                         departed_address = item.departed_address,
                         departed_qty = item.departed_qty,
                         assembly_batch_sn = item.assembly_batch_sn,
-                        y = orders.y
+                        y = orders.y,
+                        wishs = item.Orders.Wish_Light.Where(x => x.member_detail_id == item.member_detail_id)
+                                           .Select(x => new WishText() { wish_id = x.wish_id, wish_text = x.wish_text }).ToList()
                     });
                 }
 

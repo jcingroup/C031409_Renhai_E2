@@ -70,6 +70,9 @@ interface IParent extends ng.IScope {
     NowPage: number;
     Init_Query(): void;
 }
+module callOnName {
+    export var updateCartMaster_is_light_serial: string = 'updateCartMaster_is_light_serial';
+}
 
 angular
     .module('angularApp', ['commfun', 'siyfion.sfTypeahead', 'ngDialog', 'ui.router', 'ngCookies'])
@@ -167,7 +170,7 @@ angular.module('angularApp')
             if (orders_type == e_orders_type.mdlight) {
                 $state.go('edit.mdlight_orders', { 'orders_sn': orders_sn });
             }
-            if (orders_type == e_orders_type.mdlight) {
+            if (orders_type == e_orders_type.wishlight) {
                 $state.go('edit.wishlight_orders', { 'orders_sn': orders_sn });
             }
         };
@@ -474,7 +477,7 @@ angular.module('angularApp')
         function SendWishLightOrder() {
 
             if ($scope.edit_type == IEditType.insert) {
-                $http.post(gb_approot + 'Orders/AddMDLight', $scope.fd)
+                $http.post(gb_approot + 'Orders/AddWishLight', $scope.fd)
                     .success(function (data: IResultData<string>, status, headers, config) {
                     if (data.result) {
                         //回傳訂單編號
@@ -503,7 +506,7 @@ angular.module('angularApp')
             };
 
             if ($scope.edit_type == IEditType.update) {
-                $http.put(gb_approot + 'Orders/UpdateMDLight', $scope.fd)
+                $http.put(gb_approot + 'Orders/UpdateWishLight', $scope.fd)
                     .success(function (data: IResultData<server.Orders>, status, headers, config) {
                     if (data.result) {
                         $scope.edit_type = IEditType.update;
@@ -519,7 +522,10 @@ angular.module('angularApp')
             };
 
         };
-
+        $scope.$on(callOnName.updateCartMaster_is_light_serial, function (event, args) {
+            //更新是否連續配位值(因為有父子關係無法直接更新)
+            $scope.fd.is_light_serial = args;
+        });
 
         $scope.CalcLunar = function () {
             workService.getCalcLunar($scope.cart.SY, $scope.cart.SM, $scope.cart.SD)
@@ -2201,7 +2207,7 @@ angular.module('angularApp')
 interface IWishOrder extends IOrder {
     wishs: server.Wish[];
     wishlen: number;
-    checkWishList(): void;
+    checkWishList(index: number): void;
 }
 
 angular.module('angularApp')
@@ -2232,8 +2238,7 @@ angular.module('angularApp')
         $scope.SubmitCart = function () {
 
             $scope.cart.isOnOrder = false;
-
-            $http.post(gb_approot + 'Cart/AddCart', $scope.cart)
+            $http.post(gb_approot + 'Cart/AddWishCart', $scope.cart)
                 .success(function (data: IResultBase, status, headers, config) {
                 if (data.result) {
                     GetNowCartList();
@@ -2273,7 +2278,8 @@ angular.module('angularApp')
         };
 
         $scope.ShowEditAddProduct = function () {
-            $scope.cart = <server.cartDetail>{ member_detail_id: -1 };
+            SetWishList([]);
+            $scope.cart = <server.cartDetail>{ member_detail_id: -1, wishs: [] };
             $scope.isShowEditProduct = true;
             $scope.isViewWorking = false;
         };
@@ -2286,6 +2292,7 @@ angular.module('angularApp')
             })
                 .success(function (data: IResultData<server.cartDetail>, status, headers, config) {
                 if (data.result) {
+                    SetWishList(data.data.wishs);
                     $scope.cart = data.data;
                     $scope.isShowEditProduct = true;
                     $scope.isViewWorking = true;
@@ -2423,7 +2430,12 @@ angular.module('angularApp')
             workService.getWishList()
                 .success(function (data: IResultData<server.Wish[]>, status, headers, config) {
                 if (data.result) {
+                    data.data.forEach((o) => {
+                        if (!o.can_text)
+                            o.wish_text = o.wish_name;
+                    });
                     $scope.wishs = data.data;
+                    $scope.wishlen = 0;
                 } else {
                     alert(data.message);
                 }
@@ -2432,6 +2444,29 @@ angular.module('angularApp')
                 showAjaxError(data);
             });
         };
+        function SetWishList(wish: server.WishText[]) {
+            $scope.wishlen = wish.length;
+            $scope.wishs.forEach((i) => {
+                var obj = wish.filter(x=> x.wish_id == i.wish_id);
+                if (obj.length > 0) {
+                    i.wish_checked = 1;
+                    i.wish_text = obj[0].wish_text;
+                } else {
+                    i.wish_checked = 0;
+                    if (i.can_text)
+                        i.wish_text = null;
+                }
+            });
+        }
+        $scope.checkWishList = function ($index) {
+            var items = $scope.wishs;
+            var checked = items.filter(x=> x.wish_checked);
+            $scope.wishlen = checked.length;
+            if (!items[$index].wish_checked && items[$index].can_text)
+                items[$index].wish_text = null;
+
+            $scope.cart.wishs = checked;
+        }
         function GetMemberDetail(member_detail_id: number) {
             workService.getMemberDetail(member_detail_id)
                 .success(function (data: IResultData<server.Member_Detail>, status, headers, config) {
@@ -2497,10 +2532,7 @@ angular.module('angularApp')
                 GetMemberAll($state.params.member_id);
             }
         }
-        $scope.checkWishList = function () {
-            var items = $scope.wishs;
-            $scope.wishlen = items.filter(x=> x.wish_checked).length;
-        }
+
 
         $scope.$watch('cart.product_sn', function (newValue: string, oldValue) {
             if (newValue != undefined) {
@@ -2558,7 +2590,11 @@ angular.module('angularApp')
                 }
             }
         });
-
+        $scope.$watch('fd.is_light_serial', function (newValue: number, oldValue) {
+            if (newValue != undefined) {
+                $scope.$emit(callOnName.updateCartMaster_is_light_serial, newValue);
+            }
+        });
         GetProductAll();
         GetWishList();
     }]);

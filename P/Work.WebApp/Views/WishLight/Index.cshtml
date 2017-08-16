@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        var userid = '@ViewBag.ID';
+    </script>
+    @Scripts.Render("~/WishLightCtr")
+}
+<div ui-view></div>
+<script type="text/ng-template" id="dataGrid">
+    <form class="query-form" ng-submit="Init_Query()">
+        <fieldset>
+            <label>年度： </label>
+            <select ng-model="sd.year" ng-options="m as (m+'年') for m in year_list"></select>
+            <button type="button" ng-click="DownLoadExcel_WishLight()">
+                <i class="fa fa-print"></i>訂單芳名錄
+            </button>
+        </fieldset>
+        <fieldset>
+            <span ng-repeat="i in [1,2,3,4,5]" ng-if="@(ViewBag.ID == 1000001?"true":"false")">
+                <button type="button" ng-click="AddSite(i)">
+                    <i class="fa fa-plus-circle"></i>第{{i}}排燈位
+                </button>
+            </span>
+        </fieldset>
+    </form>
+    <div class="grid-list">
+        <table class="table-master">
+            <tr>
+                <th width="8%">梯次</th>
+                <th width="8%">梯次時間_國</th>
+                <th width="5%">梯次時段</th>
+                <th width="10%">梯次時間_農</th>
+                <th width="10%">訂單編號</th>
+                <th width="12%">產品名稱</th>
+                <th width="10%">申請人</th>
+                <th width="20%">申請人地址</th>
+            </tr>
+            <tr ng-repeat="gd in Grid_Items">
+                <td>{{gd.batch_title}}</td>
+                <td>{{gd.batch_date | date:'yyyy-MM-dd'}}</td>
+                <td>{{gd.batch_timeperiod | OptionStr:timeperiod_list}}</td>
+                <td>{{gd.lunar_y+'/'+gd.lunar_m+'/'+gd.lunar_d}}</td>
+                <td>{{gd.orders_sn}}</td>
+                <td>{{gd.product_name}}</td>
+                <td>{{gd.member_name}}</td>
+                <td>{{gd.address}}</td>
+            </tr>
+        </table>
+        @Html.Partial("NavPage")
+    </div>
+    <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
+</script>

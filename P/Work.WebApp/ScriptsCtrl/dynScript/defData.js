@@ -32,7 +32,8 @@ var commData;
         { value: 0, label: '一般訂單' },
         { value: 1, label: '主副斗' },
         { value: 2, label: '大中小斗' },
-        { value: 3, label: '福燈' }
+        { value: 3, label: '福燈' },
+        { value: 4, label: '祈福許願燈' }
     ];
     commData.Fortune_light = [
         { value: "", label: "All" },

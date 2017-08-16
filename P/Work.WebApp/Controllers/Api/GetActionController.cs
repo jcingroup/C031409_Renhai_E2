@@ -521,6 +521,58 @@ namespace DotWeb.Api
         {
             public bool wish_checked { get; set; }
         }
+        [HttpGet]
+        public GridInfo2<WishList> GetWishOrderList([FromUri]q_WishList q)
+        {
+            #region 連接BusinessLogicLibary資料庫並取得資料
+
+            using (db0 = getDB0())
+            {//訂單編號、姓名、生日、電話、手機、地址、祈求願望1、祈求願望2
+                var items = (from x in db0.Orders_Detail
+                             where x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.祈福許願燈
+                             orderby x.i_InsertDateTime
+                             select new WishList()
+                             {
+                                 Y = x.Y,
+                                 product_name = x.product_name,
+                                 product_sn = x.product_sn,
+                                 orders_sn = x.orders_sn,
+                                 member_name = x.member_name,
+                                 l_birthday = x.l_birthday,
+                                 tel = x.Member_Detail.tel,
+                                 mobile = x.Member_Detail.mobile,
+                                 address = x.address,
+                                 wish1 = "",
+                                 wish2 = ""
+                             });
+
+                if (q.year != null)
+                {
+                    items = items.Where(x => x.Y == q.year);
+                }
+
+                int page = (q.page == null ? 1 : (int)q.page);
+                int startRecord = PageCount.PageInfo(page, this.defPageSize, items.Count());
+
+                var resultItems = items.Skip(startRecord).Take(this.defPageSize).ToList();
+
+                return (new GridInfo2<WishList>()
+                {
+                    rows = resultItems,
+                    total = PageCount.TotalPage,
+                    page = PageCount.Page,
+                    records = PageCount.RecordCount,
+                    startcount = PageCount.StartCount,
+                    endcount = PageCount.EndCount
+                });
+            }
+            #endregion
+        }
+        public class WishList : m_Orders_Detail
+        {
+            public string wish1 { get; set; }
+            public string wish2 { get; set; }
+        }
         #endregion
 
     }

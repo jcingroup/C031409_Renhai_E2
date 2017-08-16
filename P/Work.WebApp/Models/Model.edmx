@@ -114,6 +114,20 @@
           <Property Name="can_text" Type="bit" Nullable="false" />
           <Property Name="sort" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Wish_Light">
+          <Key>
+            <PropertyRef Name="wish_light_id" />
+          </Key>
+          <Property Name="wish_light_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="orders_detail_id" Type="int" Nullable="false" />
+          <Property Name="order_sn" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Y" Type="int" Nullable="false" />
+          <Property Name="member_detail_id" Type="int" Nullable="false" />
+          <Property Name="member_name" Type="nvarchar" MaxLength="64" />
+          <Property Name="wish_id" Type="int" Nullable="false" />
+          <Property Name="wish_text" Type="nvarchar" MaxLength="32" />
+          <Property Name="idx_sort" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="人員">
           <Key>
             <PropertyRef Name="人員代碼" />
@@ -398,6 +412,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Wish_Light_Wish">
+          <End Role="Wish" Type="Self.Wish" Multiplicity="1" />
+          <End Role="Wish_Light" Type="Self.Wish_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wish">
+              <PropertyRef Name="wish_id" />
+            </Principal>
+            <Dependent Role="Wish_Light">
+              <PropertyRef Name="wish_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wish_Light_訂單主檔">
+          <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="1" />
+          <End Role="Wish_Light" Type="Self.Wish_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="訂單主檔">
+              <PropertyRef Name="訂單編號" />
+            </Principal>
+            <Dependent Role="Wish_Light">
+              <PropertyRef Name="order_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wish_Light_會員資料表">
+          <End Role="會員資料表" Type="Self.會員資料表" Multiplicity="1" />
+          <End Role="Wish_Light" Type="Self.Wish_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="會員資料表">
+              <PropertyRef Name="序號" />
+            </Principal>
+            <Dependent Role="Wish_Light">
+              <PropertyRef Name="member_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_訂單主檔_人員">
           <End Role="人員" Type="Self.人員" Multiplicity="1" />
           <End Role="訂單主檔" Type="Self.訂單主檔" Multiplicity="*" />
@@ -504,6 +554,7 @@
           <EntitySet Name="TempleAccount" EntityType="Self.TempleAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TempleMember" EntityType="Self.TempleMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Wish" EntityType="Self.Wish" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wish_Light" EntityType="Self.Wish_Light" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="人員" EntityType="Self.人員" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="文疏梯次時間表" EntityType="Self.文疏梯次時間表" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="訂單主檔" EntityType="Self.訂單主檔" Schema="dbo" store:Type="Tables" />
@@ -536,6 +587,18 @@
           <AssociationSet Name="FK_Temple_Account_Temple_Member" Association="Self.FK_Temple_Account_Temple_Member">
             <End Role="TempleMember" EntitySet="TempleMember" />
             <End Role="TempleAccount" EntitySet="TempleAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wish_Light_Wish" Association="Self.FK_Wish_Light_Wish">
+            <End Role="Wish" EntitySet="Wish" />
+            <End Role="Wish_Light" EntitySet="Wish_Light" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wish_Light_訂單主檔" Association="Self.FK_Wish_Light_訂單主檔">
+            <End Role="訂單主檔" EntitySet="訂單主檔" />
+            <End Role="Wish_Light" EntitySet="Wish_Light" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wish_Light_會員資料表" Association="Self.FK_Wish_Light_會員資料表">
+            <End Role="會員資料表" EntitySet="會員資料表" />
+            <End Role="Wish_Light" EntitySet="Wish_Light" />
           </AssociationSet>
           <AssociationSet Name="FK_訂單主檔_人員" Association="Self.FK_訂單主檔_人員">
             <End Role="人員" EntitySet="人員" />
@@ -612,6 +675,7 @@
           <Property Name="orders_type" Type="Int32" Nullable="false" />
           <Property Name="y" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Fortune_Light" Relationship="RenHai2012Model.FK_Fortune_Light_訂單主檔" FromRole="Orders" ToRole="Fortune_Light" />
+          <NavigationProperty Name="Wish_Light" Relationship="RenHai2012Model.FK_Wish_Light_訂單主檔" FromRole="Orders" ToRole="Wish_Light" />
         </EntityType>
         <EntityType Name="Orders_Detail">
           <Key>
@@ -725,6 +789,7 @@
           <Property Name="sno" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="insure_birthday" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="is_delete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Wish_Light" Relationship="RenHai2012Model.FK_Wish_Light_會員資料表" FromRole="Member_Detail" ToRole="Wish_Light" />
         </EntityType>
         <EntityType Name="Light_Site">
           <Key>
@@ -860,7 +925,20 @@
             <End Role="Light_Site" EntitySet="Light_Site" />
           </AssociationSet>
           <EntitySet Name="Wish" EntityType="RenHai2012Model.Wish" />
-        </EntityContainer>
+          <EntitySet Name="Wish_Light" EntityType="RenHai2012Model.Wish_Light" />
+          <AssociationSet Name="FK_Wish_Light_Wish" Association="RenHai2012Model.FK_Wish_Light_Wish">
+            <End Role="Wish" EntitySet="Wish" />
+            <End Role="Wish_Light" EntitySet="Wish_Light" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wish_Light_訂單主檔" Association="RenHai2012Model.FK_Wish_Light_訂單主檔">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Wish_Light" EntitySet="Wish_Light" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wish_Light_會員資料表" Association="RenHai2012Model.FK_Wish_Light_會員資料表">
+            <End Role="Member_Detail" EntitySet="Member_Detail" />
+            <End Role="Wish_Light" EntitySet="Wish_Light" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Manjushri">
           <Key>
             <PropertyRef Name="manjushri_id" />
@@ -1166,8 +1244,62 @@
           <Property Name="wish_name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="can_text" Type="Boolean" Nullable="false" />
           <Property Name="sort" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Wish_Light" Relationship="RenHai2012Model.FK_Wish_Light_Wish" FromRole="Wish" ToRole="Wish_Light" />
         </EntityType>
-      </Schema>
+        <EntityType Name="Wish_Light">
+          <Key>
+            <PropertyRef Name="wish_light_id" />
+          </Key>
+          <Property Name="wish_light_id" Type="Guid" Nullable="false" />
+          <Property Name="orders_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="order_sn" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="member_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="member_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="wish_id" Type="Int32" Nullable="false" />
+          <Property Name="wish_text" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="idx_sort" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Wish" Relationship="RenHai2012Model.FK_Wish_Light_Wish" FromRole="Wish_Light" ToRole="Wish" />
+          <NavigationProperty Name="訂單主檔" Relationship="RenHai2012Model.FK_Wish_Light_訂單主檔" FromRole="Wish_Light" ToRole="Orders" />
+          <NavigationProperty Name="會員資料表" Relationship="RenHai2012Model.FK_Wish_Light_會員資料表" FromRole="Wish_Light" ToRole="Member_Detail" />
+        </EntityType>
+        <Association Name="FK_Wish_Light_Wish">
+          <End Type="RenHai2012Model.Wish" Role="Wish" Multiplicity="1" />
+          <End Type="RenHai2012Model.Wish_Light" Role="Wish_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wish">
+              <PropertyRef Name="wish_id" />
+            </Principal>
+            <Dependent Role="Wish_Light">
+              <PropertyRef Name="wish_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wish_Light_訂單主檔">
+          <End Type="RenHai2012Model.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="RenHai2012Model.Wish_Light" Role="Wish_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orders_sn" />
+            </Principal>
+            <Dependent Role="Wish_Light">
+              <PropertyRef Name="order_sn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wish_Light_會員資料表">
+          <End Type="RenHai2012Model.Member_Detail" Role="Member_Detail" Multiplicity="1" />
+          <End Type="RenHai2012Model.Wish_Light" Role="Wish_Light" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member_Detail">
+              <PropertyRef Name="member_detail_id" />
+            </Principal>
+            <Dependent Role="Wish_Light">
+              <PropertyRef Name="member_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1506,6 +1638,21 @@
                 <ScalarProperty Name="can_text" ColumnName="can_text" />
                 <ScalarProperty Name="wish_name" ColumnName="wish_name" />
                 <ScalarProperty Name="wish_id" ColumnName="wish_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wish_Light">
+            <EntityTypeMapping TypeName="RenHai2012Model.Wish_Light">
+              <MappingFragment StoreEntitySet="Wish_Light">
+                <ScalarProperty Name="idx_sort" ColumnName="idx_sort" />
+                <ScalarProperty Name="wish_text" ColumnName="wish_text" />
+                <ScalarProperty Name="wish_id" ColumnName="wish_id" />
+                <ScalarProperty Name="member_name" ColumnName="member_name" />
+                <ScalarProperty Name="member_detail_id" ColumnName="member_detail_id" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="order_sn" ColumnName="order_sn" />
+                <ScalarProperty Name="orders_detail_id" ColumnName="orders_detail_id" />
+                <ScalarProperty Name="wish_light_id" ColumnName="wish_light_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

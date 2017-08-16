@@ -13,19 +13,24 @@ namespace Work.WebApp.Models
     using System.Collections.Generic;
     
     using Newtonsoft.Json;
-    public partial class Wish 
+    public partial class Wish_Light 
     {
-        public Wish()
-        {
-            this.Wish_Light = new HashSet<Wish_Light>();
-        }
-    
+        public System.Guid wish_light_id { get; set; }
+        public int orders_detail_id { get; set; }
+        public string order_sn { get; set; }
+        public int Y { get; set; }
+        public int member_detail_id { get; set; }
+        public string member_name { get; set; }
         public int wish_id { get; set; }
-        public string wish_name { get; set; }
-        public bool can_text { get; set; }
-        public int sort { get; set; }
+        public string wish_text { get; set; }
+        public int idx_sort { get; set; }
     
     	[JsonIgnore]
-        public virtual ICollection<Wish_Light> Wish_Light { get; set; }
+        public virtual Wish Wish { get; set; }
+    	[JsonIgnore]
+        public virtual Orders 訂單主檔 { get; set; }
+    	[JsonIgnore]
+        public virtual Member_Detail 會員資料表 { get; set; }
     }
 }
+

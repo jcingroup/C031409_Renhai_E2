@@ -11,10 +11,16 @@ namespace Work.WebApp.Models
 {
     using System;
     using System.Collections.Generic;
-    public partial class m_Wish  {
+    public partial class m_Wish_Light  {
+    public System.Guid wish_light_id { get; set; }
+    public int orders_detail_id { get; set; }
+    public string order_sn { get; set; }
+    public int Y { get; set; }
+    public int member_detail_id { get; set; }
+    public string member_name { get; set; }
     public int wish_id { get; set; }
-    public string wish_name { get; set; }
-    public bool can_text { get; set; }
-    public int sort { get; set; }
+    public string wish_text { get; set; }
+    public int idx_sort { get; set; }
     }
 }
+

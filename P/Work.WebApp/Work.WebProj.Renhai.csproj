@@ -176,6 +176,7 @@
     <Compile Include="Controllers\Api\OrdersController.cs" />
     <Compile Include="Controllers\Api\MemberController.cs" />
     <Compile Include="Controllers\Api\RejectController.cs" />
+    <Compile Include="Controllers\WishLightController.cs" />
     <Compile Include="Controllers\ExcelReportController.cs" />
     <Compile Include="Controllers\LoginManageController.cs" />
     <Compile Include="Controllers\ManjushriController.cs" />
@@ -234,6 +235,9 @@
     <Compile Include="Models\m_Wish.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\m_Wish_Light.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TempleAccount.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -241,6 +245,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Wish.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Wish_Light.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Work.WebApp.Models.cs" />
@@ -607,6 +614,7 @@
     <Content Include="Views\TempleMember\MemberPrint.cshtml" />
     <Content Include="Views\TempleMember\PostPrint.cshtml" />
     <Content Include="Views\AssemblyBatch\BatchCount.cshtml" />
+    <Content Include="Views\WishLight\Index.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -711,6 +719,7 @@
     <None Include="Properties\PublishProfiles\發行至仁海宮伺服器.pubxml" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="ScriptsCtrl\WishLightCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\batchCountCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\d.ts\angular-ui-router.d.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\templemarkcloseCtr.ts" />

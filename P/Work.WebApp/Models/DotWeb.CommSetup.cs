@@ -158,6 +158,13 @@ namespace DotWeb.CommSetup
                 return int.Parse(GetKeyValue("FortuneLimit"));
             }
         }
+        public static int WishLimit
+        {
+            get
+            {
+                return int.Parse(GetKeyValue("WishLimit"));
+            }
+        }
     }
 
     #region Image UpLoad Parma

@@ -20,6 +20,7 @@ namespace Work.WebApp.Models
             this.Orders_Detail = new HashSet<Orders_Detail>();
             this.Reject = new HashSet<Reject>();
             this.Fortune_Light = new HashSet<Fortune_Light>();
+            this.Wish_Light = new HashSet<Wish_Light>();
         }
     
         public int orders_id { get; set; }
@@ -61,5 +62,7 @@ namespace Work.WebApp.Models
         public virtual ICollection<Reject> Reject { get; set; }
     	[JsonIgnore]
         public virtual ICollection<Fortune_Light> Fortune_Light { get; set; }
+    	[JsonIgnore]
+        public virtual ICollection<Wish_Light> Wish_Light { get; set; }
     }
 }

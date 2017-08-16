@@ -1,3 +1,7 @@
+var callOnName;
+(function (callOnName) {
+    callOnName.updateCartMaster_is_light_serial = 'updateCartMaster_is_light_serial';
+})(callOnName || (callOnName = {}));
 angular.module('angularApp', ['commfun', 'siyfion.sfTypeahead', 'ngDialog', 'ui.router', 'ngCookies']).config(['$httpProvider', '$stateProvider', '$urlRouterProvider', function ($httpProvider, $stateProvider, $urlRouterProvider) {
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};
@@ -69,7 +73,7 @@ angular.module('angularApp').controller('ctrl', ['$scope', '$http', 'workService
         if (orders_type == 1 /* mdlight */) {
             $state.go('edit.mdlight_orders', { 'orders_sn': orders_sn });
         }
-        if (orders_type == 1 /* mdlight */) {
+        if (orders_type == 4 /* wishlight */) {
             $state.go('edit.wishlight_orders', { 'orders_sn': orders_sn });
         }
     };
@@ -328,7 +332,7 @@ angular.module('angularApp').controller('ctrl_master', ['$scope', '$http', 'work
     ;
     function SendWishLightOrder() {
         if ($scope.edit_type == 1 /* insert */) {
-            $http.post(gb_approot + 'Orders/AddMDLight', $scope.fd).success(function (data, status, headers, config) {
+            $http.post(gb_approot + 'Orders/AddWishLight', $scope.fd).success(function (data, status, headers, config) {
                 if (data.result) {
                     $http.get(gb_approot + 'Cart/OrdersToSession', { params: { orders_sn: data.data } }).success(function (data, status, headers, config) {
                         if (data.result) {
@@ -353,7 +357,7 @@ angular.module('angularApp').controller('ctrl_master', ['$scope', '$http', 'work
         }
         ;
         if ($scope.edit_type == 2 /* update */) {
-            $http.put(gb_approot + 'Orders/UpdateMDLight', $scope.fd).success(function (data, status, headers, config) {
+            $http.put(gb_approot + 'Orders/UpdateWishLight', $scope.fd).success(function (data, status, headers, config) {
                 if (data.result) {
                     $scope.edit_type = 2 /* update */;
                     $scope.$parent.Init_Query();
@@ -369,6 +373,9 @@ angular.module('angularApp').controller('ctrl_master', ['$scope', '$http', 'work
         ;
     }
     ;
+    $scope.$on(callOnName.updateCartMaster_is_light_serial, function (event, args) {
+        $scope.fd.is_light_serial = args;
+    });
     $scope.CalcLunar = function () {
         workService.getCalcLunar($scope.cart.SY, $scope.cart.SM, $scope.cart.SD).success(function (data, status, headers, config) {
             $scope.cart.LY = data.LY;
@@ -1869,7 +1876,7 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
     $scope.cart_gold_disable = true;
     $scope.SubmitCart = function () {
         $scope.cart.isOnOrder = false;
-        $http.post(gb_approot + 'Cart/AddCart', $scope.cart).success(function (data, status, headers, config) {
+        $http.post(gb_approot + 'Cart/AddWishCart', $scope.cart).success(function (data, status, headers, config) {
             if (data.result) {
                 GetNowCartList();
             }
@@ -1904,7 +1911,8 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
         $scope.isShowEdit = false;
     };
     $scope.ShowEditAddProduct = function () {
-        $scope.cart = { member_detail_id: -1 };
+        SetWishList([]);
+        $scope.cart = { member_detail_id: -1, wishs: [] };
         $scope.isShowEditProduct = true;
         $scope.isViewWorking = false;
     };
@@ -1916,6 +1924,7 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
             }
         }).success(function (data, status, headers, config) {
             if (data.result) {
+                SetWishList(data.data.wishs);
                 $scope.cart = data.data;
                 $scope.isShowEditProduct = true;
                 $scope.isViewWorking = true;
@@ -2045,7 +2054,12 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
     function GetWishList() {
         workService.getWishList().success(function (data, status, headers, config) {
             if (data.result) {
+                data.data.forEach(function (o) {
+                    if (!o.can_text)
+                        o.wish_text = o.wish_name;
+                });
                 $scope.wishs = data.data;
+                $scope.wishlen = 0;
             }
             else {
                 alert(data.message);
@@ -2055,6 +2069,29 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
         });
     }
     ;
+    function SetWishList(wish) {
+        $scope.wishlen = wish.length;
+        $scope.wishs.forEach(function (i) {
+            var obj = wish.filter(function (x) { return x.wish_id == i.wish_id; });
+            if (obj.length > 0) {
+                i.wish_checked = 1;
+                i.wish_text = obj[0].wish_text;
+            }
+            else {
+                i.wish_checked = 0;
+                if (i.can_text)
+                    i.wish_text = null;
+            }
+        });
+    }
+    $scope.checkWishList = function ($index) {
+        var items = $scope.wishs;
+        var checked = items.filter(function (x) { return x.wish_checked; });
+        $scope.wishlen = checked.length;
+        if (!items[$index].wish_checked && items[$index].can_text)
+            items[$index].wish_text = null;
+        $scope.cart.wishs = checked;
+    };
     function GetMemberDetail(member_detail_id) {
         workService.getMemberDetail(member_detail_id).success(function (data, status, headers, config) {
             if (data.result) {
@@ -2111,10 +2148,6 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
             GetMemberAll($state.params.member_id);
         }
     }
-    $scope.checkWishList = function () {
-        var items = $scope.wishs;
-        $scope.wishlen = items.filter(function (x) { return x.wish_checked; }).length;
-    };
     $scope.$watch('cart.product_sn', function (newValue, oldValue) {
         if (newValue != undefined) {
             for (var i in $scope.pds) {
@@ -2171,6 +2204,11 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
                     }
                 }
             }
+        }
+    });
+    $scope.$watch('fd.is_light_serial', function (newValue, oldValue) {
+        if (newValue != undefined) {
+            $scope.$emit(callOnName.updateCartMaster_is_light_serial, newValue);
         }
     });
     GetProductAll();

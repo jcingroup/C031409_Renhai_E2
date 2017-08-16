@@ -1085,7 +1085,7 @@ namespace DotWeb.Controllers
             return defJSON(r);
         }
 
-        //大中小斗
+        #region 大中小斗
         [HttpPost]
         public string AddSDLight(cartMaster md)
         {
@@ -1590,8 +1590,8 @@ namespace DotWeb.Controllers
                 tx.Dispose();
             }
         }
-
-        //主副斗
+        #endregion
+        #region 主副斗
         [HttpPost]
         public string AddMDLight(cartMaster md)
         {
@@ -2041,7 +2041,578 @@ namespace DotWeb.Controllers
                 tx.Dispose();
             }
         }
+        #endregion
+        #region 祈福許願燈
+        [HttpPost]
+        public string AddWishLight(cartMaster md)
+        {
+            rAjaxGetData<string> r = new rAjaxGetData<string>();
+            cartMaster cart = (cartMaster)Session[this.sessionCart];
 
+            if (cart == null)
+            {
+                r.result = false;
+                r.message = "未選購任何產品";
+                return defJSON(r);
+            }
+            else
+            {
+                if (cart.Item.Count == 0)
+                {
+                    r.result = false;
+                    r.message = "未選購任何產品";
+                    return defJSON(r);
+                }
+            }
+
+            var db0 = getDB();
+            var tx = defAsyncScope();
+            try
+            {
+                var getLightProduct = db0.Product.Where(x => x.isLight); //取得點燈類產品資訊
+
+                #region 燈位產品類別數量及連續配位檢查
+
+                //先群組各項產品的訂購量
+                var groupOrderProductQty = cart.Item.GroupBy(x => x.product_sn,
+                (key, Num) => new
+                {
+                    product_sn = key,
+                    needQty = Num.Count()
+                });
+
+                //查詢連續配位SQL語法
+                string sql = string.Empty;
+                if (md.is_light_serial)
+                {
+                    sql = @"select start_num=min(序號),end_num=max(序號),nums= max(序號)-min(序號) + 1 from 
+                    (select row_number()over (order by 序號) as rid,* from 點燈位置資料表 Where 年度 = @Y And 產品編號=@P And 空位='0') A 
+	                group by 序號-RID";
+                }
+
+                //記錄取燈位時的始啟燈位編號
+                IList<GetLightStratNum> getLightStratNum = new List<GetLightStratNum>();
+
+                foreach (var getOrderQty in groupOrderProductQty) //點燈類產品數量檢查是否足夠
+                {
+                    var getProductInfo = getLightProduct.Where(x => x.product_sn == getOrderQty.product_sn).FirstOrDefault();
+
+                    if (getProductInfo != null) //屬於燈位產品
+                    {
+                        #region 數量檢查是否足夠
+                        int statisticsCount = db0.Light_Site.Where(x => x.Y == this.LightYear
+                                        && x.product_sn == getOrderQty.product_sn && x.is_sellout == "0").Count(); //統計燈位目前還剩的數量
+
+                        if (statisticsCount < getOrderQty.needQty)
+                        {
+                            r.message = string.Format("{0}燈位位置不足或已用完，剩餘數量:{1}", getProductInfo.product_name, statisticsCount);
+                            r.result = false;
+                            return defJSON(r);
+                        }
+                        #endregion
+
+                        #region 連續配位資料處理
+                        if (md.is_light_serial) //採用連續配位
+                        {
+                            SqlParameter[] sps = new SqlParameter[] { new SqlParameter("@Y", this.LightYear), new SqlParameter("@P", getOrderQty.product_sn) };
+                            var getLightSerial = db0.Database.SqlQuery<LightSerial>(sql, sps).ToList();
+                            var isHaveSerial = getLightSerial.Any(x => x.nums >= getOrderQty.needQty);
+                            if (!isHaveSerial)
+                            {
+                                r.message = string.Format("{0}燈位位置已無連續配位可用", getProductInfo.product_name);
+                                r.result = false;
+                                return defJSON(r);
+                            }
+
+                            var light_serial_ok_start = getLightSerial.Where(x => x.nums >= getOrderQty.needQty)
+                                .OrderBy(x => x.start_num)
+                                .First();
+
+                            getLightStratNum.Add(new GetLightStratNum()
+                            {
+                                product_sn = getOrderQty.product_sn,
+                                start_num = light_serial_ok_start.start_num
+                            });
+                        }
+                        else
+                        {
+                            //不採用連續配位
+                            getLightStratNum.Add(new GetLightStratNum()
+                            {
+                                product_sn = getOrderQty.product_sn,
+                                start_num = 0
+                            });
+                        }
+                        #endregion
+                    }
+                }
+                #endregion
+
+                string getNewOrderSN = GetOrderNewSerial(); //取得新訂單編號
+
+                #region 訂單主檔新增
+                Orders m = new Orders()
+                {
+                    orders_sn = getNewOrderSN,
+                    y = this.LightYear,
+                    member_detail_id = md.member_detail_id,
+                    member_id = md.member_id,
+                    member_name = md.member_name,
+                    tel = md.tel,
+                    zip = md.zip,
+                    address = md.address,
+                    gender = md.gender,
+                    新增時間 = DateTime.Now,
+                    C_InsertDateTime = DateTime.Now,
+                    transation_date = DateTime.Now,
+                    InsertUserId = this.UserId,
+                    total = cart.Item.Sum(x => x.price),
+                    mobile = md.mobile,
+                    orders_state = (int)Orders_State.complete,
+                    orders_type = (int)Orders_Type.wishlight
+                };
+                IList<Wish_Light> wishs = new List<Wish_Light>();
+                foreach (var item in cart.Item)
+                {
+                    Light_Site product_light = null;
+                    if (getLightProduct.Any(x => x.product_sn == item.product_sn))
+                    {
+                        #region 點燈類產品處理
+                        if (item.light_site_id == 0) //屬於電腦選位類型
+                        {
+                            var getNewLight = getLightStratNum.Where(x => x.product_sn == item.product_sn).First();
+
+                            product_light = db0.Light_Site.
+                                    Where(x => x.Y == this.LightYear &&
+                                        x.product_sn == item.product_sn &&
+                                        x.is_sellout == "0" &&
+                                        x.light_site_id >= getNewLight.start_num)
+                                        .OrderBy(x => x.light_site_id)
+                                        .Take(1)
+                                        .First();
+
+                            product_light.is_sellout = "1";
+                            product_light.C_UpdateDateTime = DateTime.Now;
+                            product_light.C_UpdateUserID = this.UserId;
+                            db0.SaveChanges();
+                        }
+                        else
+                        { //屬於手動選位類型 主副斗直接選取燈位
+
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        #region 非點燈類產品處理
+
+                        #endregion
+                    }
+
+                    m.Orders_Detail.Add(new Orders_Detail()
+                    {
+                        orders_sn = getNewOrderSN,
+                        product_sn = item.product_sn,
+                        product_name = item.product_name,
+                        light_name = product_light == null ? null : product_light.light_name,
+                        memo = product_light == null ? null : product_light.light_site_id.ToString(),
+                        address = item.address,
+                        l_birthday = item.LY + "/" + item.LM + "/" + item.LD,
+                        Y = this.LightYear,
+                        member_detail_id = item.member_detail_id,
+                        member_name = item.member_name,
+                        price = item.price,
+                        amt = 1,
+                        race = item.race,
+                        gold = item.gold,
+                        manjushri = item.manjushri,
+                        gender = item.gender,
+                        born_sign = item.born_sign,
+                        born_time = item.born_time,
+                        購買時間 = DateTime.Now,
+                        i_InsertDateTime = DateTime.Now,
+                        經手人 = this.UserName,
+                        C_InsertDateTime = DateTime.Now,
+                        C_InsertUserID = this.UserId,
+                        i_InsertUserID = this.UserId,
+                        detail_sort = item.detail_sort
+                    });
+
+                    #region 祈福許願燈願望
+                    foreach (var wish in item.wishs)
+                    {
+                        Wish_Light w = new Wish_Light()
+                        {
+                            wish_light_id = Guid.NewGuid(),
+                            orders_detail_id = 0,
+                            order_sn = getNewOrderSN,
+                            Y = this.LightYear,
+                            member_detail_id = item.member_detail_id,
+                            member_name = item.member_name,
+                            wish_id = wish.wish_id,
+                            wish_text = wish.wish_text
+                        };
+                        wishs.Add(w);
+                    }
+                    #endregion
+                }
+
+                db0.Orders.Add(m);
+                #endregion
+                db0.SaveChanges();
+
+                #region 祈福許願燈新增處理
+                foreach (var w in wishs)
+                {
+                    var getDetail = m.Orders_Detail.Where(x => x.orders_sn == w.order_sn & x.member_detail_id == w.member_detail_id).FirstOrDefault();
+                    w.orders_detail_id = getDetail.orders_detail_id;
+                    db0.Wish_Light.Add(w);
+                }
+                db0.SaveChanges();
+                #endregion
+
+
+                tx.Complete();
+
+                m.getOrders_Detail = m.Orders_Detail.ToArray();
+                r.data = m.orders_sn;
+                return defJSON(r);
+            }
+            catch (Exception ex)
+            {
+                r.result = false;
+                r.message = ex.Message;
+                return defJSON(r);
+            }
+            finally
+            {
+                db0.Dispose();
+                tx.Dispose();
+            }
+        }
+        [HttpPut]
+        public string UpdateWishLight(cartMaster md)
+        {
+            rAjaxGetData<Orders> r = new rAjaxGetData<Orders>();
+            cartMaster cart = (cartMaster)Session[this.sessionCart];
+
+            if (cart == null)
+            {
+                r.result = false;
+                r.message = "購物車系統未配置";
+                return defJSON(r);
+            }
+
+            var db0 = getDB();
+            var tx = defAsyncScope();
+            try
+            {
+                var getLightProduct = db0.Product.Where(x => x.isLight); //取得點燈類產品資訊
+
+                #region 燈位產品類別數量及連續配位檢查
+
+                //先群組各項產品的訂購量
+                var groupOrderProductQty = cart.Item.Where(x => x.isOnOrder == false).GroupBy(x => x.product_sn,
+                (key, Num) => new
+                {
+                    product_sn = key,
+                    needQty = Num.Count()
+                });
+
+                //查詢連續配位SQL語法
+                string sql = string.Empty;
+                if (md.is_light_serial && groupOrderProductQty.Count() > 0)
+                {
+                    sql = @"select start_num=min(序號),end_num=max(序號),nums= max(序號)-min(序號) + 1 from 
+                    (select row_number()over (order by 序號) as rid,* from 點燈位置資料表 Where 年度 = @Y And 產品編號=@P And 空位='0') A 
+	                group by 序號-RID";
+                }
+
+                //記錄取燈位時的始啟燈位編號
+                IList<GetLightStratNum> getLightStratNum = new List<GetLightStratNum>();
+
+                foreach (var getOrderQty in groupOrderProductQty) //點燈類產品數量檢查是否足夠
+                {
+                    var getProductInfo = getLightProduct.Where(x => x.product_sn == getOrderQty.product_sn).FirstOrDefault();
+
+                    if (getProductInfo != null) //屬於燈位產品
+                    {
+                        #region 數量檢查是否足夠
+                        int statisticsCount = db0.Light_Site.Where(x => x.Y == this.LightYear
+                                        && x.product_sn == getOrderQty.product_sn && x.is_sellout == "0").Count(); //統計燈位目前還剩的數量
+
+                        if (statisticsCount < getOrderQty.needQty)
+                        {
+                            r.message = string.Format("{0}燈位位置不足或已用完，剩餘數量:{1}", getProductInfo.product_name, statisticsCount);
+                            r.result = false;
+                            return defJSON(r);
+                        }
+                        #endregion
+
+                        #region 連續配位資料處理
+                        if (md.is_light_serial) //採用連續配位
+                        {
+                            SqlParameter[] sps = new SqlParameter[] { new SqlParameter("@Y", this.LightYear), new SqlParameter("@P", getOrderQty.product_sn) };
+                            var getLightSerial = db0.Database.SqlQuery<LightSerial>(sql, sps).ToList();
+                            var isHaveSerial = getLightSerial.Any(x => x.nums >= getOrderQty.needQty);
+                            if (!isHaveSerial)
+                            {
+                                r.message = string.Format("{0}燈位位置已無連續配位可用", getProductInfo.product_name);
+                                r.result = false;
+                                return defJSON(r);
+                            }
+
+                            var light_serial_ok_start = getLightSerial.Where(x => x.nums >= getOrderQty.needQty)
+                                .OrderBy(x => x.start_num)
+                                .First();
+
+                            getLightStratNum.Add(new GetLightStratNum()
+                            {
+                                product_sn = getOrderQty.product_sn,
+                                start_num = light_serial_ok_start.start_num
+                            });
+                        }
+                        else
+                        {
+                            //不採用連續配位
+                            getLightStratNum.Add(new GetLightStratNum()
+                            {
+                                product_sn = getOrderQty.product_sn,
+                                start_num = 0
+                            });
+                        }
+                        #endregion
+                    }
+                }
+                #endregion
+
+                #region 訂單主檔修改
+                IList<Orders_Detail> orders_detail = db0.Orders_Detail
+                    .Where(x => x.orders_sn == md.orders_sn).ToList();
+
+                //標記準備異動
+                foreach (var n in orders_detail)
+                {
+                    n.tran_mark = true;
+                }
+
+                db0.SaveChanges();
+
+                #region Order Master
+                Orders orders = db0.Orders.Find(md.orders_sn);
+
+                orders.address = md.address;
+                orders.member_name = md.member_name;
+                orders.mobile = md.mobile;
+                orders.tel = md.tel;
+                orders.zip = md.zip;
+                orders.gender = md.gender;
+                orders.total = cart.Item.Sum(x => x.price);
+                orders.C_UpdateDateTime = DateTime.Now;
+                orders.C_UpdateUserID = this.UserId;
+                //修改訂單時 新增的東西仍算原新增訂單者
+                var ouser_id = orders.InsertUserId;
+
+                #endregion
+                IList<Wish_Light> wishs = new List<Wish_Light>();
+                foreach (var item in cart.Item)
+                {
+
+
+                    if (orders_detail.Any(x => x.member_detail_id == item.member_detail_id && x.product_sn == item.product_sn))
+                    {
+                        var get_detail_item = orders_detail.First(x => x.member_detail_id == item.member_detail_id && x.product_sn == item.product_sn);
+                        get_detail_item.tran_mark = false;
+                        get_detail_item.member_detail_id = item.member_detail_id;
+                        get_detail_item.member_name = item.member_name;
+                        get_detail_item.price = item.price;
+                        get_detail_item.race = item.race;
+                        get_detail_item.gold = item.gold;
+                        get_detail_item.C_UpdateDateTime = DateTime.Now;
+                        get_detail_item.l_birthday = item.LY + "/" + item.LM + "/" + item.LD;
+                        get_detail_item.born_sign = item.born_sign;
+                        get_detail_item.born_time = item.born_time;
+                        get_detail_item.gender = item.gender;
+                        get_detail_item.detail_sort = item.detail_sort;
+                    }
+                    else
+                    {
+                        Light_Site product_light = null;
+                        if (getLightProduct.Any(x => x.product_sn == item.product_sn)) //如果是點燈類產品
+                        {
+                            #region 點燈類產品處理
+                            if (item.light_site_id == 0 && item.isOnOrder == false) //屬於電腦選位類型
+                            {
+                                var getNewLight = getLightStratNum.Where(x => x.product_sn == item.product_sn).FirstOrDefault();
+                                if (getNewLight != null)
+                                {
+                                    product_light = db0.Light_Site.
+                                    Where(x => x.Y == this.LightYear &&
+                                        x.product_sn == item.product_sn &&
+                                        x.is_sellout == "0" &&
+                                        x.light_site_id >= getNewLight.start_num)
+                                        .OrderBy(x => x.light_site_id)
+                                        .Take(1)
+                                        .First();
+
+                                    product_light.is_sellout = "1";
+                                    product_light.C_UpdateDateTime = DateTime.Now;
+                                    product_light.C_UpdateUserID = this.UserId;
+                                    db0.SaveChanges();
+                                }
+                            }
+                            else
+                            { //屬於手動選位類型 主副斗直接選取燈位
+
+                            }
+                            #endregion
+                        }
+
+                        orders.Orders_Detail.Add(new Orders_Detail()
+                        {
+                            orders_sn = md.orders_sn,
+                            product_sn = item.product_sn,
+                            product_name = item.product_name,
+                            light_name = product_light == null ? null : product_light.light_name,
+                            memo = product_light == null ? null : product_light.light_site_id.ToString(),
+                            address = item.address,
+                            l_birthday = item.LY + "/" + item.LM + "/" + item.LD,
+                            Y = this.LightYear,
+                            member_detail_id = item.member_detail_id,
+                            member_name = item.member_name,
+                            price = item.price,
+                            amt = 1,
+                            race = item.race,
+                            gold = item.gold,
+                            manjushri = item.manjushri,
+                            gender = item.gender,
+                            born_sign = item.born_sign,
+                            born_time = item.born_time,
+                            購買時間 = DateTime.Now,
+                            i_InsertDateTime = DateTime.Now,
+                            經手人 = this.UserName,
+                            C_InsertDateTime = DateTime.Now,
+                            C_InsertUserID = ouser_id,
+                            i_InsertUserID = (int)ouser_id,
+                            C_UpdateUserID = this.UserId,
+                            C_UpdateDateTime = DateTime.Now,
+                            tran_mark = false,
+                            detail_sort = item.detail_sort
+                        });
+
+                        #region 祈福許願燈願望
+                        foreach (var wish in item.wishs)
+                        {
+                            Wish_Light w = new Wish_Light()
+                            {
+                                wish_light_id = Guid.NewGuid(),
+                                orders_detail_id = 0,
+                                order_sn = md.orders_sn,
+                                Y = this.LightYear,
+                                member_detail_id = item.member_detail_id,
+                                member_name = item.member_name,
+                                wish_id = wish.wish_id,
+                                wish_text = wish.wish_text
+                            };
+                            wishs.Add(w);
+                        }
+                        #endregion
+                    }
+                }
+
+                #endregion
+                db0.SaveChanges();
+
+                #region 祈福許願燈新增處理
+                foreach (var w in wishs)
+                {
+                    var getDetail = orders.Orders_Detail.Where(x => x.orders_sn == w.order_sn & x.member_detail_id == w.member_detail_id).FirstOrDefault();
+                    w.orders_detail_id = getDetail.orders_detail_id;
+                    db0.Wish_Light.Add(w);
+                }
+                db0.SaveChanges();
+                #endregion
+
+
+                //異動仍為True代表要做刪除
+                IList<Orders_Detail> tran_orders_detail = db0.Orders_Detail
+                    .Where(x => x.orders_sn == md.orders_sn && x.tran_mark == true).ToList();
+                #region 刪除許願燈願望清單
+                //取得要刪除的detail id
+                IList<int> tran_detail_id = tran_orders_detail.Select(x => x.orders_detail_id).ToList();
+                //取得需要被刪除的願望清單
+                IList<Wish_Light> tran_wishlight = db0.Wish_Light.Where(x => x.order_sn == md.orders_sn & tran_detail_id.Contains(x.orders_detail_id)).ToList();
+                db0.Wish_Light.RemoveRange(tran_wishlight);
+                #endregion
+                Reject rjt = null;
+
+                foreach (var item in tran_orders_detail)
+                {
+                    if (getLightProduct.Any(x => x.product_sn == item.product_sn)) //如果是燈類產品要做燈位復原動作
+                    {
+                        var n = db0.Light_Site.First(x => x.Y == this.LightYear && x.light_name == item.light_name);
+                        n.is_sellout = "0";
+                        n.IsReject = true;
+                        n.C_UpdateDateTime = DateTime.Now;
+
+                        if (rjt == null) //退燈位記錄
+                        {
+                            rjt = new Reject()
+                            {
+                                reject_id = GetNewId(ProcCore.Business.CodeTable.Reject),
+                                orders_sn = md.orders_sn,
+                                reject_date = DateTime.Now,
+                                user_id = this.UserId,
+                                total = tran_orders_detail.Sum(x => x.price),
+                                y = this.LightYear
+                            };
+
+                            db0.Reject.Add(rjt);
+                        }
+
+                        Reject_Detail rjts = new Reject_Detail()
+                        {
+                            reject_detail_id = GetNewId(ProcCore.Business.CodeTable.Reject_Detail),
+                            reject_id = rjt.reject_id,
+                            light_site_id = n.light_site_id,
+                            light_name = n.light_name,
+                            price = (int)n.price,
+                            Y = this.LightYear,
+                            member_detail_id = item.member_detail_id,
+                            orders_detail_id = item.orders_detail_id
+                        };
+
+                        rjt.Reject_Detail.Add(rjts);
+                    }
+                    db0.Orders_Detail.Remove(item);
+                }
+
+                db0.SaveChanges();
+                tx.Complete();
+
+                db0.Dispose();
+                tx.Dispose();
+
+                var dbN = getDB();
+                var new_orders = dbN.Orders.Find(md.orders_sn);
+                new_orders.getOrders_Detail = dbN.Orders_Detail.Where(x => x.orders_sn == md.orders_sn).ToList();
+                r.data = new_orders;
+                dbN.Dispose();
+                return defJSON(r);
+            }
+            catch (Exception ex)
+            {
+                r.result = false;
+                r.message = ex.Message;
+                return defJSON(r);
+            }
+            finally
+            {
+                db0.Dispose();
+                tx.Dispose();
+            }
+        }
+        #endregion
 
         [HttpGet]
         public string GetToSession(string orders_sn)
@@ -2116,7 +2687,9 @@ namespace DotWeb.Controllers
                         departed_address = detail.departed_address,
                         departed_qty = detail.departed_qty,
                         assembly_batch_sn = detail.assembly_batch_sn,
-                        y = order.y
+                        y = order.y,
+                        wishs = detail.Orders.Wish_Light.Where(x => x.member_detail_id == detail.member_detail_id)
+                                             .Select(x => new WishText() { wish_id = x.wish_id, wish_text = x.wish_text }).ToList()
                     };
 
                     if (ss != null && ss.Length == 3)

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using DotWeb.CommSetup
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var qMemberId = Request.QueryString["member_id"];
@@ -6,6 +7,14 @@
 }
 @section IncludeScript{
     @*<link href="~/Scripts/angularjs/ng-sortable.css" rel="stylesheet" />*@
+    <style>
+        /*input[disabled], input[disabled]:hover {
+            background-color: lightgray;
+        }*/
+        input[type="text"]:disabled {
+            background-color: darkgray;
+        }
+    </style>
     @Scripts.Render("~/orderCtr")
     <script>
         var member_id = @member_id;
@@ -821,6 +830,9 @@
         <caption>
             訂單明細資料填寫
             <button type="button" ng-click="ShowEditAddProduct()">新 增 明 細</button>
+            <input type="checkbox"
+                   ng-model="fd.is_light_serial" ng-true-value="true" ng-false-value="false">
+            使用連續配位
             <button type="submit">確　　認</button>
             <button type="button" ng-click="DownLoadExcel_Thanks()" ng-disabled="edit_type!=2">列印感謝狀</button>
         </caption>
@@ -973,11 +985,11 @@
                                    ng-model="m.wish_checked"
                                    ng-true-value="1"
                                    ng-false-value="0"
-                                   ng-disabled="m.wish_checked==0 && wishlen==2"
-                                   ng-click="checkWishList()" />
+                                   ng-disabled="m.wish_checked==0 && wishlen==@CommWebSetup.WishLimit"
+                                   ng-click="checkWishList($index)" />
                             {{m.wish_name}}
                             <br ng-if="($index+1)%6==0" />
-                            <input style="width:30%;" type="text" ng-if="m.can_text" ng-model="m.wish_text" ng-disabled="m.wish_checked==0" />
+                            <input style="width:30%;" type="text" ng-if="m.can_text" ng-model="m.wish_text" ng-disabled="m.wish_checked==0" maxlength="16" />
                         </span>
                     </td>
                 </tr>

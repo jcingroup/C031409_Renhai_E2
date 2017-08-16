@@ -2137,6 +2137,9 @@ namespace ProcCore.Business.Logic
         public static string 超渡法會_冤親債主 = "1403";
         public static string 超渡法會_嬰靈 = "1404";
 
+        //2017/8/10
+        public static string 祈福許願燈 = "1501";//(5040燈位)
+
     }
     public static class e_祈福產品分類
     {

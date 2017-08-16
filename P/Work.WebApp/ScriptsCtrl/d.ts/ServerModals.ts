@@ -74,7 +74,7 @@
         orders: server.Orders;
         product: server.Product;
     }
-    interface Product extends server.BaseEntityTable{
+    interface Product extends server.BaseEntityTable {
         product_sn: string;
         product_name: string;
         category: string;
@@ -184,6 +184,14 @@
         isOnOrder: boolean;
 
         y: number;
+
+        /** 祈福許願 */
+        wishs: WishText[]
+    }
+    interface WishText {
+        wish_id: number;
+        can_text: boolean;
+        wish_text: string;
     }
     interface LuniInfo {
         SY: number;
