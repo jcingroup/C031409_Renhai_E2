@@ -324,6 +324,9 @@ Dim MasterID
         //document.location.href = '../Order_MBMS/Upt.asp?MasterID=' + $('#MasterID').val() + "&t=" + (new Date()).getTime();
         document.location.href = '../../../Orders#/edit/sdorders?member_id=' + $('#MasterID').val() + "&t=" + (new Date()).getTime();
     }
+    function RedireOrderWishLight() {
+        document.location.href = '../../../Orders#/edit/wishorders?member_id=' + $('#MasterID').val() + "&t=" + (new Date()).getTime();
+    }
     //按下新增成員
     function AddNewMember() {
         $('#Uptmode').val('Insert');

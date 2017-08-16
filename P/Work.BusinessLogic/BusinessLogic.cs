@@ -5262,6 +5262,10 @@ namespace ProcCore.Business.Logic
         public int 超渡法會_薦拔祖先 { get; set; }
         public int 超渡法會_冤親債主 { get; set; }
         public int 超渡法會_嬰靈 { get; set; }
+
+        //2017/8/16 加入
+        public int 祈福許願燈 { get; set; }
+
     }
     public class m_統計數據
     {

@@ -156,6 +156,8 @@ namespace DotWeb.Controllers
                 md.超渡法會_冤親債主 = mds.Any(x => x.product_sn == e_祈福產品.超渡法會_冤親債主) ? mds.Where(x => x.product_sn == e_祈福產品.超渡法會_冤親債主).Sum(x => x.price) : 0;
                 md.超渡法會_嬰靈 = mds.Any(x => x.product_sn == e_祈福產品.超渡法會_嬰靈) ? mds.Where(x => x.product_sn == e_祈福產品.超渡法會_嬰靈).Sum(x => x.price) : 0;
 
+                //2017/8/16 加入
+                md.祈福許願燈 = mds.Any(x => x.product_sn == e_祈福產品.祈福許願燈) ? mds.Where(x => x.product_sn == e_祈福產品.祈福許願燈).Sum(x => x.price) : 0;
 
                 md.太歲 = mds.Any(x => x.product_sn == e_祈福產品.安太歲) ? mds.First(x => x.product_sn == e_祈福產品.安太歲).price : 0;
                 md.法會_入斗 = mds.Any(x => x.product_sn == e_祈福產品.入斗) ? mds.First(x => x.product_sn == e_祈福產品.入斗).price : 0;
@@ -242,7 +244,7 @@ namespace DotWeb.Controllers
                 sheet.Cells["C23"].Value = md.超渡法會_冤親債主;
                 sheet.Cells["E23"].Value = md.超渡法會_嬰靈;
 
-                sheet.Cells["C24"].Value = md.香油_祈福玉珮;
+                sheet.Cells["C24"].Value = md.香油_祈福玉珮 + md.祈福許願燈;//2017/8/16 祈福許願燈與祈福玉珮合計
                 sheet.Cells["E24"].Value = md.香油_媽祖聖誕擲筊;
 
                 sheet.Cells["C25"].Value = md.租金;

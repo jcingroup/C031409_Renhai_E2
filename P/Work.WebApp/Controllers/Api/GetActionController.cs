@@ -542,8 +542,8 @@ namespace DotWeb.Api
                                  tel = x.Member_Detail.tel,
                                  mobile = x.Member_Detail.mobile,
                                  address = x.address,
-                                 wish1 = "",
-                                 wish2 = ""
+                                 light_name = x.light_name,
+                                 wishs = x.Orders.Wish_Light.Where(y => y.member_detail_id == x.member_detail_id).ToList()
                              });
 
                 if (q.year != null)
@@ -570,8 +570,7 @@ namespace DotWeb.Api
         }
         public class WishList : m_Orders_Detail
         {
-            public string wish1 { get; set; }
-            public string wish2 { get; set; }
+            public List<Wish_Light> wishs { get; set; }
         }
         #endregion
 

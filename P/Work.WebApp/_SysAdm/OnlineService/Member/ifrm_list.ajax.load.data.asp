@@ -46,7 +46,7 @@ Dim RecordCount
 	ErrCheck "SQL Err" & StrSql
 	'======================================================
 	'-- 組合表單-------------------------------------------
-	aryIns=Array("新增訂單","RedireOrder()","福燈","RedireOrder_Fortune()","新增家庭成員","AddNewMember()","主副斗","RedireOrderM()","大中小斗","RedireOrderMBMS()")
+	aryIns=Array("新增訂單","RedireOrder()","福燈","RedireOrder_Fortune()","新增家庭成員","AddNewMember()","主副斗","RedireOrderM()","大中小斗","RedireOrderMBMS()","祈福許願燈","RedireOrderWishLight()")
 	aryDel=Array("刪除")
 	
 	ErrCheck "Is Err"

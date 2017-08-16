@@ -30,24 +30,26 @@
     <div class="grid-list">
         <table class="table-master">
             <tr>
-                <th width="8%">梯次</th>
-                <th width="8%">梯次時間_國</th>
-                <th width="5%">梯次時段</th>
-                <th width="10%">梯次時間_農</th>
-                <th width="10%">訂單編號</th>
-                <th width="12%">產品名稱</th>
-                <th width="10%">申請人</th>
-                <th width="20%">申請人地址</th>
+                <th width="8%">訂單編號</th>
+                <th width="8%">姓名</th>
+                <th width="10%">生日</th>
+                <th width="8%">電話</th>
+                <th width="8%">手機</th>
+                <th width="8%">燈位</th>
+                <th width="20%">地址</th>
+                <th width="10%">祈求願望1</th>
+                <th width="10%">祈求願望2</th>
             </tr>
             <tr ng-repeat="gd in Grid_Items">
-                <td>{{gd.batch_title}}</td>
-                <td>{{gd.batch_date | date:'yyyy-MM-dd'}}</td>
-                <td>{{gd.batch_timeperiod | OptionStr:timeperiod_list}}</td>
-                <td>{{gd.lunar_y+'/'+gd.lunar_m+'/'+gd.lunar_d}}</td>
                 <td>{{gd.orders_sn}}</td>
-                <td>{{gd.product_name}}</td>
                 <td>{{gd.member_name}}</td>
-                <td>{{gd.address}}</td>
+                <td>{{gd.l_birthday}}</td>
+                <td>{{gd.tel}}</td>
+                <td>{{gd.mobile}}</td>
+                <td>{{gd.light_name}}</td>
+                <td>{{gd.address}}</td>               
+                <td><span ng-if="gd.wishs.length>=1">{{gd.wishs[0].wish_text}}</span></td>
+                <td><span ng-if="gd.wishs.length>=2">{{gd.wishs[1].wish_text}}</span></td>
             </tr>
         </table>
         @Html.Partial("NavPage")
