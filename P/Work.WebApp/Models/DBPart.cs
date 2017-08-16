@@ -209,6 +209,8 @@ namespace Work.WebApp.Models
     public class q_WishList : QueryBase
     {
         public int? year { get; set; }
+        public DateTime? startDate { get; set; }
+        public DateTime? endDate { get; set; }
     }
     #endregion
 }

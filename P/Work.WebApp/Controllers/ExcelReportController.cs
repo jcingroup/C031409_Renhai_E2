@@ -1787,57 +1787,6 @@ namespace DotWeb.Controllers
         #endregion
 
         #region 法會梯次報表
-        public FileResult ExportExcelFile(MemoryStream stream, string name)
-        {
-            try
-            {
-                string out_file_name = name + "[" + UserName + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", out_file_name);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-        /// <summary>
-        /// 複製樣板
-        /// </summary>
-        /// <param name="Count">資料筆數</param>
-        /// <param name="PageSize">一頁放幾筆資料</param>
-        /// <param name="PageRows">一頁列高多少</param>
-        /// <param name="PageCols">一頁欄寬多少</param>
-        /// <param name="sheet">要複製到的工作表</param>
-        /// <param name="style">複製的樣板工作表</param>
-        private void copyTmp(int Count, float PageSize, int PageRows, int PageCols, IXLWorksheet sheet, IXLWorksheet style)
-        {
-            int page = Count != 0 ? (int)Math.Ceiling(Count / PageSize) : 0;//一頁PageSize筆資料
-            if (page >= 1)
-            {
-                for (var i = 0; i < page; i++)
-                {//從第二頁開始複製列高
-                    sheet.Cell(1 + (i * PageRows), 1).Value = style.Range(1, 1, PageRows, PageCols);
-                    for (var j = 1; j <= PageRows; j++)
-                    {//一頁PageRows列
-                        sheet.Row(j + (i * PageRows)).Height = style.Row(j).Height;
-                    }
-                }
-            }
-        }
-        public void copyPrint(IXLWorksheet sheet, IXLWorksheet style)
-        {
-            sheet.PageSetup.PageOrientation = style.PageSetup.PageOrientation;//列印方向
-            sheet.PageSetup.PaperSize = style.PageSetup.PaperSize;//紙張大小
-            //列印品質
-            sheet.PageSetup.VerticalDpi = style.PageSetup.VerticalDpi;
-            sheet.PageSetup.HorizontalDpi = style.PageSetup.HorizontalDpi;
-            //設定窄邊界(單位英寸 1公分=2.54英吋)
-            sheet.PageSetup.Margins.Top = style.PageSetup.Margins.Top;
-            sheet.PageSetup.Margins.Bottom = style.PageSetup.Margins.Bottom;
-            sheet.PageSetup.Margins.Left = style.PageSetup.Margins.Left;
-            sheet.PageSetup.Margins.Right = style.PageSetup.Margins.Right;
-            sheet.PageSetup.Margins.Footer = style.PageSetup.Margins.Footer;
-            sheet.PageSetup.Margins.Header = style.PageSetup.Margins.Header;
-        }
         #region 總名冊
         public FileResult BatchAllRoll(q_法會 q)
         {
@@ -3254,6 +3203,185 @@ namespace DotWeb.Controllers
             public string d { get; set; }
         }
         #endregion
+        #endregion
+
+        #region 祈福許願燈
+        public FileResult WishRoll(q_WishRoll q)
+        {
+            var outputStream = stmWishRoll(q);
+            string setFileName = "祈福許願燈訂單芳名錄";
+            return ExportExcelFile(outputStream, setFileName);
+        }
+        private MemoryStream stmWishRoll(q_WishRoll q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                XLWorkbook excel = new XLWorkbook();
+                var getSheet = excel.Worksheets.Add("Sample Sheet");
+
+                #region 取得資料
+                var items = getWishRollData(q);//取得訂單資料
+                #endregion
+                #region Excel Handle
+                makeWishRoll(items, getSheet);
+                #endregion
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private List<m_WishRoll> getWishRollData(q_WishRoll q)
+        {
+            List<m_WishRoll> res = new List<m_WishRoll>();
+            using (var db0 = getDB())
+            {
+                var tmp = db0.Orders_Detail
+                       .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.祈福許願燈)
+                       .OrderBy(x => x.i_InsertDateTime)
+                       .Select(x => new m_WishRoll()
+                       {
+                           Y = x.Y,
+                           i_InsertDateTime = x.i_InsertDateTime,
+                           product_name = x.product_name,
+                           product_sn = x.product_sn,
+                           orders_sn = x.orders_sn,
+                           member_name = x.member_name,
+                           l_birthday = x.l_birthday,
+                           tel = x.Member_Detail.tel,
+                           mobile = x.Member_Detail.mobile,
+                           address = x.address,
+                           light_name = x.light_name,
+                           wishs = x.Orders.Wish_Light.Where(y => y.member_detail_id == x.member_detail_id).ToList()
+                       });
+
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    tmp = tmp.Where(x => x.i_InsertDateTime >= start & x.i_InsertDateTime < end);
+                }
+
+                res = tmp.ToList();
+            }
+            return res;
+        }
+        private void makeWishRoll(List<m_WishRoll> data, IXLWorksheet sheet)
+        {
+            int count = data.Count();
+
+            int row_index = 2;
+
+            #region 標題
+            //訂單編號、姓名、生日、電話、手機、地址、祈求願望1、祈求願望2
+            sheet.Cell(1, 1).Value = "訂單編號";
+            sheet.Cell(1, 2).Value = "姓名";
+            sheet.Cell(1, 3).Value = "生日";
+            sheet.Cell(1, 4).Value = "電話";
+            sheet.Cell(1, 5).Value = "手機";
+            sheet.Cell(1, 6).Value = "燈位";
+            sheet.Cell(1, 7).Value = "地址";
+            sheet.Cell(1, 8).Value = "祈求願望1";
+            sheet.Cell(1, 9).Value = "祈求願望2";
+            #endregion
+
+            foreach (var i in data)
+            {
+                sheet.Cell(row_index, 1).SetValue<string>(i.orders_sn);
+                sheet.Cell(row_index, 2).Value = i.member_name;
+                sheet.Cell(row_index, 3).SetValue<string>(i.l_birthday);
+                sheet.Cell(row_index, 4).SetValue<string>(i.tel);
+                sheet.Cell(row_index, 5).SetValue<string>(i.mobile);
+                sheet.Cell(row_index, 6).Value = i.light_name;
+                sheet.Cell(row_index, 7).Value = i.address;
+
+                string wish1 = i.wishs.Select(x => x.wish_text).FirstOrDefault();
+                string wish2 = i.wishs.Select(x => x.wish_text).Skip(1).FirstOrDefault();
+
+                sheet.Cell(row_index, 8).Value = wish1;
+                sheet.Cell(row_index, 9).Value = wish2;
+
+                row_index++;
+            }
+            sheet.Columns(1, 9).Width = 20;
+            sheet.Range(1, 1, row_index - 1, 9).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
+                                                     .Border.SetInsideBorder(XLBorderStyleValues.Thin)
+                                                     .Font.SetFontSize(14);
+            sheet.Range(1, 1, 1, 9).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
+                                       .Font.SetFontSize(16);
+            sheet.Name = string.Format("訂單芳名錄({0}筆)", count);
+        }
+        public class q_WishRoll
+        {
+            public int? year { get; set; }
+            public DateTime? startDate { get; set; }
+            public DateTime? endDate { get; set; }
+        }
+        public class m_WishRoll : m_Orders_Detail
+        {
+            public List<Wish_Light> wishs { get; set; }
+        }
+        #endregion
+
+        #region closedxml
+        /// <summary>
+        /// 複製樣板
+        /// </summary>
+        /// <param name="Count">資料筆數</param>
+        /// <param name="PageSize">一頁放幾筆資料</param>
+        /// <param name="PageRows">一頁列高多少</param>
+        /// <param name="PageCols">一頁欄寬多少</param>
+        /// <param name="sheet">要複製到的工作表</param>
+        /// <param name="style">複製的樣板工作表</param>
+        private void copyTmp(int Count, float PageSize, int PageRows, int PageCols, IXLWorksheet sheet, IXLWorksheet style)
+        {
+            int page = Count != 0 ? (int)Math.Ceiling(Count / PageSize) : 0;//一頁PageSize筆資料
+            if (page >= 1)
+            {
+                for (var i = 0; i < page; i++)
+                {//從第二頁開始複製列高
+                    sheet.Cell(1 + (i * PageRows), 1).Value = style.Range(1, 1, PageRows, PageCols);
+                    for (var j = 1; j <= PageRows; j++)
+                    {//一頁PageRows列
+                        sheet.Row(j + (i * PageRows)).Height = style.Row(j).Height;
+                    }
+                }
+            }
+        }
+        public void copyPrint(IXLWorksheet sheet, IXLWorksheet style)
+        {
+            sheet.PageSetup.PageOrientation = style.PageSetup.PageOrientation;//列印方向
+            sheet.PageSetup.PaperSize = style.PageSetup.PaperSize;//紙張大小
+            //列印品質
+            sheet.PageSetup.VerticalDpi = style.PageSetup.VerticalDpi;
+            sheet.PageSetup.HorizontalDpi = style.PageSetup.HorizontalDpi;
+            //設定窄邊界(單位英寸 1公分=2.54英吋)
+            sheet.PageSetup.Margins.Top = style.PageSetup.Margins.Top;
+            sheet.PageSetup.Margins.Bottom = style.PageSetup.Margins.Bottom;
+            sheet.PageSetup.Margins.Left = style.PageSetup.Margins.Left;
+            sheet.PageSetup.Margins.Right = style.PageSetup.Margins.Right;
+            sheet.PageSetup.Margins.Footer = style.PageSetup.Margins.Footer;
+            sheet.PageSetup.Margins.Header = style.PageSetup.Margins.Header;
+        }
+        public FileResult ExportExcelFile(MemoryStream stream, string name)
+        {
+            try
+            {
+                string out_file_name = name + "[" + UserName + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", out_file_name);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         #endregion
 
         public void light_name(ExcelWorksheet sheet, int row, int column)

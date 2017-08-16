@@ -15,6 +15,13 @@
         <fieldset>
             <label>年度： </label>
             <select ng-model="sd.year" ng-options="m as (m+'年') for m in year_list"></select>
+            <label>訂單日期： 起</label>
+            <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
+            <label>迄</label>
+            <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />
+            <button type="submit">
+                <i class="fa fa-search"></i>查詢
+            </button>
             <button type="button" ng-click="DownLoadExcel_WishLight()">
                 <i class="fa fa-print"></i>訂單芳名錄
             </button>
@@ -26,6 +33,7 @@
                 </button>
             </span>
         </fieldset>
+        <label class="text-center" style="color:red">備註：訂單芳名錄依訂單日期排序。</label>
     </form>
     <div class="grid-list">
         <table class="table-master">

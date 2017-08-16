@@ -534,6 +534,7 @@ namespace DotWeb.Api
                              select new WishList()
                              {
                                  Y = x.Y,
+                                 i_InsertDateTime = x.i_InsertDateTime,
                                  product_name = x.product_name,
                                  product_sn = x.product_sn,
                                  orders_sn = x.orders_sn,
@@ -549,6 +550,13 @@ namespace DotWeb.Api
                 if (q.year != null)
                 {
                     items = items.Where(x => x.Y == q.year);
+                }
+
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    items = items.Where(x => x.i_InsertDateTime >= start & x.i_InsertDateTime < end);
                 }
 
                 int page = (q.page == null ? 1 : (int)q.page);
