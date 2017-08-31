@@ -1828,7 +1828,8 @@ namespace DotWeb.Controllers
             {
                 var tmp = db0.Orders_Detail
                        .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == e_祈福產品分類.超渡法會)
-                       .OrderBy(x => new { x.assembly_batch_sn, x.product_sn, x.light_name })
+                       //.OrderBy(x => new { x.assembly_batch_sn, x.product_sn, x.light_name })
+                       .OrderBy(x => x.i_InsertDateTime)
                        .Select(x => new m_法會總名冊()
                        {
                            orders_sn = x.orders_sn,
@@ -1955,7 +1956,8 @@ namespace DotWeb.Controllers
             {
                 var tmp = db0.Orders_Detail
                        .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會)
-                       .OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
+                       //.OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
+                       .OrderBy(x => x.i_InsertDateTime)
                        .Select(x => new m_法會名冊()
                        {
                            LightSite_name = x.light_name,
