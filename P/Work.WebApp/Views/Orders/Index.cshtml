@@ -989,7 +989,7 @@
                                    ng-click="checkWishList($index)" />
                             {{m.wish_name}}
                             <br ng-if="($index+1)%6==0" />
-                            <input style="width:30%;" type="text" ng-if="m.can_text" ng-model="m.wish_text" ng-disabled="m.wish_checked==0" maxlength="16" />
+                            <input style="width:30%;" type="text" ng-if="m.can_text" ng-change="changeWishText(m.wish_id,m.wish_text)" ng-model="m.wish_text" ng-disabled="m.wish_checked==0" maxlength="16" />
                         </span>
                     </td>
                 </tr>

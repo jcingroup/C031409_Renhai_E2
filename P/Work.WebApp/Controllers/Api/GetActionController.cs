@@ -529,41 +529,38 @@ namespace DotWeb.Api
             public bool wish_checked { get; set; }
         }
         [HttpGet]
-        public GridInfo2<WishList> GetWishOrderList([FromUri]q_WishList q)
+        public GridInfo2<m_Orders> GetWishOrderList([FromUri]q_WishList q)
         {
             #region 連接BusinessLogicLibary資料庫並取得資料
 
             using (db0 = getDB0())
             {//訂單編號、姓名、生日、電話、手機、地址、祈求願望1、祈求願望2
-                var items = (from x in db0.Orders_Detail
-                             where x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.祈福許願燈
-                             orderby x.i_InsertDateTime
-                             select new WishList()
+                var items = (from x in db0.Orders
+                             where x.Orders_Detail.Any(y => y.Product.category == ProcCore.Business.Logic.e_祈福產品分類.祈福許願燈)
+                             orderby x.C_InsertDateTime
+                             select new m_Orders()
                              {
-                                 Y = x.Y,
-                                 i_InsertDateTime = x.i_InsertDateTime,
-                                 product_name = x.product_name,
-                                 product_sn = x.product_sn,
+                                 y = x.y,
                                  orders_sn = x.orders_sn,
                                  member_name = x.member_name,
-                                 l_birthday = x.l_birthday,
-                                 tel = x.Member_Detail.tel,
-                                 mobile = x.Member_Detail.mobile,
-                                 address = x.address,
-                                 light_name = x.light_name,
-                                 wishs = x.Orders.Wish_Light.Where(y => y.member_detail_id == x.member_detail_id).ToList()
+                                 tel = x.tel,
+                                 mobile = x.mobile,
+                                 total = x.total,
+                                 C_InsertDateTime = x.C_InsertDateTime,
+                                 InsertUserName = x.Users.users_name,
+                                 member_id = x.member_id
                              });
 
                 if (q.year != null)
                 {
-                    items = items.Where(x => x.Y == q.year);
+                    items = items.Where(x => x.y == q.year);
                 }
 
                 if (q.startDate != null & q.endDate != null)
                 {
                     DateTime start = ((DateTime)q.startDate);
                     DateTime end = ((DateTime)q.endDate).AddDays(1);
-                    items = items.Where(x => x.i_InsertDateTime >= start & x.i_InsertDateTime < end);
+                    items = items.Where(x => x.C_InsertDateTime >= start & x.C_InsertDateTime < end);
                 }
 
                 int page = (q.page == null ? 1 : (int)q.page);
@@ -571,7 +568,7 @@ namespace DotWeb.Api
 
                 var resultItems = items.Skip(startRecord).Take(this.defPageSize).ToList();
 
-                return (new GridInfo2<WishList>()
+                return (new GridInfo2<m_Orders>()
                 {
                     rows = resultItems,
                     total = PageCount.TotalPage,
@@ -580,6 +577,46 @@ namespace DotWeb.Api
                     startcount = PageCount.StartCount,
                     endcount = PageCount.EndCount
                 });
+            }
+            #endregion
+        }
+
+        [HttpGet]
+        public rAjaxGetData<List<WishList>> GetWishOrderItem([FromUri]q_WishOrderItem q)
+        {
+            #region 連接BusinessLogicLibary資料庫並取得資料
+            rAjaxGetData<List<WishList>> r = new rAjaxGetData<List<WishList>>();
+            using (db0 = getDB0())
+            {//訂單編號、姓名、生日、電話、手機、地址、祈求願望1、祈求願望2
+                var items = (from x in db0.Orders_Detail
+                             where x.is_reject != true & x.orders_sn == q.orders_sn
+                             orderby x.i_InsertDateTime
+                             select new WishList()
+                             {
+                                 Y = x.Y,
+                                 i_InsertDateTime = x.i_InsertDateTime,
+                                 product_name = x.product_name,
+                                 product_sn = x.product_sn,
+                                 orders_sn = x.orders_sn,
+                                 orders_detail_id=x.orders_detail_id,
+                                 member_detail_id=x.member_detail_id,
+                                 light_name = x.light_name,
+                                 member_name = x.member_name,
+                                 tel = x.Member_Detail.tel,
+                                 gender=x.gender,
+                                 l_birthday = x.l_birthday,
+                                 born_time=x.born_time,
+                                 born_sign = x.born_sign,
+                                 mobile = x.Member_Detail.mobile,
+                                 address = x.address,            
+                                 wishs = x.Orders.Wish_Light.Where(y => y.member_detail_id == x.member_detail_id).ToList()
+                             });
+
+                                        //wishs = detail.Orders.Wish_Light.Where(x => x.member_detail_id == detail.member_detail_id)
+                                        //     .Select(x => new WishText() { wish_id = x.wish_id, wish_text = x.wish_text }).ToList()
+                r.result = true;
+                r.data = items.ToList();
+                return r;
             }
             #endregion
         }

@@ -6,6 +6,21 @@
     */
     var newDate: Date = new Date(); return newDate.getTime();
 }
+function findIndex(ary: any[], field: string, val: any): number {
+    /*
+    Autohr:joe
+    Date:2017/8/31
+    Description:取出陣列index值
+    */
+    var index: number = -1;
+    for (var i = 0; i < ary.length; ++i) {
+        if (ary[i][field] == val) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
 function obj_prop_list(obj) {
     /*
     Autohr:Jerry

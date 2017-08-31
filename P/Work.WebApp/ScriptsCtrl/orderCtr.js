@@ -2086,11 +2086,28 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
     }
     $scope.checkWishList = function ($index) {
         var items = $scope.wishs;
-        var checked = items.filter(function (x) { return x.wish_checked; });
-        $scope.wishlen = checked.length;
-        if (!items[$index].wish_checked && items[$index].can_text)
-            items[$index].wish_text = null;
-        $scope.cart.wishs = checked;
+        var item = items[$index];
+        var select = items.filter(function (x) { return x.wish_checked; });
+        $scope.wishlen = select.length;
+        if (item.wish_checked) {
+            var obj = {
+                wish_id: item.wish_id,
+                wish_text: item.wish_text,
+                can_text: item.can_text,
+                edit_type: 1 /* insert */
+            };
+            $scope.cart.wishs.push(obj);
+        }
+        else if (!item.wish_checked) {
+            var i = findIndex($scope.cart.wishs, "wish_id", item.wish_id);
+            $scope.cart.wishs.splice(i, 1);
+            if (item.can_text)
+                item.wish_text = null;
+        }
+    };
+    $scope.changeWishText = function (id, text) {
+        var i = findIndex($scope.cart.wishs, "wish_id", id);
+        $scope.cart.wishs[i].wish_text = text;
     };
     function GetMemberDetail(member_detail_id) {
         workService.getMemberDetail(member_detail_id).success(function (data, status, headers, config) {

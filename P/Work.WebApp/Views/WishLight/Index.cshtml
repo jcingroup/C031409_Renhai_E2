@@ -1,4 +1,5 @@
-﻿@{
+﻿@using DotWeb.CommSetup
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,7 +16,7 @@
         <fieldset>
             <label>年度： </label>
             <select ng-model="sd.year" ng-options="m as (m+'年') for m in year_list"></select>
-            <label>訂單日期： 起</label>{{openedStart}}-{{openedEnd}}
+            <label>訂單日期： 起</label>
             <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
             <label>迄</label>
             <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />
@@ -38,29 +39,105 @@
     <div class="grid-list">
         <table class="table-master">
             <tr>
+                <th width="5%" class="text-center">編輯</th>
                 <th width="8%">訂單編號</th>
-                <th width="8%">姓名</th>
-                <th width="10%">生日</th>
+                <th width="8%">戶長姓名</th>
                 <th width="8%">電話</th>
-                <th width="8%">手機</th>
-                <th width="8%">燈位</th>
-                <th width="20%">地址</th>
-                <th width="10%">祈求願望1</th>
-                <th width="10%">祈求願望2</th>
+                <th width="8%">總額</th>
+                <th width="15%">新增時間</th>
+                <th width="8%">承辦人</th>
+                <th width="10%">戶長編號</th>
             </tr>
             <tr ng-repeat="gd in Grid_Items">
+                <td>
+                    <button type="button" ng-click="Master_Open_Modify($index)"
+                            title="@Resources.Res.Button_Sure_Modify">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                </td>
                 <td>{{gd.orders_sn}}</td>
                 <td>{{gd.member_name}}</td>
-                <td>{{gd.l_birthday}}</td>
                 <td>{{gd.tel}}</td>
-                <td>{{gd.mobile}}</td>
-                <td>{{gd.light_name}}</td>
-                <td>{{gd.address}}</td>               
-                <td><span ng-if="gd.wishs.length>=1">{{gd.wishs[0].wish_text}}</span></td>
-                <td><span ng-if="gd.wishs.length>=2">{{gd.wishs[1].wish_text}}</span></td>
+                <td>{{gd.total}}</td>
+                <td>{{gd.C_InsertDateTime | date:'yyyy-MM-dd A hh:mm:ss'}}</td>
+                <td>{{gd.InsertUserName}}</td>
+                <td>{{gd.member_id}}</td>
             </tr>
         </table>
         @Html.Partial("NavPage")
     </div>
     <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
+</script>
+<script type="text/ng-template" id="dataEdit">
+    <h4 class="text-center">修正祈福許願燈訂單會員資料 訂單編號{{orders_sn}}</h4>
+    <form ng-submit="Submit()">
+        <div class="grid-list">
+            <table class="table-master">
+                <caption><button type="button" ng-click="goGrid()">回列表</button></caption>
+                <tr>
+                    <th width="8%">產品</th>
+                    <th width="6%">燈位</th>
+                    <th width="6%">姓名</th>
+                    <th width="6%">性別</th>
+                    <th width="8%">農日生日</th>
+                    <th width="8%">生辰</th>
+                    <th width="6%">生肖</th>
+                    <th width="15%">地址</th>
+                    <th width="20%">願望</th>
+                </tr>
+                <tr ng-repeat="gd in fd ">
+                    <td>{{gd.product_name}}</td>
+                    <td>{{gd.light_name}}</td>
+                    <td>{{gd.member_name}}</td>
+                    <td>
+                        <input type="radio" ng-model="gd.gender" value="2" />女
+                        <input type="radio" ng-model="gd.gender" value="1" />男
+                    </td>
+                    <td>
+                        <input type="text" ng-model="gd.l_birthday" style="width: 64px" />
+                    </td>
+                    <td>
+                        <select ng-model="gd.born_time" ng-options="m.value as m.label for m in born_time"></select>
+                    </td>
+                    <td>
+                        <select ng-model="gd.born_sign" ng-options="m as m + ' ' for m in born_sign"></select>
+                    </td>
+                    <td><input type="text" ng-model="gd.address" /></td>
+                    <td>
+                        <button type="button" ng-click="ShowEditWish($index)">修改願望</button>
+                        <span ng-repeat="wd in gd.wishs">{{wd.wish_text}}<span ng-if="!$last">、</span></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="9" class="text-center"><button type="submit">修正</button></td>
+                </tr>
+            </table>           
+        </div>
+        <!-- 子板面 願望明細維護-->
+        <div name="frmCar" class="blue-form ng-hide" ng-show="isShowEditWish">
+            <div class="dialog-div" style="height:200px">
+                <table class="text-center">
+                    <caption>
+                        願望編輯
+                        <button type="button" ng-click="CloseEditWish()">關　閉</button>
+                    </caption>
+                    <tr>
+                        <td>
+                            <span ng-repeat="m in wishs">
+                                <input type="checkbox"
+                                       ng-model="m.wish_checked"
+                                       ng-true-value="1"
+                                       ng-false-value="0"
+                                       ng-disabled="m.wish_checked==0 && wishlen==@CommWebSetup.WishLimit"
+                                       ng-change="checkWishList($index,m.wish_checked)" />
+                                {{m.wish_name}}
+                                <br ng-if="($index+1)%6==0" />
+                                <input style="width:30%;" type="text" ng-if="m.can_text" ng-change="changeWishText(m.wish_id,m.wish_text)" ng-model="m.wish_text" ng-disabled="m.wish_checked==0" maxlength="16" />
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
 </script>

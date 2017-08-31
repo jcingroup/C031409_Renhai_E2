@@ -2,6 +2,16 @@ function uniqid() {
     var newDate = new Date();
     return newDate.getTime();
 }
+function findIndex(ary, field, val) {
+    var index = -1;
+    for (var i = 0; i < ary.length; ++i) {
+        if (ary[i][field] == val) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
 function obj_prop_list(obj) {
     for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {

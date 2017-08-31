@@ -214,5 +214,9 @@ namespace Work.WebApp.Models
         public DateTime? startDate { get; set; }
         public DateTime? endDate { get; set; }
     }
+    public class q_WishOrderItem : QueryBase
+    {
+        public string orders_sn { get; set; }
+    }
     #endregion
 }

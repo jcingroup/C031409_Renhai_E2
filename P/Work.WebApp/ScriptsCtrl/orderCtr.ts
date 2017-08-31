@@ -2208,6 +2208,7 @@ interface IWishOrder extends IOrder {
     wishs: server.Wish[];
     wishlen: number;
     checkWishList(index: number): void;
+    changeWishText(id: number,val:any): void;
 }
 
 angular.module('angularApp')
@@ -2460,12 +2461,30 @@ angular.module('angularApp')
         }
         $scope.checkWishList = function ($index) {
             var items = $scope.wishs;
-            var checked = items.filter(x=> x.wish_checked);
-            $scope.wishlen = checked.length;
-            if (!items[$index].wish_checked && items[$index].can_text)
-                items[$index].wish_text = null;
+            var item = items[$index];
+            var select = items.filter(x=> x.wish_checked);
+            $scope.wishlen = select.length;
 
-            $scope.cart.wishs = checked;
+            if (item.wish_checked) {
+                var obj: server.WishText = {
+                    wish_id: item.wish_id,
+                    wish_text: item.wish_text,
+                    can_text: item.can_text,
+                    edit_type: IEditType.insert
+                };
+                $scope.cart.wishs.push(obj);
+            } else if (!item.wish_checked) {
+                var i = findIndex($scope.cart.wishs, "wish_id", item.wish_id);
+
+                $scope.cart.wishs.splice(i, 1);
+
+                if (item.can_text)
+                    item.wish_text = null;
+            }
+        }
+        $scope.changeWishText = function (id, text) {
+            var i = findIndex($scope.cart.wishs, "wish_id", id);
+            $scope.cart.wishs[i].wish_text = text;
         }
         function GetMemberDetail(member_detail_id: number) {
             workService.getMemberDetail(member_detail_id)

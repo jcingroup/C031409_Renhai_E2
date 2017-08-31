@@ -189,9 +189,18 @@
         wishs: WishText[]
     }
     interface WishText {
-        wish_id: number;
-        can_text: boolean;
-        wish_text: string;
+        wish_light_id?: any;
+        orders_detail_id?: number;
+        order_sn?: string;
+        Y?: number;
+        member_detail_id?: number;
+        member_name?: string;
+
+        wish_id?: number;
+        can_text?: boolean;
+        wish_text?: string;
+        //擴充
+        edit_type: IEditType;
     }
     interface LuniInfo {
         SY: number;
