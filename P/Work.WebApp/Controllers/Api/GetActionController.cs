@@ -535,8 +535,9 @@ namespace DotWeb.Api
 
             using (db0 = getDB0())
             {//訂單編號、姓名、生日、電話、手機、地址、祈求願望1、祈求願望2
+                int Orders_Type=(int)ProcCore.Business.Orders_Type.wishlight;
                 var items = (from x in db0.Orders
-                             where x.Orders_Detail.Any(y => y.Product.category == ProcCore.Business.Logic.e_祈福產品分類.祈福許願燈)
+                             where x.orders_type == Orders_Type
                              orderby x.C_InsertDateTime
                              select new m_Orders()
                              {
