@@ -1733,8 +1733,9 @@ namespace DotWeb.Controllers
             {
                 sheet.Cell(row_index, col_index).Value = i.light_name;
                 sheet.Cell(row_index + 1, col_index).Value = i.householder;
-                sheet.Cell(row_index + 2, col_index).Value = i.zip;
-                sheet.Cell(row_index + 3, col_index).Value = i.address;
+                //sheet.Cell(row_index + 2, col_index).Value = i.zip;
+                sheet.Cell(row_index + 2, col_index).Value = i.address;
+                sheet.Range(row_index + 2, col_index, row_index + 3, col_index).Merge(false);//地址
                 sheet.Cell(row_index + 4, col_index).Value = i.tel;
 
                 #region 合併儲存格
