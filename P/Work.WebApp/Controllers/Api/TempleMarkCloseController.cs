@@ -86,14 +86,6 @@ namespace DotWeb.Api
                                  last_attend_datetime = x.last_attend_datetime
                              });
 
-                #region 過濾名單
-                items = items.Where(x => !haveTransactionMember.Contains(x.temple_member_id));
-                //items = items.Where(x => !haveTransactionMember2.Contains(x.member_name)); 增加last_attend_datetime欄位後就不需驗證
-                //items = items.Where(x => !haveTransactionMember2.Select(y=>y.member_name).Contains(x.member_name));
-
-                items = items.Where(x => x.last_attend_datetime < rang_year || x.last_attend_datetime == null);
-                #endregion
-
                 if (q.member_name != null)
                 {
                     items = items.Where(x => x.member_name.Contains(q.member_name));
@@ -111,15 +103,20 @@ namespace DotWeb.Api
 
                 if (q.is_close != null)
                 {
-                    if (q.is_close == "false")
+                    if (q.is_close == "sug" || q.is_close == "sugflase")
                     {
-                        items = items.Where(x => x.is_close == false);
+                        #region 過濾名單
+                        items = items.Where(x => !haveTransactionMember.Contains(x.temple_member_id));//三年內入會or大會名單
+                        items = items.Where(x => x.last_attend_datetime < rang_year || x.last_attend_datetime == null);//出席日期
+                        #endregion
+
+                        if (q.is_close == "sugflase")
+                            items = items.Where(x => x.is_close == false);
                     }
                     else if (q.is_close == "true")
                     {
                         items = items.Where(x => x.is_close == true);
                     }
-
                 }
 
                 int page = (q.page == null ? 1 : (int)q.page);

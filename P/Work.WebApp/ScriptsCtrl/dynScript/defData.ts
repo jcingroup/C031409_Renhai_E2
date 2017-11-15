@@ -54,9 +54,10 @@
         { value: "752", label: "契子會(大會)" }
     ];
     export var godson_markclose_forsearch: IKeyValueS[] = [
-        { value: "", label: "All" },
-        { value: "false", label: "建議關閉會員資格名單" },
-        { value: "true", label: "已取消會員資格名單" },
+        { value: "", label: "全部" },
+        { value: "sug", label: "建議關閉會員" },
+        { value: "sugflase", label: "建議關閉會員(未取消)" },
+        { value: "true", label: "已取消資格會員" }
     ];
     export var godson_print: IKeyValueS[] = [
         { value: "753", label: "香油(契子觀摩)" }

@@ -17,8 +17,13 @@
             <i class="fa fa-search"></i>查詢
         </button>
     </fieldset>
-    <span style="color:red;font-size:small">此清單內的會員為三年內未有契子會(大會)交易紀錄的會員．</span><br />
-    <span style="color:red;font-size:small">系統以"最後出席日期"起算，若有落差請自行更新"最後出席日期"．</span>
+    <div style="color:darkblue;">
+        類別搜尋條件說明:<br />
+        <span style="font-weight:bold;width:160px;display: inline-block;">全部</span>-全部契子會會員<br />
+        <span style="font-weight:bold;width:160px;display: inline-block;">建議關閉會員</span>-三年內未有「契子會(大會)」、「契子會(入會)」交易紀錄和「最後出席日期」已超過近三年<br />
+        <span style="font-weight:bold;width:160px;display: inline-block;">建議關閉會員(未取消)</span>-為「建議關閉會員」且會員資格未取消之會員<br />
+        <span style="font-weight:bold;width:160px;display: inline-block;">已取消資格會員</span>-資格被取消之會員
+    </div>
 </form>
 <div class="grid-list">
     <table class="table-master">
@@ -54,10 +59,10 @@
             <td>{{gd.birthday}}</td>
             <td>{{gd.join_datetime | getTaiwanCalendarDate }}</td>
             @*<td>
-                <button ng-click="openFamilyData(gd.member_id)">
-                    檢視
-                </button>
-            </td>*@
+                    <button ng-click="openFamilyData(gd.member_id)">
+                        檢視
+                    </button>
+                </td>*@
         </tr>
     </table>
     @Html.Partial("NavPage")
