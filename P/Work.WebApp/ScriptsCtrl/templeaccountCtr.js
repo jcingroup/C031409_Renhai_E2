@@ -18,8 +18,6 @@ angular.module('angularApp', ['commfun', 'siyfion.sfTypeahead', 'ui.bootstrap'])
     var today = new Date();
     var fday = new Date(today.getFullYear() + "/1/1");
     $scope.sd = {
-        startDate: setDateS(fday),
-        endDate: setDateS(today),
         product_sn: '',
         InsertUserId: 0,
         account_sn: ''

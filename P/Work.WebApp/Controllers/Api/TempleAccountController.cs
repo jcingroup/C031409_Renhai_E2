@@ -73,15 +73,17 @@ namespace DotWeb.Api
                     items = items.Where(x => (DateTime)x.tran_date >= start && (DateTime)x.tran_date < end);
                 }
 
+                if (q.temple_member_id != null)
+                {
+                    items = items.Where(x => x.temple_member_id == q.temple_member_id);
+                }
+
                 int page = (q.page == null ? 1 : (int)q.page);
                 int startRecord = PageCount.PageInfo(page, this.defPageSize, items.Count());
 
                 var resultItems = items.Skip(startRecord).Take(this.defPageSize);
 
-                if (q.temple_member_id != null)
-                {
-                    resultItems = resultItems.Where(x => x.temple_member_id == q.temple_member_id);
-                }
+               
 
                 return (new GridInfo2<m_TempleAccount>()
                 {

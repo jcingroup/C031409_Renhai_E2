@@ -37,7 +37,7 @@ namespace DotWeb.Api
                                                    join y in db0.TempleAccount
                                                    on x.temple_member_id equals y.temple_member_id
                                                    where y.tran_date > rang_year
-                                                   & (y.product_sn == e_祈福產品.香油_契子觀摩 || y.product_sn == e_祈福產品.契子會_大會)
+                                                   & (y.product_sn == e_祈福產品.契子會_入會 || y.product_sn == e_祈福產品.契子會_大會)
                                                    orderby x.temple_member_id descending
                                                    select x.temple_member_id).Distinct().ToList();
                 #endregion

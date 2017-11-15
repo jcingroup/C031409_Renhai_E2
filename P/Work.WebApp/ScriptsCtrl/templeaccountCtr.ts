@@ -53,8 +53,8 @@ angular
     var today: Date = new Date();
     var fday: Date = new Date(today.getFullYear() + "/1/1");
     $scope.sd = {//預設日期為今天
-        startDate: setDateS(fday),
-        endDate: setDateS(today),
+        //startDate: setDateS(fday),
+        //endDate: setDateS(today),
         product_sn: '',
         InsertUserId: 0,
         account_sn: ''
