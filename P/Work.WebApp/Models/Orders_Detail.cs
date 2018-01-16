@@ -53,6 +53,7 @@ namespace Work.WebApp.Models
         public string departed_name { get; set; }
         public Nullable<int> assembly_batch_sn { get; set; }
         public string departed_qty { get; set; }
+        public string wish_memo { get; set; }
     
     	[JsonIgnore]
         public virtual Orders Orders { get; set; }

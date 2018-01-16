@@ -77,6 +77,7 @@ namespace Work.WebApp.Models
 
         //祈福許願燈用
         public List<WishText> wishs { get; set; }
+        public string wish_memo { get; set; }
     }
     public class WishText
     {

@@ -240,6 +240,7 @@
           <Property Name="departed_name" Type="nvarchar" MaxLength="64" />
           <Property Name="departed_qty" Type="nvarchar" MaxLength="16" />
           <Property Name="assembly_batch_sn" Type="int" />
+          <Property Name="wish_memo" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="產品資料表">
           <Key>
@@ -725,6 +726,7 @@
           <Property Name="assembly_batch_sn" Type="Int32" />
           <Property Name="departed_qty" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AssemblyBatch" Relationship="RenHai2012Model.FK_訂單明細檔_AssemblyBatch" FromRole="Orders_Detail" ToRole="AssemblyBatch" />
+          <Property Name="wish_memo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1344,6 +1346,7 @@
           <EntitySetMapping Name="Orders_Detail">
             <EntityTypeMapping TypeName="RenHai2012Model.Orders_Detail">
               <MappingFragment StoreEntitySet="訂單明細檔">
+                <ScalarProperty Name="wish_memo" ColumnName="wish_memo" />
                 <ScalarProperty Name="departed_qty" ColumnName="departed_qty" />
                 <ScalarProperty Name="assembly_batch_sn" ColumnName="assembly_batch_sn" />
                 <ScalarProperty Name="departed_name" ColumnName="departed_name" />

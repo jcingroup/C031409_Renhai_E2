@@ -846,7 +846,7 @@ namespace DotWeb.Controllers
                         { //屬於手動選位類型 主副斗直接選取燈位
                             string sqlLight = @"Select 序號 as 'light_site_id',位置名稱 as 'light_name',年度 as 'Y',空位 as 'is_sellout',產品編號 as 'product_sn',價格 as 'price',
                                                        _Hiden as 'C_Hiden',_InsertUserID as 'C_InsertUserID',_InsertDateTime as 'C_InsertDateTime',_UpdateUserID as 'C_UpdateUserID',
-                                                       _UpdateDateTime as 'C_UpdateDateTime',_LockUserID as 'C_LockUserID',_LockDateTime as 'C_LockDateTime',_LockState as 'C_LockState',IsReject
+                                                       _UpdateDateTime as 'C_UpdateDateTime',_LockUserID as 'C_LockUserID',_LockDateTime as 'C_LockDateTime',_LockState as 'C_LockState',IsReject,assembly_batch_sn
                                                 FROM 點燈位置資料表 WITH (ROWLOCK, UPDLOCK)  Where 序號 = @id";
                             product_light = db0.Database.SqlQuery<Light_Site>(sqlLight, new SqlParameter("@id", item.light_site_id)).FirstOrDefault();
                             //product_light = db0.Light_Site.Where(x => x.light_site_id == item.light_site_id).FirstOrDefault();
@@ -2235,7 +2235,8 @@ namespace DotWeb.Controllers
                         C_InsertDateTime = DateTime.Now,
                         C_InsertUserID = this.UserId,
                         i_InsertUserID = this.UserId,
-                        detail_sort = item.detail_sort
+                        detail_sort = item.detail_sort,
+                        wish_memo = item.wish_memo
                     });
 
                     #region 祈福許願燈願望
@@ -2434,6 +2435,7 @@ namespace DotWeb.Controllers
                         get_detail_item.born_time = item.born_time;
                         get_detail_item.gender = item.gender;
                         get_detail_item.detail_sort = item.detail_sort;
+                        get_detail_item.wish_memo = item.wish_memo;
                     }
                     else
                     {
@@ -2688,6 +2690,7 @@ namespace DotWeb.Controllers
                         departed_qty = detail.departed_qty,
                         assembly_batch_sn = detail.assembly_batch_sn,
                         y = order.y,
+                        wish_memo = detail.wish_memo,
                         wishs = detail.Orders.Wish_Light.Where(x => x.member_detail_id == detail.member_detail_id)
                                              .Select(x => new WishText() { wish_id = x.wish_id, wish_text = x.wish_text }).ToList()
                     };

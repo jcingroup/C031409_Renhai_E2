@@ -567,6 +567,7 @@ namespace DotWeb.Controllers
                         departed_qty = item.departed_qty,
                         assembly_batch_sn = item.assembly_batch_sn,
                         y = orders.y,
+                        wish_memo = item.wish_memo,
                         wishs = item.Orders.Wish_Light.Where(x => x.member_detail_id == item.member_detail_id)
                                            .Select(x => new WishText() { wish_id = x.wish_id, wish_text = x.wish_text }).ToList()
                     });
