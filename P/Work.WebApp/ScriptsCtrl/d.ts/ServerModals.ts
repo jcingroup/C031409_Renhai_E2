@@ -187,6 +187,7 @@
 
         /** 祈福許願 */
         wishs: WishText[]
+        wish_memo: string;
     }
     interface WishText {
         wish_light_id?: any;

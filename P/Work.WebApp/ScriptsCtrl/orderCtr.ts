@@ -25,7 +25,6 @@
     allowYear: number;
     timeperiod_list: IKeyValueS[];
 
-
     ShowEdit(): void;
     CloseEdit(): void;
     GoGrid(): void;
@@ -2207,8 +2206,11 @@ angular.module('angularApp')
 interface IWishOrder extends IOrder {
     wishs: server.Wish[];
     wishlen: number;
+    wishmemo_no: string;
+    wishmemo_list: IKeyValueS[];
+    chgWishMemo(): void;
     checkWishList(index: number): void;
-    changeWishText(id: number,val:any): void;
+    changeWishText(id: number, val: any): void;
 }
 
 angular.module('angularApp')
@@ -2228,6 +2230,7 @@ angular.module('angularApp')
         var allowSetRace: string[] = ['白米'];
         var allowSetGold: string[] = ['金牌'];
 
+        $scope.wishmemo_list = commData.wishmemo_list;
         $scope.born_sign = commData.born_sign;
         $scope.born_time = commData.born_time;
         $scope.isShowEdit = false;
@@ -2235,6 +2238,10 @@ angular.module('angularApp')
         $scope.cart_price_disable = true;
         $scope.cart_race_disable = true;
         $scope.cart_gold_disable = true;
+
+        $scope.chgWishMemo = function () {
+            $scope.cart.wish_memo = $scope.wishmemo_no;
+        }
 
         $scope.SubmitCart = function () {
 

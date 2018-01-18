@@ -998,6 +998,7 @@
                         備註
                     </th>
                     <td colspan="3">
+                        <select ng-model="wishmemo_no" ng-change="chgWishMemo()" ng-options="m.value as m.label for m in wishmemo_list"></select>
                         <input type="text" ng-model="cart.wish_memo" maxlength="500" />
                     </td>
                 </tr>
