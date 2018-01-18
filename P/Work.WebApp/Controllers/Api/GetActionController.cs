@@ -535,7 +535,7 @@ namespace DotWeb.Api
 
             using (db0 = getDB0())
             {//訂單編號、姓名、生日、電話、手機、地址、祈求願望1、祈求願望2
-                int Orders_Type=(int)ProcCore.Business.Orders_Type.wishlight;
+                int Orders_Type = (int)ProcCore.Business.Orders_Type.wishlight;
                 var items = (from x in db0.Orders
                              where x.orders_type == Orders_Type
                              orderby x.C_InsertDateTime
@@ -599,22 +599,23 @@ namespace DotWeb.Api
                                  product_name = x.product_name,
                                  product_sn = x.product_sn,
                                  orders_sn = x.orders_sn,
-                                 orders_detail_id=x.orders_detail_id,
-                                 member_detail_id=x.member_detail_id,
+                                 orders_detail_id = x.orders_detail_id,
+                                 member_detail_id = x.member_detail_id,
                                  light_name = x.light_name,
                                  member_name = x.member_name,
                                  tel = x.Member_Detail.tel,
-                                 gender=x.gender,
+                                 gender = x.gender,
                                  l_birthday = x.l_birthday,
-                                 born_time=x.born_time,
+                                 born_time = x.born_time,
                                  born_sign = x.born_sign,
                                  mobile = x.Member_Detail.mobile,
-                                 address = x.address,            
+                                 address = x.address,
+                                 wish_memo = x.wish_memo,
                                  wishs = x.Orders.Wish_Light.Where(y => y.member_detail_id == x.member_detail_id).ToList()
                              });
 
-                                        //wishs = detail.Orders.Wish_Light.Where(x => x.member_detail_id == detail.member_detail_id)
-                                        //     .Select(x => new WishText() { wish_id = x.wish_id, wish_text = x.wish_text }).ToList()
+                //wishs = detail.Orders.Wish_Light.Where(x => x.member_detail_id == detail.member_detail_id)
+                //     .Select(x => new WishText() { wish_id = x.wish_id, wish_text = x.wish_text }).ToList()
                 r.result = true;
                 r.data = items.ToList();
                 return r;

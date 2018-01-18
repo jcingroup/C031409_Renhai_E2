@@ -1830,7 +1830,7 @@ namespace DotWeb.Controllers
                 var tmp = db0.Orders_Detail
                        .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == e_祈福產品分類.超渡法會)
                        .OrderBy(x => new { x.assembly_batch_sn, x.product_sn, x.light_name })
-                       //.OrderBy(x => x.i_InsertDateTime)
+                    //.OrderBy(x => x.i_InsertDateTime)
                        .Select(x => new m_法會總名冊()
                        {
                            orders_sn = x.orders_sn,
@@ -1957,7 +1957,7 @@ namespace DotWeb.Controllers
             {
                 var tmp = db0.Orders_Detail
                        .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會)
-                       //.OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
+                    //.OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
                        .OrderBy(x => x.i_InsertDateTime)
                        .Select(x => new m_法會名冊()
                        {
@@ -2363,7 +2363,7 @@ namespace DotWeb.Controllers
             {
                 var tmp = db0.Orders_Detail
                        .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會)
-                       //.OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
+                    //.OrderBy(x => new { x.AssemblyBatch.batch_date, x.AssemblyBatch.batch_timeperiod, x.light_name })
                        .OrderBy(x => x.i_InsertDateTime)
                        .Select(x => new m_疏文名單()
                        {
@@ -3291,6 +3291,7 @@ namespace DotWeb.Controllers
                            mobile = x.Member_Detail.mobile,
                            address = x.address,
                            light_name = x.light_name,
+                           wish_memo = x.wish_memo,
                            wishs = x.Orders.Wish_Light.Where(y => y.member_detail_id == x.member_detail_id).ToList()
                        });
 
@@ -3312,7 +3313,7 @@ namespace DotWeb.Controllers
             int row_index = 2;
 
             #region 標題
-            //訂單編號、姓名、生日、電話、手機、地址、祈求願望1、祈求願望2
+            //訂單編號、姓名、生日、電話、手機、地址、祈求願望1、祈求願望2、備註
             sheet.Cell(1, 1).Value = "訂單編號";
             sheet.Cell(1, 2).Value = "姓名";
             sheet.Cell(1, 3).Value = "生日";
@@ -3322,6 +3323,7 @@ namespace DotWeb.Controllers
             sheet.Cell(1, 7).Value = "地址";
             sheet.Cell(1, 8).Value = "祈求願望1";
             sheet.Cell(1, 9).Value = "祈求願望2";
+            sheet.Cell(1, 10).Value = "備註";
             #endregion
 
             foreach (var i in data)
@@ -3340,13 +3342,15 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index, 8).Value = wish1;
                 sheet.Cell(row_index, 9).Value = wish2;
 
+                sheet.Cell(row_index, 10).Value = i.wish_memo;
+
                 row_index++;
             }
-            sheet.Columns(1, 9).Width = 20;
-            sheet.Range(1, 1, row_index - 1, 9).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
+            sheet.Columns(1, 10).Width = 20;
+            sheet.Range(1, 1, row_index - 1, 10).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
                                                      .Border.SetInsideBorder(XLBorderStyleValues.Thin)
                                                      .Font.SetFontSize(14);
-            sheet.Range(1, 1, 1, 9).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
+            sheet.Range(1, 1, 1, 10).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
                                        .Font.SetFontSize(16);
             sheet.Name = string.Format("訂單芳名錄({0}筆)", count);
         }

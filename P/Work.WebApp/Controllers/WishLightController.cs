@@ -39,6 +39,7 @@ namespace DotWeb.Controllers
                         getItem.born_sign = item.born_sign;
                         getItem.born_time = item.born_time;
                         getItem.address = item.address;
+                        getItem.wish_memo = item.wish_memo;
 
                         getItem.C_UpdateDateTime = DateTime.Now;
 

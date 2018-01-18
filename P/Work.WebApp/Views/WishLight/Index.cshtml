@@ -82,8 +82,9 @@
                     <th width="8%">農日生日</th>
                     <th width="8%">生辰</th>
                     <th width="6%">生肖</th>
-                    <th width="15%">地址</th>
-                    <th width="20%">願望</th>
+                    <th width="10%">地址</th>
+                    <th width="10%">備註</th>
+                    <th width="15%">願望</th>
                 </tr>
                 <tr ng-repeat="gd in fd ">
                     <td>{{gd.product_name}}</td>
@@ -103,13 +104,14 @@
                         <select ng-model="gd.born_sign" ng-options="m as m + ' ' for m in born_sign"></select>
                     </td>
                     <td><input type="text" ng-model="gd.address" /></td>
+                    <td><input type="text" ng-model="gd.wish_memo" /></td>
                     <td>
                         <button type="button" ng-click="ShowEditWish($index)">修改願望</button>
                         <span ng-repeat="wd in gd.wishs">{{wd.wish_text}}<span ng-if="!$last">、</span></span>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="9" class="text-center"><button type="submit">修正</button></td>
+                    <td colspan="10" class="text-center"><button type="submit">修正</button></td>
                 </tr>
             </table>           
         </div>
