@@ -133,7 +133,9 @@ Dim strkey
 			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('6')","","N","","")
 		Case 4  '福燈
 			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('390','391','392','393','394','395','396')","","N","","")
-	End Select	
+	    Case 5	'祈福許願燈
+			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('1501')","","N","","")
+    End Select	
 	
 	'strWhere=MakeWhere(strWhere,"AND","A.產品編號","=",intProductSN,-1,"N","","")
 	'strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('2','3','4','5')","","N","","")
