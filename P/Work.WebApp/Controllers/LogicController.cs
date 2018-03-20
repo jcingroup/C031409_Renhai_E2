@@ -665,6 +665,7 @@ namespace DotWeb.Controllers
                         getItem.departed_address = item.departed_address;
                         getItem.departed_qty = item.departed_qty;
 
+                        getItem.manjushri = item.manjushri;
                         getItem.C_UpdateDateTime = DateTime.Now;
                     }
                 }

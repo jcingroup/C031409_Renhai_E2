@@ -132,6 +132,22 @@ Dim p0	'訂單編號
             .success(function (data, status, headers, config) {
                 $scope.Items = data;
             })
+            GetManjushri();
+
+            function uniqid() {
+                var newDate = new Date(); return newDate.getTime();
+            }
+            //取得疏文梯次
+            function GetManjushri() {
+                $http.get(gb_approot + 'Manjushri/GetManjushri', { params: { t: uniqid() } })
+                  .success(function (data, status, headers, config) {
+                      if (data.result) {
+                          $scope.mjs = data.data;
+                      } else {
+                          alert(data.message);
+                      }
+                  })
+            };
         });
     </script>
     <title></title>
@@ -156,7 +172,7 @@ Dim p0	'訂單編號
                                         <td class="TableHeadTD">農曆生日</td>
                                         <td class="TableHeadTD">生辰</td>
                                         <td class="TableHeadTD">生肖</td>
-                                        <td class="TableHeadTD">地址</td>
+                                        <td class="TableHeadTD">文疏梯次</td>
                                         <td class="TableHeadTD">往者名</td>
                                         <td class="TableHeadTD">牌位地址</td>
                                         <td class="TableHeadTD">嬰靈數</td>
@@ -178,13 +194,22 @@ Dim p0	'訂單編號
                                             <td class="TableBodyTD">
                                                 <select ng-model="gd.born_sign" ng-options="m.id as m.text for m in options_born_sign"></select></td>
                                             <td class="TableBodyTD">
-                                                <input type="text" ng-model="gd.address" style="width: 150px" /></td>
+                                                 <select ng-model="gd.manjushri"
+                                                    ng-options="m.manjushri_id as m.set_date | date:'yyyy-MM-dd' for m in mjs">
+                                                </select>
+                                            </td>
                                             <td class="TableBodyTD">
                                                 <input type="text" ng-model="gd.departed_name" style="width: 50px" /></td>
                                             <td class="TableBodyTD">
                                                 <input type="text" ng-model="gd.departed_address" style="width: 150px" /></td>
                                             <td class="TableBodyTD">
                                                 <input type="text" ng-model="gd.departed_qty" style="width: 40px" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="TableHeadTR" colspan="2">地址</td>
+                                            <td class="TableBodyTD" colspan="9">
+                                                 <input type="text" ng-model="gd.address" style="width: 250px" />                                              
+                                            </td>
                                         </tr>
                                 </table>
                             </td>
