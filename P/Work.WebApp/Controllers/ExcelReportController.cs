@@ -1697,7 +1697,7 @@ namespace DotWeb.Controllers
             {
                 var tmp = db0.Orders_Detail
                        .Where(x => x.Y == q.year & x.is_reject != true & x.Product.category == e_祈福產品分類.禮斗)
-                       .OrderBy(x => new { x.product_sn, x.light_name })
+                       .OrderBy(x => new { x.product_sn, x.memo })
                        .Select(x => new m_LiDo()
                        {
                            light_name = x.light_name,
