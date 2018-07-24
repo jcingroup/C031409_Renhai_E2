@@ -2528,6 +2528,36 @@ namespace DotWeb.Controllers
                     sheet.Range(row_index + 7, 2, row_index + 10, 2).Merge(false);
                 }
 
+                #region 區分是哪種產品金紙
+                switch (i.product_sn)
+                {
+                    case "1401":
+                        //超渡法會(個別祖先)
+                        sheet.Cell(row_index + 2, 8).Value = i.departed_name;
+                        sheet.Range(row_index + 2, 8, row_index + 7, 8).Merge(false);
+                        break;
+                    case "1402":
+                        //超渡法會(歷代祖先)
+                        sheet.Cell(row_index + 2, 8).Value = i.departed_name;
+                        sheet.Cell(row_index + 3, 8).Value = "姓歷代祖先";
+                        sheet.Range(row_index + 3, 8, row_index + 7, 8).Merge(false);
+                        break;
+                    case "1403":
+                        //超渡法會(冤親債主)
+                        sheet.Cell(row_index + 2, 8).Value = "前生今世冤親債主";
+                        sheet.Range(row_index + 2, 8, row_index + 7, 8).Merge(false);
+                        break;
+                    case "1404":
+                        //渡法會(嬰靈)
+                        sheet.Cell(row_index + 2, 8).Value = "所孕損墮胎嬰靈";
+                        sheet.Range(row_index + 2, 8, row_index + 7, 8).Merge(false);
+                        break;
+                    default:
+                        break;
+                }
+
+                #endregion
+
                 sheet.Cell(row_index + 4, 29).Value = i.apply_name;//申請人
                 sheet.Range(row_index + 4, 29, row_index + 10, 29).Merge(false);
                 sheet.Cell(row_index + 3, 30).Value = i.address;//祈福地址
@@ -2846,9 +2876,12 @@ namespace DotWeb.Controllers
 
                 sheet.Cell(row_index + 3, 10).Value = i.departed_name;//祖先姓氏
                 sheet.Range(row_index + 3, 10, row_index + 5, 10).Merge(false);
+                sheet.Cell(row_index + 4, 12).Value = i.departed_address;//法會地址
+                sheet.Range(row_index + 4, 12, row_index + 12, 12).Merge(false);
+
                 sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
                 sheet.Range(row_index + 5, 24, row_index + 8, 24).Merge(false);
-                sheet.Cell(row_index + 5, 26).Value = i.departed_address;//法會地址
+                sheet.Cell(row_index + 5, 26).Value = i.address;//申請人地址
                 sheet.Range(row_index + 5, 26, row_index + 12, 26).Merge(false);
                 sheet.Cell(row_index + 12, 31).Value = i.LightSite_name;//燈位
                 sheet.Range(row_index + 12, 31, row_index + 12, 32).Merge(false);
@@ -2919,9 +2952,12 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index + 10, 6).Value = getTwLC.day;
 
                 sheet.Cell(row_index + 1, 10).Value = i.departed_name;//祖先姓氏
+                sheet.Cell(row_index + 4, 12).Value = i.departed_address;//法會地址
+                sheet.Range(row_index + 4, 12, row_index + 10, 12).Merge(false);
+
                 sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
                 sheet.Range(row_index + 5, 24, row_index + 8, 24).Merge(false);
-                sheet.Cell(row_index + 5, 26).Value = i.departed_address;//法會地址
+                sheet.Cell(row_index + 5, 26).Value = i.departed_address;//申請人地址
                 sheet.Range(row_index + 5, 26, row_index + 11, 26).Merge(false);
                 sheet.Cell(row_index + 11, 31).Value = i.LightSite_name;//燈位
                 sheet.Range(row_index + 11, 31, row_index + 11, 32).Merge(false);
