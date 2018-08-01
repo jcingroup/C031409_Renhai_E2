@@ -2957,7 +2957,7 @@ namespace DotWeb.Controllers
 
                 sheet.Cell(row_index + 5, 24).Value = i.apply_name;//申請人
                 sheet.Range(row_index + 5, 24, row_index + 8, 24).Merge(false);
-                sheet.Cell(row_index + 5, 26).Value = i.departed_address;//申請人地址
+                sheet.Cell(row_index + 5, 26).Value = i.address;//申請人地址
                 sheet.Range(row_index + 5, 26, row_index + 11, 26).Merge(false);
                 sheet.Cell(row_index + 11, 31).Value = i.LightSite_name;//燈位
                 sheet.Range(row_index + 11, 31, row_index + 11, 32).Merge(false);
