@@ -14,8 +14,8 @@
     export var wishmemo_list: IKeyValueS[] = [
         { value: "謝燈後郵寄", label: "謝燈後郵寄" },
         { value: "謝燈後自取", label: "謝燈後自取" },
-        { value: "刻好直接郵寄", label: "刻好直接郵寄" },
-        { value: "刻好自取", label: "刻好自取" }
+        //{ value: "刻好直接郵寄", label: "刻好直接郵寄" },
+        //{ value: "刻好自取", label: "刻好自取" }
     ];
     export var born_sign: string[] = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
     export var born_time: IKeyValueS[] = [

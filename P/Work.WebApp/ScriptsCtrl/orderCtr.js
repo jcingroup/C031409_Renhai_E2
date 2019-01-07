@@ -1867,6 +1867,7 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
     var allowSetPrice = ['香油'];
     var allowSetRace = ['白米'];
     var allowSetGold = ['金牌'];
+    $scope.wishmemo_list = commData.wishmemo_list;
     $scope.born_sign = commData.born_sign;
     $scope.born_time = commData.born_time;
     $scope.isShowEdit = false;
@@ -1874,6 +1875,9 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
     $scope.cart_price_disable = true;
     $scope.cart_race_disable = true;
     $scope.cart_gold_disable = true;
+    $scope.chgWishMemo = function () {
+        $scope.cart.wish_memo = $scope.wishmemo_no;
+    };
     $scope.SubmitCart = function () {
         $scope.cart.isOnOrder = false;
         $http.post(gb_approot + 'Cart/AddWishCart', $scope.cart).success(function (data, status, headers, config) {

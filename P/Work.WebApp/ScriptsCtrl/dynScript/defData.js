@@ -12,6 +12,10 @@ var commData;
         { value: "1403", label: "超渡法會(冤親債主)" },
         { value: "1404", label: "超渡法會(嬰靈)" }
     ];
+    commData.wishmemo_list = [
+        { value: "謝燈後郵寄", label: "謝燈後郵寄" },
+        { value: "謝燈後自取", label: "謝燈後自取" },
+    ];
     commData.born_sign = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
     commData.born_time = [
         { value: '吉', label: '00:00~23:59 吉時' },
