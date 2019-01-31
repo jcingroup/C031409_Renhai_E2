@@ -336,5 +336,6 @@ declare module server {
         fortune_value: number;
         sort: number;//福燈排序
         join_date: string;//契子入會日期
+        is_godson: boolean;//是否契子
     }
 }

@@ -700,6 +700,7 @@ angular.module('angularApp').controller('ctrl_general', ['$scope', '$http', 'wor
     };
     $scope.CloseEditProduct = function () {
         $scope.isShowEditProduct = false;
+        $scope.is_godson = false;
     };
     $scope.ShowOrderDetail = function () {
         if ($scope.cart.member_detail_id > 0) {
@@ -963,6 +964,7 @@ angular.module('angularApp').controller('ctrl_general', ['$scope', '$http', 'wor
                     $scope.cart.mobile = n.mobile;
                     $scope.cart.join_date = n.join_date;
                     $scope.order_detail = null;
+                    $scope.is_godson = n.is_godson;
                     var lbirthday = $scope.cart.l_birthday.split("/");
                     if (lbirthday.length == 3) {
                         $scope.cart.LY = parseInt(lbirthday[0]) - 1911;
@@ -1013,6 +1015,7 @@ angular.module('angularApp').controller('ctrl_fortune', ['$scope', '$http', 'wor
     };
     $scope.CloseEditProduct = function () {
         $scope.isShowEditProduct = false;
+        $scope.is_godson = false;
     };
     $scope.CalcLunar = function () {
         workService.getCalcLunar($scope.cart.SY, $scope.cart.SM, $scope.cart.SD).success(function (data, status, headers, config) {
@@ -1169,6 +1172,7 @@ angular.module('angularApp').controller('ctrl_fortune', ['$scope', '$http', 'wor
                     $scope.cart.gender = n.gender;
                     $scope.cart.tel = n.tel;
                     $scope.cart.mobile = n.mobile;
+                    $scope.is_godson = n.is_godson;
                     var lbirthday = $scope.cart.l_birthday.split("/");
                     if (lbirthday.length == 3) {
                         $scope.cart.LY = parseInt(lbirthday[0]) - 1911;
@@ -1310,6 +1314,7 @@ angular.module('angularApp').controller('ctrl_sdlight', ['$scope', '$http', 'wor
     };
     $scope.CloseEditProduct = function () {
         $scope.isShowEditProduct = false;
+        $scope.is_godson = false;
     };
     $scope.ShowOrderDetail = function () {
         if ($scope.cart.member_detail_id > 0) {
@@ -1527,6 +1532,7 @@ angular.module('angularApp').controller('ctrl_sdlight', ['$scope', '$http', 'wor
                     $scope.cart.tel = n.tel;
                     $scope.cart.mobile = n.mobile;
                     $scope.order_detail = null;
+                    $scope.is_godson = n.is_godson;
                     var lbirthday = $scope.cart.l_birthday.split("/");
                     if (lbirthday.length == 3) {
                         $scope.cart.LY = parseInt(lbirthday[0]) - 1911;
@@ -1614,6 +1620,7 @@ angular.module('angularApp').controller('ctrl_mdlight', ['$scope', '$http', 'wor
     };
     $scope.CloseEditProduct = function () {
         $scope.isShowEditProduct = false;
+        $scope.is_godson = false;
     };
     $scope.ShowOrderDetail = function () {
         if ($scope.cart.member_detail_id > 0) {
@@ -1844,6 +1851,7 @@ angular.module('angularApp').controller('ctrl_mdlight', ['$scope', '$http', 'wor
                     $scope.cart.tel = n.tel;
                     $scope.cart.mobile = n.mobile;
                     $scope.order_detail = null;
+                    $scope.is_godson = n.is_godson;
                     var lbirthday = $scope.cart.l_birthday.split("/");
                     if (lbirthday.length == 3) {
                         $scope.cart.LY = parseInt(lbirthday[0]) - 1911;
@@ -1942,6 +1950,7 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
     };
     $scope.CloseEditProduct = function () {
         $scope.isShowEditProduct = false;
+        $scope.is_godson = false;
     };
     $scope.ShowOrderDetail = function () {
         if ($scope.cart.member_detail_id > 0) {
@@ -2217,6 +2226,7 @@ angular.module('angularApp').controller('ctrl_wishlight', ['$scope', '$http', 'w
                     $scope.cart.tel = n.tel;
                     $scope.cart.mobile = n.mobile;
                     $scope.order_detail = null;
+                    $scope.is_godson = n.is_godson;
                     var lbirthday = $scope.cart.l_birthday.split("/");
                     if (lbirthday.length == 3) {
                         $scope.cart.LY = parseInt(lbirthday[0]) - 1911;

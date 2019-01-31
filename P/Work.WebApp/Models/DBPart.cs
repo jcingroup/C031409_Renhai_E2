@@ -30,6 +30,7 @@ namespace Work.WebApp.Models
     {
         public int fortune_value { get; set; }
         public string join_date { get; set; }//契子入會日期
+        public bool is_godson { get; set; }//是否為契子
     }
     public partial class m_Member
     {

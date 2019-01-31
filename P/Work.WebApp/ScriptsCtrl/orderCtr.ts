@@ -58,6 +58,8 @@
     closeSortData(): void;
     isShow: boolean;
     sort_member: server.Sort_Member[];
+    //是否為契子
+    is_godson: boolean;
 }
 interface IOrderCookie extends ng.cookies.ICookiesService {
     unit_id: number;
@@ -907,6 +909,7 @@ angular.module('angularApp')
         };
         $scope.CloseEditProduct = function () {
             $scope.isShowEditProduct = false;
+            $scope.is_godson = false;
         };
         $scope.ShowOrderDetail = function () {
             if ($scope.cart.member_detail_id > 0) {
@@ -1184,6 +1187,7 @@ angular.module('angularApp')
                         $scope.cart.mobile = n.mobile;
                         $scope.cart.join_date = n.join_date;
                         $scope.order_detail = null;
+                        $scope.is_godson = n.is_godson;
 
                         var lbirthday: string[] = $scope.cart.l_birthday.split("/");
                         if (lbirthday.length == 3) {
@@ -1249,6 +1253,7 @@ angular.module('angularApp')
         };
         $scope.CloseEditProduct = function () {
             $scope.isShowEditProduct = false;
+            $scope.is_godson = false;
         };
 
         $scope.CalcLunar = function () {
@@ -1421,6 +1426,7 @@ angular.module('angularApp')
                         $scope.cart.gender = n.gender;
                         $scope.cart.tel = n.tel;
                         $scope.cart.mobile = n.mobile;
+                        $scope.is_godson = n.is_godson;
 
                         var lbirthday: string[] = $scope.cart.l_birthday.split("/");
                         if (lbirthday.length == 3) {
@@ -1596,6 +1602,7 @@ angular.module('angularApp')
         };
         $scope.CloseEditProduct = function () {
             $scope.isShowEditProduct = false;
+            $scope.is_godson = false;
         };
         $scope.ShowOrderDetail = function () {
             if ($scope.cart.member_detail_id > 0) {
@@ -1827,6 +1834,8 @@ angular.module('angularApp')
                         $scope.cart.tel = n.tel;
                         $scope.cart.mobile = n.mobile;
                         $scope.order_detail = null;
+                        $scope.is_godson = n.is_godson;
+
                         var lbirthday: string[] = $scope.cart.l_birthday.split("/");
                         if (lbirthday.length == 3) {
                             $scope.cart.LY = parseInt(lbirthday[0]) - 1911;
@@ -1937,6 +1946,7 @@ angular.module('angularApp')
         };
         $scope.CloseEditProduct = function () {
             $scope.isShowEditProduct = false;
+            $scope.is_godson = false;
         };
         $scope.ShowOrderDetail = function () {
             if ($scope.cart.member_detail_id > 0) {
@@ -2183,6 +2193,8 @@ angular.module('angularApp')
                         $scope.cart.tel = n.tel;
                         $scope.cart.mobile = n.mobile;
                         $scope.order_detail = null;
+                        $scope.is_godson = n.is_godson;
+
                         var lbirthday: string[] = $scope.cart.l_birthday.split("/");
                         if (lbirthday.length == 3) {
                             $scope.cart.LY = parseInt(lbirthday[0]) - 1911;
@@ -2314,6 +2326,7 @@ angular.module('angularApp')
         };
         $scope.CloseEditProduct = function () {
             $scope.isShowEditProduct = false;
+            $scope.is_godson = false;
         };
         $scope.ShowOrderDetail = function () {
             if ($scope.cart.member_detail_id > 0) {
@@ -2606,6 +2619,8 @@ angular.module('angularApp')
                         $scope.cart.tel = n.tel;
                         $scope.cart.mobile = n.mobile;
                         $scope.order_detail = null;
+                        $scope.is_godson = n.is_godson;
+
                         var lbirthday: string[] = $scope.cart.l_birthday.split("/");
                         if (lbirthday.length == 3) {
                             $scope.cart.LY = parseInt(lbirthday[0]) - 1911;

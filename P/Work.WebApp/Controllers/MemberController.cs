@@ -33,7 +33,8 @@ namespace DotWeb.Controllers
                         bool isTemple = db.TempleMember.Any(x => x.sno == md.sno);
                         if (isTemple) {
                             DateTime? getJoinDate = db.TempleMember.Where(x => x.sno == md.sno).FirstOrDefault().join_datetime;
-                            md.member_name += "(契子)";
+                            //md.member_name += "(契子)";
+                            md.is_godson = true;
                             if (getJoinDate != null)
                             {
                                 md.join_date = DateTime.Parse(getJoinDate.ToString()).ToString("yyyy/MM/dd");
