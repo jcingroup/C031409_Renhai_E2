@@ -51,13 +51,13 @@
         { value: "396", label: "上排福燈" }
     ];
     export var godson_account_type: IKeyValueS[] = [
-        { value: "751", label: "契子會(入會)" },
-        { value: "752", label: "契子會(大會)" }
+        { value: "751", label: "契子入會" },
+        { value: "752", label: "契子大會" }
     ];
     export var godson_account_type_forsearch: IKeyValueS[] = [
         { value: "", label: "All" },
-        { value: "751", label: "契子會(入會)" },
-        { value: "752", label: "契子會(大會)" }
+        { value: "751", label: "契子入會" },
+        { value: "752", label: "契子大會" }
     ];
     export var godson_markclose_forsearch: IKeyValueS[] = [
         { value: "", label: "全部" },

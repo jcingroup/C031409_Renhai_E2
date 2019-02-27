@@ -25,6 +25,7 @@ namespace DotWeb.Api
                         && x.category != ProcCore.Business.Logic.e_祈福產品分類.禮斗
                         && x.category != ProcCore.Business.Logic.e_祈福產品分類.福燈
                         && x.category != ProcCore.Business.Logic.e_祈福產品分類.祈福許願燈
+                        && x.category != ProcCore.Business.Logic.e_祈福產品分類.契子
                         && x.isSelect == false
                         && x.i_Hide == 0
                     //&& x.category != "契子" // ref sa.xls No 2
@@ -128,6 +129,47 @@ namespace DotWeb.Api
                 db = getDB0();
                 var getAllProduct = db.Product
                     .Where(x => x.i_Hide == 0 && x.category == ProcCore.Business.Logic.e_祈福產品分類.祈福許願燈 && x.isSelect == false && x.i_Hide == 0)
+                    .Select(x => new m_Product()
+                    {
+                        product_sn = x.product_sn,
+                        product_name = x.product_name,
+                        price = x.price,
+                        category = x.category,
+                        排序 = x.排序
+                    }).OrderBy(x => x.排序).ToList();
+
+                r.data = getAllProduct;
+                r.result = true;
+                return r;
+            }
+            catch (Exception ex)
+            {
+                r.result = false;
+                r.message = ex.Message;
+                return r;
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
+        /// <summary>
+        /// 取得契子產品資料
+        /// </summary>
+        /// <returns></returns>
+        public rAjaxGetItems<m_Product> GetProductTempleMember()
+        {
+            rAjaxGetItems<m_Product> r = new rAjaxGetItems<m_Product>();
+            RenHai2012Entities db = null;
+            try
+            {
+                db = getDB0();
+
+                var getAllProduct = db.Product
+                    .Where(x => x.i_Hide == 0
+                        && x.category == ProcCore.Business.Logic.e_祈福產品分類.契子
+                        && x.isSelect == false
+                        )
                     .Select(x => new m_Product()
                     {
                         product_sn = x.product_sn,

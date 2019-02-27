@@ -255,6 +255,16 @@ angular.module('angularApp').controller('ctrl_edit', ['$scope', '$http', 'workSe
         var url = gb_approot + 'ExcelReport/downloadExcel_GodSON?temple_account_id=' + $scope.fds.temple_account_id + '&t=' + uniqid();
         $scope.downloadExcel = $sce.getTrustedResourceUrl(url);
     };
+    $scope.$watch('fds.product_sn', function (newValue, oldValue) {
+        if (newValue != undefined) {
+            for (var i in $scope.pds) {
+                var n = $scope.pds[i];
+                if (n.product_sn == newValue) {
+                    $scope.fds.price = n.price;
+                }
+            }
+        }
+    });
     function getMasterData(id) {
         $http.get(gb_approot + 'api/TempleMember', { params: { id: id } }).success(function (data, status, headers, config) {
             if (data.result) {
@@ -274,6 +284,19 @@ angular.module('angularApp').controller('ctrl_edit', ['$scope', '$http', 'workSe
             showAjaxError(data);
         });
     }
+    function GetProductTempMember() {
+        workService.getProductTempleMember().success(function (data, status, headers, config) {
+            if (data.result) {
+                $scope.pds = data.data;
+            }
+            else {
+                alert(data.message);
+            }
+        }).error(function (data, status, headers, config) {
+            showAjaxError(data);
+        });
+    }
+    ;
     function checkTwID(id) {
         if (id != null && id != "") {
             var city = new Array(1, 10, 19, 28, 37, 46, 55, 64, 39, 73, 82, 2, 11, 20, 48, 29, 38, 47, 56, 65, 74, 83, 21, 3, 12, 30);
@@ -334,6 +357,7 @@ angular.module('angularApp').controller('ctrl_edit', ['$scope', '$http', 'workSe
             return false;
         }
     }
+    GetProductTempMember();
     if ($state.params.temple_member_id != undefined) {
         var get_id = $state.params.temple_member_id;
         $scope.edit_type = 2 /* update */;

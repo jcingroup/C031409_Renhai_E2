@@ -150,6 +150,9 @@ angular.module('commfun', []).service('workService', ['$http', function ($http) 
     this.getProductWishLight = function () {
         return $http.get(gb_approot + apiGetAction + '/GetProductWishLight', { params: {} });
     };
+    this.getProductTempleMember = function () {
+        return $http.get(gb_approot + apiGetAction + '/GetProductTempleMember', { params: {} });
+    };
     this.getWishList = function () {
         return $http.get(gb_approot + apiGetAction + '/GetWishList', { params: {} });
     };

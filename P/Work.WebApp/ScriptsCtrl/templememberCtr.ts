@@ -13,6 +13,7 @@ interface ITempleMemberEdit extends IScopeM<server.TempleMember> {
     deleteDetail(id: number): void;
     openNewDetail(master_id: number): void;
     print(): void;
+    pds: server.Product[];//產品資訊
     gds: server.TempleAccount[];
     fds: server.TempleAccount;
     is_show_acct: boolean;
@@ -334,6 +335,16 @@ angular.module('angularApp')
             var url = gb_approot + 'ExcelReport/downloadExcel_GodSON?temple_account_id=' + $scope.fds.temple_account_id + '&t=' + uniqid();
             $scope.downloadExcel = $sce.getTrustedResourceUrl(url);
         }
+        $scope.$watch('fds.product_sn', function (newValue: string, oldValue) {
+            if (newValue != undefined) {
+                for (var i in $scope.pds) {
+                    var n = $scope.pds[i];
+                    if (n.product_sn == newValue) {
+                        $scope.fds.price = n.price;
+                    }
+                }
+            }
+        });
         function getMasterData(id: number) {
             $http.get(gb_approot + 'api/TempleMember', { params: { id: id } })
                 .success(function (data: IResultData<server.TempleMember>, status, headers, config) {
@@ -356,6 +367,19 @@ angular.module('angularApp')
                 showAjaxError(data);
             });
         }
+        function GetProductTempMember() {
+            workService.getProductTempleMember()
+                .success(function (data: IResultData<server.Product[]>, status, headers, config) {
+                if (data.result) {
+                    $scope.pds = data.data;
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        };
 
         function checkTwID(id) {
             if (id != null && id != "") {
@@ -428,7 +452,7 @@ angular.module('angularApp')
                 return false;
             }
         }
-
+        GetProductTempMember();//取得產品資料
         if ($state.params.temple_member_id != undefined) { // 進入為修改模式
             var get_id: number = $state.params.temple_member_id;
             $scope.edit_type = IEditType.update;

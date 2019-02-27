@@ -150,6 +150,7 @@ module services {
         getProductSDLight: () => ng.IHttpPromise<IResultData<server.Product[]>>;
         getProductMDLight: () => ng.IHttpPromise<IResultData<server.Product[]>>;
         getProductWishLight: () => ng.IHttpPromise<IResultData<server.Product[]>>;
+        getProductTempleMember: () => ng.IHttpPromise<IResultData<server.Product[]>>;
         getWishList: () => ng.IHttpPromise<IResultData<server.Wish[]>>;
         getLightByMD: (product_sn: string) => ng.IHttpPromise<IResultData<server.Light_Site[]>>;
         getProductFortune: () => ng.IHttpPromise<IResultData<server.Product[]>>;
@@ -200,6 +201,9 @@ angular.module('commfun', []).service('workService', ['$http', function ($http: 
     };
     this.getProductWishLight = function () {
         return $http.get(gb_approot + apiGetAction + '/GetProductWishLight', { params: {} });
+    };
+    this.getProductTempleMember = function () {
+        return $http.get(gb_approot + apiGetAction + '/GetProductTempleMember', { params: {} });
     };
     this.getWishList = function () {
         return $http.get(gb_approot + apiGetAction + '/GetWishList', { params: {} });

@@ -169,7 +169,8 @@
                             類型
                         </th>
                         <td colspan="3">
-                            <select ng-model="fds.product_sn" ng-options="m.value as m.label for m in godson_account_type" required></select>
+                            <select ng-model="fds.product_sn"
+                                    ng-options="m.product_sn as m.product_name for m in pds" required></select>
                         </td>
                     </tr>
                     <tr>

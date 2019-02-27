@@ -50,13 +50,13 @@ var commData;
         { value: "396", label: "上排福燈" }
     ];
     commData.godson_account_type = [
-        { value: "751", label: "契子會(入會)" },
-        { value: "752", label: "契子會(大會)" }
+        { value: "751", label: "契子入會" },
+        { value: "752", label: "契子大會" }
     ];
     commData.godson_account_type_forsearch = [
         { value: "", label: "All" },
-        { value: "751", label: "契子會(入會)" },
-        { value: "752", label: "契子會(大會)" }
+        { value: "751", label: "契子入會" },
+        { value: "752", label: "契子大會" }
     ];
     commData.godson_markclose_forsearch = [
         { value: "", label: "全部" },
