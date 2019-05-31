@@ -2,7 +2,9 @@
     export var batch_timeperiod: IKeyValueS[] = [
         { value: "All", label: "整天" },
         { value: "AM", label: "上午" },
-        { value: "PM", label: "下午" }
+        { value: "PM", label: "下午" },
+        { value: "AMScene", label: "上午現場" },
+        { value: "PMScene", label: "下午現場" }
     ];
     export var batch_prod: IKeyValueS[] = [
         { value: null, label: "全部" },

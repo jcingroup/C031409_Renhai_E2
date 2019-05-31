@@ -39,7 +39,8 @@ namespace DotWeb.Controllers
                 db = getDB();
                 int y = year == null ? this.LightYear : (int)year;
                 var getAssemblyBatch = db.AssemblyBatch.Where(x => x.batch_date.Year == y)
-                                         .OrderBy(x => new { x.batch_date, x.batch_timeperiod }).ToList();
+                    //.OrderBy(x => new { x.batch_date, x.batch_timeperiod }).ToList();
+                                         .OrderBy(x => x.batch_sn).ToList();
 
                 r.data = getAssemblyBatch;
                 r.result = true;
@@ -136,7 +137,8 @@ namespace DotWeb.Controllers
                 var batchsIndex = batchlist.Select((x, i) => new BatchList()
                 {
                     batch_sn = x.batch_sn,
-                    index = i + 1
+                    index = i + 1,
+                    batch_qty = x.batch_qty
                 }).ToList();
 
                 if (this.UserId == 1000001 & batchsIndex.Any(x => x.batch_sn == batch_sn))
@@ -160,7 +162,7 @@ namespace DotWeb.Controllers
                     else
                     {
                         #region 加燈位
-                        for (var i = 1; i <= 500; i++)
+                        for (var i = 1; i <= batch.batch_qty; i++)
                         {
                             string num = i.ToString().PadLeft(4, '0');
                             Light_Site md01 = new Light_Site()
@@ -261,6 +263,7 @@ namespace DotWeb.Controllers
     {
         public int batch_sn { get; set; }
         public int index { get; set; }
+        public int batch_qty { get; set; }
     }
     public class ICar : Car
     {
