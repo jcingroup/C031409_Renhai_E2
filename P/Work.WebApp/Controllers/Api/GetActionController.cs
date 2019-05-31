@@ -513,7 +513,7 @@ namespace DotWeb.Api
                         batch_timeperiod = x.batch_timeperiod,
                         batch_title = x.batch_title,
                         count = x.訂單明細檔.Where(z => z.assembly_batch_sn != null & z.is_reject != true & z.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會).Count()
-                    }).OrderBy(x => new { x.batch_date, x.batch_timeperiod }).ToList();
+                    }).OrderBy(x => x.batch_sn).ToList();
 
                 r.data = getAllBath;
                 r.result = true;
