@@ -26,6 +26,8 @@
             </select>
             <label>產品種類： </label>
             <select ng-model="sd.product_sn" ng-options="m.value as m.label for m in batch_prod"></select>
+            <label>訂單編號</label>
+            <input type="text" ng-model="sd.orders_sn" />
             <button type="submit">
                 <i class="fa fa-search"></i>查詢
             </button>
@@ -48,7 +50,7 @@
             </button>
             <label class="text-center" style="color:red">備註：總名冊 Excel依祈福燈位排序;名冊、金紙疏文、牒文、個別歷代祖先疏文 Excel依訂單日期排序。</label>
         </fieldset>
-       
+
     </form>
     <div class="grid-list">
         <table class="table-master">
@@ -60,7 +62,8 @@
                 <th width="10%">訂單編號</th>
                 <th width="12%">產品名稱</th>
                 <th width="10%">申請人</th>
-                <th width="20%">申請人地址</th>
+                <th width="15%">申請人地址</th>
+                <th width="5%">換梯次</th>
             </tr>
             <tr ng-repeat="gd in Grid_Items">
                 <td>{{gd.batch_title}}</td>
@@ -71,9 +74,110 @@
                 <td>{{gd.product_name}}</td>
                 <td>{{gd.member_name}}</td>
                 <td>{{gd.address}}</td>
+                <td class="text-center">
+                    <button type="button" ng-click="Master_Open_ChgBatch($index)"
+                            title="換梯次">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                </td>
             </tr>
         </table>
         @Html.Partial("NavPage")
     </div>
     <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
+</script>
+
+<script type="text/ng-template" id="dataChgBatch">
+    <!-- 編輯畫面-->
+    <h4 class="text-center">法會梯次替換 訂單編號{{orders_sn}}<button type="button" ng-click="goGrid()">回表列</button></h4>
+    <div class="red-form">
+        <table class="table-master">
+            <tr>
+                <th width="25%">祈福姓名</th>
+                <td width="25%">{{order_data.dtl.member_name}}</td>
+                <th width="25%">祈福產品</th>
+                <td width="25%">{{order_data.dtl.product_name}}</td>
+            </tr>
+            <tr>
+                <th>祈福性別</th>
+                <td>{{order_data.dtl.gender==2?"女":"男"}}</td>
+                <th>單價</th>
+                <td>{{order_data.dtl.price}}</td>
+            </tr>
+            <tr>
+                <th>祈福地址</th>
+                <td colspan="3">{{order_data.dtl.address}}</td>
+            </tr>
+        </table>
+        <hr />
+        <form id="upBatch" ng-submit="submitData()">
+            <div style="margin: 0 auto;text-align: center;display:flex;align-items: center;justify-content:  center;">
+                <div style="display:inline-block;width:45%;">
+                    <table class="table-master">
+                        <caption>
+                            原本梯次
+                        </caption>
+                        <tr>
+                            <th>點燈位置</th>
+                            <td>{{order_data.dtl.light_name}}</td>
+                            <th>超渡梯次</th>
+                            <td>{{order_data.dtl.batch_title}}</td>
+                        </tr>
+                        <tr>
+                            <th>超渡_往者名</th>
+                            <td>{{order_data.dtl.departed_name}}</td>
+                            <th>超渡_嬰靈數量</th>
+                            <td>{{order_data.dtl.departed_qty}}</td>
+                        </tr>
+                        <tr>
+                            <th>超渡_牌位地址</th>
+                            <td colspan="3">
+                                <span ng-show="order_data.dtl.product_sn==1401 || order_data.dtl.product_sn==1402">
+                                    {{order_data.dtl.departed_address}}
+                                </span>
+                                <span ng-show="order_data.dtl.product_sn==1403 || order_data.dtl.product_sn==1404" style="color:orangered">冤親、嬰靈 地址用祈福地址</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="display:inline-block;width:5%;">
+                    ➨
+                </div>
+
+                <div style="display:inline-block;width:45%;">
+                    <table class="table-master">
+                        <caption>
+                            替換梯次
+                        </caption>
+                        <tr>
+                            <th>點燈位置</th>
+                            <td></td>
+                            <th>超渡梯次</th>
+                            <td>
+                                <select ng-model="upData.up_batch_sn" ng-disabled="order_data.y!=allowYear" ng-options="m.batch_sn as (m.batch_title+'('+(m.batch_date | date:'yyyyMMdd')+(m.batch_timeperiod |  OptionStr:timeperiod_list)+')'+'__'+m.count) for m in bath_list"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>超渡_往者名</th>
+                            <td>{{order_data.dtl.departed_name}}</td>
+                            <th>超渡_嬰靈數量</th>
+                            <td>{{order_data.dtl.departed_qty}}</td>
+                        </tr>
+                        <tr>
+                            <th>超渡_牌位地址</th>
+                            <td colspan="3">
+                                <span ng-show="order_data.dtl.product_sn==1401 || order_data.dtl.product_sn==1402">
+                                    {{order_data.dtl.departed_address}}
+                                </span>
+                                <span ng-show="order_data.dtl.product_sn==1403 || order_data.dtl.product_sn==1404" style="color:orangered">冤親、嬰靈 地址用祈福地址</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="text-align:center">
+        <button type="submit" form="upBatch">確認變更梯次</button>
+    </div>
 </script>

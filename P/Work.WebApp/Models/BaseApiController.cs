@@ -104,6 +104,10 @@ namespace DotWeb.Api
                 }
             }
         }
+        protected TransactionScope defAsyncScope()
+        {
+            return new TransactionScope();
+        }
     }
 
     #region 泛型控制器擴充

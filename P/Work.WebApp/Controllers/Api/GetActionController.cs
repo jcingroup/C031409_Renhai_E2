@@ -447,6 +447,7 @@ namespace DotWeb.Api
                                  batch_timeperiod = x.AssemblyBatch.batch_timeperiod,
                                  assembly_batch_sn = x.assembly_batch_sn,
                                  orders_sn = x.orders_sn,
+                                 orders_detail_id = x.orders_detail_id,
                                  member_name = x.member_name,
                                  address = x.address,
                                  Y = x.Y,
@@ -459,7 +460,10 @@ namespace DotWeb.Api
                 {
                     items = items.Where(x => x.Y == q.year);
                 }
-
+                if (q.orders_sn != null)
+                {
+                    items = items.Where(x => x.orders_sn == q.orders_sn);
+                }
                 if (q.assembly_batch_sn != null)
                 {
                     items = items.Where(x => x.assembly_batch_sn == q.assembly_batch_sn);
@@ -667,6 +671,65 @@ namespace DotWeb.Api
         public class WishList : m_Orders_Detail
         {
             public List<Wish_Light> wishs { get; set; }
+        }
+        #endregion
+
+        #region (2019.6.3)超渡法會 換批次
+        /// <summary>
+        /// 取得要替換梯次的 訂單主明細資料
+        /// </summary>
+        /// <param name="orders_sn"></param>
+        /// <returns></returns>
+        public rAjaxGetData<object> GetBatchItem(string orders_sn, int orders_detail_id)
+        {
+            rAjaxGetData<object> r = new rAjaxGetData<object>();
+            RenHai2012Entities db = null;
+            try
+            {
+                db = getDB0();
+                int year = DotWeb.CommSetup.CommWebSetup.WorkYear;
+                var main = db.Orders.Where(x => x.orders_sn == orders_sn).FirstOrDefault();
+                var dtl = db.Orders_Detail
+                            .Where(x => x.orders_sn == orders_sn & x.orders_detail_id == orders_detail_id)
+                            .Select(x => new
+                            {
+                                x.orders_sn,//訂單編號
+                                x.orders_detail_id,//訂單明細編號
+                                x.product_sn,//產品編號
+                                x.member_detail_id,//會員編號
+                                x.member_name,//會員名稱
+                                x.address,//祈福地址
+                                x.product_name,//產品名稱
+                                x.gender,//性別
+                                x.price,//產品價格
+                                x.light_name,//點燈位置
+                                x.assembly_batch_sn,//超渡法會梯次
+                                x.AssemblyBatch.batch_title,//超渡法會梯次名稱
+                                x.departed_name,//超渡_往者名
+                                x.departed_qty,//超渡_嬰靈數量
+                                x.departed_address,//超渡_牌位地址
+                            })
+                            .FirstOrDefault();
+
+                r.data = new
+                {
+                    y = (main == null ? year : main.y),
+                    main,
+                    dtl
+                };
+                r.result = true;
+                return r;
+            }
+            catch (Exception ex)
+            {
+                r.result = false;
+                r.message = ex.Message;
+                return r;
+            }
+            finally
+            {
+                db.Dispose();
+            }
         }
         #endregion
 

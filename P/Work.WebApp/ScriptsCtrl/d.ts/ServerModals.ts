@@ -73,6 +73,8 @@
         c_UpdateDateTime: Date;
         orders: server.Orders;
         product: server.Product;
+
+        assembly_batch_sn: number;
     }
     interface Product extends server.BaseEntityTable {
         product_sn: string;

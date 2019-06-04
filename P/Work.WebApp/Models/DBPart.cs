@@ -208,6 +208,7 @@ namespace Work.WebApp.Models
         public string product_sn { get; set; }
         public DateTime? startDate { get; set; }
         public DateTime? endDate { get; set; }
+        public string orders_sn { get; set; }
     }
     public class q_WishList : QueryBase
     {

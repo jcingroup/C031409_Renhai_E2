@@ -9,6 +9,7 @@ using ProcCore;
 using ProcCore.Business.Logic;
 using ProcCore.ReturnAjaxResult;
 using Work.WebApp.Models;
+using System.Data.SqlClient;
 
 namespace DotWeb.Controllers
 {
@@ -133,7 +134,7 @@ namespace DotWeb.Controllers
 
                 //取得目前法會梯次資料
                 var batchlist = db0.AssemblyBatch.Where(x => x.batch_date.Year == year)
-                                                 .OrderBy(x => new { x.batch_date, x.batch_timeperiod }).ToList();
+                                                 .OrderBy(x => x.batch_sn).ToList();
                 var batchsIndex = batchlist.Select((x, i) => new BatchList()
                 {
                     batch_sn = x.batch_sn,
@@ -257,8 +258,118 @@ namespace DotWeb.Controllers
         {
             return defJSON(new { });
         }
+        #region (2019.6.3) 更新梯次
+        /// <summary>
+        /// 更新梯次
+        /// </summary>
+        /// <param name="orders_sn">更新訂單編號</param>
+        /// <param name="orders_detail_id">更新訂單明細編號</param>
+        /// <param name="up_batch_sn">要更新的梯次名稱</param>
+        /// <returns></returns>
+        [HttpPost]
+        public string chgBatch(UpBatchData p)
+        {
+            rAjaxGetData<object> r = new rAjaxGetData<object>();
+            string orders_sn = p.orders_sn;
+            int orders_detail_id = p.orders_detail_id;
+            int up_batch_sn = p.up_batch_sn;
+            int year = DotWeb.CommSetup.CommWebSetup.WorkYear;
+            try
+            {
+                using (RenHai2012Entities db0 = getDB())
+                {
+                    using (var tx = defAsyncScope())
+                    {
+                        var main = db0.Orders.Where(x => x.orders_sn == orders_sn).FirstOrDefault();
+                        var dtl = db0.Orders_Detail.Where(x => x.orders_sn == orders_sn & x.orders_detail_id == orders_detail_id).FirstOrDefault();
+                        var batchlist = db0.AssemblyBatch.Where(x => x.batch_date.Year == year).OrderBy(x => x.batch_sn).ToList();
+                        #region 驗證
+                        if (dtl == null || main == null)
+                        {
+                            r.result = false;
+                            r.message = "您搜尋的訂單已經不存,請重新整理再確認看看~!";
+                            return defJSON(r);
+                        }
+                        if (!batchlist.Any(x => x.batch_sn == up_batch_sn))
+                        {
+                            r.result = false;
+                            r.message = "您要更新的梯次非今年度法會梯次,無法更新!";
+                            return defJSON(r);
+                        }
+                        if (dtl.assembly_batch_sn == up_batch_sn)
+                        {
+                            r.result = false;
+                            r.message = "您要更新的梯次已經與原本梯次相同,無法更新!";
+                            return defJSON(r);
+                        }
+                        #region 超渡法會梯次統計
+                        var getBatchInfo = batchlist.FirstOrDefault(x => x.batch_sn == up_batch_sn);
+                        int qty = db0.Orders_Detail.Where(x => x.is_reject != true & x.assembly_batch_sn == getBatchInfo.batch_sn & x.Product.category == ProcCore.Business.Logic.e_祈福產品分類.超渡法會).Count();
+                        int EmptySerial = getBatchInfo.batch_qty - qty;//多餘空位
+                        if (EmptySerial <= 0)
+                        {
+                            r.message = string.Format("{0}超渡法會梯次人數僅剩{1}位,目前選取人數已達上限,請選擇其他梯次!", getBatchInfo.batch_title, EmptySerial);
+                            r.result = false;
+                            return defJSON(r);
+                        }
+                        #endregion
+                        #endregion
+                        string product_sn = dtl.product_sn;//產品編號
+                        int old_light_sn = int.Parse(dtl.memo);//原始梯次位置
+                        int? old_batch_sn = dtl.assembly_batch_sn;//原始梯次位置
+
+                        //step1.取得舊的點燈位置
+                        var old_light = db0.Light_Site.
+                                Where(x => x.Y == this.LightYear &&
+                                    x.product_sn == product_sn &&
+                                    x.light_site_id == old_light_sn &&
+                                    x.assembly_batch_sn == old_batch_sn)
+                                    .FirstOrDefault();
+                        old_light.is_sellout = "0";
+                        old_light.C_UpdateDateTime = DateTime.Now;
+                        old_light.C_UpdateUserID = this.UserId;
+                        //step2.取得新的點燈位置
+                        var new_light = db0.Light_Site.
+                                  Where(x => x.Y == this.LightYear &&
+                                      x.product_sn == product_sn &&
+                                      x.is_sellout == "0" &&
+                                      x.assembly_batch_sn == up_batch_sn)
+                                      .OrderBy(x => x.light_site_id)
+                                      .Take(1)
+                                      .FirstOrDefault();
+
+                        new_light.is_sellout = "1";
+                        new_light.C_UpdateDateTime = DateTime.Now;
+                        new_light.C_UpdateUserID = this.UserId;
+                        //step3.更新Orders_Detail的梯次及點燈位置
+
+                        dtl.assembly_batch_sn = up_batch_sn;//更新梯次編號
+                        dtl.light_name = new_light.light_name;//更新燈位名稱
+                        dtl.memo = new_light.light_site_id.ToString();//更新燈位編號
+
+                        db0.SaveChanges();
+                        tx.Complete();
+                    }
+                }
+                //r.result = true;
+                return defJSON(r);
+            }
+            catch (Exception ex)
+            {
+                r.result = false;
+                r.message = ex.Message;
+                return defJSON(r);
+            }
+        }
+        #endregion
     }
 
+    public class UpBatchData
+    {
+        public string orders_sn { get; set; }
+        public int orders_detail_id { get; set; }
+        public int up_batch_sn { get; set; }
+    }
     public class BatchList
     {
         public int batch_sn { get; set; }

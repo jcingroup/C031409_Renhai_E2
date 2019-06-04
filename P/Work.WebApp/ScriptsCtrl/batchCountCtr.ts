@@ -24,6 +24,19 @@
     DownLoadExcel_DieWenPrint(): void;//蝶文
     DownLoadExcel_ShuWenPrint(): void;//個別、歷代祖先 疏文
     //download excel
+
+    //超渡法會換梯次功能
+    Master_Open_ChgBatch($index: number): void;
+}
+interface IChgBatch extends IScopeM<server.Orders> {
+    orders_sn: string;
+    order_data: { main: server.Orders; dtl: server.Orders_Detail }
+    bath_list: server.AssemblyBatch[];
+    timeperiod_list: IKeyValueS[];
+    submitData(): void;
+    goGrid(): void;
+    allowYear: number;
+    upData: { orders_sn?: string; orders_detail_id?: number; up_batch_sn?: number }//更新後資料
 }
 interface JQuery {
     modal(options?: string): JQuery;
@@ -46,11 +59,11 @@ angular
         templateUrl: 'dataGrid',
         controller: 'ctrl'
     })
-    //    .state('edit', {
-    //    url: '/edit?batch_id',
-    //    templateUrl: 'dataEdit',
-    //    controller: 'ctrl_edit'
-    //})
+        .state('chgbatch', {
+        url: '/chgbatch?orders_sn&orders_detail_id',
+        templateUrl: 'dataChgBatch',
+        controller: 'ctrl_edit'
+    });
 }]);
 var apiPath: string = gb_approot + 'api/GetAction/GetAssemblyList';
 angular
@@ -219,7 +232,87 @@ angular
                 return $.extend({}, date);
             }
         }
-
+        //超渡法會 換梯次功能---start---
+        $scope.Master_Open_ChgBatch = function ($index) {
+            var orders_sn = $scope.Grid_Items[$index]["orders_sn"];
+            var orders_detail_id = $scope.Grid_Items[$index]["orders_detail_id"];
+            $state.go('chgbatch', { 'orders_sn': orders_sn, 'orders_detail_id': orders_detail_id });
+        };
+        //超渡法會 換梯次功能---end---
     }]);
 
-
+var apiItemPath: string = gb_approot + 'api/GetAction/GetBatchItem';
+var apiUpPath: string = gb_approot + 'AssemblyBatch/chgBatch';
+angular.module('angularApp')
+    .controller('ctrl_edit', ['$scope', '$http', 'workService', '$sce', '$state', '$q',
+    function (
+        $scope: IChgBatch,
+        $http: ng.IHttpService,
+        workService: services.workService,
+        $sce: ng.ISCEService,
+        $state: ng.ui.IStateService,
+        $q: ng.IQService
+        ) {
+        $scope.allowYear = allowyear;
+        $scope.timeperiod_list = commData.batch_timeperiod;
+        $scope.upData = { assembly_batch_sn: null };
+        $scope.submitData = function () {
+            $http.post(apiUpPath, $scope.upData)
+                .success(function (data: IResultBase, status, headers, config) {
+                if (data.result) {
+                    var orders_sn: string = $state.params.orders_sn;
+                    var orders_detail_id: number = $state.params.orders_detail_id;
+                    getMasterData(orders_sn, orders_detail_id);//重新整理
+                    alert("更新成功!");
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        };
+        $scope.goGrid = function () {
+            $state.go('grid');
+            $scope.Init_Query();
+        }
+        function getMasterData(orders_sn: string, orders_detail_id: number) {
+            $http.get(apiItemPath, { params: { orders_sn: orders_sn, orders_detail_id: orders_detail_id } })
+                .success(function (data: IResultData<{ y: number; main: server.Orders; dtl: server.Orders_Detail }>, status, headers, config) {
+                if (data.result) {
+                    GetBathList(data.data.y);//一年度取得法會梯次
+                    $scope.upData.up_batch_sn = data.data.dtl.assembly_batch_sn;
+                    $scope.order_data = obj_prop_date(data.data);
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        }
+        function GetBathList(year) {
+            workService.getQueryBatchList(year)
+                .success(function (data: IResultData<server.AssemblyBatch[]>, status, headers, config) {
+                if (data.result) {
+                    $scope.bath_list = data.data;
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                alert('ajax error' + data);
+            });
+        };
+        if ($state.params.orders_sn != undefined && $state.params.orders_detail_id) { // 進入為修改模式
+            var orders_sn: string = $state.params.orders_sn;
+            var orders_detail_id: number = $state.params.orders_detail_id;
+            $scope.orders_sn = orders_sn;
+            $scope.edit_type = IEditType.update;
+            $scope.upData.orders_sn = orders_sn;
+            $scope.upData.orders_detail_id = orders_detail_id;
+            getMasterData(orders_sn, orders_detail_id);
+        } else {
+            //錯誤
+        }
+    }]);
