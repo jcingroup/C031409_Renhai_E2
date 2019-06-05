@@ -621,6 +621,7 @@
     <Content Include="Views\TempleMember\PostPrint.cshtml" />
     <Content Include="Views\AssemblyBatch\BatchCount.cshtml" />
     <Content Include="Views\WishLight\Index.cshtml" />
+    <Content Include="Views\AssemblyBatch\BatchChg.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -725,6 +726,7 @@
     <None Include="Properties\PublishProfiles\發行至仁海宮伺服器.pubxml" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="ScriptsCtrl\batchChgCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\WishLightCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\batchCountCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\d.ts\angular-ui-router.d.ts" />

@@ -29,6 +29,15 @@ namespace DotWeb.Controllers
             ViewBag.ID = this.UserId;
             return View();
         }
+        /// <summary>
+        /// 梯次更新歷史紀錄
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult BatchChg()
+        {
+            ViewBag.ID = this.UserId;
+            return View();
+        }
 
         [HttpGet]
         public string GetAssemblyBatch(int? year)
@@ -349,15 +358,21 @@ namespace DotWeb.Controllers
 
                         var log = new AssemblyBatchChglog()
                         {
+                            y = year,
                             orders_sn = orders_sn,
                             orders_detail_id = orders_detail_id,
                             product_sn = product_sn,
+                            member_detail_id = dtl.member_detail_id,
+                            member_name = dtl.member_name,
                             old_batch_sn = old_batch_sn,
                             old_light_id = old_light.light_site_id,
                             old_light_name = old_light.light_name,
                             new_batch_sn = up_batch_sn,
                             new_light_id = new_light.light_site_id,
                             new_light_name = new_light.light_name,
+                            departed_name = dtl.departed_name,
+                            departed_address = dtl.departed_address,
+                            departed_qty = dtl.departed_qty,
                             C_InsertDateTime = DateTime.Now,
                             C_InsertUserID = this.UserId
                         };

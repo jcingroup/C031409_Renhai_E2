@@ -13,9 +13,12 @@ namespace Work.WebApp.Models
     using System.Collections.Generic;
     public partial class m_AssemblyBatchChglog  {
     public int id { get; set; }
+    public int y { get; set; }
     public string orders_sn { get; set; }
     public int orders_detail_id { get; set; }
     public string product_sn { get; set; }
+    public int member_detail_id { get; set; }
+    public string member_name { get; set; }
     public Nullable<int> old_batch_sn { get; set; }
     public Nullable<int> old_light_id { get; set; }
     public string old_light_name { get; set; }

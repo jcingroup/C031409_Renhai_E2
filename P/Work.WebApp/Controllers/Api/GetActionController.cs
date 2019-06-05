@@ -731,6 +731,79 @@ namespace DotWeb.Api
                 db.Dispose();
             }
         }
+        /// <summary>
+        /// 超渡法會 換梯次歷史紀錄
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        public GridInfo2<object> GetBatchChgList([FromUri]q_BatchList q)
+        {
+            #region 連接BusinessLogicLibary資料庫並取得資料
+
+            using (db0 = getDB0())
+            {
+                var items = (from x in db0.AssemblyBatchChglog
+                             orderby x.C_InsertDateTime
+                             select new
+                             {
+                                 x.id,
+                                 x.y,
+                                 x.orders_sn,
+                                 x.orders_detail_id,
+                                 x.product_sn,
+                                 x.member_name,
+                                 x.old_batch_sn,
+                                 x.old_light_id,
+                                 x.old_light_name,
+                                 x.new_batch_sn,
+                                 x.new_light_id,
+                                 x.new_light_name,
+                                 x.departed_address,
+                                 x.departed_name,
+                                 x.departed_qty,
+                                 x.C_InsertDateTime,
+                                 x.C_InsertUserID
+                             });
+
+                if (q.year != null)
+                {
+                    items = items.Where(x => x.y == q.year);
+                }
+                if (q.orders_sn != null)
+                {
+                    items = items.Where(x => x.orders_sn == q.orders_sn);
+                }
+
+                if (q.product_sn != null)
+                {
+                    items = items.Where(x => x.product_sn == q.product_sn);
+                }
+
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    items = items.Where(x => x.C_InsertDateTime >= start & x.C_InsertDateTime < end);
+                }
+
+                int page = (q.page == null ? 1 : (int)q.page);
+                int startRecord = PageCount.PageInfo(page, this.defPageSize, items.Count());
+
+                var resultItems = items.Skip(startRecord).Take(this.defPageSize).ToList();
+
+                return (new GridInfo2<object>()
+                {
+                    rows = resultItems,
+                    total = PageCount.TotalPage,
+                    page = PageCount.Page,
+                    records = PageCount.RecordCount,
+                    startcount = PageCount.StartCount,
+                    endcount = PageCount.EndCount
+                });
+            }
+            #endregion
+        }
+
         #endregion
 
     }

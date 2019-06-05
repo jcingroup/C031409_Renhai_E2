@@ -16,9 +16,12 @@ namespace Work.WebApp.Models
     public partial class AssemblyBatchChglog 
     {
         public int id { get; set; }
+        public int y { get; set; }
         public string orders_sn { get; set; }
         public int orders_detail_id { get; set; }
         public string product_sn { get; set; }
+        public int member_detail_id { get; set; }
+        public string member_name { get; set; }
         public Nullable<int> old_batch_sn { get; set; }
         public Nullable<int> old_light_id { get; set; }
         public string old_light_name { get; set; }
@@ -35,5 +38,7 @@ namespace Work.WebApp.Models
         public virtual AssemblyBatch AssemblyBatch { get; set; }
     	[JsonIgnore]
         public virtual AssemblyBatch AssemblyBatch1 { get; set; }
+    	[JsonIgnore]
+        public virtual Member_Detail 會員資料表 { get; set; }
     }
 }

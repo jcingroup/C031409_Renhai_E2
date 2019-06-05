@@ -314,6 +314,24 @@
         //擴充
         count: number;
     }
+    interface AssemblyBatchChglog extends server.BaseEntityTable {
+        id: number;
+        y: number;
+        orders_sn: string;
+        orders_detail_id?: number;
+        product_sn?: string;
+        old_batch_sn?: number;
+        old_light_id?: number;
+        old_light_name?: string;
+        new_batch_sn?: number;
+        new_light_id?: number;
+        new_light_name?: string;
+        departed_name?: string;
+        departed_address?: string;
+        departed_qty?: string;
+        C__InsertUserID?: string;
+        C_InsertDateTime?: string;
+    }
     //祈福許願燈:願望種類
     interface Wish extends server.BaseEntityTable {
         wish_id: number;
