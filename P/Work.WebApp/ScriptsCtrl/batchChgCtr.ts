@@ -67,7 +67,8 @@ angular
             year: today.getFullYear(),
             product_sn: null,
             startDate: setDateS(today),
-            endDate: setDateS(today)
+            endDate: setDateS(today),
+            orders_sn: null
         }
         $scope.show_master_edit = false;
         $scope.edit_type = 0;// IEditType.none; //ref 2
@@ -121,12 +122,12 @@ angular
         $scope.DownLoadExcel_BatchChgPrint = function () {
             var parm = [];
             parm.push('year=' + $scope.sd.year);
-            parm.push('batch_sn=' + $scope.sd.assembly_batch_sn);
             parm.push('product_sn=' + $scope.sd.product_sn);
             parm.push('startDate=' + setDateS($scope.sd.startDate));
             parm.push('endDate=' + setDateS($scope.sd.endDate));
+            parm.push('orders_sn=' + $scope.sd.orders_sn);
             parm.push('tid=' + uniqid());
-            var url = gb_approot + 'ExcelReport/BatchAllRoll?' + parm.join('&');
+            var url = gb_approot + 'ExcelReport/BatchChg?' + parm.join('&');
             $scope.downloadExcel = url;
         }
         //日曆小幫手---start---
@@ -148,12 +149,12 @@ angular
             startingDay: 1
         };
         //日曆小幫手---end-----
-        function setDateS(date) {//將日期轉成字串
+        function setDateS(date): string {//將日期轉成字串
             if (date instanceof Date) {
-                var dateS: String = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
-                return dateS
+                var dateS: string = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+                return dateS;
             } else {
-                return $.extend({}, date);
+                return date;
             }
         }
     }]);

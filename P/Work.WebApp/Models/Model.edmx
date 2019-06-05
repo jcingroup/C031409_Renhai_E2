@@ -28,6 +28,7 @@
           <Property Name="orders_sn" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="orders_detail_id" Type="int" Nullable="false" />
           <Property Name="product_sn" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="product_name" Type="nvarchar" MaxLength="30" />
           <Property Name="member_detail_id" Type="int" Nullable="false" />
           <Property Name="member_name" Type="nvarchar" MaxLength="60" />
           <Property Name="old_batch_sn" Type="int" />
@@ -1299,8 +1300,8 @@
           <Property Name="batch_qty" Type="Int32" Nullable="false" />
           <NavigationProperty Name="訂單明細檔" Relationship="RenHai2012Model.FK_訂單明細檔_AssemblyBatch" FromRole="AssemblyBatch" ToRole="Orders_Detail" />
           <NavigationProperty Name="點燈位置資料表" Relationship="RenHai2012Model.FK_點燈位置資料表_AssemblyBatch" FromRole="AssemblyBatch" ToRole="Light_Site" />
-          <NavigationProperty Name="AssemblyBatchChglog" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch" FromRole="AssemblyBatch" ToRole="AssemblyBatchChglog" />
-          <NavigationProperty Name="AssemblyBatchChglog1" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch1" FromRole="AssemblyBatch" ToRole="AssemblyBatchChglog" />
+          <NavigationProperty Name="NewBatch" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch" FromRole="AssemblyBatch" ToRole="AssemblyBatchChglog" />
+          <NavigationProperty Name="OldBatch" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch1" FromRole="AssemblyBatch" ToRole="AssemblyBatchChglog" />
           </EntityType>
         <Association Name="FK_訂單明細檔_AssemblyBatch">
           <End Type="RenHai2012Model.AssemblyBatch" Role="AssemblyBatch" Multiplicity="0..1" />
@@ -1398,6 +1399,7 @@
           <Property Name="orders_sn" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="orders_detail_id" Type="Int32" Nullable="false" />
           <Property Name="product_sn" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="product_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="member_detail_id" Type="Int32" Nullable="false" />
           <Property Name="member_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="old_batch_sn" Type="Int32" />
@@ -1411,8 +1413,8 @@
           <Property Name="departed_qty" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="C_InsertUserID" Type="Int32" Nullable="false" />
           <Property Name="C_InsertDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AssemblyBatch" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch" FromRole="AssemblyBatchChglog" ToRole="AssemblyBatch" />
-          <NavigationProperty Name="AssemblyBatch1" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch1" FromRole="AssemblyBatchChglog" ToRole="AssemblyBatch" />
+          <NavigationProperty Name="NewBatch" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch" FromRole="AssemblyBatchChglog" ToRole="AssemblyBatch" />
+          <NavigationProperty Name="OldBatch" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch1" FromRole="AssemblyBatchChglog" ToRole="AssemblyBatch" />
           <NavigationProperty Name="會員資料表" Relationship="RenHai2012Model.FK_AssemblyBatchChglog_會員資料表" FromRole="AssemblyBatchChglog" ToRole="Member_Detail" />
         </EntityType>
         <Association Name="FK_AssemblyBatchChglog_AssemblyBatch">
@@ -1825,6 +1827,7 @@
                 <ScalarProperty Name="old_batch_sn" ColumnName="old_batch_sn" />
                 <ScalarProperty Name="member_name" ColumnName="member_name" />
                 <ScalarProperty Name="member_detail_id" ColumnName="member_detail_id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
                 <ScalarProperty Name="product_sn" ColumnName="product_sn" />
                 <ScalarProperty Name="orders_detail_id" ColumnName="orders_detail_id" />
                 <ScalarProperty Name="orders_sn" ColumnName="orders_sn" />

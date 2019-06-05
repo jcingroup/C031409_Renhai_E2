@@ -362,6 +362,7 @@ namespace DotWeb.Controllers
                             orders_sn = orders_sn,
                             orders_detail_id = orders_detail_id,
                             product_sn = product_sn,
+                            product_name = dtl.product_name,
                             member_detail_id = dtl.member_detail_id,
                             member_name = dtl.member_name,
                             old_batch_sn = old_batch_sn,

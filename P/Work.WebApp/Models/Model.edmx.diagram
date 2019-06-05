@@ -41,7 +41,7 @@
         <AssociationConnector Association="RenHai2012Model.FK_Wish_Light_Wish" />
         <AssociationConnector Association="RenHai2012Model.FK_Wish_Light_訂單主檔" />
         <AssociationConnector Association="RenHai2012Model.FK_Wish_Light_會員資料表" />
-        <EntityTypeShape EntityType="RenHai2012Model.AssemblyBatchChglog" Width="1.5" PointX="16.25" PointY="7.75" />
+        <EntityTypeShape EntityType="RenHai2012Model.AssemblyBatchChglog" Width="1.5" PointX="16.25" PointY="7.625" />
         <AssociationConnector Association="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch" />
         <AssociationConnector Association="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch1" />
         <AssociationConnector Association="RenHai2012Model.FK_AssemblyBatchChglog_會員資料表" />

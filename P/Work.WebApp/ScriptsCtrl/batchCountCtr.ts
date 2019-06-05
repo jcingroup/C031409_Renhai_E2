@@ -229,7 +229,7 @@ angular
                 var dateS: String = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
                 return dateS
             } else {
-                return $.extend({}, date);
+                return date;
             }
         }
         //超渡法會 換梯次功能---start---

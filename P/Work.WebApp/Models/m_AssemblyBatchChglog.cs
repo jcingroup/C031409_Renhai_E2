@@ -17,6 +17,7 @@ namespace Work.WebApp.Models
     public string orders_sn { get; set; }
     public int orders_detail_id { get; set; }
     public string product_sn { get; set; }
+    public string product_name { get; set; }
     public int member_detail_id { get; set; }
     public string member_name { get; set; }
     public Nullable<int> old_batch_sn { get; set; }

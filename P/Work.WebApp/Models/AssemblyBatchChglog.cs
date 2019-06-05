@@ -20,6 +20,7 @@ namespace Work.WebApp.Models
         public string orders_sn { get; set; }
         public int orders_detail_id { get; set; }
         public string product_sn { get; set; }
+        public string product_name { get; set; }
         public int member_detail_id { get; set; }
         public string member_name { get; set; }
         public Nullable<int> old_batch_sn { get; set; }
@@ -35,9 +36,9 @@ namespace Work.WebApp.Models
         public System.DateTime C_InsertDateTime { get; set; }
     
     	[JsonIgnore]
-        public virtual AssemblyBatch AssemblyBatch { get; set; }
+        public virtual AssemblyBatch NewBatch { get; set; }
     	[JsonIgnore]
-        public virtual AssemblyBatch AssemblyBatch1 { get; set; }
+        public virtual AssemblyBatch OldBatch { get; set; }
     	[JsonIgnore]
         public virtual Member_Detail 會員資料表 { get; set; }
     }

@@ -3135,6 +3135,7 @@ namespace DotWeb.Controllers
             public string product_sn { get; set; }
             public DateTime? startDate { get; set; }
             public DateTime? endDate { get; set; }
+            public string orders_sn { get; set; }
         }
         public class m_法會總名冊
         {
@@ -3271,6 +3272,199 @@ namespace DotWeb.Controllers
             public string d { get; set; }
         }
         #endregion
+        #endregion
+
+        #region 法會梯次替換報表
+        public FileResult BatchChg(q_法會 q)
+        {
+            var outputStream = stmBatchChg(q);
+            string setFileName = "超渡法會梯次替換名冊";
+            return ExportExcelFile(outputStream, setFileName);
+        }
+        private MemoryStream stmBatchChg(q_法會 q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                XLWorkbook excel = new XLWorkbook();
+                IXLWorksheet sheet = excel.Worksheets.Add("超渡法會梯次替換名冊");
+
+                #region 取得資料
+                var items = getBatchChgData(q);//取得訂單資料
+                #endregion
+                #region Excel Handle
+                makeBatchChg(items, sheet);
+                #endregion
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private List<m_法會梯次替換名冊> getBatchChgData(q_法會 q)
+        {
+            List<m_法會梯次替換名冊> res = new List<m_法會梯次替換名冊>();
+            using (var db0 = getDB())
+            {
+                var tmp = db0.AssemblyBatchChglog
+                        .OrderBy(x => x.C_InsertDateTime)
+                       .Select(x => new m_法會梯次替換名冊()
+                       {
+                           y = x.y,
+                           orders_sn = x.orders_sn,
+                           orders_detail_id = x.orders_detail_id,
+                           product_sn = x.product_sn,
+                           product_name = x.product_name,
+                           member_name = x.member_name,
+                           old_batch_sn = x.old_batch_sn,
+                           old_batch_sn_title = x.OldBatch.batch_title,
+                           old_light_id = x.old_light_id,
+                           old_light_name = x.old_light_name,
+                           new_batch_sn = x.new_batch_sn,
+                           new_batch_sn_title = x.NewBatch.batch_title,
+                           new_light_id = x.new_light_id,
+                           new_light_name = x.new_light_name,
+                           departed_address = x.departed_address,
+                           departed_name = x.departed_name,
+                           departed_qty = x.departed_qty,
+                           C_InsertDateTime = x.C_InsertDateTime
+                       });
+
+                if (q.year != null)
+                {
+                    tmp = tmp.Where(x => x.y == q.year);
+                }
+                if (q.orders_sn != null & q.orders_sn != "null")
+                {
+                    tmp = tmp.Where(x => x.orders_sn == q.orders_sn);
+                }
+
+                if (q.product_sn != null & q.product_sn != "null")
+                {
+                    tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                }
+
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    tmp = tmp.Where(x => x.C_InsertDateTime >= start & x.C_InsertDateTime < end);
+                }
+
+                res = tmp.ToList();
+            }
+            return res;
+        }
+        private void makeBatchChg(List<m_法會梯次替換名冊> data, IXLWorksheet sheet)
+        {
+            int count = data.Count();
+            int row_index = 1;
+            #region 標頭
+            sheet.Cell(row_index, 1).Value = "編號";
+            sheet.Cell(row_index, 2).Value = "訂單編號";
+            sheet.Cell(row_index, 3).Value = "申請人";
+            sheet.Cell(row_index, 4).Value = "產品名稱";
+            sheet.Cell(row_index, 5).Value = "原來梯次";
+            sheet.Cell(row_index, 6).Value = "原來位置";
+            sheet.Cell(row_index, 7).Value = "新梯次";
+            sheet.Cell(row_index, 8).Value = "新位置";
+            sheet.Cell(row_index, 9).Value = "超渡_往者名";
+            sheet.Cell(row_index, 10).Value = "超渡_牌位地址";
+            sheet.Cell(row_index, 11).Value = "超渡_超渡_嬰靈數量";
+            sheet.Cell(row_index, 12).Value = "替換日期";
+            row_index++;
+            #endregion
+
+
+            int index = 1;
+
+            foreach (var i in data)
+            {
+                sheet.Cell(row_index, 1).Value = index;
+                sheet.Cell(row_index, 2).SetValue<string>(i.orders_sn);
+                sheet.Cell(row_index, 3).Value = i.member_name;
+                sheet.Cell(row_index, 4).Value = i.product_name;
+                sheet.Cell(row_index, 5).Value = i.old_batch_sn_title;
+                sheet.Cell(row_index, 6).Value = i.old_light_name;
+                sheet.Cell(row_index, 7).Value = i.new_batch_sn_title;
+                sheet.Cell(row_index, 8).Value = i.new_light_name;
+                sheet.Cell(row_index, 9).Value = i.departed_name;
+                sheet.Cell(row_index, 10).Value = i.departed_address;
+                sheet.Cell(row_index, 11).Value = i.departed_qty;
+                sheet.Cell(row_index, 12).Value = i.C_InsertDateTime.ToShortDateString();
+
+                row_index++;
+                index++;
+            }
+
+            sheet.Name = string.Format("超渡法會總名冊({0}筆)", count);
+        }
+        public class m_法會梯次替換名冊
+        {
+            public int? y { get; set; }
+            /// <summary>
+            /// 訂單編號
+            /// </summary>
+            public string orders_sn { get; set; }
+            /// <summary>
+            /// 訂單明細編號
+            /// </summary>
+            public int orders_detail_id { get; set; }
+            /// <summary>
+            /// 產品編號
+            /// </summary>
+            public string product_sn { get; set; }
+            public string product_name { get; set; }
+            /// <summary>
+            /// 申請人、祈福姓名
+            /// </summary>
+            public string member_name { get; set; }
+            /// <summary>
+            /// 舊梯次
+            /// </summary>
+            public int? old_batch_sn { get; set; }
+            public string old_batch_sn_title { get; set; }
+            /// <summary>
+            /// 舊燈位編號
+            /// </summary>
+            public int? old_light_id { get; set; }
+            /// <summary>
+            /// 舊燈位名稱
+            /// </summary>
+            public string old_light_name { get; set; }
+            /// <summary>
+            /// 新梯次
+            /// </summary>
+            public int? new_batch_sn { get; set; }
+            public string new_batch_sn_title { get; set; }
+            /// <summary>
+            /// 新燈位編號
+            /// </summary>
+            public int? new_light_id { get; set; }
+            /// <summary>
+            /// 新燈位名稱
+            /// </summary>
+            public string new_light_name { get; set; }
+            /// <summary>
+            /// 超渡_超渡_牌位地址
+            /// </summary>
+            public string departed_address { get; set; }
+            /// <summary>
+            /// 超渡_往者名
+            /// </summary>
+            public string departed_name { get; set; }
+            /// <summary>
+            /// 超渡_嬰靈數量
+            /// </summary>
+            public string departed_qty { get; set; }
+            public DateTime C_InsertDateTime { get; set; }
+        }
         #endregion
 
         #region 祈福許願燈
