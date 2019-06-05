@@ -41,7 +41,10 @@
         <AssociationConnector Association="RenHai2012Model.FK_Wish_Light_Wish" />
         <AssociationConnector Association="RenHai2012Model.FK_Wish_Light_訂單主檔" />
         <AssociationConnector Association="RenHai2012Model.FK_Wish_Light_會員資料表" />
-      </Diagram>
+        <EntityTypeShape EntityType="RenHai2012Model.AssemblyBatchChglog" Width="1.5" PointX="7.625" PointY="14.625" />
+        <AssociationConnector Association="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch" />
+        <AssociationConnector Association="RenHai2012Model.FK_AssemblyBatchChglog_AssemblyBatch1" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

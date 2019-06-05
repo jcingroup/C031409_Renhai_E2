@@ -203,6 +203,9 @@
     <Compile Include="Models\AssemblyBatch.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssemblyBatchChglog.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BaseApiController.cs" />
     <Compile Include="Models\Fortune_Light.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -215,6 +218,9 @@
     </Compile>
     <Compile Include="Models\MyTaiwanCalendar.cs" />
     <Compile Include="Models\m_AssemblyBatch.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\m_AssemblyBatchChglog.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\m_Fortune_Light.cs">

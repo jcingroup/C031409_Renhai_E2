@@ -341,12 +341,27 @@ namespace DotWeb.Controllers
                         new_light.is_sellout = "1";
                         new_light.C_UpdateDateTime = DateTime.Now;
                         new_light.C_UpdateUserID = this.UserId;
-                        //step3.更新Orders_Detail的梯次及點燈位置
 
+                        //step3.更新Orders_Detail的梯次及點燈位置
                         dtl.assembly_batch_sn = up_batch_sn;//更新梯次編號
                         dtl.light_name = new_light.light_name;//更新燈位名稱
                         dtl.memo = new_light.light_site_id.ToString();//更新燈位編號
 
+                        var log = new AssemblyBatchChglog()
+                        {
+                            orders_sn = orders_sn,
+                            orders_detail_id = orders_detail_id,
+                            product_sn = product_sn,
+                            old_batch_sn = old_batch_sn,
+                            old_light_id = old_light.light_site_id,
+                            old_light_name = old_light.light_name,
+                            new_batch_sn = up_batch_sn,
+                            new_light_id = new_light.light_site_id,
+                            new_light_name = new_light.light_name,
+                            C_InsertDateTime = DateTime.Now,
+                            C_InsertUserID = this.UserId
+                        };
+                        db0.AssemblyBatchChglog.Add(log);
                         db0.SaveChanges();
                         tx.Complete();
                     }
