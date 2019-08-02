@@ -2103,7 +2103,7 @@ namespace ProcCore.Business.Logic
 
         public static string 香油_牛軋糖 = "761";
         public static string 香油_農民曆廣告 = "762";//2016/12/7 下架
-        public static string 香油_衣服 = "763";
+        public static string 香油_喜緣玉品 = "763";// 2019/8/2 『香油(衣服)』 改名為 『香油(寄售)』
         public static string 香油_薦拔祖先 = "764";//2017/7/19 下架
         public static string 香油_冤親債主 = "765";//2017/7/19 下架
         public static string 香油_嬰靈 = "766";//2017/7/19 下架
@@ -5222,7 +5222,7 @@ namespace ProcCore.Business.Logic
         public int 香油_其它 { get; set; }
         public int 香油_牛軋糖 { get; set; }
         public int 香油_農民曆廣告 { get; set; }//2016/12/7 下架
-        public int 香油_衣服 { get; set; }
+        public int 香油_喜緣玉品 { get; set; } // 2019/8/2 『香油(衣服)』 改名為 『香油(喜緣玉品)』
         public int 香油_薦拔祖先 { get; set; }//2017/7/19 下架
         public int 香油_冤親債主 { get; set; }//2017/7/19 下架
         public int 香油_嬰靈 { get; set; }//2017/7/19 下架
