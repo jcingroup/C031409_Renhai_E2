@@ -368,6 +368,7 @@ Dim MasterID
                     $('#p13').val(jsonobj.縣市);
                     $('#p13').trigger('change');
                     $('#p14').val(jsonobj.鄉鎮);
+                    countryName = jsonobj.鄉鎮;
                     $('#p7').val(jsonobj.地址);
                     $('#p9').val(jsonobj.電話尾碼);
                     $('#CaptionText').text("會員管理：新增");
@@ -525,7 +526,6 @@ Dim MasterID
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
-
         //縣市 鄉鎮 地址切換
         $(function () {
             $('#p13').change(function () {
@@ -856,7 +856,7 @@ Dim MasterID
             return true;
         }
     }
-    
+
     function checkDate(date) {//檢查日期
         if (date != null && date != "") {
             var day = date.split('/');
