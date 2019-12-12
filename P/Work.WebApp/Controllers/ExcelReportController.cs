@@ -139,7 +139,7 @@ namespace DotWeb.Controllers
                 md.香油_專案專款 = mds.Any(x => x.product_sn == e_祈福產品.香油_專案專款) ? mds.First(x => x.product_sn == e_祈福產品.香油_專案專款).price : 0;
                 md.香油_契子觀摩 = mds.Any(x => x.product_sn == e_祈福產品.香油_契子觀摩) ? mds.Where(x => x.product_sn == e_祈福產品.香油_契子觀摩).Sum(x => x.price) : 0;
                 //香油其它
-                md.香油_牛軋糖 = mds.Any(x => x.product_sn == e_祈福產品.香油_牛軋糖) ? mds.Where(x => x.product_sn == e_祈福產品.香油_牛軋糖).Sum(x => x.price) : 0;
+                md.香油_翡翠 = mds.Any(x => x.product_sn == e_祈福產品.香油_翡翠) ? mds.Where(x => x.product_sn == e_祈福產品.香油_翡翠).Sum(x => x.price) : 0;
                 //2016/12/7 下架 md.香油_農民曆廣告 = mds.Any(x => x.product_sn == e_祈福產品.香油_農民曆廣告) ? mds.Where(x => x.product_sn == e_祈福產品.香油_農民曆廣告).Sum(x => x.price) : 0;
                 md.香油_喜緣玉品 = mds.Any(x => x.product_sn == e_祈福產品.香油_喜緣玉品) ? mds.Where(x => x.product_sn == e_祈福產品.香油_喜緣玉品).Sum(x => x.price) : 0;
                 //2017/7/19 下架md.香油_薦拔祖先 = mds.Any(x => x.product_sn == e_祈福產品.香油_薦拔祖先) ? mds.Where(x => x.product_sn == e_祈福產品.香油_薦拔祖先).Sum(x => x.price) : 0;
@@ -235,7 +235,7 @@ namespace DotWeb.Controllers
                 sheet.Cells["C20"].Value = md.香油_契子觀摩;
                 sheet.Cells["E20"].Value = md.香油_專案專款;
 
-                sheet.Cells["C21"].Value = md.香油_牛軋糖;
+                sheet.Cells["C21"].Value = md.香油_翡翠;
                 sheet.Cells["E21"].Value = md.香油_屋頂整修費;
 
                 sheet.Cells["C22"].Value = md.香油_喜緣玉品;

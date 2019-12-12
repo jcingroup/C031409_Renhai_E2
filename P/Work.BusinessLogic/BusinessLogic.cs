@@ -2086,6 +2086,11 @@ namespace ProcCore.Business.Logic
         public static string 財神頭燈 = "121";
         public static string 月老頭燈 = "131";
         public static string 觀音頭燈 = "41";
+        public static string 藥師佛燈 = "16";
+        public static string 藥師佛頭燈 = "161";
+        public static string 沉香媽祖燈 = "17";
+        public static string 沉香媽祖頭燈 = "171";
+
         public static string 入斗 = "8";
         public static string 保運 = "9";
         public static string 香油錢 = "7";
@@ -2101,7 +2106,7 @@ namespace ProcCore.Business.Logic
         public static string 租金 = "707";
         public static string 香油_其它 = "760";
 
-        public static string 香油_牛軋糖 = "761";
+        public static string 香油_翡翠 = "761";
         public static string 香油_農民曆廣告 = "762";//2016/12/7 下架
         public static string 香油_喜緣玉品 = "763";// 2019/8/2 『香油(衣服)』 改名為 『香油(寄售)』
         public static string 香油_薦拔祖先 = "764";//2017/7/19 下架
@@ -5220,7 +5225,7 @@ namespace ProcCore.Business.Logic
         public int 香油_媽祖聖誕典禮 { get; set; }
 
         public int 香油_其它 { get; set; }
-        public int 香油_牛軋糖 { get; set; }
+        public int 香油_翡翠 { get; set; }
         public int 香油_農民曆廣告 { get; set; }//2016/12/7 下架
         public int 香油_喜緣玉品 { get; set; } // 2019/8/2 『香油(衣服)』 改名為 『香油(喜緣玉品)』
         public int 香油_薦拔祖先 { get; set; }//2017/7/19 下架
