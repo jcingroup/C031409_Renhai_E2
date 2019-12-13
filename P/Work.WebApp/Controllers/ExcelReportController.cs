@@ -268,13 +268,13 @@ namespace DotWeb.Controllers
                 sheet.Cells["C28"].Value = md.香油_祈福玉珮 + md.祈福許願燈;//2017/8/16 祈福許願燈與祈福玉珮合計
                 sheet.Cells["E28"].Value = md.保運;
 
-                sheet.Cells["C29"].Value = "";
+                sheet.Cells["C29"].Value = md.香油_屋頂整修費;
                 sheet.Cells["E29"].Value = md.租金;
 
                 sheet.Cells["C30"].Value = md.金牌 + "面";
                 sheet.Cells["E30"].Value = md.白米 + "斤";
 
-                sheet.Cells["D31"].Formula = "C8+E8+E15+E19+SUM(C20:C28) + SUM(E20:E29)";
+                sheet.Cells["D31"].Formula = "C8+E8+E15+E19+SUM(C20:C29) + SUM(E20:E29)";
                 sheet.Cells["D31"].Calculate();
                 sheet.Cells["D32"].Value = md.負責人;
                 sheet.Cells["D35"].Value = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
