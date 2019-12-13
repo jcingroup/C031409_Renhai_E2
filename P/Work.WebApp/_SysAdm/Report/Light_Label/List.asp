@@ -147,7 +147,7 @@ Dim strkey
 
 	'-- 取得產品基本資料-----------------------------------
 	Dim strSelCboProductSN
-	Set oRs=ExecSQL_RTN_RST("SELECT 產品編號,產品名稱 FROM 產品資料表 Where 產品編號 IN ('2','21','3','31','4','41','5','51','12','121','13','131') ORDER BY 產品編號",2,0,1)
+	Set oRs=ExecSQL_RTN_RST("SELECT 產品編號,產品名稱 FROM 產品資料表 Where 產品編號 IN ('2','21','3','31','4','41','5','51','12','121','13','131','16','161','17','171') ORDER BY 產品編號",2,0,1)
 	strSelCboProductSN=RsToOption(oRs,0,1,trim(intProductSN),"","")			
 	'======================================================
 	
@@ -168,7 +168,13 @@ Dim strkey
 	<script language=javascript src="../../_JScript/Subwin.js"></script>
 
 	<script Language=javascript>
-
+	    $('#btn_ExportExcel').click(function () {
+	        var parms = [];
+	        //parms.push('Date1=' + $('#Date1').val());
+	        //parms.push('Date2=' + $('#Date2').val());
+	        parms.push('year=' + today.getFullYear());
+	        $("#ifm_exceldownload").attr("src", "../../../ExcelReport/ajax_MakeExcel?" + parms.join('&'));
+	    });
 	//打開視窗-------------
 	function WO(URL){
 		window.open(URL,"WO","Left=0,Top=0,width=1180,height=750,center=yes,status=no,toolbar=no,scrollbars=yes");
@@ -219,7 +225,7 @@ Dim strkey
 				-->
 				
 				<td width="100" Align=Right><font color=red>請選擇類別：</font></td>
-				<td width="80" Align=Left><select name="ProductSN" style="width:100%;Cursor:Hand;"><option></option><%=strSelCboProductSN%></select> </td>
+				<td width="80" Align=Left><select name="ProductSN" id="ProductSN" style="width:100%;Cursor:Hand;"><option></option><%=strSelCboProductSN%></select> </td>
 
 
 				<!--
@@ -228,7 +234,11 @@ Dim strkey
 				-->
 				<td width=60 Align=Right><input type="submit" value="查　詢" class=button></td>
 				<td width=80 Align=Right><input type="button" class="button" OnClick="WO('ExcelExport.asp?<%=strQS%>')" value="產生點燈標籤" style="margin-right:10px;"></td>
-				<td >&nbsp;</td>
+				<td width=80 Align=Right>
+                     <input type="button" id="btn_ExportExcel" class="button" value="文玄國寶匯入用名單" style="margin-right: 10px;" />
+				</td>
+				
+                <td >&nbsp;</td>
 
 			</tr>
 			

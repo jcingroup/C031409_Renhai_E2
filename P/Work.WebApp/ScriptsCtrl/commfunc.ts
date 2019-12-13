@@ -154,6 +154,7 @@ module services {
         getWishList: () => ng.IHttpPromise<IResultData<server.Wish[]>>;
         getLightByMD: (product_sn: string) => ng.IHttpPromise<IResultData<server.Light_Site[]>>;
         getProductFortune: () => ng.IHttpPromise<IResultData<server.Product[]>>;
+        getProductDouLight: () => ng.IHttpPromise<IResultData<server.Product[]>>;
         getManjushri: () => ng.IHttpPromise<IResultData<server.Manjushri[]>>;
         getAssemblyBatch: (year?: number) => ng.IHttpPromise<IResultData<server.AssemblyBatch[]>>;
         getQueryBatchList: (year?: number) => ng.IHttpPromise<IResultData<server.AssemblyBatch[]>>;
@@ -215,8 +216,10 @@ angular.module('commfun', []).service('workService', ['$http', function ($http: 
     this.getProductFortune = function () {
         return $http.get(gb_approot + apiGetAction + '/GetProductFortune', { params: {} });
     };
-
-
+    //取得斗燈資料
+    this.getProductDouLight = function () {
+        return $http.get(gb_approot + apiGetAction + '/GetProductDouLight', { params: {} });
+    };
     this.getManjushri = function () {
         return $http.get(gb_approot + 'Manjushri/GetManjushri', { params: { t: uniqid() } });
     };

@@ -121,6 +121,10 @@ angular
         url: "/wishorders?orders_sn&member_id",
         templateUrl: "dataEditWishLightOrders",
         controller: 'ctrl_wishlight'
+        }).state('edit.doulight_orders', {
+        url: "/doulightorders?orders_sn&member_id",
+        templateUrl: "dataEditDouLightOrders",
+        controller: 'ctrl_doulight'
     })
 }]);
 
@@ -173,6 +177,9 @@ angular.module('angularApp')
             }
             if (orders_type == e_orders_type.wishlight) {
                 $state.go('edit.wishlight_orders', { 'orders_sn': orders_sn });
+            }
+            if (orders_type == e_orders_type.doulight) {
+                $state.go('edit.doulight_orders', { 'orders_sn': orders_sn });
             }
         };
 
@@ -255,6 +262,9 @@ angular.module('angularApp')
 
             if ($state.current.name == 'edit.wishlight_orders') {
                 SendWishLightOrder();
+            }
+            if ($state.current.name == 'edit.doulight_orders') {
+                SendDouLightOrder();
             }
         };
         function SendGeneralOrder() {
@@ -522,6 +532,79 @@ angular.module('angularApp')
                 });
             };
 
+        };
+        function SendDouLightOrder() {
+            console.log($scope.fd.Item);
+            var item = $scope.fd.Item[0];
+
+            if ($scope.edit_type == IEditType.insert) {
+                var m: number[] = [];
+                for (var i in $scope.mb.getMember_Detail) {
+                    var n = $scope.mb.getMember_Detail[i];
+                    if (n.fortune_value > 0) {
+                        m.push(n.fortune_value);
+                    }
+                }
+                $http.post(gb_approot + 'Orders/AddOrdersDouLight',
+                    {
+                        'master': $scope.fd,
+                        'product_sn': item.product_sn,
+                        'member_detail_ids': m
+                    })
+                    .success(function (data: IResultData<string>, status, headers, config) {
+                    if (data.result) {
+                        //回傳訂單編號
+                        $http.get(gb_approot + 'Cart/OrdersToSession', { params: { orders_sn: data.data } })
+                            .success(function (data: IResultData<server.cartMaster>, status, headers, config) {
+                            if (data.result) {
+                                $scope.fd = data.data;
+                                $scope.edit_type = IEditType.update;
+                                $scope.$parent.Init_Query();
+                                alert('訂單新增完成');
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                            .error(function (data, status, headers, config) {
+                            showAjaxError(data);
+                        });
+
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                    .error(function (data, status, headers, config) {
+                    showAjaxError(data);
+                });
+            };
+
+            if ($scope.edit_type == IEditType.update) {
+
+                var m: number[] = [];
+                for (var i in $scope.mb.getMember_Detail) {
+                    var n = $scope.mb.getMember_Detail[i];
+                    if (n.fortune_value > 0) {
+                        m.push(n.fortune_value);
+                    }
+                }
+
+                $http.put(gb_approot + 'Orders/UpdateOrdersDouLight', {
+                    'master': $scope.fd,
+                    'member_detail_ids': m
+                })
+                    .success(function (data: IResultData<server.Orders>, status, headers, config) {
+                    if (data.result) {
+                        $scope.edit_type = IEditType.update;
+                        $scope.$parent.Init_Query();
+                        alert('訂單修改完成');
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                    .error(function (data, status, headers, config) {
+                    showAjaxError(data);
+                });
+            };
         };
         $scope.$on(callOnName.updateCartMaster_is_light_serial, function (event, args) {
             //更新是否連續配位值(因為有父子關係無法直接更新)
@@ -2214,7 +2297,7 @@ angular.module('angularApp')
         GetProductAll();
     }]);
 
-//===================================================================================
+//祈福許願燈===================================================================================
 interface IWishOrder extends IOrder {
     wishs: server.Wish[];
     wishlen: number;
@@ -2638,4 +2721,295 @@ angular.module('angularApp')
         });
         GetProductAll();
         GetWishList();
+        }]);
+
+//斗燈(DouLight)===================================================================================
+angular.module('angularApp')
+    .controller('ctrl_doulight', ['$scope', '$http', 'workService', '$sce', 'ngDialog', '$state',
+    function (
+        $scope: IOrder,
+        $http: ng.IHttpService,
+        workService: services.workService,
+        $sce: ng.ISCEService,
+        ngDialog,
+        $state: ng.ui.IStateService
+        ) {
+        console.log('ctrl_doulight');
+        var p0: number = 0;
+        var p0: number = 0;
+
+        $scope.born_sign = commData.born_sign;
+        $scope.born_time = commData.born_time;
+        $scope.isShowEdit = false;
+        $scope.isShowEditProduct = false;
+        $scope.cart_price_disable = true;
+        $scope.cart_race_disable = true;
+        $scope.cart_gold_disable = true;
+
+        $scope.ShowEditAddProduct = function () {
+            $scope.cart = <server.cartDetail>{ member_detail_id: -1 };
+            $scope.isShowEditProduct = true;
+            $scope.isViewWorking = false;
+        };
+        $scope.ShowEditViewProduct = function (member_detail_id, product_sn) {
+            $http.get(gb_approot + 'Cart/ViewCart', {
+                params: {
+                    member_detail_id: member_detail_id,
+                    product_sn: product_sn
+                }
+            })
+                .success(function (data: IResultData<server.cartDetail>, status, headers, config) {
+                if (data.result) {
+                    $scope.cart = data.data;
+                    $scope.isShowEditProduct = true;
+                    $scope.isViewWorking = true;
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        };
+        $scope.CloseEditProduct = function () {
+            $scope.isShowEditProduct = false;
+            $scope.is_godson = false;
+        };
+
+        $scope.CalcLunar = function () {
+            workService.getCalcLunar($scope.cart.SY, $scope.cart.SM, $scope.cart.SD)
+                .success(function (data: server.LuniInfo, status, headers, config) {
+                $scope.cart.LY = data.LY;
+                $scope.cart.LM = data.M;
+                $scope.cart.LD = data.D;
+                $scope.cart.isOnLeapMonth = data.IsLeap;
+            }).error(function (data) {
+                showAjaxError(data);
+            })
+        };
+
+        function GetOrder(orders_sn) {
+            workService.getOrderData(orders_sn)
+                .success(function (data, status, headers, config) {
+                if (data.result) {
+                    $scope.fd.member_id = data.data.member_id;
+                    $scope.fd.member_name = data.data.member_name;
+                    $scope.fd.member_detail_id = data.data.member_detail_id;
+                    $scope.fd.tel = data.data.tel;
+                    $scope.fd.zip = data.data.zip;
+                    $scope.fd.address = data.data.address;
+                    $scope.fd.gender = data.data.gender;
+                    $scope.fd.mobile = data.data.mobile;
+
+                    for (var i in data.data.getOrders_Detail) {
+                        var order_detail = data.data.getOrders_Detail[i];
+                    }
+
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        };
+        function GetProductAll() {
+            workService.getProductDouLight()
+                .success(function (data: IResultData<server.Product[]>, status, headers, config) {
+                if (data.result) {
+                    $scope.pds = data.data;
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        };
+        function GetFortune() {
+            $http.get(gb_approot + apiGetAction + '/GetFortune')
+                .success(function (data: IResultData<server.Product[]>, status, headers, config) {
+                if (data.result) {
+                    $scope.pds_fortune = data.data;
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        };
+        function GetMemberDetail(member_detail_id: number) {
+            workService.getMemberDetail(member_detail_id)
+                .success(function (data: IResultData<server.Member_Detail>, status, headers, config) {
+                if (data.result) {
+
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });;
+        }
+        function GetNowCartList() {
+            $http.get(gb_approot + 'Cart/ListCartItems', { params: {} })
+                .success(function (data: IResultData<server.cartDetail[]>, status, headers, config) {
+                if (data.result) {
+                    $scope.fd.Item = data.data;
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        };
+        function SetMemberToCart() {
+            $http.post(gb_approot + 'Cart/SetCartMaster', $scope.fd)
+                .success(function (data: IResultBase, status, headers, config) {
+                if (data.result) {
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        }
+        function ClearCart() {
+            //清除Session
+            $http.get(gb_approot + 'Cart/ClearCart', { params: { t: uniqid() } })
+                .success(function (data: IResultBase, status, headers, config) {
+                if (!data.result) {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        }
+
+        if ($scope.edit_type == IEditType.update) { // 進入為修改模式
+            //Master_Open_Modify($state.params.orders_sn);
+            workService.getFortune($state.params.orders_sn)
+                .success(function (fdata: IResultData<number[]>, status, headers, config) {
+
+                $scope.qMasterView.then(function () {
+                    for (var i in $scope.mb.getMember_Detail) {
+                        var item = $scope.mb.getMember_Detail[i];
+                        if (fdata.data.indexOf(item.member_detail_id) >= 0) {
+                            item.fortune_value = item.member_detail_id;
+                        }
+                    }
+                })
+            });
+        }
+
+        if ($scope.edit_type == IEditType.insert) { //進入為新增模式
+            if ($state.params.member_id != undefined) {
+                $scope.qMember.success(function (data: IResultData<server.Member_Detail>, status, headers, config) {
+                    var detail: server.cartDetail;
+                    detail = <server.cartDetail>{
+                        member_detail_id: $state.params.member_id,
+                        member_name: $scope.fd.member_name,
+                        product_sn: ''
+                    };
+                    $scope.fd.Item.push(detail);
+                    //GetMemberAll($state.params.member_id);
+                });
+            }
+        }
+        $scope.$watch('cart.member_detail_id', function (newValue: number, oldValue) {
+            if (newValue != undefined) {
+                for (var i in $scope.mb.getMember_Detail) {
+                    var n = $scope.mb.getMember_Detail[i];
+                    if (n.member_detail_id == newValue) {
+                        $scope.cart.born_time = n.born_time;
+                        $scope.cart.born_sign = n.born_sign;
+                        $scope.cart.member_name = n.member_name;
+                        $scope.cart.l_birthday = n.lbirthday;
+                        $scope.cart.address = n.city + n.country + n.address;
+                        $scope.cart.gender = n.gender;
+                        $scope.cart.tel = n.tel;
+                        $scope.cart.mobile = n.mobile;
+                        $scope.is_godson = n.is_godson;
+
+                        var lbirthday: string[] = $scope.cart.l_birthday.split("/");
+                        if (lbirthday.length == 3) {
+                            $scope.cart.LY = parseInt(lbirthday[0]) - 1911;
+                            $scope.cart.LM = parseInt(lbirthday[1]);
+                            $scope.cart.LD = parseInt(lbirthday[2]);
+                        }
+                    }
+                }
+            }
+        });
+        $scope.ProductChange = function (product_sn) {
+            for (var i in $scope.pds) {
+                var n = $scope.pds[i];
+                if (n.product_sn == product_sn) {
+                    $scope.fd.Item[0].price = n.price;
+                    $scope.fd.Item[0].product_name = n.product_name;
+                    $scope.fd.Item[0].race = 0;
+                    $scope.fd.Item[0].gold = 0;
+                }
+            }
+            GetLight(product_sn);
+        }
+        $scope.DeleteOrderFourtune = function () {
+            if (confirm('確定刪除訂單?')) {
+                $http.get(gb_approot + 'Orders/DeleteOrdersDouLight', { params: { orders_sn: $scope.fd.orders_sn } })
+                    .success(function (data: IResultBase, status, headers, config) {
+                    if (data.result) {
+                        $scope.Init_Query();
+                        $scope.$parent.GoGrid();
+                    } else {
+                        alert(data.message);
+                    }
+                });
+            } else {
+                return;
+            }
+        }
+        $scope.checkFortuneNum = function () {
+            var items = $scope.mb.getMember_Detail;
+
+            for (var i in items) {
+                var item = items[i];
+            }
+        }
+
+        function GetLight(product_sn: string) {
+            workService.getLightByMD(product_sn)
+                .success(function (data: IResultData<server.Light_Site[]>, status, headers, config) {
+                if (data.result) {
+                    $scope.lights = data.data;
+                } else {
+                    alert(data.message);
+                }
+            })
+                .error(function (data, status, headers, config) {
+                showAjaxError(data);
+            });
+        };
+
+        //(ng-sortable)排序設定---start
+        $scope.openSortData = function () {
+            //var tmp: server.Sort_Member[] = [];
+            //for (var i in $scope.mb.getMember_Detail) {
+            //    var n = $scope.mb.getMember_Detail[i];
+            //    if (n.fortune_value > 0) {
+            //        tmp.push({ member_detail_id: n.fortune_value, member_name:n.member_name,sort:0});
+            //    }
+            //}
+            //$scope.sort_member = tmp;
+            $scope.isShow = true;
+            console.log($scope.mb);
+        };
+        $scope.closeSortData = function () {
+            $scope.isShow = false;
+        };
+        //(ng-sortable)排序設定---end
+        GetProductAll();
     }]);

@@ -75,6 +75,7 @@
             <div><a href="<%=ResolveUrl("~/Orders#/edit/gorders?member_id=10000001")%>">新增一般訂單(學勤)</a></div>
             <div><a href="<%=ResolveUrl("~/Orders#/edit/forders?member_id=10000001")%>">新增福燈訂單(學勤)</a></div>
             <div><a href="<%=ResolveUrl("~/Orders#/edit/wishorders?member_id=10000001")%>">新增祈福許願訂單(學勤)</a></div>
+            <div><a href="<%=ResolveUrl("~/Orders#/edit/doulightorders?member_id=10000001")%>">新增斗燈訂單(學勤)</a></div>
             <div><a href="<%=ResolveUrl("~/Orders")%>">訂單管理</a></div>
             <div><a href="<%=ResolveUrl("~/MemberMark")%>">會員重複標記</a></div>
             <div><a href="<%=ResolveUrl("~/TempleMember")%>">契子會會員管理</a></div>
@@ -82,6 +83,7 @@
             <div><a href="<%=ResolveUrl("~/ExcelReport/ajax_MakeExcel?Date1=2017-01-01&Date2=2017-12-07&Time1=01&Time2=24&People=1000001")%>">統計表列印</a></div>
             <div><a href="<%=ResolveUrl("~/ExcelReport/LiDoRoll?year=2017")%>">禮斗名冊列印</a></div>
             <div><a href="<%=ResolveUrl("~/AssemblyBatch/BatchCount/#/grid")%>">祈福法會訂單換梯次</a></div>
+              <div><a href="<%=ResolveUrl("~/ExcelReport/AiLight?year=2020")%>">文玄國寶列印</a></div>
         </div>
         <table id="TableProductDetailView" style="width: 100%; margin: 1px; padding: 1px; border: 1px">
             <thead>

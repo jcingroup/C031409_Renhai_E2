@@ -139,6 +139,7 @@ namespace Work.WebApp.Models
         public DateTime? endDate { get; set; }
 
         public string fortune_psn { get; set; }
+        public string psn { get; set; }
 
     }
     public class q_Reject : QueryBase

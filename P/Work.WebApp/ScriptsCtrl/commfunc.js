@@ -162,6 +162,9 @@ angular.module('commfun', []).service('workService', ['$http', function ($http) 
     this.getProductFortune = function () {
         return $http.get(gb_approot + apiGetAction + '/GetProductFortune', { params: {} });
     };
+    this.getProductDouLight = function () {
+        return $http.get(gb_approot + apiGetAction + '/GetProductDouLight', { params: {} });
+    };
     this.getManjushri = function () {
         return $http.get(gb_approot + 'Manjushri/GetManjushri', { params: { t: uniqid() } });
     };

@@ -44,6 +44,11 @@ namespace Work.WebApp
                .Include("~/Scripts/ui-bootstrap-tpls-0.12.0.js")
                .Include("~/ScriptsCtrl/FortuneLightLabelCtr.js")
                );
+            bundles.Add(new ScriptBundle("~/DouLightLabelCtr")
+               .Include(commFile)
+               .Include("~/Scripts/ui-bootstrap-tpls-0.12.0.js")
+               .Include("~/ScriptsCtrl/DouLightLabelCtr.js")
+               );
             bundles.Add(new ScriptBundle("~/RejectReportCtr")
                 .Include(commFile)
                 .Include("~/Scripts/ui-bootstrap-tpls-0.12.0.js")

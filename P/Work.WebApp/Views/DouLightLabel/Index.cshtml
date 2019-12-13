@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section IncludeScript{
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    @Scripts.Render("~/DouLightLabelCtr")
+}
+<form class="query-form" ng-submit="Init_Query()">
+    <fieldset>
+        <label>訂單日期： 起</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.startDate" is-open="openedStart" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openStart($event)" />
+        <label>迄</label>
+        <input type="text" datepicker-popup="yyyy/MM/dd" ng-model="sd.endDate" is-open="openedEnd" datepicker-options="dateOptions" @*date-disabled="disabled(date, mode)"*@ close-text="Close" ng-click="openEnd($event)" />
+        <label style="color:red">請選擇類別：</label>
+        <select ng-model="sd.psn" ng-options="m.value as m.label for m in dou_light"></select>
+        <button type="submit">
+            <i class="fa fa-search"></i>查詢
+        </button>
+        <button type="button" ng-click="DownLoadExcel_DouLightLabel()">
+            <i class="fa fa-print"></i>產生沉香媽祖/藥師佛斗燈標籤
+        </button>
+        @*<button type="button" ng-click="test()">test</button>*@
+    </fieldset>
+</form>
+<div class="grid-list">
+    <table class="table-master">
+        <caption>沉香媽祖/藥師佛斗燈標籤列印</caption>
+        <tr>
+            <th width="15%">訂單編號</th>
+            <th width="10%">產品編號</th>
+            <th width="15%">產品名稱</th>
+            <th width="10%">價格</th>
+            <th width="15%">申請人姓名</th>
+            <th width="10%">點燈位置</th>
+            <th width="15%">新增時間</th>
+        </tr>
+        <tr ng-repeat="gd in Grid_Items">
+            <td class="text-center">{{gd.orders_sn}}</td>
+            <td>{{gd.product_sn}}</td>
+            <td>{{gd.product_name}}</td>
+            <td>{{gd.price}}</td>
+            <td>{{gd.member_name}}</td>
+            <td>{{gd.light_name}}</td>
+            <td>{{gd.C_InsertDateTime | date: 'yyyy/MM/dd a hh:mm:ss'}}</td>
+        </tr>
+    </table>
+    @Html.Partial("NavPage")
+</div>
+<iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>

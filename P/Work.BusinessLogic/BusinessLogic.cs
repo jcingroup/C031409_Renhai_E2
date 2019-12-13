@@ -2090,6 +2090,8 @@ namespace ProcCore.Business.Logic
         public static string 藥師佛頭燈 = "161";
         public static string 沉香媽祖燈 = "17";
         public static string 沉香媽祖頭燈 = "171";
+        public static string 藥師佛斗燈 = "1801";
+        public static string 沉香媽祖斗燈 = "1802";
 
         public static string 入斗 = "8";
         public static string 保運 = "9";
@@ -2160,6 +2162,8 @@ namespace ProcCore.Business.Logic
         public static string 入斗 = "入斗";
         public static string 保運 = "保運";
         public static string 祈福許願燈 = "祈福許願燈";
+        //新增燈種類似福燈但是由電腦自動配位
+        public static string 斗燈 = "斗燈";
     }
     #endregion
 
@@ -5270,6 +5274,15 @@ namespace ProcCore.Business.Logic
 
         //2017/8/16 加入
         public int 祈福許願燈 { get; set; }
+
+        //2019/12/13 加入 沉香殿點燈 
+        public int 沉香殿點燈小計 { get; set; }
+        public int 沉香媽祖燈 { get; set; }
+        public int 沉香媽祖頭燈 { get; set; }
+        public int 藥師佛燈 { get; set; }
+        public int 藥師佛頭燈 { get; set; }
+        public int 沉香媽祖斗燈 { get; set; }
+        public int 藥師佛斗燈 { get; set; }
 
     }
     public class m_統計數據

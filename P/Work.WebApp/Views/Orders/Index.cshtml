@@ -1030,3 +1030,74 @@
     </div>
     <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
 </script>
+<script type="text/ng-template" id="dataEditDouLightOrders">
+    <table class="table-detail">
+        <caption>
+            選擇家庭成員最多12位
+            <button type="submit">確　　認</button>
+            <button type="button" ng-disabled="edit_type!=2" ng-click="DeleteOrderFourtune()" ng-disabled="allowReject==0">刪除訂單</button>
+            <button type="button" ng-click="DownLoadExcel_Thanks()" ng-disabled="edit_type!=2">列印感謝狀</button>
+        </caption>
+        <thead>
+            <tr>
+                <th width="20%">訂購人</th>
+                <th width="30%">斗燈類型</th>
+                <th width="30%">斗燈位置</th>
+                <th width="20%">單價</th>
+                @*<th width="10%">排序設定</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in fd.Item">
+                <td>{{item.member_name}}</td>
+                <td>
+                    <select ng-model="item.product_sn"
+                            ng-options="m.product_sn as m.product_name for m in pds"
+                            ng-change="ProductChange(item.product_sn)"
+                            ng-disabled="edit_type==2"></select>
+                </td>
+                <td ng-hide="edit_type==2">
+                    <!--
+                          <select ng-model="item.light_site_id"
+                            ng-options="m.light_site_id as m.light_name for m in lights" required></select>
+                    -->
+                    (電腦配位)
+                </td>
+                <td ng-hide="edit_type==1">{{item.light_name}}</td>
+                <td>{{item.price}}</td>
+                @*<td>
+                        <button type="button" ng-click="openSortData()">
+                            檢視
+                        </button>
+                    </td>*@
+            </tr>
+        </tbody>
+    </table>
+    <span ng-repeat="m in mb.getMember_Detail">
+        <input type="checkbox"
+               ng-model="m.fortune_value"
+               ng-true-value="{{m.member_detail_id}}"
+               ng-false-value="0"
+               ng-click="checkFortuneNum()" />
+        {{m.member_name}}
+    </span>
+    <iframe class="ng-hide" ng-src="{{downloadExcel}}"></iframe>
+    <div class="dialog-div ng-hide" ng-show="isShow">
+        <table class="table-detail">
+            <caption>
+                家庭成員
+                <button type="button" ng-click="closeSortData()">
+                    關閉
+                </button>
+            </caption>
+            <tr>
+                <th width="25%">姓名</th>
+                <th width="25%">排序</th>
+            </tr>
+            <tr ng-repeat="m in mb.getMember_Detail |orderBy:['-sort']">
+                <td ng-if="m.fortune_value>0">{{m.member_name}}</td>
+                <td ng-if="m.fortune_value>0">{{m.sort}}</td>
+            </tr>
+        </table>
+    </div>
+</script>

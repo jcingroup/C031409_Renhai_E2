@@ -116,9 +116,9 @@ namespace DotWeb.Controllers
                 if (cartData.product_sn == e_祈福產品.超渡法會_嬰靈 && (cartData.departed_qty == null))
                     throw new Exception("超渡法會(嬰靈)未填寫「嬰靈數量」");
 
-                List<string> ailight = new List<string>() { e_祈福產品.藥師佛燈, e_祈福產品.藥師佛頭燈, e_祈福產品.沉香媽祖燈, e_祈福產品.沉香媽祖頭燈 };
-                if (ailight.Contains(cartData.product_sn) && string.IsNullOrWhiteSpace(cartData.mobile))
-                    throw new Exception("行動電話未填寫");
+                //List<string> ailight = new List<string>() { e_祈福產品.藥師佛燈, e_祈福產品.藥師佛頭燈, e_祈福產品.沉香媽祖燈, e_祈福產品.沉香媽祖頭燈 };
+                //if (ailight.Contains(cartData.product_sn) && string.IsNullOrWhiteSpace(cartData.mobile))
+                //    throw new Exception("行動電話未填寫~!請更新該會員手機資料!");
 
                 cart.Item.Add(cartData);
                 cart.total = cart.Item.Sum(x => x.price);

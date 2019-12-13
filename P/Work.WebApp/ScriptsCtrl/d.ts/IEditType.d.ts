@@ -9,7 +9,8 @@ declare enum e_orders_type {
     mdlight = 1, //主副斗
     sdlight = 2, //大中小斗
     fortune_order = 3,//福燈
-    wishlight = 4//祈福許願燈
+    wishlight = 4,//祈福許願燈
+    doulight = 5 //媽祖/藥師佛斗燈
 }
 
 declare enum e_orders_state {

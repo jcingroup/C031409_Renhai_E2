@@ -184,6 +184,15 @@ namespace DotWeb.Controllers
                 md.契子會_大會 = gItem.Any(x => x.product_sn == e_祈福產品.契子會_大會) ? gItem.Where(x => x.product_sn == e_祈福產品.契子會_大會).Sum(x => x.price) : 0;
                 //md.香油_契子觀摩 = gItem.Any(x => x.product_sn == e_祈福產品.香油_契子觀摩) ? gItem.Where(x => x.product_sn == e_祈福產品.香油_契子觀摩).Sum(x => x.price) : 0;
                 //香油_契子觀摩 改放在一般會員資料管理
+
+                //2019/12/13 加入沉香殿點燈小計
+                md.沉香媽祖燈 = mds.Any(x => x.product_sn == e_祈福產品.沉香媽祖燈) ? mds.First(x => x.product_sn == e_祈福產品.沉香媽祖燈).price : 0;
+                md.沉香媽祖頭燈 = mds.Any(x => x.product_sn == e_祈福產品.沉香媽祖頭燈) ? mds.First(x => x.product_sn == e_祈福產品.沉香媽祖頭燈).price : 0;
+                md.藥師佛燈 = mds.Any(x => x.product_sn == e_祈福產品.藥師佛燈) ? mds.First(x => x.product_sn == e_祈福產品.藥師佛燈).price : 0;
+                md.藥師佛頭燈 = mds.Any(x => x.product_sn == e_祈福產品.藥師佛頭燈) ? mds.First(x => x.product_sn == e_祈福產品.藥師佛頭燈).price : 0;
+                md.沉香媽祖斗燈 = mds.Any(x => x.product_sn == e_祈福產品.沉香媽祖斗燈) ? mds.First(x => x.product_sn == e_祈福產品.沉香媽祖斗燈).price : 0;
+                md.藥師佛斗燈 = mds.Any(x => x.product_sn == e_祈福產品.藥師佛斗燈) ? mds.First(x => x.product_sn == e_祈福產品.藥師佛斗燈).price : 0;
+                md.沉香殿點燈小計 = md.沉香媽祖燈 + md.沉香媽祖頭燈 + md.藥師佛燈 + md.藥師佛頭燈 + md.沉香媽祖斗燈 + md.藥師佛斗燈;
                 #endregion
                 #endregion
 
@@ -220,43 +229,55 @@ namespace DotWeb.Controllers
                 sheet.Cells["C15"].Value = md.媽祖殿燈籠頭燈加總;
                 sheet.Cells["E15"].Value = md.文昌燈 + md.文昌頭燈 + md.媽祖燈 + md.媽祖頭燈 + md.觀音燈 + md.觀音頭燈 + md.關聖燈 + md.關聖頭燈 + md.財神燈 + md.財神頭燈 + md.姻緣燈 + md.姻緣頭燈 + md.媽祖殿燈籠頭燈加總;
 
-                sheet.Cells["C16"].Value = md.香油錢;
-                sheet.Cells["E16"].Value = md.香油_信徒觀摩;
+                sheet.Cells["C16"].Value = md.沉香媽祖燈;
+                sheet.Cells["E16"].Value = md.沉香媽祖頭燈;
 
-                sheet.Cells["C17"].Value = md.香油_祈願卡;
-                sheet.Cells["E17"].Value = md.合計禮斗;
+                sheet.Cells["C17"].Value = md.藥師佛燈;
+                sheet.Cells["E17"].Value = md.藥師佛頭燈;
 
-                sheet.Cells["C18"].Value = md.香油_媽祖回鑾;
-                sheet.Cells["E18"].Value = md.契子會_大會;
+                sheet.Cells["C18"].Value = md.沉香媽祖斗燈;
+                sheet.Cells["E18"].Value = md.藥師佛斗燈;
 
-                sheet.Cells["C19"].Value = md.契子會_入會;
-                sheet.Cells["E19"].Value = md.香油_媽祖聖誕典禮;
+                //sheet.Cells["C19"].Value = "";
+                sheet.Cells["E19"].Value = md.沉香殿點燈小計;
 
-                sheet.Cells["C20"].Value = md.香油_契子觀摩;
-                sheet.Cells["E20"].Value = md.香油_專案專款;
+                sheet.Cells["C20"].Value = md.香油錢;
+                sheet.Cells["E20"].Value = md.香油_媽祖聖誕典禮;
 
-                sheet.Cells["C21"].Value = md.香油_翡翠;
-                sheet.Cells["E21"].Value = md.香油_屋頂整修費;
+                sheet.Cells["C21"].Value = md.香油_祈願卡;
+                sheet.Cells["E21"].Value = md.合計禮斗;
 
-                sheet.Cells["C22"].Value = md.香油_喜緣玉品;
-                sheet.Cells["E22"].Value = md.超渡法會_薦拔祖先;
+                sheet.Cells["C22"].Value = md.香油_專案專款;
+                sheet.Cells["E22"].Value = md.契子會_入會;
 
-                sheet.Cells["C23"].Value = md.超渡法會_冤親債主;
-                sheet.Cells["E23"].Value = md.超渡法會_嬰靈;
+                sheet.Cells["C23"].Value = md.香油_翡翠;
+                sheet.Cells["E23"].Value = md.契子會_大會;
 
-                sheet.Cells["C24"].Value = md.香油_祈福玉珮 + md.祈福許願燈;//2017/8/16 祈福許願燈與祈福玉珮合計
+                sheet.Cells["C24"].Value = md.香油_喜緣玉品;// ;
                 sheet.Cells["E24"].Value = md.香油_媽祖聖誕擲筊;
 
-                sheet.Cells["C25"].Value = md.租金;
-                sheet.Cells["E25"].Value = md.保運;
+                sheet.Cells["C25"].Value = md.超渡法會_薦拔祖先;
+                sheet.Cells["E25"].Value = md.香油_契子觀摩;// md.香油_屋頂整修費;
 
-                sheet.Cells["C26"].Value = md.金牌 + "面";
-                sheet.Cells["E26"].Value = md.白米 + "斤";
+                sheet.Cells["C26"].Value = md.超渡法會_冤親債主;
+                sheet.Cells["E26"].Value = md.香油_信徒觀摩;
 
-                sheet.Cells["D27"].Formula = "C8+E8+E15+SUM(C16:C25) + SUM(E16:E25)";
-                sheet.Cells["D27"].Calculate();
-                sheet.Cells["D28"].Value = md.負責人;
-                sheet.Cells["D31"].Value = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                sheet.Cells["C27"].Value = md.超渡法會_嬰靈;
+                sheet.Cells["E27"].Value = md.香油_媽祖回鑾;
+
+                sheet.Cells["C28"].Value = md.香油_祈福玉珮 + md.祈福許願燈;//2017/8/16 祈福許願燈與祈福玉珮合計
+                sheet.Cells["E28"].Value = md.保運;
+
+                sheet.Cells["C29"].Value = "";
+                sheet.Cells["E29"].Value = md.租金;
+
+                sheet.Cells["C30"].Value = md.金牌 + "面";
+                sheet.Cells["E30"].Value = md.白米 + "斤";
+
+                sheet.Cells["D31"].Formula = "C8+E8+E15+E19+SUM(C20:C28) + SUM(E20:E29)";
+                sheet.Cells["D31"].Calculate();
+                sheet.Cells["D32"].Value = md.負責人;
+                sheet.Cells["D35"].Value = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                 #endregion
 
                 rAjaxResult.result = true;
@@ -294,7 +315,9 @@ namespace DotWeb.Controllers
                 var user = db0.Users.Find(this.UserId);
                 int detail_count = orders_detail.Count();
                 int fortune_conut = 0;
-                if (orders.orders_type == (int)Orders_Type.fortune_order)//判斷福燈人數
+                //媽祖/藥師佛斗燈、福燈 需要人數判斷
+                List<int> need_count_member = new List<int> { (int)Orders_Type.fortune_order, (int)Orders_Type.doulight };
+                if (need_count_member.Contains(orders.orders_type))//判斷福燈人數
                 {
                     var item = orders_detail.FirstOrDefault();
                     var items = db0.Fortune_Light.Where(x => x.order_sn == orders_sn).OrderBy(x => x.fortune_light_id);
@@ -362,7 +385,7 @@ namespace DotWeb.Controllers
 
                 #region 明細
 
-                if (orders.orders_type == (int)Orders_Type.fortune_order)
+                if (need_count_member.Contains(orders.orders_type))
                 {
 
                     var item = orders_detail.FirstOrDefault();
@@ -447,7 +470,7 @@ namespace DotWeb.Controllers
                     detail_row = 48;
 
                     #region 明細
-                    if (orders.orders_type == (int)Orders_Type.fortune_order)
+                    if (need_count_member.Contains(orders.orders_type))
                     {
                         var item = orders_detail.FirstOrDefault();
                         var items = db0.Fortune_Light.Where(x => x.order_sn == orders_sn).OrderBy(x => x.fortune_light_id);
@@ -1652,6 +1675,98 @@ namespace DotWeb.Controllers
                 db0.Dispose();
             }
         }
+
+        #region 文玄國寶
+        public FileResult AiLight(q_LiDo q)
+        {
+            var outputStream = stmAiLight(q);
+            string setFileName = "文玄國寶匯入名單";
+            return ExportExcelFile(outputStream, setFileName);
+        }
+        private MemoryStream stmAiLight(q_LiDo q)
+        {
+            MemoryStream outputStream = new MemoryStream();
+            try
+            {
+                XLWorkbook excel = new XLWorkbook();
+                #region 取得資料
+                var items = getAiLightData(q);//取得訂單資料
+                #endregion
+                #region Excel Handle
+                makeAiLight(items, excel);
+                #endregion
+
+                excel.SaveAs(outputStream);
+                outputStream.Position = 0;
+                excel.Dispose();
+                return outputStream;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private List<m_Orders_Detail> getAiLightData(q_LiDo q)
+        {
+            List<m_Orders_Detail> res = new List<m_Orders_Detail>();
+            using (var db0 = getDB())
+            {
+                List<string> ailight = new List<string>() { e_祈福產品.藥師佛燈, e_祈福產品.藥師佛頭燈, e_祈福產品.沉香媽祖燈, e_祈福產品.沉香媽祖頭燈 };
+                var tmp = db0.Orders_Detail
+                       .Where(x => x.Y == this.LightYear && x.is_reject != true && ailight.Contains(x.product_sn))
+                       .OrderBy(x => x.orders_sn)
+                       .Select(x => new m_Orders_Detail()
+                       {
+                           orders_detail_id = x.orders_detail_id,
+                           orders_sn = x.orders_sn,
+                           product_sn = x.product_sn,
+                           member_name = x.member_name,
+                           mobile = x.Member_Detail.mobile,
+                           light_name = x.light_name,
+                           zip = x.zip,
+                           address = x.address,
+                           tel = x.Member_Detail.Member.tel,
+                       });
+
+                res = tmp.ToList();
+            }
+            return res;
+        }
+        public class EachAiLight
+        {
+            public string product_sn { get; set; }
+            public string product_name { get; set; }
+        }
+        private void makeAiLight(List<m_Orders_Detail> data, XLWorkbook excel)
+        {
+            int row_index = 2;//+6
+            List<EachAiLight> ailight = new List<EachAiLight>() {
+                new EachAiLight(){product_sn=e_祈福產品.藥師佛燈, product_name="藥師佛燈"},
+                new EachAiLight(){product_sn=e_祈福產品.藥師佛頭燈, product_name="藥師佛頭燈"},
+                new EachAiLight(){product_sn=e_祈福產品.沉香媽祖燈, product_name="沉香媽祖燈"},
+                new EachAiLight(){product_sn=e_祈福產品.沉香媽祖頭燈, product_name="沉香媽祖頭燈"} };
+
+            foreach (var light in ailight)
+            {
+                var t_data = data.Where(x => x.product_sn == light.product_sn);
+                int count = t_data.Count();
+
+                IXLWorksheet getSheet = excel.AddWorksheet(string.Format("{0}({1}筆)", light.product_name, count));
+                getSheet.Cell(1, 1).Value = "手機";
+                getSheet.Cell(1, 2).Value = "姓名";
+                getSheet.Cell(1, 3).Value = "訂單編號";
+                row_index = 2;
+                foreach (var i in t_data)
+                {
+                    getSheet.Cell(row_index, 1).SetValue<string>(i.mobile);
+                    getSheet.Cell(row_index, 2).SetValue<string>(i.member_name);
+                    getSheet.Cell(row_index, 3).SetValue<string>(i.orders_sn);
+                    row_index++;
+                }
+            }
+        }
+        #endregion
 
         #region 禮斗名冊
         public FileResult LiDoRoll(q_LiDo q)
@@ -3593,6 +3708,260 @@ namespace DotWeb.Controllers
         public class m_WishRoll : m_Orders_Detail
         {
             public List<Wish_Light> wishs { get; set; }
+        }
+        #endregion
+
+        #region 斗燈
+        public FileResult downloadExcel_DouLightLabel(string psn, string startDate, string endDate)
+        {
+            ExcelPackage excel = null;
+            FileStream fs = null;
+            var db0 = getDB();
+            try
+            {
+
+                var user = db0.Users.Find(this.UserId);
+
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "福燈標籤8.xlsx");
+                FileInfo finfo = new FileInfo(ExcelTemplateFile);
+                excel = new ExcelPackage(finfo, true);
+                ExcelWorksheet sheet = excel.Workbook.Worksheets["SheetPrint"];
+
+                sheet.View.TabSelected = true;
+                #region 取得福燈訂單明細
+                List<string> psn_list = new List<string> { ProcCore.Business.Logic.e_祈福產品.沉香媽祖斗燈, ProcCore.Business.Logic.e_祈福產品.藥師佛斗燈 };//斗燈產品編號
+
+                var Orders_detail = (from x in db0.Orders_Detail
+                                     orderby x.C_InsertDateTime
+                                     select new m_Orders_Detail()
+                                     {
+                                         orders_sn = x.orders_sn,
+                                         product_sn = x.product_sn,
+                                         member_name = x.member_name,
+                                         light_name = x.light_name,
+                                         C_InsertDateTime = x.C_InsertDateTime
+                                     }).Where(x => psn_list.Contains(x.product_sn));
+
+                if (psn != null && psn != "")
+                    Orders_detail = Orders_detail.Where(x => x.product_sn == psn);
+
+                if (startDate != null && endDate != null)
+                {
+                    DateTime start = (DateTime.Parse(startDate));
+                    DateTime end = (DateTime.Parse(endDate)).AddDays(1);
+                    Orders_detail = Orders_detail.Where(x => (DateTime)x.C_InsertDateTime >= start && (DateTime)x.C_InsertDateTime < end);
+                }
+                #endregion
+
+                #region 複製格式
+
+                //var test = sheet.Drawings.AddShape("test", eShapeStyle.RoundRect);
+
+                #region 複製列高
+                int page = Convert.ToInt16(Math.Ceiling((Double)Orders_detail.Count() / 8));//一頁8筆資料
+                if (page > 1)
+                {
+                    for (var i = 1; i < page; i++)
+                    {//從第二頁開始複製列高
+                        for (var j = 1; j <= 29; j++)
+                        {//一頁29列
+                            sheet.Row(j + (i * 29)).Height = sheet.Row(j).Height;
+                        }
+                    }
+                }
+                #endregion
+
+                #endregion
+
+                #region Excel Handle
+
+                int detail_row = 2;
+                #region 主檔
+
+                int index = 1;
+                foreach (var item in Orders_detail)
+                {
+                    //var members = db0.Fortune_Light.Where(x => x.order_sn == item.orders_sn).OrderByDescending(x => x.sort);
+                    var members = (from x in db0.Fortune_Light
+                                   join y in db0.Member_Detail
+                                   on x.member_detail_id equals y.member_detail_id
+                                   where x.order_sn == item.orders_sn
+                                   select new { x.member_detail_id, x.member_name, x.order_sn, y.lbirthday, y.is_holder })
+                                   .OrderByDescending(x => x.is_holder).ThenBy(x => x.lbirthday);
+
+                    #region copy戶長格式(第一頁以後)
+                    if (index > 8)
+                    {
+                        if (index % 2 != 0)
+                        {
+                            sheet.Cells["H2"].Copy(sheet.Cells[detail_row, 17]);//戶長姓名
+                            sheet.Cells["H5"].Copy(sheet.Cells[detail_row + 3, 17]);//闔府
+                        }
+                        else
+                        {
+                            sheet.Cells["H2"].Copy(sheet.Cells[detail_row, 8]);//戶長姓名
+                            sheet.Cells["H5"].Copy(sheet.Cells[detail_row + 3, 8]);//闔府
+                        }
+                    }
+                    else if (index > 2)
+                    {
+                        sheet.Cells[detail_row + 3, 17].Value = "闔府";
+                        sheet.Cells[detail_row + 3, 8].Value = "闔府";
+                    }
+                    #endregion
+                    #region 內容
+                    if (index % 2 != 0)
+                    {
+                        sheet.Cells[detail_row, 17].Value = item.member_name;//戶長姓名
+                        sheet.Cells[detail_row + 5, 11].Value = item.light_name;//燈位名稱
+                        if (item.member_name.Length > 4)
+                            length4HouseHold(sheet, detail_row, 17);
+
+                        light_name(sheet, detail_row + 5, 11);
+                        #region 家族成員
+                        int column = 16, index2 = 1;
+                        foreach (var mb in members)
+                        {
+                            if (index2 % 2 != 0)
+                            {
+                                if (index > 8)
+                                {
+                                    sheet.Cells["P2"].Copy(sheet.Cells[detail_row, column]);
+                                }
+                                sheet.Cells[detail_row, column].Value = mb.member_name;
+                                if (mb.member_name.Length > 4)
+                                    length4Member(sheet, detail_row, column);
+                            }
+                            else
+                            {
+                                if (index > 8)
+                                {
+                                    sheet.Cells["P2"].Copy(sheet.Cells[detail_row + 2, column]);
+                                }
+
+                                sheet.Cells[detail_row + 2, column].Value = mb.member_name;
+                                if (mb.member_name.Length > 4)
+                                    length4Member(sheet, detail_row + 2, column);
+
+                                column--;//偶數換行
+                            }
+                            index2++;
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        sheet.Cells[detail_row, 8].Value = item.member_name;//戶長姓名
+                        sheet.Cells[detail_row + 5, 2].Value = item.light_name;//燈位名稱
+                        if (item.member_name.Length > 4)
+                            length4HouseHold(sheet, detail_row, 8);
+
+                        light_name(sheet, detail_row + 5, 2);
+
+                        #region 家族成員
+                        int column = 7, index2 = 1;
+                        foreach (var mb in members)
+                        {
+                            if (index2 % 2 != 0)
+                            {
+                                if (index > 8)
+                                {
+                                    sheet.Cells["P2"].Copy(sheet.Cells[detail_row, column]);
+                                }
+                                sheet.Cells[detail_row, column].Value = mb.member_name;
+                                if (mb.member_name.Length > 4)
+                                    length4Member(sheet, detail_row, column);
+                            }
+                            else
+                            {
+                                if (index > 8)
+                                {
+                                    sheet.Cells["P2"].Copy(sheet.Cells[detail_row + 2, column]);
+                                }
+                                sheet.Cells[detail_row + 2, column].Value = mb.member_name;
+                                if (mb.member_name.Length > 4)
+                                    length4Member(sheet, detail_row + 2, column);
+                                column--;//偶數換行
+                            }
+                            index2++;
+                        }
+                        #endregion
+                    }
+                    #endregion
+                    #region 合併儲存格(copy時相鄰儲存格不能被合併)
+                    if (index > 8)
+                    {
+                        if (index % 2 != 0)
+                        {
+                            sheet.Cells[detail_row, 17, detail_row + 2, 17].Merge = true;//戶長合併儲存格
+                            sheet.Cells[detail_row + 3, 17, detail_row + 3 + 2, 17].Merge = true;//合併儲存格
+
+                            int column = 16, index2 = 1;
+                            foreach (var mb in members)
+                            {
+                                if (index2 % 2 == 0)
+                                {
+                                    sheet.Cells[detail_row + 2, column, detail_row + 2 + 1, column].Merge = true;
+                                    column--;//偶數換行
+                                }
+                                index2++;
+                            }
+                        }
+                        else
+                        {
+                            sheet.Cells[detail_row, 8, detail_row + 2, 8].Merge = true;//戶長合併儲存格
+                            sheet.Cells[detail_row + 3, 8, detail_row + 3 + 2, 8].Merge = true;//合併儲存格
+
+                            int column = 7, index2 = 1;
+                            foreach (var mb in members)
+                            {
+                                if (index2 % 2 == 0)
+                                {
+                                    sheet.Cells[detail_row + 2, column, detail_row + 2 + 1, column].Merge = true;
+                                    column--;//偶數換行
+                                }
+                                index2++;
+                            }
+                        }
+                    }
+                    #endregion
+                    if (index % 8 == 0)
+                    {
+                        detail_row += 8;//換頁
+                    }
+                    else if (index % 2 == 0)
+                    {
+                        detail_row += 7;//偶數換列
+                    }
+                    index++;
+                }
+
+                #endregion
+
+                //sheet.Cells.Calculate(); //要對所以Cell做公計計算 否則樣版中的公式值是不會變的
+
+                #endregion
+
+                string filename = "沉香媽祖及藥師佛斗燈標籤[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
+                string filepath = Server.MapPath(folder_path_save + filename);
+                fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
+                excel.SaveAs(fs);
+                fs.Position = 0;
+                return File(fs, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex.Message);
+                Log.Write(ex.ToString());
+                //Console.Write(ex.Message);
+                return null;
+            }
+            finally
+            {
+                //fs.Close();
+                //fs.Dispose();
+                db0.Dispose();
+            }
         }
         #endregion
 

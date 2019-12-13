@@ -160,6 +160,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Api\DouLightLabelController.cs" />
     <Compile Include="Controllers\Api\MemberMailController.cs" />
     <Compile Include="Controllers\Api\FortuneLightLabelController.cs" />
     <Compile Include="Controllers\Api\TempleAccountPrintController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Controllers\Api\OrdersController.cs" />
     <Compile Include="Controllers\Api\MemberController.cs" />
     <Compile Include="Controllers\Api\RejectController.cs" />
+    <Compile Include="Controllers\DouLightLabelController.cs" />
     <Compile Include="Controllers\WishLightController.cs" />
     <Compile Include="Controllers\ExcelReportController.cs" />
     <Compile Include="Controllers\LoginManageController.cs" />
@@ -622,6 +624,7 @@
     <Content Include="Views\AssemblyBatch\BatchCount.cshtml" />
     <Content Include="Views\WishLight\Index.cshtml" />
     <Content Include="Views\AssemblyBatch\BatchChg.cshtml" />
+    <Content Include="Views\DouLightLabel\Index.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -727,6 +730,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="ScriptsCtrl\batchChgCtr.ts" />
+    <TypeScriptCompile Include="ScriptsCtrl\DouLightLabelCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\WishLightCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\batchCountCtr.ts" />
     <TypeScriptCompile Include="ScriptsCtrl\d.ts\angular-ui-router.d.ts" />

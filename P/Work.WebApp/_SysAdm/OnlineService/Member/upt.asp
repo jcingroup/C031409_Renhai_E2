@@ -310,6 +310,9 @@ Dim MasterID
     function RedireOrder() {
         document.location.href = '../../../Orders#/edit/gorders?member_id=' + $('#MasterID').val() + "&t=" + (new Date()).getTime();
     }
+    function RedireOrder_DouLight() {
+        document.location.href = '../../../Orders#/edit/doulightorders?member_id=' + $('#MasterID').val() + "&t=" + (new Date()).getTime();
+    }
 
     function RedireOrder_Fortune() {
         document.location.href = '../../../Orders#/edit/forders?member_id=' + $('#MasterID').val() + "&t=" + (new Date()).getTime();

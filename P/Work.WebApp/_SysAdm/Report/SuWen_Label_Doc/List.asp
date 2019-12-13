@@ -73,7 +73,7 @@ Dim strkey
 	
 	Select Case intDocType 
 		Case 1	'點燈
-			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('2','3','4','5','12','13','21','31','41','51','121','131')","","N","","")
+			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('2','3','4','5','12','13','21','31','41','51','121','131','16','161','17','171')","","N","","")
 		Case 2	'入斗
 			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('8')","","N","","")
 		Case 3	'太歲
@@ -82,6 +82,8 @@ Dim strkey
 			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('390','391','392','393','394','395','396')","","N","","")
 		Case 5	'祈福許願燈
 			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('1501')","","N","","")
+    	Case 6	'沉香媽祖/藥師佛斗燈
+			strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('1801','1802')","","N","","")
     End Select	
 	
 	'strWhere=MakeWhere(strWhere,"AND","A.產品編號","=",intProductSN,-1,"N","","")
@@ -141,7 +143,7 @@ Dim strkey
 
 	Dim strSelCboDocType
 	'-- 取得疏文名冊類別-----------------------------------
-	strSelCboDocType=AryToOption(Array(1,2,3,4,5),Array("點燈","入斗","太歲","福燈","祈福許願燈"),0,1,Trim(intDocType),"","")
+	strSelCboDocType=AryToOption(Array(1,2,3,4,5,6),Array("點燈","入斗","太歲","福燈","祈福許願燈","沉香媽祖/藥師佛斗燈"),0,1,Trim(intDocType),"","")
 	'======================================================
 	
 	

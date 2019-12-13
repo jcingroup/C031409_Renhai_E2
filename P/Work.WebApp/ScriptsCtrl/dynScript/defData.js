@@ -39,7 +39,8 @@ var commData;
         { value: 1, label: '主副斗' },
         { value: 2, label: '大中小斗' },
         { value: 3, label: '福燈' },
-        { value: 4, label: '祈福許願燈' }
+        { value: 4, label: '祈福許願燈' },
+        { value: 5, label: '媽祖/藥師佛斗燈' },
     ];
     commData.Fortune_light = [
         { value: "", label: "All" },
@@ -50,6 +51,11 @@ var commData;
         { value: "394", label: "左排福燈" },
         { value: "395", label: "後排福燈" },
         { value: "396", label: "上排福燈" }
+    ];
+    commData.Dou_light = [
+        { value: "", label: "All" },
+        { value: "1801", label: "藥師佛斗燈" },
+        { value: "1802", label: "沉香媽祖斗燈" }
     ];
     commData.godson_account_type = [
         { value: "751", label: "契子入會" },
