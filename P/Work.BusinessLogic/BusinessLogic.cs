@@ -5223,7 +5223,8 @@ namespace ProcCore.Business.Logic
         public int 香油錢 { get; set; }
         public int 香油_信徒觀摩 { get; set; }
         public int 香油_祈願卡 { get; set; }
-        public int 香油_媽祖聖誕擲筊 { get; set; }
+        //2019/12/16 Line說停用於統計表 改放 斗燈(各殿神明年斗燈)
+        //public int 香油_媽祖聖誕擲筊 { get; set; }
         public int 香油_媽祖回鑾 { get; set; }
         public int 香油_專案專款 { get; set; }
         public int 香油_媽祖聖誕典禮 { get; set; }
@@ -5256,7 +5257,12 @@ namespace ProcCore.Business.Logic
         public int 白米 { get; set; }
         public int 合計金額 { get; set; }
         public int 合計燈類金額 { get; set; }
+        //合計禮斗拆開 斗燈_各殿神明年斗燈、斗燈(媽祖聖誕禮斗金)
         public int 合計禮斗 { get; set; }
+        //主斗、福斗、斗首 合計金額 放入 斗燈(各殿神明年斗燈)
+        public int 斗燈_各殿神明年斗燈 { get; set; }
+        // 大斗、中斗、小斗 合計金額
+        public int 斗燈_媽祖聖誕禮斗金 { get; set; }
 
         //總和
         public int 媽祖殿燈籠頭燈加總 { get; set; }
@@ -5359,7 +5365,7 @@ namespace ProcCore.Business.Logic
                 md.觀音頭燈 = mds.Any(x => x.產品編號 == e_祈福產品.觀音頭燈) ? mds.First(x => x.產品編號 == e_祈福產品.觀音頭燈).數量 : 0;
 
                 md.香油錢 = mds.Any(x => x.產品編號 == e_祈福產品.香油錢) ? mds.First(x => x.產品編號 == e_祈福產品.香油錢).數量 : 0;
-                md.香油_媽祖聖誕擲筊 = mds.Any(x => x.產品編號 == e_祈福產品.香油_媽祖聖誕擲筊) ? mds.First(x => x.產品編號 == e_祈福產品.香油_媽祖聖誕擲筊).數量 : 0;
+                //md.香油_媽祖聖誕擲筊 = mds.Any(x => x.產品編號 == e_祈福產品.香油_媽祖聖誕擲筊) ? mds.First(x => x.產品編號 == e_祈福產品.香油_媽祖聖誕擲筊).數量 : 0;
                 md.香油_媽祖回鑾 = mds.Any(x => x.產品編號 == e_祈福產品.香油_媽祖回鑾) ? mds.First(x => x.產品編號 == e_祈福產品.香油_媽祖回鑾).數量 : 0;
                 md.香油_祈願卡 = mds.Any(x => x.產品編號 == e_祈福產品.香油_祈願卡) ? mds.First(x => x.產品編號 == e_祈福產品.香油_祈願卡).數量 : 0;
                 md.香油_契子觀摩 = mds.Any(x => x.產品編號 == e_祈福產品.香油_契子觀摩) ? mds.First(x => x.產品編號 == e_祈福產品.香油_契子觀摩).數量 : 0;

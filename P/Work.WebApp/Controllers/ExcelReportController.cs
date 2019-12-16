@@ -130,7 +130,7 @@ namespace DotWeb.Controllers
                 md.媽祖殿燈籠頭燈加總 = md.頭燈前排福燈 + md.頭燈後排福燈 + md.前排福燈 + md.後排福燈 + md.左排福燈 + md.右排福燈 + md.上排福燈;
 
                 md.香油錢 = mds.Any(x => x.product_sn == e_祈福產品.香油錢) ? mds.First(x => x.product_sn == e_祈福產品.香油錢).price : 0;
-                md.香油_媽祖聖誕擲筊 = mds.Any(x => x.product_sn == e_祈福產品.香油_媽祖聖誕擲筊) ? mds.First(x => x.product_sn == e_祈福產品.香油_媽祖聖誕擲筊).price : 0;
+                //md.香油_媽祖聖誕擲筊 = mds.Any(x => x.product_sn == e_祈福產品.香油_媽祖聖誕擲筊) ? mds.First(x => x.product_sn == e_祈福產品.香油_媽祖聖誕擲筊).price : 0;
                 md.香油_媽祖回鑾 = mds.Any(x => x.product_sn == e_祈福產品.香油_媽祖回鑾) ? mds.First(x => x.product_sn == e_祈福產品.香油_媽祖回鑾).price : 0;
                 md.香油_祈願卡 = mds.Any(x => x.product_sn == e_祈福產品.香油_祈願卡) ? mds.First(x => x.product_sn == e_祈福產品.香油_祈願卡).price : 0;
 
@@ -175,7 +175,8 @@ namespace DotWeb.Controllers
                 md.福斗 = mds.Any(x => x.product_sn == e_祈福產品.福斗) ? mds.First(x => x.product_sn == e_祈福產品.福斗).price : 0;
 
                 md.合計禮斗 = md.大斗 + md.中斗 + md.小斗 + md.主斗 + md.副斗 + md.福斗;
-
+                md.斗燈_各殿神明年斗燈 = md.主斗 + md.副斗 + md.福斗;
+                md.斗燈_媽祖聖誕禮斗金 = md.大斗 + md.中斗 + md.小斗;
                 //md.合計金額 = mds.Where(x => x.product_sn != e_祈福產品.捐白米 && x.product_sn != e_祈福產品.捐金牌).Select(x=>x.price).DefaultIfEmpty().Sum();
 
                 md.合計燈類金額 = md.文昌燈 + md.文昌頭燈;
@@ -245,7 +246,7 @@ namespace DotWeb.Controllers
                 sheet.Cells["E20"].Value = md.香油_媽祖聖誕典禮;
 
                 sheet.Cells["C21"].Value = md.香油_祈願卡;
-                sheet.Cells["E21"].Value = md.合計禮斗;
+                sheet.Cells["E21"].Value = md.斗燈_媽祖聖誕禮斗金;
 
                 sheet.Cells["C22"].Value = md.香油_專案專款;
                 sheet.Cells["E22"].Value = md.契子會_入會;
@@ -254,7 +255,7 @@ namespace DotWeb.Controllers
                 sheet.Cells["E23"].Value = md.契子會_大會;
 
                 sheet.Cells["C24"].Value = md.香油_喜緣玉品;// ;
-                sheet.Cells["E24"].Value = md.香油_媽祖聖誕擲筊;
+                sheet.Cells["E24"].Value = md.斗燈_各殿神明年斗燈;
 
                 sheet.Cells["C25"].Value = md.超渡法會_薦拔祖先;
                 sheet.Cells["E25"].Value = md.香油_契子觀摩;// md.香油_屋頂整修費;
@@ -3722,7 +3723,7 @@ namespace DotWeb.Controllers
 
                 var user = db0.Users.Find(this.UserId);
 
-                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "福燈標籤8.xlsx");
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "闔家平安斗標籤.xlsx");
                 FileInfo finfo = new FileInfo(ExcelTemplateFile);
                 excel = new ExcelPackage(finfo, true);
                 ExcelWorksheet sheet = excel.Workbook.Worksheets["SheetPrint"];
@@ -3763,9 +3764,9 @@ namespace DotWeb.Controllers
                 {
                     for (var i = 1; i < page; i++)
                     {//從第二頁開始複製列高
-                        for (var j = 1; j <= 29; j++)
-                        {//一頁29列
-                            sheet.Row(j + (i * 29)).Height = sheet.Row(j).Height;
+                        for (var j = 1; j <= 28; j++)
+                        {//一頁28列
+                            sheet.Row(j + (i * 28)).Height = sheet.Row(j).Height;
                         }
                     }
                 }
@@ -3775,7 +3776,7 @@ namespace DotWeb.Controllers
 
                 #region Excel Handle
 
-                int detail_row = 2;
+                int detail_row = 3;
                 #region 主檔
 
                 int index = 1;
@@ -3794,56 +3795,58 @@ namespace DotWeb.Controllers
                     {
                         if (index % 2 != 0)
                         {
-                            sheet.Cells["H2"].Copy(sheet.Cells[detail_row, 17]);//戶長姓名
-                            sheet.Cells["H5"].Copy(sheet.Cells[detail_row + 3, 17]);//闔府
+                            sheet.Cells["F3"].Copy(sheet.Cells[detail_row, 18]);//戶長姓名
+                            sheet.Cells["F6"].Copy(sheet.Cells[detail_row + 3, 18]);//闔府
+                            sheet.Cells["M3"].Copy(sheet.Cells[detail_row, 13]);//燈位
+                            //黑色框線
+                            sheet.SelectedRange[detail_row - 1, 13, detail_row + 4, 22].Style.Border.BorderAround(ExcelBorderStyle.Medium, Color.Black);
                         }
                         else
                         {
-                            sheet.Cells["H2"].Copy(sheet.Cells[detail_row, 8]);//戶長姓名
-                            sheet.Cells["H5"].Copy(sheet.Cells[detail_row + 3, 8]);//闔府
+                            sheet.Cells["F3"].Copy(sheet.Cells[detail_row, 6]);//戶長姓名
+                            sheet.Cells["F6"].Copy(sheet.Cells[detail_row + 3, 6]);//闔府
+                            sheet.Cells["M3"].Copy(sheet.Cells[detail_row, 2]);//燈位
+                            //黑色框線
+                            sheet.SelectedRange[detail_row - 1, 2, detail_row + 4, 10].Style.Border.BorderAround(ExcelBorderStyle.Medium, Color.Black);
                         }
                     }
                     else if (index > 2)
                     {
-                        sheet.Cells[detail_row + 3, 17].Value = "闔府";
-                        sheet.Cells[detail_row + 3, 8].Value = "闔府";
+                        sheet.Cells[detail_row + 3, 18].Value = "闔府";
+                        sheet.Cells[detail_row + 3, 6].Value = "闔府";
                     }
                     #endregion
                     #region 內容
                     if (index % 2 != 0)
                     {
-                        sheet.Cells[detail_row, 17].Value = item.member_name;//戶長姓名
-                        sheet.Cells[detail_row + 5, 11].Value = item.light_name;//燈位名稱
-                        if (item.member_name.Length > 4)
-                            length4HouseHold(sheet, detail_row, 17);
-
-                        light_name(sheet, detail_row + 5, 11);
+                        sheet.Cells[detail_row, 18].Value = item.member_name;//戶長姓名
+                        sheet.Cells[detail_row, 13].Value = item.light_name;//燈位名稱
                         #region 家族成員
-                        int column = 16, index2 = 1;
+                        int column = 21, index2 = 1;
                         foreach (var mb in members)
                         {
                             if (index2 % 2 != 0)
                             {
                                 if (index > 8)
                                 {
-                                    sheet.Cells["P2"].Copy(sheet.Cells[detail_row, column]);
+                                    sheet.Cells["U3"].Copy(sheet.Cells[detail_row, column]);
                                 }
                                 sheet.Cells[detail_row, column].Value = mb.member_name;
-                                if (mb.member_name.Length > 4)
-                                    length4Member(sheet, detail_row, column);
                             }
                             else
                             {
                                 if (index > 8)
                                 {
-                                    sheet.Cells["P2"].Copy(sheet.Cells[detail_row + 2, column]);
+                                    sheet.Cells["U3"].Copy(sheet.Cells[detail_row + 2, column]);
                                 }
 
                                 sheet.Cells[detail_row + 2, column].Value = mb.member_name;
-                                if (mb.member_name.Length > 4)
-                                    length4Member(sheet, detail_row + 2, column);
 
                                 column--;//偶數換行
+                            }
+                            if (index2 == 6)
+                            {//中間塞入戶長姓名 要多換一行數
+                                column--;
                             }
                             index2++;
                         }
@@ -3851,37 +3854,33 @@ namespace DotWeb.Controllers
                     }
                     else
                     {
-                        sheet.Cells[detail_row, 8].Value = item.member_name;//戶長姓名
-                        sheet.Cells[detail_row + 5, 2].Value = item.light_name;//燈位名稱
-                        if (item.member_name.Length > 4)
-                            length4HouseHold(sheet, detail_row, 8);
-
-                        light_name(sheet, detail_row + 5, 2);
+                        sheet.Cells[detail_row, 6].Value = item.member_name;//戶長姓名
+                        sheet.Cells[detail_row, 2].Value = item.light_name;//燈位名稱
 
                         #region 家族成員
-                        int column = 7, index2 = 1;
+                        int column = 9, index2 = 1;
                         foreach (var mb in members)
                         {
                             if (index2 % 2 != 0)
                             {
                                 if (index > 8)
                                 {
-                                    sheet.Cells["P2"].Copy(sheet.Cells[detail_row, column]);
+                                    sheet.Cells["U3"].Copy(sheet.Cells[detail_row, column]);
                                 }
                                 sheet.Cells[detail_row, column].Value = mb.member_name;
-                                if (mb.member_name.Length > 4)
-                                    length4Member(sheet, detail_row, column);
                             }
                             else
                             {
                                 if (index > 8)
                                 {
-                                    sheet.Cells["P2"].Copy(sheet.Cells[detail_row + 2, column]);
+                                    sheet.Cells["U3"].Copy(sheet.Cells[detail_row + 2, column]);
                                 }
                                 sheet.Cells[detail_row + 2, column].Value = mb.member_name;
-                                if (mb.member_name.Length > 4)
-                                    length4Member(sheet, detail_row + 2, column);
                                 column--;//偶數換行
+                            }
+                            if (index2 == 6)
+                            {//中間塞入戶長姓名 要多換一行數
+                                column--;
                             }
                             index2++;
                         }
@@ -3893,26 +3892,30 @@ namespace DotWeb.Controllers
                     {
                         if (index % 2 != 0)
                         {
-                            sheet.Cells[detail_row, 17, detail_row + 2, 17].Merge = true;//戶長合併儲存格
-                            sheet.Cells[detail_row + 3, 17, detail_row + 3 + 2, 17].Merge = true;//合併儲存格
+                            sheet.Cells[detail_row, 18, detail_row + 2, 18].Merge = true;//戶長合併儲存格
+                            sheet.Cells[detail_row, 13, detail_row + 3, 13].Merge = true;//燈位名稱合併儲存格
 
-                            int column = 16, index2 = 1;
+                            int column = 21, index2 = 1;
                             foreach (var mb in members)
                             {
                                 if (index2 % 2 == 0)
                                 {
                                     sheet.Cells[detail_row + 2, column, detail_row + 2 + 1, column].Merge = true;
                                     column--;//偶數換行
+                                }
+                                if (index2 == 6)
+                                {//中間塞入戶長姓名 要多換一行數
+                                    column--;
                                 }
                                 index2++;
                             }
                         }
                         else
                         {
-                            sheet.Cells[detail_row, 8, detail_row + 2, 8].Merge = true;//戶長合併儲存格
-                            sheet.Cells[detail_row + 3, 8, detail_row + 3 + 2, 8].Merge = true;//合併儲存格
+                            sheet.Cells[detail_row, 6, detail_row + 2, 6].Merge = true;//戶長合併儲存格
+                            sheet.Cells[detail_row, 2, detail_row + 3, 2].Merge = true;//燈位名稱合併儲存格
 
-                            int column = 7, index2 = 1;
+                            int column = 9, index2 = 1;
                             foreach (var mb in members)
                             {
                                 if (index2 % 2 == 0)
@@ -3920,16 +3923,16 @@ namespace DotWeb.Controllers
                                     sheet.Cells[detail_row + 2, column, detail_row + 2 + 1, column].Merge = true;
                                     column--;//偶數換行
                                 }
+                                if (index2 == 6)
+                                {//中間塞入戶長姓名 要多換一行數
+                                    column--;
+                                }
                                 index2++;
                             }
                         }
                     }
                     #endregion
-                    if (index % 8 == 0)
-                    {
-                        detail_row += 8;//換頁
-                    }
-                    else if (index % 2 == 0)
+                    if (index % 2 == 0)
                     {
                         detail_row += 7;//偶數換列
                     }
@@ -3942,7 +3945,7 @@ namespace DotWeb.Controllers
 
                 #endregion
 
-                string filename = "沉香媽祖及藥師佛斗燈標籤[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
+                string filename = "闔家平安斗標籤[" + user.users_name + "][" + DateTime.Now.ToString("yyyyMMddHHmm") + "].xlsx";
                 string filepath = Server.MapPath(folder_path_save + filename);
                 fs = new FileStream(filepath, FileMode.Create, FileAccess.ReadWrite);
                 excel.SaveAs(fs);

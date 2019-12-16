@@ -680,6 +680,7 @@
     <Content Include="_Code\Excel\超度法會%28歷代祖先%29名冊.xlsx" />
     <Content Include="_Code\Excel\超度法會%28超渡嬰靈%29名冊.xlsx" />
     <Content Include="_Code\Excel\禮斗金名冊格式.xlsx" />
+    <Content Include="_Code\Excel\闔家平安斗標籤.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
