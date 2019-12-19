@@ -1678,10 +1678,16 @@ namespace DotWeb.Controllers
         }
 
         #region 文玄國寶
+        public static Dictionary<string, string> AiLight_PName = new Dictionary<string, string>() {
+            { e_祈福產品.藥師佛燈, "藥師佛燈" },
+            {e_祈福產品.藥師佛頭燈, "藥師佛頭燈" },
+            {e_祈福產品.沉香媽祖燈, "沉香媽祖燈" },
+            {e_祈福產品.沉香媽祖頭燈, "沉香媽祖燈" },
+        };
         public FileResult AiLight(q_LiDo q)
         {
             var outputStream = stmAiLight(q);
-            string setFileName = "文玄國寶匯入名單";
+            string setFileName = "文玄LCD光明燈導出資料表-" + AiLight_PName[q.product_sn];
             return ExportExcelFile(outputStream, setFileName);
         }
         private MemoryStream stmAiLight(q_LiDo q)
@@ -1689,12 +1695,14 @@ namespace DotWeb.Controllers
             MemoryStream outputStream = new MemoryStream();
             try
             {
-                XLWorkbook excel = new XLWorkbook();
+                string ExcelTemplateFile = Server.MapPath(folder_path_tmp + "文玄LCD光明燈導出資料表.xlsx");
+                XLWorkbook excel = new XLWorkbook(ExcelTemplateFile);
+                IXLWorksheet getSheet = excel.Worksheet(1);
                 #region 取得資料
                 var items = getAiLightData(q);//取得訂單資料
                 #endregion
                 #region Excel Handle
-                makeAiLight(items, excel);
+                makeAiLight(q, items, getSheet);
                 #endregion
 
                 excel.SaveAs(outputStream);
@@ -1733,6 +1741,10 @@ namespace DotWeb.Controllers
                            C_InsertDateTime = x.Orders.C_InsertDateTime
                        });
 
+                if (q.product_sn != null & q.product_sn != "null")
+                {
+                    tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                }
                 res = tmp.ToList();
             }
             return res;
@@ -1742,42 +1754,25 @@ namespace DotWeb.Controllers
             public string product_sn { get; set; }
             public string product_name { get; set; }
         }
-        private void makeAiLight(List<m_Orders_Detail> data, XLWorkbook excel)
+        private void makeAiLight(q_LiDo q, List<m_Orders_Detail> data, IXLWorksheet getSheet)
         {
-            int row_index = 2;//+6
-            List<EachAiLight> ailight = new List<EachAiLight>() {
-                new EachAiLight(){product_sn=e_祈福產品.藥師佛燈, product_name="藥師佛燈"},
-                new EachAiLight(){product_sn=e_祈福產品.藥師佛頭燈, product_name="藥師佛頭燈"},
-                new EachAiLight(){product_sn=e_祈福產品.沉香媽祖燈, product_name="沉香媽祖燈"},
-                new EachAiLight(){product_sn=e_祈福產品.沉香媽祖頭燈, product_name="沉香媽祖頭燈"} };
-
-            foreach (var light in ailight)
+            getSheet.Cell(1, 1).Value = "文玄光明燈系統導入資料表-" + AiLight_PName[q.product_sn];
+            getSheet.Name = AiLight_PName[q.product_sn];
+            int row_index = 4;
+            int count = data.Count() - 2;
+            if (count > 0) { getSheet.Row(row_index).InsertRowsBelow(count); }
+            foreach (var i in data)
             {
-                var t_data = data.Where(x => x.product_sn == light.product_sn);
-                int count = t_data.Count();
-
-                IXLWorksheet getSheet = excel.AddWorksheet(string.Format("{0}({1}筆)", light.product_name, count));
-                getSheet.Cell(1, 1).Value = "姓名";
-                getSheet.Cell(1, 2).Value = "性別";
-                getSheet.Cell(1, 3).Value = "出生日期";
-                getSheet.Cell(1, 4).Value = "訂單編號";
-                getSheet.Cell(1, 5).Value = "燈位位置";
-                getSheet.Cell(1, 6).Value = "手機";
-                getSheet.Cell(1, 7).Value = "電話";
-                getSheet.Cell(1, 8).Value = "地址";
-                row_index = 2;
-                foreach (var i in t_data)
-                {
-                    getSheet.Cell(row_index, 1).SetValue<string>(i.member_name);
-                    getSheet.Cell(row_index, 2).SetValue<string>(i.gender == "1" ? "男生" : "女生");
-                    getSheet.Cell(row_index, 3).SetValue<string>(i.l_birthday);
-                    getSheet.Cell(row_index, 4).SetValue<string>(i.orders_sn);
-                    getSheet.Cell(row_index, 5).SetValue<string>(i.light_name);
-                    getSheet.Cell(row_index, 6).SetValue<string>(i.mobile);
-                    getSheet.Cell(row_index, 7).SetValue<string>(i.tel);
-                    getSheet.Cell(row_index, 8).SetValue<string>(i.address);
-                    row_index++;
-                }
+                getSheet.Cell(row_index, 1).SetValue<string>(i.member_name);
+                getSheet.Cell(row_index, 2).SetValue<string>(i.gender == "1" ? "男生" : "女生");
+                getSheet.Cell(row_index, 3).SetValue<string>(i.l_birthday);
+                getSheet.Cell(row_index, 5).SetValue<string>(i.orders_sn);
+                getSheet.Cell(row_index, 6).SetValue<string>(i.light_name);
+                getSheet.Cell(row_index, 8).SetValue<string>(i.mobile);
+                getSheet.Cell(row_index, 9).SetValue<string>(i.tel);
+                getSheet.Cell(row_index, 10).SetValue<string>(i.address);
+                getSheet.Cell(row_index, 11).SetValue<string>("109年2月16日");
+                row_index++;
             }
         }
         #endregion

@@ -83,7 +83,8 @@
             <div><a href="<%=ResolveUrl("~/ExcelReport/ajax_MakeExcel?Date1=2017-01-01&Date2=2017-12-07&Time1=01&Time2=24&People=1000001")%>">統計表列印</a></div>
             <div><a href="<%=ResolveUrl("~/ExcelReport/LiDoRoll?year=2017")%>">禮斗名冊列印</a></div>
             <div><a href="<%=ResolveUrl("~/AssemblyBatch/BatchCount/#/grid")%>">祈福法會訂單換梯次</a></div>
-              <div><a href="<%=ResolveUrl("~/ExcelReport/AiLight?year=2020")%>">文玄國寶列印</a></div>
+              <div><a href="<%=ResolveUrl("~/ExcelReport/AiLight?year=2020&product_sn=16")%>">文玄國寶列印-1</a></div>
+              <div><a href="<%=ResolveUrl("~/ExcelReport/AiLight?year=2020product_sn=161")%>">文玄國寶列印-2</a></div>
         </div>
         <table id="TableProductDetailView" style="width: 100%; margin: 1px; padding: 1px; border: 1px">
             <thead>

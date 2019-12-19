@@ -161,59 +161,88 @@ Dim strkey
 <html>
 <head>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>點燈標籤</title>	
-	<link rel=stylesheet href=../../_CSS/default.css>
-	<script language=javascript src="../../_JScript/List.js"></script>
-	<script language=javascript src="../../_JScript/Subwin.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>點燈標籤</title>
+    <link rel="stylesheet" href="../../_CSS/default.css">
+    <script language="javascript" src="../../_JScript/List.js"></script>
+    <script language="javascript" src="../../_JScript/Subwin.js"></script>
 
-	<script Language=javascript>
-	//打開視窗-------------
-	function WO(URL){
-		window.open(URL,"WO","Left=0,Top=0,width=1180,height=750,center=yes,status=no,toolbar=no,scrollbars=yes");
-	}//================================
-	</script>
-	
-	<style type="text/css">
-		.gridtd1{color:black;text-align:center}
-		.gridtd2{color:black;text-align:center}	
-		.gridtd3{color:black;text-align:center}	
-		.gridtd4{color:black;text-align:center}
-		.gridtd5{color:black;text-align:center}
-		.gridtd6{color:black;text-align:center}
-		.gridtd7{color:black;text-align:center}
+    <script language="javascript">
+        //打開視窗-------------
+        function WO(URL) {
+            window.open(URL, "WO", "Left=0,Top=0,width=1180,height=750,center=yes,status=no,toolbar=no,scrollbars=yes");
+        }//================================
+    </script>
 
-	</style>
+    <style type="text/css">
+        .gridtd1 {
+            color: black;
+            text-align: center;
+        }
+
+        .gridtd2 {
+            color: black;
+            text-align: center;
+        }
+
+        .gridtd3 {
+            color: black;
+            text-align: center;
+        }
+
+        .gridtd4 {
+            color: black;
+            text-align: center;
+        }
+
+        .gridtd5 {
+            color: black;
+            text-align: center;
+        }
+
+        .gridtd6 {
+            color: black;
+            text-align: center;
+        }
+
+        .gridtd7 {
+            color: black;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<!--#include file="../../_include/top.asp"-->
-<script>
-	$(document).ready(function(){
-    	    $('#btn_ExportExcel').click(function () {
+    <!--#include file="../../_include/top.asp"-->
+    <script>
+         function btn_ExportExcel(product_sn) {
 	        var parms = [];
 	        //parms.push('Date1=' + $('#Date1').val());
 	        //parms.push('Date2=' + $('#Date2').val());
 	        parms.push('year=' + (new Date()).getFullYear());
+	        parms.push('product_sn=' + product_sn);
 	        $("#ifm_exceldownload").attr("src", "../../../ExcelReport/AiLight?" + parms.join('&'));
-	    });
+	    };
+	$(document).ready(function(){	   
 		$('.datepicker').datepicker();
 	});
-</script>
-<form action="<%=strScript%>" method="post" name=traQuery id="form1">
-<input name="cmd" type="hidden" id="cmd" value="set">
-<table width=100% border=0  cellspacing="0" cellpadding="0">
-	<tr>
-	<td Align=Left> 
-	
-		<table wwidth=800 border=0  cellspacing="0" cellpadding="0">
-			<tr> 
-				<td width="100" Align=Right>訂單日期：</td>
-				<td width="20"  Align=Right>起</td>
-				<td width="80" Align=Right><input name="Date1" type="text" id="Date1" value="<%=strDate1%>" class="datepicker" /></td>
-				<td width="20"  Align=Right>迄</td>
-				<td width="80" Align=Right><input name="Date2" type="text" id="Date2" value="<%=strDate2%>" class="datepicker" /></td>
-				
-				<!--
+    </script>
+    <form action="<%=strScript%>" method="post" name="traQuery" id="form1">
+        <input name="cmd" type="hidden" id="cmd" value="set">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="Left">
+
+                    <table wwidth="800" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="100" align="Right">訂單日期：</td>
+                            <td width="20" align="Right">起</td>
+                            <td width="80" align="Right">
+                                <input name="Date1" type="text" id="Date1" value="<%=strDate1%>" class="datepicker" /></td>
+                            <td width="20" align="Right">迄</td>
+                            <td width="80" align="Right">
+                                <input name="Date2" type="text" id="Date2" value="<%=strDate2%>" class="datepicker" /></td>
+
+                            <!--
 				<td width="80" Align=Right>列印時間：</td>
 				<td width="20"  Align=Right>起</td>
 				<td width="50" Align=Left><select name="Time1" style="width:100%;Cursor:Hand;"><%=strSelCboTime1%></select> </td>
@@ -223,38 +252,49 @@ Dim strkey
 				<td width="80" Align=Right>經手人員：</td>
 				<td width="80" Align=Left><select name="People" style="width:100%;Cursor:Hand;"><%=strSelCboPeople%></select> </td>
 				-->
-				
-				<td width="100" Align=Right><font color=red>請選擇類別：</font></td>
-				<td width="80" Align=Left><select name="ProductSN" id="ProductSN" style="width:100%;Cursor:Hand;"><option></option><%=strSelCboProductSN%></select> </td>
+
+                            <td width="100" align="Right"><font color="red">請選擇類別：</font></td>
+                            <td width="80" align="Left">
+                                <select name="ProductSN" id="ProductSN" style="width: 100%; cursor: Hand;">
+                                    <option></option>
+                                    <%=strSelCboProductSN%>
+                                </select>
+                            </td>
 
 
-				<!--
+                            <!--
 				<td>關鍵字:</td>
 				<td><input type="text" size=10 name="key" value="<%=strKey%>"></td>
 				-->
-				<td width=60 Align=Right><input type="submit" value="查　詢" class=button></td>
-				<td width=80 Align=Right><input type="button" class="button" OnClick="WO('ExcelExport.asp?<%=strQS%>')" value="產生點燈標籤" style="margin-right:10px;"></td>
-				<td width=80 Align=Right>
-                     <input type="button" id="btn_ExportExcel" class="button" value="文玄國寶匯入用名單" style="margin-right: 10px;" />
-				</td>
-				
-                <td >&nbsp;</td>
+                            <td width="60" align="Right">
+                                <input type="submit" value="查　詢" class="button"></td>
+                            <td width="80" align="Right">
+                                <input type="button" class="button" onclick="WO('ExcelExport.asp?<%=strQS%>')" value="產生點燈標籤" style="margin-right: 10px;"></td>
+                            <td width="80" align="Right">
+                                <input type="button" class="button" onclick="btn_ExportExcel('17')" value="沉香媽祖燈" style="margin-right: 10px;" />
+                                <input type="button" class="button" onclick="btn_ExportExcel('171')" value="沉香媽祖頭燈" style="margin-right: 10px;" />
+                            </td>
+                             <td width="80" align="Right">
+                                <input type="button" class="button" onclick="btn_ExportExcel('16')" value="藥師佛燈" style="margin-right: 10px;" />
+                                <input type="button" class="button" onclick="btn_ExportExcel('161')" value="藥師佛頭燈" style="margin-right: 10px;" />
+                            </td>
+                            <td>&nbsp;</td>
 
-			</tr>
-			<tr>
-                 <td colspan="11">
-                     <font color=red>注意:查詢有顯示『藥師佛燈』、『沉香媽祖燈』、『藥師佛頭燈』、『沉香媽祖頭燈』但「產生點燈標籤」並不會列印</font>
-                 </td>
-			</tr>
-			
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <font color="red">注意:查詢有顯示『藥師佛燈』、『沉香媽祖燈』、『藥師佛頭燈』、『沉香媽祖頭燈』但「產生點燈標籤」並不會列印</font>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
         </table>
-	</td>
-	</tr>
-</table>	
-</form>
+    </form>
 
-<%=strRs%>
-<!--#include file="../../_include/bottom.asp"-->
- <iframe id="ifm_exceldownload" src="" style="border: 0px; width: 0px; height: 0px"></iframe>
+    <%=strRs%>
+    <!--#include file="../../_include/bottom.asp"-->
+    <iframe id="ifm_exceldownload" src="" style="border: 0px; width: 0px; height: 0px"></iframe>
 </body>
 </html>
