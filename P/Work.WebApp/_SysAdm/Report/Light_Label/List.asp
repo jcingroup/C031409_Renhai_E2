@@ -168,13 +168,6 @@ Dim strkey
 	<script language=javascript src="../../_JScript/Subwin.js"></script>
 
 	<script Language=javascript>
-	    $('#btn_ExportExcel').click(function () {
-	        var parms = [];
-	        //parms.push('Date1=' + $('#Date1').val());
-	        //parms.push('Date2=' + $('#Date2').val());
-	        parms.push('year=' + today.getFullYear());
-	        $("#ifm_exceldownload").attr("src", "../../../ExcelReport/ajax_MakeExcel?" + parms.join('&'));
-	    });
 	//打開視窗-------------
 	function WO(URL){
 		window.open(URL,"WO","Left=0,Top=0,width=1180,height=750,center=yes,status=no,toolbar=no,scrollbars=yes");
@@ -196,6 +189,13 @@ Dim strkey
 <!--#include file="../../_include/top.asp"-->
 <script>
 	$(document).ready(function(){
+    	    $('#btn_ExportExcel').click(function () {
+	        var parms = [];
+	        //parms.push('Date1=' + $('#Date1').val());
+	        //parms.push('Date2=' + $('#Date2').val());
+	        parms.push('year=' + (new Date()).getFullYear());
+	        $("#ifm_exceldownload").attr("src", "../../../ExcelReport/AiLight?" + parms.join('&'));
+	    });
 		$('.datepicker').datepicker();
 	});
 </script>
@@ -251,5 +251,6 @@ Dim strkey
 
 <%=strRs%>
 <!--#include file="../../_include/bottom.asp"-->
+ <iframe id="ifm_exceldownload" src="" style="border: 0px; width: 0px; height: 0px"></iframe>
 </body>
 </html>
