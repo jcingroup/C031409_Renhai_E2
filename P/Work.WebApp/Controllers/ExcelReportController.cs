@@ -1723,11 +1723,14 @@ namespace DotWeb.Controllers
                            orders_sn = x.orders_sn,
                            product_sn = x.product_sn,
                            member_name = x.member_name,
-                           mobile = x.Member_Detail.mobile,
+                           gender = x.gender,
+                           l_birthday = x.l_birthday,
                            light_name = x.light_name,
+                           mobile = x.Member_Detail.mobile,
+                           tel = x.Member_Detail.Member.tel,
                            zip = x.zip,
                            address = x.address,
-                           tel = x.Member_Detail.Member.tel,
+                           C_InsertDateTime = x.Orders.C_InsertDateTime
                        });
 
                 res = tmp.ToList();
@@ -1754,15 +1757,25 @@ namespace DotWeb.Controllers
                 int count = t_data.Count();
 
                 IXLWorksheet getSheet = excel.AddWorksheet(string.Format("{0}({1}筆)", light.product_name, count));
-                getSheet.Cell(1, 1).Value = "手機";
-                getSheet.Cell(1, 2).Value = "姓名";
-                getSheet.Cell(1, 3).Value = "訂單編號";
+                getSheet.Cell(1, 1).Value = "姓名";
+                getSheet.Cell(1, 2).Value = "性別";
+                getSheet.Cell(1, 3).Value = "出生日期";
+                getSheet.Cell(1, 4).Value = "訂單編號";
+                getSheet.Cell(1, 5).Value = "燈位位置";
+                getSheet.Cell(1, 6).Value = "手機";
+                getSheet.Cell(1, 7).Value = "電話";
+                getSheet.Cell(1, 8).Value = "地址";
                 row_index = 2;
                 foreach (var i in t_data)
                 {
-                    getSheet.Cell(row_index, 1).SetValue<string>(i.mobile);
-                    getSheet.Cell(row_index, 2).SetValue<string>(i.member_name);
-                    getSheet.Cell(row_index, 3).SetValue<string>(i.orders_sn);
+                    getSheet.Cell(row_index, 1).SetValue<string>(i.member_name);
+                    getSheet.Cell(row_index, 2).SetValue<string>(i.gender == "1" ? "男生" : "女生");
+                    getSheet.Cell(row_index, 3).SetValue<string>(i.l_birthday);
+                    getSheet.Cell(row_index, 4).SetValue<string>(i.orders_sn);
+                    getSheet.Cell(row_index, 5).SetValue<string>(i.light_name);
+                    getSheet.Cell(row_index, 6).SetValue<string>(i.mobile);
+                    getSheet.Cell(row_index, 7).SetValue<string>(i.tel);
+                    getSheet.Cell(row_index, 8).SetValue<string>(i.address);
                     row_index++;
                 }
             }
