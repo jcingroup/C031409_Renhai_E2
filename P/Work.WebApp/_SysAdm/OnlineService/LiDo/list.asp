@@ -118,12 +118,13 @@
 </body>
 </html>
 <script type="text/javascript">
+    var lightyear = (new Date()).getFullYear();
     $(document).ready(function () {
         $.ReFreshDetailHTML();
         $('#btn_ExportExcel').click(function () {
-            var today = new Date();
             var parms = [];
-            parms.push('year=' + today.getFullYear());
+            parms.push('year=' + lightyear);
+            console.log("lightyear", lightyear);
             parms.push('product_sn=' + $("select#sel_ProdSn option:checked").val());
             $("#ifm_exceldownload").attr("src", "../../../ExcelReport/LiDoRoll?" + parms.join('&'));
         });
@@ -131,7 +132,6 @@
 </script>
 <script type="text/javascript">
     (function ($) {
-
         //取得統計資料
         $.ReFreshDetailHTML = function () {
             ajaxRequest.push
@@ -152,6 +152,7 @@
 			            success: function (response) {
 			                var stai = jQuery.parseJSON(response);
 			                if (stai.result) {
+			                    lightyear = stai.lightyear;
 			                    $('tbody', $('#TableProductDetailView')).html(''); //first clear
 			                    for (var i = 0; i < stai.Module.length; i++) {
 

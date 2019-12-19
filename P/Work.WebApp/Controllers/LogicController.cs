@@ -603,6 +603,7 @@ namespace DotWeb.Controllers
                                      .Where(x => x.Product.category == e_祈福產品分類.禮斗 & x.Y == this.LightYear)
                                      .Select(x => new { 燈位名稱 = x.light_name, 產品名稱 = x.product_name, 姓名 = x.member_name, 地址 = x.address, 電話 = x.Member_Detail.tel })
                                      .ToList();
+                rAjaxResult.lightyear = this.LightYear;
             }
             catch (LogicError ex)
             {
@@ -686,6 +687,12 @@ namespace DotWeb.Controllers
         {
 
             return "test";
+        }
+        [HttpGet]
+        public int getYear()
+        {
+            int year = this.LightYear;
+            return year;
         }
     }
 

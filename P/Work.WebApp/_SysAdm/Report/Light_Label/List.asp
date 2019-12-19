@@ -241,7 +241,11 @@ Dim strkey
                 <td >&nbsp;</td>
 
 			</tr>
-			
+			<tr>
+                 <td colspan="11">
+                     <font color=red>注意:查詢有顯示『藥師佛燈』、『沉香媽祖燈』、『藥師佛頭燈』、『沉香媽祖頭燈』但「產生點燈標籤」並不會列印</font>
+                 </td>
+			</tr>
 			
         </table>
 	</td>

@@ -232,6 +232,7 @@ namespace ProcCore.ReturnAjaxResult
     public class ReturnAjaxData : ResultInfo
     {
         public Object Module { get; set; }
+        public int lightyear { get; set; }
     }
     public class ReturnAjaxFiles : ResultInfo
     {
