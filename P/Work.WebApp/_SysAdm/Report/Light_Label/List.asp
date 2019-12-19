@@ -67,7 +67,7 @@ Dim strkey
 	'-- 加入查詢條件---------------------------------------
 	strWhere=""
 	strWhere=MakeWhere(strWhere,"AND","A.產品編號","=",intProductSN,-1,"N","","")
-	strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('2','21','3','31','4','41','5','51','12','121','13','131')","","N","","")
+	strWhere=MakeWhere(strWhere,"AND","A.產品編號","IN","('2','21','3','31','4','41','5','51','12','121','13','131','16','161','17','171')","","N","","")
 	'strWhere=MakeWhere(strWhere,"AND","A.新增人員","=",intPeople,-1,"N","","")
 	strWhere=MakeWhere(strWhere,"AND","CONVERT(NVARCHAR(10),A.新增時間,111)",">=",strDate1,"","S","","")
 	strWhere=MakeWhere(strWhere,"AND","CONVERT(NVARCHAR(10),A.新增時間,111)","<=",strDate2,"","S","","")
