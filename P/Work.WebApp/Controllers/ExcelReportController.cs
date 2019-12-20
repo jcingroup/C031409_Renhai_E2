@@ -1682,7 +1682,7 @@ namespace DotWeb.Controllers
             { e_祈福產品.藥師佛燈, "藥師佛燈" },
             {e_祈福產品.藥師佛頭燈, "藥師佛頭燈" },
             {e_祈福產品.沉香媽祖燈, "沉香媽祖燈" },
-            {e_祈福產品.沉香媽祖頭燈, "沉香媽祖燈" },
+            {e_祈福產品.沉香媽祖頭燈, "沉香媽祖頭燈" },
         };
         public FileResult AiLight(q_LiDo q)
         {

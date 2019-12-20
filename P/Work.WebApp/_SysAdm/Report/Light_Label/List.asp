@@ -219,7 +219,6 @@ Dim strkey
 	        var parms = [];
 	        //parms.push('Date1=' + $('#Date1').val());
 	        //parms.push('Date2=' + $('#Date2').val());
-        console.log("test",lightyear);
 	        parms.push('year=' + lightyear);
 	        parms.push('product_sn=' + product_sn);
 	        $("#ifm_exceldownload").attr("src", "../../../ExcelReport/AiLight?" + parms.join('&'));
