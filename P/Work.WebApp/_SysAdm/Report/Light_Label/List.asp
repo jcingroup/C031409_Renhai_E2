@@ -214,16 +214,19 @@ Dim strkey
 <body>
     <!--#include file="../../_include/top.asp"-->
     <script>
+         var lightyear = (new Date()).getFullYear();
          function btn_ExportExcel(product_sn) {
 	        var parms = [];
 	        //parms.push('Date1=' + $('#Date1').val());
 	        //parms.push('Date2=' + $('#Date2').val());
-	        parms.push('year=' + (new Date()).getFullYear());
+        console.log("test",lightyear);
+	        parms.push('year=' + lightyear);
 	        parms.push('product_sn=' + product_sn);
 	        $("#ifm_exceldownload").attr("src", "../../../ExcelReport/AiLight?" + parms.join('&'));
 	    };
 	$(document).ready(function(){	   
 		$('.datepicker').datepicker();
+        $.ReFreshDetailHTML();
 	});
     </script>
     <form action="<%=strScript%>" method="post" name="traQuery" id="form1">
@@ -274,7 +277,7 @@ Dim strkey
                                 <input type="button" class="button" onclick="btn_ExportExcel('17')" value="沉香媽祖燈" style="margin-right: 10px;" />
                                 <input type="button" class="button" onclick="btn_ExportExcel('171')" value="沉香媽祖頭燈" style="margin-right: 10px;" />
                             </td>
-                             <td width="80" align="Right">
+                            <td width="80" align="Right">
                                 <input type="button" class="button" onclick="btn_ExportExcel('16')" value="藥師佛燈" style="margin-right: 10px;" />
                                 <input type="button" class="button" onclick="btn_ExportExcel('161')" value="藥師佛頭燈" style="margin-right: 10px;" />
                             </td>
@@ -298,3 +301,32 @@ Dim strkey
     <iframe id="ifm_exceldownload" src="" style="border: 0px; width: 0px; height: 0px"></iframe>
 </body>
 </html>
+<script type="text/javascript">
+    (function ($) {
+        //取得統計資料
+        $.ReFreshDetailHTML = function () {
+            ajaxRequest.push
+            (
+		        $.ajax
+		        (
+			        {
+			            url: '../../../Logic/getYear',
+			            type: "GET",
+			            datatype: "json",
+			            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			            data: {},
+			            cache: false,
+			            global: true,
+			            error: function (jqXHR, textStatus, errorThrown) {
+			                alert(errorThrown);
+			            },
+			            success: function (response) {		           
+			                var stai = jQuery.parseJSON(response);
+			                lightyear = stai;
+			            }
+			        }
+		        )
+	        )
+        };
+    })(jQuery);
+</script>
