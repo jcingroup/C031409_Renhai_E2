@@ -1756,9 +1756,9 @@ namespace DotWeb.Controllers
         }
         private void makeAiLight(q_LiDo q, List<m_Orders_Detail> data, IXLWorksheet getSheet)
         {
-            getSheet.Cell(1, 1).Value = "文玄光明燈系統導入資料表-" + AiLight_PName[q.product_sn];
+            //getSheet.Cell(1, 1).Value = "文玄光明燈系統導入資料表-" + AiLight_PName[q.product_sn];
             getSheet.Name = AiLight_PName[q.product_sn];
-            int row_index = 4;
+            int row_index = 2;
             int count = data.Count() - 2;
             if (count > 0) { getSheet.Row(row_index).InsertRowsBelow(count); }
             foreach (var i in data)
