@@ -64,7 +64,7 @@ angular
         $scope.batch_slist = [];
 
         $scope.sd = {//預設日期為今天
-            year: today.getFullYear(),
+            year: allowyear,
             product_sn: null,
             startDate: setDateS(today),
             endDate: setDateS(today),
