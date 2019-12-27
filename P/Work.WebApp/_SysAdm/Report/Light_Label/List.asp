@@ -217,8 +217,8 @@ Dim strkey
          var lightyear = (new Date()).getFullYear();
          function btn_ExportExcel(product_sn) {
 	        var parms = [];
-	        //parms.push('Date1=' + $('#Date1').val());
-	        //parms.push('Date2=' + $('#Date2').val());
+	        parms.push('startDate=' + $('#Date1').val());
+	        parms.push('endDate=' + $('#Date2').val());
 	        parms.push('year=' + lightyear);
 	        parms.push('product_sn=' + product_sn);
 	        $("#ifm_exceldownload").attr("src", "../../../ExcelReport/AiLight?" + parms.join('&'));
@@ -319,7 +319,7 @@ Dim strkey
 			            error: function (jqXHR, textStatus, errorThrown) {
 			                alert(errorThrown);
 			            },
-			            success: function (response) {		           
+			            success: function (response) {
 			                var stai = jQuery.parseJSON(response);
 			                lightyear = stai;
 			            }

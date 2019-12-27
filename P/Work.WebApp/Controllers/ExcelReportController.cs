@@ -1738,12 +1738,20 @@ namespace DotWeb.Controllers
                            tel = x.Member_Detail.Member.tel,
                            zip = x.zip,
                            address = x.address,
-                           C_InsertDateTime = x.Orders.C_InsertDateTime
+                           C_InsertDateTime = x.Orders.C_InsertDateTime,
+                           i_InsertDateTime = x.i_InsertDateTime
                        });
 
                 if (q.product_sn != null & q.product_sn != "null")
                 {
                     tmp = tmp.Where(x => x.product_sn == q.product_sn);
+                }
+
+                if (q.startDate != null & q.endDate != null)
+                {
+                    DateTime start = ((DateTime)q.startDate);
+                    DateTime end = ((DateTime)q.endDate).AddDays(1);
+                    tmp = tmp.Where(x => x.i_InsertDateTime >= start & x.i_InsertDateTime < end);
                 }
                 res = tmp.ToList();
             }
@@ -1893,6 +1901,8 @@ namespace DotWeb.Controllers
             /// 產品種類
             /// </summary>
             public string product_sn { get; set; }
+            public DateTime? startDate { get; set; }
+            public DateTime? endDate { get; set; }
         }
         public class m_LiDo
         {

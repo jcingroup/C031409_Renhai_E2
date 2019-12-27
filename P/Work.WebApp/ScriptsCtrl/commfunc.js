@@ -188,7 +188,7 @@ angular.module('commfun', []).service('workService', ['$http', function ($http) 
     };
     this.setApplyYearRange = function () {
         var y = [];
-        var getNowYear = (new Date()).getFullYear();
+        var getNowYear = allowyear;
         for (var i = 2016; i <= getNowYear; i++) {
             y.push(i);
         }

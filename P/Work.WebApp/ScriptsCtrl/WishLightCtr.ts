@@ -83,7 +83,7 @@ angular
         $scope.year_list = workService.setApplyYearRange();
 
         $scope.sd = {//預設日期為今天
-            year: today.getFullYear(),
+            year: allowyear,
             startDate: setDateS(fday),
             endDate: setDateS(today)
         }
