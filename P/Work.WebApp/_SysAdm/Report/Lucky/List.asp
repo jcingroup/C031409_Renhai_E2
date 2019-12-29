@@ -80,7 +80,7 @@ Dim strkey
 	StrSql=StrSql & "	X2.文疏梯次 "
 	StrSql=StrSql & " 	FROM 訂單主檔 AS X1 "
 	StrSql=StrSql & " 		Left Join 訂單明細檔 AS X2 ON X2.訂單編號=X1.訂單編號 "
-	StrSql=StrSql & " 	WHERE X2.文疏梯次 > 0 and year(X1.新增時間)=year(getdate()) "
+	StrSql=StrSql & " 	WHERE X2.文疏梯次 > 0 and 年度=(SELECT TOP 1 apply_year FROM ApplyParam) "
 	
 	StrSql=StrSql & " 	) AS B ON B.文疏梯次=A.序號 "
 	StrSql=StrSql & StrWhere
@@ -106,7 +106,7 @@ Dim strkey
 	'-- 取得文疏梯次時間表基本資料-----------------------------------
 	Dim strSelCboStepSN
 	StrSql= "SELECT A.序號,"
-	StrSql=StrSql & " (A.梯次 + '__' + CAST( (Select Count(*) FROM 訂單明細檔 AS X WHERE X.文疏梯次=A.序號 and year(新增時間)=year(getdate())) AS NVARCHAR(10))) AS 梯次 "
+	StrSql=StrSql & " (A.梯次 + '__' + CAST( (Select Count(*) FROM 訂單明細檔 AS X WHERE X.文疏梯次=A.序號 and 年度=(SELECT TOP 1 apply_year FROM ApplyParam)) AS NVARCHAR(10))) AS 梯次 "
 	StrSql=StrSql & " FROM 文疏梯次時間表 AS A "
 	StrSql=StrSql & " ORDER BY A.序號 "
 	'RESPONSE.WRITE StrSql & "<BR>"

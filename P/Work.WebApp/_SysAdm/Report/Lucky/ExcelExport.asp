@@ -133,7 +133,7 @@ Dim strkey
 	StrSql=StrSql & "	X2.文疏梯次 "
 	StrSql=StrSql & " 	FROM 訂單主檔 AS X1 "
 	StrSql=StrSql & " 		Left Join 訂單明細檔 AS X2 ON X2.訂單編號=X1.訂單編號 "
-	StrSql=StrSql & " 	WHERE X2.文疏梯次 > 0 and year(X1.新增時間)=year(getdate()) "
+	StrSql=StrSql & " 	WHERE X2.文疏梯次 > 0 and 年度=(SELECT TOP 1 apply_year FROM ApplyParam) "
 	
 	StrSql=StrSql & " 	) AS B ON B.文疏梯次=A.序號 "
 	StrSql=StrSql & StrWhere
