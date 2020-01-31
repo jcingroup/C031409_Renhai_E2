@@ -3653,6 +3653,7 @@ namespace DotWeb.Controllers
                            l_birthday = x.l_birthday,
                            tel = x.Member_Detail.tel,
                            mobile = x.Member_Detail.mobile,
+                           born_sign = x.Member_Detail.born_sign,
                            address = x.address,
                            light_name = x.light_name,
                            wish_memo = x.wish_memo,
@@ -3681,13 +3682,14 @@ namespace DotWeb.Controllers
             sheet.Cell(1, 1).Value = "訂單編號";
             sheet.Cell(1, 2).Value = "姓名";
             sheet.Cell(1, 3).Value = "生日";
-            sheet.Cell(1, 4).Value = "電話";
-            sheet.Cell(1, 5).Value = "手機";
-            sheet.Cell(1, 6).Value = "燈位";
-            sheet.Cell(1, 7).Value = "地址";
-            sheet.Cell(1, 8).Value = "祈求願望1";
-            sheet.Cell(1, 9).Value = "祈求願望2";
-            sheet.Cell(1, 10).Value = "備註";
+            sheet.Cell(1, 4).Value = "生肖";
+            sheet.Cell(1, 5).Value = "電話";
+            sheet.Cell(1, 6).Value = "手機";
+            sheet.Cell(1, 7).Value = "燈位";
+            sheet.Cell(1, 8).Value = "地址";
+            sheet.Cell(1, 9).Value = "祈求願望1";
+            sheet.Cell(1, 10).Value = "祈求願望2";
+            sheet.Cell(1, 11).Value = "備註";
             #endregion
 
             foreach (var i in data)
@@ -3695,26 +3697,27 @@ namespace DotWeb.Controllers
                 sheet.Cell(row_index, 1).SetValue<string>(i.orders_sn);
                 sheet.Cell(row_index, 2).Value = i.member_name;
                 sheet.Cell(row_index, 3).SetValue<string>(i.l_birthday);
-                sheet.Cell(row_index, 4).SetValue<string>(i.tel);
-                sheet.Cell(row_index, 5).SetValue<string>(i.mobile);
-                sheet.Cell(row_index, 6).Value = i.light_name;
-                sheet.Cell(row_index, 7).Value = i.address;
+                sheet.Cell(row_index, 4).SetValue<string>(i.born_sign);
+                sheet.Cell(row_index, 5).SetValue<string>(i.tel);
+                sheet.Cell(row_index, 6).SetValue<string>(i.mobile);
+                sheet.Cell(row_index, 7).Value = i.light_name;
+                sheet.Cell(row_index, 8).Value = i.address;
 
                 string wish1 = i.wishs.Select(x => x.wish_text).FirstOrDefault();
                 string wish2 = i.wishs.Select(x => x.wish_text).Skip(1).FirstOrDefault();
 
-                sheet.Cell(row_index, 8).Value = wish1;
-                sheet.Cell(row_index, 9).Value = wish2;
+                sheet.Cell(row_index, 9).Value = wish1;
+                sheet.Cell(row_index, 10).Value = wish2;
 
-                sheet.Cell(row_index, 10).Value = i.wish_memo;
+                sheet.Cell(row_index, 11).Value = i.wish_memo;
 
                 row_index++;
             }
-            sheet.Columns(1, 10).Width = 20;
-            sheet.Range(1, 1, row_index - 1, 10).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
+            sheet.Columns(1, 11).Width = 20;
+            sheet.Range(1, 1, row_index - 1, 11).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
                                                      .Border.SetInsideBorder(XLBorderStyleValues.Thin)
                                                      .Font.SetFontSize(14);
-            sheet.Range(1, 1, 1, 10).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
+            sheet.Range(1, 1, 1, 11).Style.Border.SetOutsideBorder(XLBorderStyleValues.Thick)
                                        .Font.SetFontSize(16);
             sheet.Name = string.Format("訂單芳名錄({0}筆)", count);
         }
