@@ -1834,6 +1834,7 @@ namespace DotWeb.Controllers
                        {
                            light_name = x.light_name,
                            householder = x.Member_Detail.Member.householder,
+                           member_name = x.member_name,
                            zip = x.zip,
                            address = x.address,
                            tel = x.Member_Detail.Member.tel,
@@ -1864,7 +1865,8 @@ namespace DotWeb.Controllers
             foreach (var i in data)
             {
                 sheet.Cell(row_index, col_index).Value = i.light_name;
-                sheet.Cell(row_index + 1, col_index).Value = i.householder;
+                sheet.Cell(row_index + 1, col_index).Value = i.member_name;
+                //sheet.Cell(row_index + 1, col_index).Value = i.householder;
                 //sheet.Cell(row_index + 2, col_index).Value = i.zip;
                 sheet.Cell(row_index + 2, col_index).Value = i.address;
                 sheet.Range(row_index + 2, col_index, row_index + 3, col_index).Merge(false);//地址
@@ -1914,6 +1916,10 @@ namespace DotWeb.Controllers
             /// 戶長姓名
             /// </summary>
             public string householder { get; set; }
+            /// <summary>
+            /// 申請人姓名
+            /// </summary>
+            public string member_name { get; set; }
             public string address { get; set; }
             public string zip { get; set; }
             public string tel { get; set; }
