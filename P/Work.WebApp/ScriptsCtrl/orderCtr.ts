@@ -202,7 +202,7 @@ angular.module('angularApp')
 
         } else { //進入為新增模式
             if (member_id > 0) {
-                $scope.edit_type = IEditType.insert;
+                $scope.edit_type = 1;// IEditType.insert;
             }
         }
         $scope.Init_Query();
@@ -269,7 +269,7 @@ angular.module('angularApp')
         };
         function SendGeneralOrder() {
 
-            if ($scope.edit_type == IEditType.insert) {
+            if ($scope.edit_type == 1) {//IEditType.insert
                 $http.post(gb_approot + 'Orders/AddOrders', $scope.fd)
                     .success(function (data: IResultData<string>, status, headers, config) {
                     if (data.result) {
@@ -298,7 +298,7 @@ angular.module('angularApp')
                 });
             };
 
-            if ($scope.edit_type == IEditType.update) {
+            if ($scope.edit_type == 2) {//IEditType.update
                 $http.put(gb_approot + 'Orders/UpdateOrders', $scope.fd)
                     .success(function (data: IResultData<server.Orders>, status, headers, config) {
                     if (data.result) {
@@ -319,7 +319,7 @@ angular.module('angularApp')
             console.log($scope.fd.Item);
             var item = $scope.fd.Item[0];
 
-            if ($scope.edit_type == IEditType.insert) {
+            if ($scope.edit_type == 1) {//IEditType.insert
                 var m: number[] = [];
                 for (var i in $scope.mb.getMember_Detail) {
                     var n = $scope.mb.getMember_Detail[i];
@@ -390,7 +390,7 @@ angular.module('angularApp')
         };
         function SendSDLightOrder() {
 
-            if ($scope.edit_type == IEditType.insert) {
+            if ($scope.edit_type == 1) {//IEditType.insert
                 $http.post(gb_approot + 'Orders/AddSDLight', $scope.fd)
                     .success(function (data: IResultData<string>, status, headers, config) {
                     if (data.result) {
@@ -419,7 +419,7 @@ angular.module('angularApp')
                 });
             };
 
-            if ($scope.edit_type == IEditType.update) {
+            if ($scope.edit_type == 2) {//IEditType.update
                 $http.put(gb_approot + 'Orders/UpdateSDLight', $scope.fd)
                     .success(function (data: IResultData<server.Orders>, status, headers, config) {
                     if (data.result) {
@@ -438,7 +438,7 @@ angular.module('angularApp')
         };
         function SendMDLightOrder() {
 
-            if ($scope.edit_type == IEditType.insert) {
+            if ($scope.edit_type == 1) {//IEditType.insert
                 $http.post(gb_approot + 'Orders/AddMDLight', $scope.fd)
                     .success(function (data: IResultData<string>, status, headers, config) {
                     if (data.result) {
@@ -467,7 +467,7 @@ angular.module('angularApp')
                 });
             };
 
-            if ($scope.edit_type == IEditType.update) {
+            if ($scope.edit_type == 2) {//IEditType.update
                 $http.put(gb_approot + 'Orders/UpdateMDLight', $scope.fd)
                     .success(function (data: IResultData<server.Orders>, status, headers, config) {
                     if (data.result) {
@@ -487,7 +487,7 @@ angular.module('angularApp')
 
         function SendWishLightOrder() {
 
-            if ($scope.edit_type == IEditType.insert) {
+            if ($scope.edit_type == 1) {//IEditType.insert
                 $http.post(gb_approot + 'Orders/AddWishLight', $scope.fd)
                     .success(function (data: IResultData<string>, status, headers, config) {
                     if (data.result) {
@@ -516,7 +516,7 @@ angular.module('angularApp')
                 });
             };
 
-            if ($scope.edit_type == IEditType.update) {
+            if ($scope.edit_type == 2) {//IEditType.update
                 $http.put(gb_approot + 'Orders/UpdateWishLight', $scope.fd)
                     .success(function (data: IResultData<server.Orders>, status, headers, config) {
                     if (data.result) {
@@ -537,7 +537,7 @@ angular.module('angularApp')
             console.log($scope.fd.Item);
             var item = $scope.fd.Item[0];
 
-            if ($scope.edit_type == IEditType.insert) {
+            if ($scope.edit_type == 1) {//IEditType.insert
                 var m: number[] = [];
                 for (var i in $scope.mb.getMember_Detail) {
                     var n = $scope.mb.getMember_Detail[i];
@@ -881,9 +881,9 @@ angular.module('angularApp')
             $scope.edit_type = IEditType.update;
             $scope.qMasterView = MasterDataView($state.params.orders_sn);
         } else { //進入為新增模式
-            $scope.edit_type = IEditType.insert;
+            $scope.edit_type = 1;//IEditType.insert;
             if ($state.params.member_id != undefined) {
-                $scope.edit_type = IEditType.insert;
+                $scope.edit_type = 1;//IEditType.insert;
                 $scope.qMember = GetMemberByDetail($state.params.member_id);
                 GetMemberAll($state.params.member_id);
                 $scope.isTodayOrder = true;
@@ -1206,11 +1206,11 @@ angular.module('angularApp')
             });
         }
 
-        if ($scope.edit_type == IEditType.update) { // 進入為修改模式
+        if ($scope.edit_type == 2) {//IEditType.update // 進入為修改模式
             //GetMemberAll($scope.fd.member_id);
         }
 
-        if ($scope.edit_type == IEditType.insert) { //進入為新增模式
+        if ($scope.edit_type == 1) { //IEditType.insert//進入為新增模式
             if ($state.params.member_id != undefined) {
                 GetMemberByDetail($state.params.member_id);
                 GetMemberAll($state.params.member_id);
@@ -1466,7 +1466,7 @@ angular.module('angularApp')
             });
         }
 
-        if ($scope.edit_type == IEditType.update) { // 進入為修改模式
+        if ($scope.edit_type == 2) {//IEditType.update // 進入為修改模式
             //Master_Open_Modify($state.params.orders_sn);
             workService.getFortune($state.params.orders_sn)
                 .success(function (fdata: IResultData<number[]>, status, headers, config) {
@@ -1482,7 +1482,7 @@ angular.module('angularApp')
             });
         }
 
-        if ($scope.edit_type == IEditType.insert) { //進入為新增模式
+        if ($scope.edit_type == 1) {//IEditType.insert //進入為新增模式
             if ($state.params.member_id != undefined) {
                 $scope.qMember.success(function (data: IResultData<server.Member_Detail>, status, headers, config) {
                     var detail: server.cartDetail;
@@ -1860,11 +1860,11 @@ angular.module('angularApp')
             });
         }
 
-        if ($scope.edit_type == IEditType.update) { // 進入為修改模式
+        if ($scope.edit_type == 2) {//IEditType.update // 進入為修改模式
             //GetMemberAll($scope.fd.member_id);
         }
 
-        if ($scope.edit_type == IEditType.insert) { //進入為新增模式
+        if ($scope.edit_type == 1) {//IEditType.insert //進入為新增模式
             if ($state.params.member_id != undefined) {
                 GetMemberByDetail($state.params.member_id);
                 GetMemberAll($state.params.member_id);
@@ -2219,11 +2219,11 @@ angular.module('angularApp')
             });
         }
 
-        if ($scope.edit_type == IEditType.update) { // 進入為修改模式
+        if ($scope.edit_type == 2) {//IEditType.update // 進入為修改模式
             //GetMemberAll($scope.fd.member_id);
         }
 
-        if ($scope.edit_type == IEditType.insert) { //進入為新增模式
+        if ($scope.edit_type == 1) {//IEditType.insert //進入為新增模式
             if ($state.params.member_id != undefined) {
                 GetMemberByDetail($state.params.member_id);
                 GetMemberAll($state.params.member_id);
@@ -2573,7 +2573,7 @@ angular.module('angularApp')
                     wish_id: item.wish_id,
                     wish_text: item.wish_text,
                     can_text: item.can_text,
-                    edit_type: IEditType.insert
+                    edit_type: 1//IEditType.insert
                 };
                 $scope.cart.wishs.push(obj);
             } else if (!item.wish_checked) {
@@ -2644,11 +2644,11 @@ angular.module('angularApp')
         }
 
 
-        if ($scope.edit_type == IEditType.update) { // 進入為修改模式
+        if ($scope.edit_type == 2) {//IEditType.update // 進入為修改模式
             //GetMemberAll($scope.fd.member_id);
         }
 
-        if ($scope.edit_type == IEditType.insert) { //進入為新增模式
+        if ($scope.edit_type == 1) {// IEditType.insert //進入為新增模式
             if ($state.params.member_id != undefined) {
                 GetMemberByDetail($state.params.member_id);
                 GetMemberAll($state.params.member_id);
@@ -2890,7 +2890,7 @@ angular.module('angularApp')
             });
         }
 
-        if ($scope.edit_type == IEditType.update) { // 進入為修改模式
+        if ($scope.edit_type == 2) { //IEditType.update// 進入為修改模式
             //Master_Open_Modify($state.params.orders_sn);
             workService.getFortune($state.params.orders_sn)
                 .success(function (fdata: IResultData<number[]>, status, headers, config) {
@@ -2906,7 +2906,7 @@ angular.module('angularApp')
             });
         }
 
-        if ($scope.edit_type == IEditType.insert) { //進入為新增模式
+        if ($scope.edit_type == 1) {//IEditType.insert //進入為新增模式
             if ($state.params.member_id != undefined) {
                 $scope.qMember.success(function (data: IResultData<server.Member_Detail>, status, headers, config) {
                     var detail: server.cartDetail;

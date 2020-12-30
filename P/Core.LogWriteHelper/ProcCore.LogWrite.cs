@@ -17,19 +17,19 @@ namespace ProcCore
 
         public static void WriteToFile()
         {
-            if (SetupBasePath == null) SetupBasePath = "D:\\";
-            String FileName = "Log." + DateTime.Now.ToString("yyyyMMddHH") + ".txt";
-            FileStream fs = File.Open(SetupBasePath + FileName, FileMode.Append);
-            StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
-            while (QueueMessage.Count > 0)
-            {
-                String dq = QueueMessage.Dequeue();
-                sw.WriteLine(dq);
-            }
-            sw.Close();
-            sw.Dispose();
-            fs.Close();
-            fs.Dispose();
+            //if (SetupBasePath == null) SetupBasePath = "D:\\";
+            //String FileName = "Log." + DateTime.Now.ToString("yyyyMMddHH") + ".txt";
+            //FileStream fs = File.Open(SetupBasePath + FileName, FileMode.Append);
+            //StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+            //while (QueueMessage.Count > 0)
+            //{
+            //    String dq = QueueMessage.Dequeue();
+            //    sw.WriteLine(dq);
+            //}
+            //sw.Close();
+            //sw.Dispose();
+            //fs.Close();
+            //fs.Dispose();
         }
         public static void Write(String message)
         {

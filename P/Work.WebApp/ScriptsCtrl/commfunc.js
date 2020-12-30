@@ -91,7 +91,9 @@ function isValidJSONDate(value, userFormat) {
                 y = date[i];
         }
         ;
-        return (m > 0 && m < 13 && y && y.length === 4 && d > 0 && d <= (new Date(y, m, 0)).getDate());
+        return (m > 0 && m < 13 &&
+            y && y.length === 4 &&
+            d > 0 && d <= (new Date(y, m, 0)).getDate());
     };
     return isDate(theDate, theFormat);
 }
@@ -115,86 +117,86 @@ var services;
         function workService() {
         }
         return workService;
-    })();
+    }());
     services.workService = workService;
 })(services || (services = {}));
 ;
 angular.module('commfun', []).service('workService', ['$http', function ($http) {
-    this.getOrderData = function (order_sn) {
-        return $http.get(gb_approot + 'Orders/GetOrders', { params: { order_sn: order_sn } });
-    };
-    this.getMemberDetailAll = function (member_id) {
-        return $http.get(gb_approot + 'api/Member_Detail', { params: { member_id: member_id } });
-    };
-    this.getMemberAll = function (member_id) {
-        return $http.get(gb_approot + 'Member/getMemberAll', { params: { member_id: member_id } });
-    };
-    this.getMember = function (member_id) {
-        return $http.get(gb_approot + 'Member/GetMember', { params: { member_id: member_id } });
-    };
-    this.getMemberDetail = function (member_detail_id) {
-        return $http.get(gb_approot + 'Member/GetMemberDetail', { params: { member_detail_id: member_detail_id } });
-    };
-    this.getMemberByDetail = function (member_id) {
-        return $http.get(gb_approot + 'Member/GetMemberByDetail', { params: { member_id: member_id } });
-    };
-    this.getProductAll = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetProductAll', { params: {} });
-    };
-    this.getProductSDLight = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetProductSDLight', { params: {} });
-    };
-    this.getProductMDLight = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetProductMDLight', { params: {} });
-    };
-    this.getProductWishLight = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetProductWishLight', { params: {} });
-    };
-    this.getProductTempleMember = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetProductTempleMember', { params: {} });
-    };
-    this.getWishList = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetWishList', { params: {} });
-    };
-    this.getLightByMD = function (product_sn) {
-        return $http.get(gb_approot + apiGetAction + '/GetLightByMD', { params: { product_sn: product_sn } });
-    };
-    this.getProductFortune = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetProductFortune', { params: {} });
-    };
-    this.getProductDouLight = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetProductDouLight', { params: {} });
-    };
-    this.getManjushri = function () {
-        return $http.get(gb_approot + 'Manjushri/GetManjushri', { params: { t: uniqid() } });
-    };
-    this.getAssemblyBatch = function (year) {
-        return $http.get(gb_approot + 'AssemblyBatch/GetAssemblyBatch', { params: { year: year, t: uniqid() } });
-    };
-    this.getQueryBatchList = function (year) {
-        return $http.get(gb_approot + apiGetAction + '/GetBatchList', { params: { year: year, t: uniqid() } });
-    };
-    this.getCalcLunar = function (Y, M, D) {
-        var setDate = new Date(Y + 1911, M, D);
-        return $http.get(gb_approot + apiGetAction + '/GetLunisolar', { params: { t: uniqid(), dt: setDate } });
-    };
-    this.getUsers = function () {
-        return $http.get(gb_approot + apiGetAction + '/GetUsers', { params: {} });
-    };
-    this.getFortune = function (order_sn) {
-        return $http.get(gb_approot + apiGetAction + '/GetFortuneLight', { params: { orders_sn: order_sn } });
-    };
-    this.showToaster = function (type, title, message) {
-    };
-    this.setApplyYearRange = function () {
-        var y = [];
-        var getNowYear = allowyear;
-        for (var i = 2016; i <= getNowYear; i++) {
-            y.push(i);
-        }
-        return y;
-    };
-}]);
+        this.getOrderData = function (order_sn) {
+            return $http.get(gb_approot + 'Orders/GetOrders', { params: { order_sn: order_sn } });
+        };
+        this.getMemberDetailAll = function (member_id) {
+            return $http.get(gb_approot + 'api/Member_Detail', { params: { member_id: member_id } });
+        };
+        this.getMemberAll = function (member_id) {
+            return $http.get(gb_approot + 'Member/getMemberAll', { params: { member_id: member_id } });
+        };
+        this.getMember = function (member_id) {
+            return $http.get(gb_approot + 'Member/GetMember', { params: { member_id: member_id } });
+        };
+        this.getMemberDetail = function (member_detail_id) {
+            return $http.get(gb_approot + 'Member/GetMemberDetail', { params: { member_detail_id: member_detail_id } });
+        };
+        this.getMemberByDetail = function (member_id) {
+            return $http.get(gb_approot + 'Member/GetMemberByDetail', { params: { member_id: member_id } });
+        };
+        this.getProductAll = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetProductAll', { params: {} });
+        };
+        this.getProductSDLight = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetProductSDLight', { params: {} });
+        };
+        this.getProductMDLight = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetProductMDLight', { params: {} });
+        };
+        this.getProductWishLight = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetProductWishLight', { params: {} });
+        };
+        this.getProductTempleMember = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetProductTempleMember', { params: {} });
+        };
+        this.getWishList = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetWishList', { params: {} });
+        };
+        this.getLightByMD = function (product_sn) {
+            return $http.get(gb_approot + apiGetAction + '/GetLightByMD', { params: { product_sn: product_sn } });
+        };
+        this.getProductFortune = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetProductFortune', { params: {} });
+        };
+        this.getProductDouLight = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetProductDouLight', { params: {} });
+        };
+        this.getManjushri = function () {
+            return $http.get(gb_approot + 'Manjushri/GetManjushri', { params: { t: uniqid() } });
+        };
+        this.getAssemblyBatch = function (year) {
+            return $http.get(gb_approot + 'AssemblyBatch/GetAssemblyBatch', { params: { year: year, t: uniqid() } });
+        };
+        this.getQueryBatchList = function (year) {
+            return $http.get(gb_approot + apiGetAction + '/GetBatchList', { params: { year: year, t: uniqid() } });
+        };
+        this.getCalcLunar = function (Y, M, D) {
+            var setDate = new Date(Y + 1911, M, D);
+            return $http.get(gb_approot + apiGetAction + '/GetLunisolar', { params: { t: uniqid(), dt: setDate } });
+        };
+        this.getUsers = function () {
+            return $http.get(gb_approot + apiGetAction + '/GetUsers', { params: {} });
+        };
+        this.getFortune = function (order_sn) {
+            return $http.get(gb_approot + apiGetAction + '/GetFortuneLight', { params: { orders_sn: order_sn } });
+        };
+        this.showToaster = function (type, title, message) {
+        };
+        this.setApplyYearRange = function () {
+            var y = [];
+            var getNowYear = allowyear;
+            for (var i = 2016; i <= getNowYear; i++) {
+                y.push(i);
+            }
+            return y;
+        };
+    }]);
 angular.module('commfun').directive('capitalize', function () {
     return {
         require: 'ngModel',
@@ -215,34 +217,35 @@ angular.module('commfun').directive('capitalize', function () {
     };
 });
 angular.module('commfun').factory('gridpage', ['$http', function ($http) {
-    var struc = {
-        CountPage: function ($scope) {
-            $scope.NowPage = $scope.NowPage == undefined ? 1 : $scope.NowPage;
-            var s = { page: $scope.NowPage };
-            if ($scope.sd != null) {
-                for (var key in $scope.sd) {
-                    s[key] = $scope.sd[key];
+        var struc = {
+            CountPage: function ($scope) {
+                $scope.NowPage = $scope.NowPage == undefined ? 1 : $scope.NowPage;
+                var s = { page: $scope.NowPage };
+                if ($scope.sd != null) {
+                    for (var key in $scope.sd) {
+                        s[key] = $scope.sd[key];
+                    }
+                }
+                var path = $scope.apiPath ? $scope.apiPath : apiConnection;
+                if ($scope.NowPage >= 1) {
+                    $http.get(path, { params: s })
+                        .success(function (data, status, headers, config) {
+                        $scope.Grid_Items = data.rows;
+                        $scope.TotalPage = data.total;
+                        $scope.NowPage = data.page;
+                        $scope.RecordCount = data.records;
+                        $scope.StartCount = data.startcount;
+                        $scope.EndCount = data.endcount;
+                        $scope.firstpage = 1;
+                        $scope.prevpage = $scope.NowPage <= 1 ? 1 : data.page - 1;
+                        $scope.lastpage = data.total;
+                        $scope.nextpage = $scope.NowPage >= $scope.TotalPage ? $scope.TotalPage : data.page + 1;
+                    });
                 }
             }
-            var path = $scope.apiPath ? $scope.apiPath : apiConnection;
-            if ($scope.NowPage >= 1) {
-                $http.get(path, { params: s }).success(function (data, status, headers, config) {
-                    $scope.Grid_Items = data.rows;
-                    $scope.TotalPage = data.total;
-                    $scope.NowPage = data.page;
-                    $scope.RecordCount = data.records;
-                    $scope.StartCount = data.startcount;
-                    $scope.EndCount = data.endcount;
-                    $scope.firstpage = 1;
-                    $scope.prevpage = $scope.NowPage <= 1 ? 1 : data.page - 1;
-                    $scope.lastpage = data.total;
-                    $scope.nextpage = $scope.NowPage >= $scope.TotalPage ? $scope.TotalPage : data.page + 1;
-                });
-            }
-        }
-    };
-    return struc;
-}]);
+        };
+        return struc;
+    }]);
 angular.module('commfun').filter('codelang', function () {
     return function (input, data) {
         var r = input;
@@ -302,9 +305,7 @@ angular.module('commfun').filter('godsonProductSn', function () {
 angular.module('commfun').filter('OptionStr', function () {
     return function (input, data) {
         var res = "";
-        var item = data.filter(function (x) {
-            return x.value == input;
-        });
+        var item = data.filter(function (x) { return x.value == input; });
         if (item.length > 0) {
             res = item[0].label;
         }
