@@ -75,22 +75,22 @@ angular.module('angularApp')
             $state.go('grid');
         };
         $scope.openOrders = function (orders_sn, orders_type) {
-            if (orders_type == e_orders_type.general) {
+            if (orders_type == 0) {
                 $state.go('edit.general_orders', { 'orders_sn': orders_sn });
             }
-            if (orders_type == e_orders_type.fortune_order) {
+            if (orders_type == 3) {
                 $state.go('edit.fortune_orders', { 'orders_sn': orders_sn });
             }
-            if (orders_type == e_orders_type.sdlight) {
+            if (orders_type == 2) {
                 $state.go('edit.sdlight_orders', { 'orders_sn': orders_sn });
             }
-            if (orders_type == e_orders_type.mdlight) {
+            if (orders_type == 1) {
                 $state.go('edit.mdlight_orders', { 'orders_sn': orders_sn });
             }
-            if (orders_type == e_orders_type.wishlight) {
+            if (orders_type == 4) {
                 $state.go('edit.wishlight_orders', { 'orders_sn': orders_sn });
             }
-            if (orders_type == e_orders_type.doulight) {
+            if (orders_type == 5) {
                 $state.go('edit.doulight_orders', { 'orders_sn': orders_sn });
             }
         };
@@ -167,7 +167,7 @@ angular.module('angularApp')
                             .success(function (data, status, headers, config) {
                             if (data.result) {
                                 $scope.fd = data.data;
-                                $scope.edit_type = IEditType.update;
+                                $scope.edit_type = 2;
                                 $scope.$parent.Init_Query();
                                 alert('訂單新增完成');
                             }
@@ -192,7 +192,7 @@ angular.module('angularApp')
                 $http.put(gb_approot + 'Orders/UpdateOrders', $scope.fd)
                     .success(function (data, status, headers, config) {
                     if (data.result) {
-                        $scope.edit_type = IEditType.update;
+                        $scope.edit_type = 2;
                         $scope.$parent.Init_Query();
                         alert('訂單修改完成');
                     }
@@ -229,7 +229,7 @@ angular.module('angularApp')
                             .success(function (data, status, headers, config) {
                             if (data.result) {
                                 $scope.fd = data.data;
-                                $scope.edit_type = IEditType.update;
+                                $scope.edit_type = 2;
                                 $scope.$parent.Init_Query();
                                 alert('訂單新增完成');
                             }
@@ -250,7 +250,7 @@ angular.module('angularApp')
                 });
             }
             ;
-            if ($scope.edit_type == IEditType.update) {
+            if ($scope.edit_type == 2) {
                 var m = [];
                 for (var i in $scope.mb.getMember_Detail) {
                     var n = $scope.mb.getMember_Detail[i];
@@ -264,7 +264,7 @@ angular.module('angularApp')
                 })
                     .success(function (data, status, headers, config) {
                     if (data.result) {
-                        $scope.edit_type = IEditType.update;
+                        $scope.edit_type = 2;
                         $scope.$parent.Init_Query();
                         alert('訂單修改完成');
                     }
@@ -288,7 +288,7 @@ angular.module('angularApp')
                             .success(function (data, status, headers, config) {
                             if (data.result) {
                                 $scope.fd = data.data;
-                                $scope.edit_type = IEditType.update;
+                                $scope.edit_type = 2;
                                 $scope.$parent.Init_Query();
                                 alert('訂單新增完成');
                             }
@@ -313,7 +313,7 @@ angular.module('angularApp')
                 $http.put(gb_approot + 'Orders/UpdateSDLight', $scope.fd)
                     .success(function (data, status, headers, config) {
                     if (data.result) {
-                        $scope.edit_type = IEditType.update;
+                        $scope.edit_type = 2;
                         $scope.$parent.Init_Query();
                         alert('訂單修改完成');
                     }
@@ -337,7 +337,7 @@ angular.module('angularApp')
                             .success(function (data, status, headers, config) {
                             if (data.result) {
                                 $scope.fd = data.data;
-                                $scope.edit_type = IEditType.update;
+                                $scope.edit_type = 2;
                                 $scope.$parent.Init_Query();
                                 alert('訂單新增完成');
                             }
@@ -362,7 +362,7 @@ angular.module('angularApp')
                 $http.put(gb_approot + 'Orders/UpdateMDLight', $scope.fd)
                     .success(function (data, status, headers, config) {
                     if (data.result) {
-                        $scope.edit_type = IEditType.update;
+                        $scope.edit_type = 2;
                         $scope.$parent.Init_Query();
                         alert('訂單修改完成');
                     }
@@ -386,7 +386,7 @@ angular.module('angularApp')
                             .success(function (data, status, headers, config) {
                             if (data.result) {
                                 $scope.fd = data.data;
-                                $scope.edit_type = IEditType.update;
+                                $scope.edit_type = 2;
                                 $scope.$parent.Init_Query();
                                 alert('訂單新增完成');
                             }
@@ -411,7 +411,7 @@ angular.module('angularApp')
                 $http.put(gb_approot + 'Orders/UpdateWishLight', $scope.fd)
                     .success(function (data, status, headers, config) {
                     if (data.result) {
-                        $scope.edit_type = IEditType.update;
+                        $scope.edit_type = 2;
                         $scope.$parent.Init_Query();
                         alert('訂單修改完成');
                     }
@@ -448,7 +448,7 @@ angular.module('angularApp')
                             .success(function (data, status, headers, config) {
                             if (data.result) {
                                 $scope.fd = data.data;
-                                $scope.edit_type = IEditType.update;
+                                $scope.edit_type = 2;
                                 $scope.$parent.Init_Query();
                                 alert('訂單新增完成');
                             }
@@ -469,7 +469,7 @@ angular.module('angularApp')
                 });
             }
             ;
-            if ($scope.edit_type == IEditType.update) {
+            if ($scope.edit_type == 2) {
                 var m = [];
                 for (var i in $scope.mb.getMember_Detail) {
                     var n = $scope.mb.getMember_Detail[i];
@@ -483,7 +483,7 @@ angular.module('angularApp')
                 })
                     .success(function (data, status, headers, config) {
                     if (data.result) {
-                        $scope.edit_type = IEditType.update;
+                        $scope.edit_type = 2;
                         $scope.$parent.Init_Query();
                         alert('訂單修改完成');
                     }
@@ -722,7 +722,7 @@ angular.module('angularApp')
                                     $scope.fd = data.data;
                                     $scope.fd.transation_date = new Date(data.data.transation_date.toString());
                                     $scope.fd.is_light_serial = true;
-                                    $scope.edit_type = IEditType.update;
+                                    $scope.edit_type = 2;
                                     var LocalDate = new Date($scope.fd.transation_date.getFullYear(), $scope.fd.transation_date.getMonth(), $scope.fd.transation_date.getDate(), $scope.fd.transation_date.getHours() - 8);
                                     var nowToday = new Date();
                                     if (LocalDate.getFullYear() == nowToday.getFullYear() &&
@@ -760,7 +760,7 @@ angular.module('angularApp')
         }
         ;
         if ($state.params.orders_sn != undefined) {
-            $scope.edit_type = IEditType.update;
+            $scope.edit_type = 2;
             $scope.qMasterView = MasterDataView($state.params.orders_sn);
         }
         else {
